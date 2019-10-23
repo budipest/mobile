@@ -104,7 +104,7 @@ class MapState extends State<MapWidget> {
     setState(() {
       _animateToUser();
       _mapController = controller;
-      _getFileData('assets/light_mode.json').then(_setMapStyle);
+      _getFileData('assets/dark_mode.json').then(_setMapStyle);
       //start listening after map is created
       stream.listen((List<DocumentSnapshot> documentList) {
         print("Change is in the air!");

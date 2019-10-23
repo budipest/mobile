@@ -129,7 +129,7 @@ DEPENDENCIES:
   - location (from `.symlinks/plugins/location/ios`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
@@ -188,4 +188,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2dfb0181216afd10a8ff9d681c38a137a21dce27
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4
