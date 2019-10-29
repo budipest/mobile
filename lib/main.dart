@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
-import 'screens/home.dart';
-import 'screens/about.dart';
-import 'common/variables.dart';
 
-void main() => runApp(Application());
+import './ui/screens/home.dart';
+import './ui/screens/about.dart';
+
+import './core/viewmodels/ToiletModel.dart';
+import './core/common/variables.dart';
+
+import './locator.dart';
+
+void main() {
+  setupLocator();
+  runApp(Application());
+}
 
 class Application extends StatelessWidget {
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  final FirebaseAnalytics analytics = FirebaseAnalytics();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Budipest',
-      theme: ThemeData(
-          primarySwatch: black,
-          textTheme: Theme.of(context)
-              .textTheme
-              .apply(fontFamily: 'Muli', fontSizeFactor: 1.4)),
-      initialRoute: '/',
-      routes: {'/': (context) => Home(), '/about': (context) => About()},
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: analytics),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (context) => locator<ToiletModel>())
       ],
+      child: MaterialApp(
+        title: 'Budipest',
+        theme: ThemeData(
+            primarySwatch: black,
+            textTheme: Theme.of(context)
+                .textTheme
+                .apply(fontFamily: 'Muli', fontSizeFactor: 1.4)),
+        initialRoute: '/',
+        routes: {'/': (context) => Home(), '/about': (context) => About()},
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
+      ),
     );
   }
 }

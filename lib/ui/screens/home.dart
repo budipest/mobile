@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import '../components/header.dart';
+
 import '../widgets/map.dart';
 import '../widgets/sidebar.dart';
 
@@ -24,7 +24,8 @@ class HomeState extends State<Home> {
           MapWidget(),
           SafeArea(
               child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
             child: FloatingActionButton(
                 child: Icon(
                   Icons.menu,
