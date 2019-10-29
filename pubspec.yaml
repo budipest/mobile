@@ -53,6 +53,8 @@ flutter:
 
   assets:
     - assets/
+    - assets/icons/
+    - assets/icons/general_open.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
