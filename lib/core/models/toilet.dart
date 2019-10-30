@@ -44,7 +44,8 @@ class Toilet {
         addDate = /*snapshot["addDate"] ??*/ new DateTime.now(),
         category = _standariseCategory(snapshot["category"].toString()) ??
             Category.GENERAL,
-        openHours = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        openHours = snapshot["openHours"].cast<int>() ??
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         tags = _standariseTags(snapshot["tags"].toString()) ?? new List<Tag>(),
         reviews = _standariseReviews(snapshot["reviews"].toString()) ??
             new List<Review>();

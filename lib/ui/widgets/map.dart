@@ -9,7 +9,7 @@ import 'dart:async';
 
 import '../../core/models/toilet.dart';
 import '../../core/viewmodels/ToiletModel.dart';
-import '../../core/common/bitmapFromSvg.dart';
+import '../../core/common/determineIcon.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget();
@@ -78,38 +78,6 @@ class MapState extends State<MapWidget> {
     });
   }
 
-  Future<BitmapDescriptor> _determineIcon(
-      Category category, List<int> openHours) async {
-    String result = "";
-
-    switch (category) {
-      case Category.GENERAL:
-        result += "general";
-        break;
-      case Category.SHOP:
-        result += "shop";
-        break;
-      case Category.RESTAURANT:
-        result += "restaurant";
-        break;
-      case Category.GAS_STATION:
-        result += "gas_station";
-        break;
-      case Category.PORTABLE:
-        result += "portable";
-        break;
-      default:
-        result += "general";
-        break;
-    }
-
-    // TODO: determine the open time based on the input array once Balazs is finished.
-    result += "_open";
-
-    return await bitmapDescriptorFromSvgAsset(
-        context, 'assets/icons/pin/$result.svg');
-  }
-
   @override
   Widget build(BuildContext context) {
     final toiletProvider = Provider.of<ToiletModel>(context);
@@ -126,7 +94,8 @@ class MapState extends State<MapWidget> {
               Marker _marker = Marker(
                 markerId: id,
                 position: LatLng(lat, lng),
-                icon: await _determineIcon(toilet.category, toilet.openHours),
+                icon: await determineIcon(
+                    toilet.category, toilet.openHours, context),
                 infoWindow: InfoWindow(
                     title: toilet.title, snippet: toilet.price.toString()),
               );

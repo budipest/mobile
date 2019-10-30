@@ -64,7 +64,6 @@ class BottomBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Padding(padding: EdgeInsets.all(25.0), child: Expanded(child: ,),)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0.0),
                   child: Text(
