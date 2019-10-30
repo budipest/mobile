@@ -74,7 +74,7 @@ class MapState extends State<MapWidget> {
     setState(() {
       _animateToUser();
       _mapController = controller;
-      _getFileData('assets/dark_mode.json').then(_setMapStyle);
+      _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
   }
 

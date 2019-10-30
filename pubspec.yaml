@@ -37,6 +37,8 @@ dependencies:
   provider: any
   get_it: any
 
+  sliding_up_panel: ^0.3.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
