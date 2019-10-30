@@ -65,14 +65,16 @@ class Toilet {
 
   static Category _standariseCategory(String input) {
     switch (input) {
-      case "General":
+      case "GENERAL":
         return Category.GENERAL;
-      case "Shop":
+      case "SHOP":
         return Category.SHOP;
-      case "Restaurant":
+      case "RESTAURANT":
         return Category.RESTAURANT;
-      case "Portable":
+      case "PORTABLE":
         return Category.PORTABLE;
+      case "GAS_STATION":
+        return Category.GAS_STATION;
       default:
         return Category.GENERAL;
     }

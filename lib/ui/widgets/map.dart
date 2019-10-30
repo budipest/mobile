@@ -22,13 +22,11 @@ class MapState extends State<MapWidget> {
   MapState();
 
   GoogleMapController _mapController;
-
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  BitmapDescriptor icon;
   List<Future<Toilet>> data;
   Location location = new Location();
   bool _nightMode = false;
-  // ------------------------------------------------------------------------------------------
+  BitmapDescriptor generalOpen;
 
   Future<String> _getFileData(String path) async {
     return await rootBundle.loadString(path);
@@ -80,6 +78,38 @@ class MapState extends State<MapWidget> {
     });
   }
 
+  Future<BitmapDescriptor> _determineIcon(
+      Category category, List<int> openHours) async {
+    String result = "";
+
+    switch (category) {
+      case Category.GENERAL:
+        result += "general";
+        break;
+      case Category.SHOP:
+        result += "shop";
+        break;
+      case Category.RESTAURANT:
+        result += "restaurant";
+        break;
+      case Category.GAS_STATION:
+        result += "gas_station";
+        break;
+      case Category.PORTABLE:
+        result += "portable";
+        break;
+      default:
+        result += "general";
+        break;
+    }
+
+    // TODO: determine the open time based on the input array once Balazs is finished.
+    result += "_open";
+
+    return await bitmapDescriptorFromSvgAsset(
+        context, 'assets/icons/pin/$result.svg');
+  }
+
   @override
   Widget build(BuildContext context) {
     final toiletProvider = Provider.of<ToiletModel>(context);
@@ -88,44 +118,36 @@ class MapState extends State<MapWidget> {
         stream: toiletProvider.fetchQueriedData(10.0),
         builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
           if (snapshot.hasData) {
-            return FutureBuilder(
-                future: bitmapDescriptorFromSvgAsset(
-                    context, 'assets/icons/pin/general_open.svg'),
-                builder: (BuildContext context,
-                    AsyncSnapshot<BitmapDescriptor> snap) {
-                  data = snapshot.data.map((doc) async {
-                    final toilet = Toilet.fromMap(doc.data, doc.documentID);
-                    double lat = toilet.geopoint.latitude;
-                    double lng = toilet.geopoint.longitude;
-                    MarkerId id = MarkerId(lat.toString() + lng.toString());
-                    Marker _marker = Marker(
-                      markerId: id,
-                      position: LatLng(lat, lng),
-                      icon: snap.data,
-                      infoWindow: InfoWindow(
-                          title: toilet.title,
-                          snippet: toilet.price.toString()),
-                    );
-                    markers[id] = _marker;
-
-                    return toilet;
-                  }).toList();
-                  return GoogleMap(
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: const CameraPosition(
-                      target: LatLng(12.960632, 77.641603),
-                      zoom: 15.0,
-                    ),
-                    compassEnabled: true,
-                    mapType: MapType.normal,
-                    rotateGesturesEnabled: true,
-                    scrollGesturesEnabled: true,
-                    tiltGesturesEnabled: false,
-                    zoomGesturesEnabled: true,
-                    myLocationEnabled: true,
-                    markers: Set<Marker>.of(markers.values),
-                  );
-                });
+            data = snapshot.data.map((doc) async {
+              final toilet = Toilet.fromMap(doc.data, doc.documentID);
+              double lat = toilet.geopoint.latitude;
+              double lng = toilet.geopoint.longitude;
+              MarkerId id = MarkerId(lat.toString() + lng.toString());
+              Marker _marker = Marker(
+                markerId: id,
+                position: LatLng(lat, lng),
+                icon: await _determineIcon(toilet.category, toilet.openHours),
+                infoWindow: InfoWindow(
+                    title: toilet.title, snippet: toilet.price.toString()),
+              );
+              markers[id] = _marker;
+              return toilet;
+            }).toList();
+            return GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: const CameraPosition(
+                target: LatLng(12.960632, 77.641603),
+                zoom: 15.0,
+              ),
+              compassEnabled: true,
+              mapType: MapType.normal,
+              rotateGesturesEnabled: true,
+              scrollGesturesEnabled: true,
+              tiltGesturesEnabled: false,
+              zoomGesturesEnabled: true,
+              myLocationEnabled: true,
+              markers: Set<Marker>.of(markers.values),
+            );
           } else {
             return Text('fetching');
           }
