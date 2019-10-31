@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/map.dart';
 import '../widgets/sidebar.dart';
-import '../widgets/bottomBar.dart';
+import '../widgets/toiletsNearbyBar.dart';
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/models/toilet.dart';
 
@@ -48,7 +48,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 parallaxOffset: 0.5,
                 minHeight: 200,
                 maxHeight: MediaQuery.of(context).size.height,
-                panel: BottomBar(data),
+                panel: ToiletsNearbyBar(data),
                 body: Center(
                   child: Center(
                     child: Stack(
@@ -75,8 +75,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               );
             } else if (snapshot.hasError) {
               return Center(child: Text("Haha el van succolva xdddd :)))"));
-            }
-            else {
+            } else {
               return Center(child: Text("Data is fetching xdddd asasa"));
             }
           }),

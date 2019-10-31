@@ -4,8 +4,10 @@ import 'package:location/location.dart';
 import '../../core/models/toilet.dart';
 import '../../core/common/determineIcon.dart';
 
-class BottomBar extends StatelessWidget {
-  BottomBar(this.toilets);
+import './toiletCard.dart';
+
+class ToiletsNearbyBar extends StatelessWidget {
+  ToiletsNearbyBar(this.toilets);
   final Location _location = new Location();
   List<Toilet> toilets;
 
@@ -68,7 +70,7 @@ class BottomBar extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${toilets[0].distance * 1000} m",
+                                "${toilets[0].distance} m",
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 16.0,
@@ -96,43 +98,14 @@ class BottomBar extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: toilets.length,
                   padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 25.0),
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return new Container(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      margin: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 25.0, vertical: 15.0),
-                        child: Row(
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  toilets[index].title,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  "${toilets[index].distance * 1000} m",
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                  itemBuilder: (BuildContext ctxt, int index) =>
+                      GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      print("${toilets[index].title} got tapped!");
+                    },
+                    child: ToiletCard(toilets[index]),
+                  ),
                 ),
               ),
             ],

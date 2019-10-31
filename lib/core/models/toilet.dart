@@ -17,7 +17,7 @@ class Toilet {
   List<int> openHours;
   List<Tag> tags;
   List<Review> reviews;
-  double distance = 0.0;
+  int distance = 0;
 
   // Default constructor
   Toilet(this.id, this.geopoint, this.price, this.title, this.addDate,
@@ -52,8 +52,8 @@ class Toilet {
         reviews = _standariseReviews(snapshot["reviews"].toString()) ??
             new List<Review>();
 
-  double calculateDistance(pos) {
-    double dist = this.geopoint.distance(lat: pos["latitude"], lng: pos["longitude"]);
+  int calculateDistance(pos) {
+    int dist = (this.geopoint.distance(lat: pos["latitude"], lng: pos["longitude"]) * 1000).toInt();
     this.distance = dist;
     return dist;
   }

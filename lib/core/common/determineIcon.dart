@@ -29,6 +29,28 @@ String openState(List<int> openHours) {
   }
 }
 
+Color coloredOpenState(List<int> openHours) {
+  if (openHours[0] >= openHours[1]) {
+    return Colors.grey;
+  }
+
+  DateTime dateTime = DateTime.now();
+  int curr = (dateTime.hour * 60) + dateTime.minute;
+  int start = 0;
+  int end = 1;
+
+  if (openHours.length > 2) {
+    start = (dateTime.weekday - 1) * 2;
+    end = start + 1;
+  }
+
+  if (openHours[start] <= curr && curr <= openHours[end]) {
+    return Colors.green;
+  } else {
+    return Colors.red;
+  }
+}
+
 String stringFromCategory(Category category) {
   switch (category) {
     case Category.GENERAL:
@@ -49,11 +71,15 @@ String stringFromCategory(Category category) {
 List<Widget> describeToiletIcons(Toilet toilet, String mode) {
   var result = new List<Widget>();
   String categoryStr = stringFromCategory(toilet.category);
+
+  // Add category icon
   result.add(Padding(
     padding: const EdgeInsets.fromLTRB(0, 0, 10.0, 0),
     child: SvgPicture.asset("assets/icons/bottom/$mode/cat_$categoryStr.svg",
         semanticsLabel: '$categoryStr category icon', width: 35, height: 35),
   ));
+
+  // Loop over tags, add corresponding icons
   toilet.tags.forEach((Tag tag) {
     String tagStr = tag.toString().toLowerCase().substring(4);
     result.add(Padding(
@@ -62,6 +88,7 @@ List<Widget> describeToiletIcons(Toilet toilet, String mode) {
           semanticsLabel: '$tagStr tag icon', width: 35, height: 35),
     ));
   });
+
   return result;
 }
 
