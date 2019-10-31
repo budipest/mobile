@@ -1,5 +1,4 @@
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:location/location.dart';
 import './review.dart';
 
 enum Category { GENERAL, SHOP, RESTAURANT, PORTABLE, GAS_STATION }

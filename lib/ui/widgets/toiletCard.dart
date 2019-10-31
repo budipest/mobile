@@ -18,7 +18,7 @@ class ToiletCard extends StatelessWidget {
           colors: [coloredOpenState(toilet.openHours), Colors.grey[200]],
         ),
         borderRadius: BorderRadius.all(
-          Radius.circular(5.0),
+          Radius.circular(3.0),
         ),
       ),
       child: Padding(

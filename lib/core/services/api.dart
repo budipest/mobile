@@ -13,11 +13,9 @@ class API {
   GeoFirePoint _center;
   GeoFireCollectionRef _geoRef;
 
-
   API(this.path) {
     ref = _db.collection(path);
     _geo = Geoflutterfire();
-    _center = _geo.point(latitude: 47.496430, longitude: 19.043793);
     _geoRef = _geo.collection(collectionRef: ref);
   }
 
@@ -25,9 +23,12 @@ class API {
     return ref.getDocuments();
   }
 
-  Stream<List<DocumentSnapshot>> streamQueriedData(double rad) {
+  Stream<List<DocumentSnapshot>> streamQueriedData(double rad, double lat, double lon) {
     return _geoRef.within(
-        center: _center, radius: rad, field: 'geopoint', strictMode: true);
+        center: _geo.point(latitude: lat, longitude: lon),
+        radius: rad,
+        field: 'geopoint',
+        strictMode: true);
   }
 
   Stream<QuerySnapshot> streamDataCollection() {

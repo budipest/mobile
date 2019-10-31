@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
 import 'dart:async';
 
@@ -9,23 +8,24 @@ import '../../core/models/toilet.dart';
 import '../../core/common/determineIcon.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget(this.toilets);
+  const MapWidget(this.toilets, this.userLocation);
 
   final List<Toilet> toilets;
+  final Map userLocation;
 
   @override
-  State<StatefulWidget> createState() => MapState(toilets);
+  State<StatefulWidget> createState() => MapState(toilets, userLocation);
 }
 
 class MapState extends State<MapWidget> {
-  MapState(this.toilets);
+  MapState(this.toilets, this.userLocation);
 
   GoogleMapController _mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   List<Toilet> toilets;
-  Location location = new Location();
   bool _nightMode = false;
   BitmapDescriptor generalOpen;
+  Map userLocation;
 
   Future<String> _getFileData(String path) async {
     return await rootBundle.loadString(path);
@@ -48,31 +48,31 @@ class MapState extends State<MapWidget> {
     super.dispose();
   }
 
-  Widget _nightModeToggler() {
-    return FlatButton(
-        child: Text('${_nightMode ? 'disable' : 'enable'} night mode'),
-        onPressed: () {
-          if (_nightMode) {
-            _getFileData('assets/light_mode.json').then(_setMapStyle);
-          } else {
-            _getFileData('assets/dark_mode.json').then(_setMapStyle);
-          }
-        },
-        textColor: Colors.white);
-  }
+  // Widget _nightModeToggler() {
+  //   return FlatButton(
+  //     child: Text('${_nightMode ? 'disable' : 'enable'} night mode'),
+  //     onPressed: () {
+  //       if (_nightMode) {
+  //         _getFileData('assets/light_mode.json').then(_setMapStyle);
+  //       } else {
+  //         _getFileData('assets/dark_mode.json').then(_setMapStyle);
+  //       }
+  //     },
+  //     textColor: Colors.white,
+  //   );
+  // }
 
-  _animateToUser() async {
-    var pos = await location.getLocation();
+  _animateToUser() {
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(pos['latitude'], pos['longitude']),
+      target: LatLng(userLocation["latitude"], userLocation["longitude"]),
       zoom: 15.0,
     )));
   }
 
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
-      _animateToUser();
       _mapController = controller;
+      _animateToUser();
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
   }
@@ -86,7 +86,8 @@ class MapState extends State<MapWidget> {
       Marker _marker = Marker(
         markerId: id,
         position: LatLng(lat, lng),
-        icon: await determineMarkerIcon(toilet.category, toilet.openHours, context),
+        icon: await determineMarkerIcon(
+            toilet.category, toilet.openHours, context),
         infoWindow:
             InfoWindow(title: toilet.title, snippet: toilet.price.toString()),
       );
@@ -97,8 +98,8 @@ class MapState extends State<MapWidget> {
 
     return GoogleMap(
       onMapCreated: _onMapCreated,
-      initialCameraPosition: const CameraPosition(
-        target: LatLng(12.960632, 77.641603),
+      initialCameraPosition: CameraPosition(
+        target: LatLng(47.498290, 19.033493),
         zoom: 15.0,
       ),
       compassEnabled: true,

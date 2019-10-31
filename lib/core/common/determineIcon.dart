@@ -70,23 +70,34 @@ String stringFromCategory(Category category) {
 
 List<Widget> describeToiletIcons(Toilet toilet, String mode) {
   var result = new List<Widget>();
+  EdgeInsets padding;
   String categoryStr = stringFromCategory(toilet.category);
 
+  if (mode == "light") {
+    padding = EdgeInsets.fromLTRB(0, 0, 10.0, 0);
+  } else {
+    padding = EdgeInsets.fromLTRB(10.0, 0, 0, 0);
+  }
+
   // Add category icon
-  result.add(Padding(
-    padding: const EdgeInsets.fromLTRB(0, 0, 10.0, 0),
-    child: SvgPicture.asset("assets/icons/bottom/$mode/cat_$categoryStr.svg",
-        semanticsLabel: '$categoryStr category icon', width: 35, height: 35),
-  ));
+  result.add(
+    Padding(
+      padding: padding,
+      child: SvgPicture.asset("assets/icons/bottom/$mode/cat_$categoryStr.svg",
+          semanticsLabel: '$categoryStr category icon', width: 35, height: 35),
+    ),
+  );
 
   // Loop over tags, add corresponding icons
   toilet.tags.forEach((Tag tag) {
     String tagStr = tag.toString().toLowerCase().substring(4);
-    result.add(Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 10.0, 0),
-      child: SvgPicture.asset("assets/icons/bottom/$mode/tag_$tagStr.svg",
-          semanticsLabel: '$tagStr tag icon', width: 35, height: 35),
-    ));
+    result.add(
+      Padding(
+        padding: padding,
+        child: SvgPicture.asset("assets/icons/bottom/$mode/tag_$tagStr.svg",
+            semanticsLabel: '$tagStr tag icon', width: 35, height: 35),
+      ),
+    );
   });
 
   return result;
