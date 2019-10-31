@@ -55,14 +55,19 @@ flutter:
 
   assets:
     - assets/
+    - assets/icons/gas_station_unknown.svg
     - assets/icons/gas_station_closed.svg
     - assets/icons/gas_station_open.svg
+    - assets/icons/general_unknown.svg
     - assets/icons/general_closed.svg
     - assets/icons/general_open.svg
+    - assets/icons/portable_unknown.svg
     - assets/icons/portable_closed.svg
     - assets/icons/portable_open.svg
+    - assets/icons/restaurant_unknown.svg
     - assets/icons/restaurant_closed.svg
     - assets/icons/restaurant_open.svg
+    - assets/icons/shop_unknown.svg
     - assets/icons/shop_closed.svg
     - assets/icons/shop_open.svg
 

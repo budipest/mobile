@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:async';
 
 import '../../core/models/toilet.dart';
-import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/common/determineIcon.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget();
+  const MapWidget(this.toilets);
+
+  final List<Toilet> toilets;
 
   @override
-  State<StatefulWidget> createState() => MapState();
+  State<StatefulWidget> createState() => MapState(toilets);
 }
 
 class MapState extends State<MapWidget> {
-  MapState();
+  MapState(this.toilets);
 
   GoogleMapController _mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  List<Future<Toilet>> data;
+  List<Toilet> toilets;
   Location location = new Location();
   bool _nightMode = false;
   BitmapDescriptor generalOpen;
@@ -80,46 +79,36 @@ class MapState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final toiletProvider = Provider.of<ToiletModel>(context);
+    toilets.forEach((toilet) async {
+      double lat = toilet.geopoint.latitude;
+      double lng = toilet.geopoint.longitude;
+      MarkerId id = MarkerId(lat.toString() + lng.toString());
+      Marker _marker = Marker(
+        markerId: id,
+        position: LatLng(lat, lng),
+        icon: await determineIcon(toilet.category, toilet.openHours, context),
+        infoWindow:
+            InfoWindow(title: toilet.title, snippet: toilet.price.toString()),
+      );
+      setState(() {
+        markers[id] = _marker;
+      });
+    });
 
-    return StreamBuilder(
-        stream: toiletProvider.fetchQueriedData(10.0),
-        builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
-          if (snapshot.hasData) {
-            data = snapshot.data.map((doc) async {
-              final toilet = Toilet.fromMap(doc.data, doc.documentID);
-              double lat = toilet.geopoint.latitude;
-              double lng = toilet.geopoint.longitude;
-              MarkerId id = MarkerId(lat.toString() + lng.toString());
-              Marker _marker = Marker(
-                markerId: id,
-                position: LatLng(lat, lng),
-                icon: await determineIcon(
-                    toilet.category, toilet.openHours, context),
-                infoWindow: InfoWindow(
-                    title: toilet.title, snippet: toilet.price.toString()),
-              );
-              markers[id] = _marker;
-              return toilet;
-            }).toList();
-            return GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: const CameraPosition(
-                target: LatLng(12.960632, 77.641603),
-                zoom: 15.0,
-              ),
-              compassEnabled: true,
-              mapType: MapType.normal,
-              rotateGesturesEnabled: true,
-              scrollGesturesEnabled: true,
-              tiltGesturesEnabled: false,
-              zoomGesturesEnabled: true,
-              myLocationEnabled: true,
-              markers: Set<Marker>.of(markers.values),
-            );
-          } else {
-            return Text('fetching');
-          }
-        });
+    return GoogleMap(
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: const CameraPosition(
+        target: LatLng(12.960632, 77.641603),
+        zoom: 15.0,
+      ),
+      compassEnabled: true,
+      mapType: MapType.normal,
+      rotateGesturesEnabled: true,
+      scrollGesturesEnabled: true,
+      tiltGesturesEnabled: false,
+      zoomGesturesEnabled: true,
+      myLocationEnabled: true,
+      markers: Set<Marker>.of(markers.values),
+    );
   }
 }

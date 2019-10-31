@@ -6,9 +6,9 @@ import 'dart:async';
 import '../models/toilet.dart';
 import './bitmapFromSvg.dart';
 
-bool isOpen(List<int> openHours) {
+String openState(List<int> openHours) {
   if (openHours[0] >= openHours[1]) {
-    return false;
+    return "_unknown";
   }
 
   DateTime dateTime = DateTime.now();
@@ -22,9 +22,9 @@ bool isOpen(List<int> openHours) {
   }
 
   if (openHours[start] <= curr && curr <= openHours[end]) {
-    return true;
+    return "_open";
   } else {
-    return false;
+    return "_closed";
   }
 }
 
@@ -53,11 +53,7 @@ Future<BitmapDescriptor> determineIcon(
       break;
   }
 
-  if (isOpen(openHours)) {
-    result += "_open";
-  } else {
-    result += "_closed";
-  }
+  result += openState(openHours);
 
   return await bitmapDescriptorFromSvgAsset(
       context, 'assets/icons/pin/$result.svg');
