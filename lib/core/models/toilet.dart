@@ -1,4 +1,5 @@
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:location/location.dart';
 import './review.dart';
 
 enum Category { GENERAL, SHOP, RESTAURANT, PORTABLE, GAS_STATION }
@@ -16,6 +17,7 @@ class Toilet {
   List<int> openHours;
   List<Tag> tags;
   List<Review> reviews;
+  double distance = 0.0;
 
   // Default constructor
   Toilet(this.id, this.geopoint, this.price, this.title, this.addDate,
@@ -46,9 +48,15 @@ class Toilet {
             Category.GENERAL,
         openHours = snapshot["openHours"].cast<int>() ??
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        tags = _standariseTags(snapshot["tags"].toString()) ?? new List<Tag>(),
+        tags = _standariseTags(snapshot["tags"].toString()) ?? [],
         reviews = _standariseReviews(snapshot["reviews"].toString()) ??
             new List<Review>();
+
+  double calculateDistance(pos) {
+    double dist = this.geopoint.distance(lat: pos["latitude"], lng: pos["longitude"]);
+    this.distance = dist;
+    return dist;
+  }
 
   toJson() {
     return {

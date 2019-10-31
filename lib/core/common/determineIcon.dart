@@ -1,5 +1,6 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'dart:async';
 
@@ -28,31 +29,47 @@ String openState(List<int> openHours) {
   }
 }
 
-Future<BitmapDescriptor> determineIcon(
+String stringFromCategory(Category category) {
+  switch (category) {
+    case Category.GENERAL:
+      return "general";
+    case Category.SHOP:
+      return "shop";
+    case Category.RESTAURANT:
+      return "restaurant";
+    case Category.GAS_STATION:
+      return "gas_station";
+    case Category.PORTABLE:
+      return "portable";
+    default:
+      return "general";
+  }
+}
+
+List<Widget> describeToiletIcons(Toilet toilet, String mode) {
+  var result = new List<Widget>();
+  String categoryStr = stringFromCategory(toilet.category);
+  result.add(Padding(
+    padding: const EdgeInsets.fromLTRB(0, 0, 10.0, 0),
+    child: SvgPicture.asset("assets/icons/bottom/$mode/cat_$categoryStr.svg",
+        semanticsLabel: '$categoryStr category icon', width: 35, height: 35),
+  ));
+  toilet.tags.forEach((Tag tag) {
+    String tagStr = tag.toString().toLowerCase().substring(4);
+    result.add(Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 10.0, 0),
+      child: SvgPicture.asset("assets/icons/bottom/$mode/tag_$tagStr.svg",
+          semanticsLabel: '$tagStr tag icon', width: 35, height: 35),
+    ));
+  });
+  return result;
+}
+
+Future<BitmapDescriptor> determineMarkerIcon(
     Category category, List<int> openHours, BuildContext context) async {
   String result = "";
 
-  switch (category) {
-    case Category.GENERAL:
-      result += "general";
-      break;
-    case Category.SHOP:
-      result += "shop";
-      break;
-    case Category.RESTAURANT:
-      result += "restaurant";
-      break;
-    case Category.GAS_STATION:
-      result += "gas_station";
-      break;
-    case Category.PORTABLE:
-      result += "portable";
-      break;
-    default:
-      result += "general";
-      break;
-  }
-
+  result += stringFromCategory(category);
   result += openState(openHours);
 
   return await bitmapDescriptorFromSvgAsset(

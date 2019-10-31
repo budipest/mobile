@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 2.0.0
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -55,21 +55,43 @@ flutter:
 
   assets:
     - assets/
-    - assets/icons/gas_station_unknown.svg
-    - assets/icons/gas_station_closed.svg
-    - assets/icons/gas_station_open.svg
-    - assets/icons/general_unknown.svg
-    - assets/icons/general_closed.svg
-    - assets/icons/general_open.svg
-    - assets/icons/portable_unknown.svg
-    - assets/icons/portable_closed.svg
-    - assets/icons/portable_open.svg
-    - assets/icons/restaurant_unknown.svg
-    - assets/icons/restaurant_closed.svg
-    - assets/icons/restaurant_open.svg
-    - assets/icons/shop_unknown.svg
-    - assets/icons/shop_closed.svg
-    - assets/icons/shop_open.svg
+
+    # Marker icons
+    - assets/icons/pin/gas_station_unknown.svg
+    - assets/icons/pin/gas_station_closed.svg
+    - assets/icons/pin/gas_station_open.svg
+    - assets/icons/pin/general_unknown.svg
+    - assets/icons/pin/general_closed.svg
+    - assets/icons/pin/general_open.svg
+    - assets/icons/pin/portable_unknown.svg
+    - assets/icons/pin/portable_closed.svg
+    - assets/icons/pin/portable_open.svg
+    - assets/icons/pin/restaurant_unknown.svg
+    - assets/icons/pin/restaurant_closed.svg
+    - assets/icons/pin/restaurant_open.svg
+    - assets/icons/pin/shop_unknown.svg
+    - assets/icons/pin/shop_closed.svg
+    - assets/icons/pin/shop_open.svg
+
+    # Square icons - dark
+    - assets/icons/bottom/dark/cat_general.svg
+    - assets/icons/bottom/dark/cat_gas_station.svg
+    - assets/icons/bottom/dark/cat_restaurant.svg
+    - assets/icons/bottom/dark/cat_shop.svg
+    - assets/icons/bottom/dark/cat_temporary.svg
+    - assets/icons/bottom/dark/tag_babyroom.svg
+    - assets/icons/bottom/dark/tag_wheelchair_accessible.svg
+    - assets/icons/bottom/dark/tag_key.svg
+
+    # Square icons - light
+    - assets/icons/bottom/light/cat_general.svg
+    - assets/icons/bottom/light/cat_gas_station.svg
+    - assets/icons/bottom/light/cat_restaurant.svg
+    - assets/icons/bottom/light/cat_shop.svg
+    - assets/icons/bottom/light/cat_temporary.svg
+    - assets/icons/bottom/light/tag_babyroom.svg
+    - assets/icons/bottom/light/tag_wheelchair_accessible.svg
+    - assets/icons/bottom/light/tag_key.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

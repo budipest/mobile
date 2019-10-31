@@ -65,7 +65,7 @@ class MapState extends State<MapWidget> {
     var pos = await location.getLocation();
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(pos['latitude'], pos['longitude']),
-      zoom: 14.0,
+      zoom: 15.0,
     )));
   }
 
@@ -86,7 +86,7 @@ class MapState extends State<MapWidget> {
       Marker _marker = Marker(
         markerId: id,
         position: LatLng(lat, lng),
-        icon: await determineIcon(toilet.category, toilet.openHours, context),
+        icon: await determineMarkerIcon(toilet.category, toilet.openHours, context),
         infoWindow:
             InfoWindow(title: toilet.title, snippet: toilet.price.toString()),
       );

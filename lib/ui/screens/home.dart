@@ -35,7 +35,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       key: _scaffoldKey,
       drawer: Sidebar(),
       body: StreamBuilder(
-          stream: toiletProvider.fetchQueriedData(10.0),
+          stream: toiletProvider.fetchQueriedData(2.0),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               data = snapshot.data
