@@ -30,6 +30,7 @@ dependencies:
   firebase_analytics: any
   cloud_firestore: ^0.12.5
   geoflutterfire: 2.0.3+5
+  fluster: 1.1.2
 
   google_maps_flutter: ^0.5.12
   location: 1.4.1
@@ -56,22 +57,39 @@ flutter:
   assets:
     - assets/
 
-    # Marker icons
-    - assets/icons/pin/gas_station_unknown.svg
-    - assets/icons/pin/gas_station_closed.svg
-    - assets/icons/pin/gas_station_open.svg
-    - assets/icons/pin/general_unknown.svg
-    - assets/icons/pin/general_closed.svg
-    - assets/icons/pin/general_open.svg
-    - assets/icons/pin/portable_unknown.svg
-    - assets/icons/pin/portable_closed.svg
-    - assets/icons/pin/portable_open.svg
-    - assets/icons/pin/restaurant_unknown.svg
-    - assets/icons/pin/restaurant_closed.svg
-    - assets/icons/pin/restaurant_open.svg
-    - assets/icons/pin/shop_unknown.svg
-    - assets/icons/pin/shop_closed.svg
-    - assets/icons/pin/shop_open.svg
+    # Marker icons - light
+    - assets/icons/pin/l_gas_station_unknown.svg
+    - assets/icons/pin/l_gas_station_closed.svg
+    - assets/icons/pin/l_gas_station_open.svg
+    - assets/icons/pin/l_general_unknown.svg
+    - assets/icons/pin/l_general_closed.svg
+    - assets/icons/pin/l_general_open.svg
+    - assets/icons/pin/l_portable_unknown.svg
+    - assets/icons/pin/l_portable_closed.svg
+    - assets/icons/pin/l_portable_open.svg
+    - assets/icons/pin/l_restaurant_unknown.svg
+    - assets/icons/pin/l_restaurant_closed.svg
+    - assets/icons/pin/l_restaurant_open.svg
+    - assets/icons/pin/l_shop_unknown.svg
+    - assets/icons/pin/l_shop_closed.svg
+    - assets/icons/pin/l_shop_open.svg
+    - assets/icons/pin/l_gas_station_unknown.svg
+
+    # Marker icons - dark
+    - assets/icons/pin/d_gas_station_closed.svg
+    - assets/icons/pin/d_gas_station_open.svg
+    - assets/icons/pin/d_general_unknown.svg
+    - assets/icons/pin/d_general_closed.svg
+    - assets/icons/pin/d_general_open.svg
+    - assets/icons/pin/d_portable_unknown.svg
+    - assets/icons/pin/d_portable_closed.svg
+    - assets/icons/pin/d_portable_open.svg
+    - assets/icons/pin/d_restaurant_unknown.svg
+    - assets/icons/pin/d_restaurant_closed.svg
+    - assets/icons/pin/d_restaurant_open.svg
+    - assets/icons/pin/d_shop_unknown.svg
+    - assets/icons/pin/d_shop_closed.svg
+    - assets/icons/pin/d_shop_open.svg
 
     # Square icons - dark
     - assets/icons/bottom/dark/cat_general.svg

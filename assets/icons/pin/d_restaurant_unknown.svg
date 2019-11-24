@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="219" height="381" viewBox="0 0 219 381">
   <defs>
-    <clipPath id="clip-restaurant_unknown">
+    <clipPath id="clip-d_restaurant_unknown">
       <rect width="219" height="381"/>
     </clipPath>
   </defs>
-  <g id="restaurant_unknown" clip-path="url(#clip-restaurant_unknown)">
+  <g id="d_restaurant_unknown" clip-path="url(#clip-d_restaurant_unknown)">
     <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)"/>
     <rect id="Rectangle_9" data-name="Rectangle 9" width="219" height="27" fill="#6f6f6f"/>
     <g id="restaurant" transform="translate(49.26 72.952)">

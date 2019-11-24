@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluster/fluster.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:async';
 
 import '../../core/models/toilet.dart';
+import '../../core/models/clusterMarker.dart';
 import '../../core/common/determineIcon.dart';
 
 class MapWidget extends StatefulWidget {
@@ -26,6 +28,23 @@ class MapState extends State<MapWidget> {
   bool _nightMode = false;
   BitmapDescriptor generalOpen;
   Map userLocation;
+
+  // List<ClusterMarker> rawMarkers = toilets.map((Toilet data) => {
+  //   return ClusterMarker()
+  // }).toList();
+  // Fluster<ClusterMarker> fluster = Fluster<ClusterMarker>(
+  //     minZoom: 0,
+  //     maxZoom: 20,
+  //     radius: 150,
+  //     extent: 2048,
+  //     nodeSize: 64,
+  //     points: markers,
+  //     createCluster: (BaseCluster cluster, double longitude, double latitude) {
+  //       return ClusterMarker(
+  //           markerId: cluster.id.toString(),
+  //           latitude: latitude,
+  //           longitude: longitude,);
+  //     });
 
   Future<String> _getFileData(String path) async {
     return await rootBundle.loadString(path);

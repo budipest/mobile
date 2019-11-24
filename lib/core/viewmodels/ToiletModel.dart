@@ -19,6 +19,7 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Stream<List<DocumentSnapshot>> fetchQueriedData(double rad, double lat, double lon) {
+    print("asdasdasdasd");
     return _api.streamQueriedData(rad, lat, lon);
   }
 

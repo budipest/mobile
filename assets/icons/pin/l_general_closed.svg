@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="219" height="381" viewBox="0 0 219 381">
   <defs>
-    <clipPath id="clip-General_pin_-_closed">
+    <clipPath id="clip-l_general_closed">
       <rect width="219" height="381"/>
     </clipPath>
   </defs>
-  <g id="General_pin_-_closed" data-name="General pin - closed" clip-path="url(#clip-General_pin_-_closed)">
-    <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)"/>
+  <g id="l_general_closed" clip-path="url(#clip-l_general_closed)">
+    <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)" fill="#2e2e2e"/>
     <rect id="Rectangle_9" data-name="Rectangle 9" width="219" height="27" fill="#e84118"/>
     <g id="toilet_1_" data-name="toilet (1)" transform="translate(41.191 74)">
       <g id="Group_9" data-name="Group 9" transform="translate(72.148)">

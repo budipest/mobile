@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
 import '../../core/models/toilet.dart';
+
+import './toiletRecommendationList.dart';
 import '../../core/common/determineIcon.dart';
 
-import './toiletCard.dart';
-
-class ToiletsNearbyBar extends StatelessWidget {
-  ToiletsNearbyBar(this.toilets);
+class BottomBar extends StatelessWidget {
+  const BottomBar(this.toilets);
   final List<Toilet> toilets;
 
   @override
   Widget build(BuildContext context) {
+    print("bottomBar build");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -71,29 +71,7 @@ class ToiletsNearbyBar extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0.0),
-          child: Text(
-            "További mosdók",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: toilets.length,
-            padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 25.0),
-            itemBuilder: (BuildContext ctxt, int index) => GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                print("${toilets[index].title} got tapped!");
-              },
-              child: ToiletCard(toilets[index]),
-            ),
-          ),
-        ),
+        ToiletRecommendationList(toilets),
       ],
     );
   }

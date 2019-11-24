@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="219" height="381" viewBox="0 0 219 381">
   <defs>
-    <clipPath id="clip-Shop_pin_-_open">
+    <clipPath id="clip-l_shop_open">
       <rect width="219" height="381"/>
     </clipPath>
   </defs>
-  <g id="Shop_pin_-_open" data-name="Shop pin - open" clip-path="url(#clip-Shop_pin_-_open)">
-    <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)"/>
+  <g id="l_shop_open" clip-path="url(#clip-l_shop_open)">
+    <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)" fill="#2e2e2e"/>
     <rect id="Rectangle_9" data-name="Rectangle 9" width="219" height="27" fill="#4cd137"/>
     <g id="shopping-cart" transform="translate(50 73)">
       <g id="shopping-cart-2" data-name="shopping-cart">

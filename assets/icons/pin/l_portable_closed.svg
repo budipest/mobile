@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="219" height="381" viewBox="0 0 219 381">
   <defs>
-    <clipPath id="clip-Portable_toilet_closed">
+    <clipPath id="clip-l_portable_closed">
       <rect width="219" height="381"/>
     </clipPath>
   </defs>
-  <g id="Portable_toilet_closed" data-name="Portable toilet – closed" clip-path="url(#clip-Portable_toilet_closed)">
-    <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)"/>
+  <g id="l_portable_closed" clip-path="url(#clip-l_portable_closed)">
+    <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)" fill="#2e2e2e"/>
     <rect id="Rectangle_9" data-name="Rectangle 9" width="219" height="27" fill="#e84118"/>
     <g id="portable-toilets" transform="translate(45 56.494)">
       <path id="Path_29" data-name="Path 29" d="M126.981,8.87A224.31,224.31,0,0,0,65,0,224.31,224.31,0,0,0,3.017,8.87L0,9.834V26H130V9.834Zm0,0" fill="#fff"/>

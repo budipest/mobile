@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="219" height="381" viewBox="0 0 219 381">
   <defs>
-    <clipPath id="clip-Restaurant_pin_-_open">
+    <clipPath id="clip-d_restaurant_open">
       <rect width="219" height="381"/>
     </clipPath>
   </defs>
-  <g id="Restaurant_pin_-_open" data-name="Restaurant pin - open" clip-path="url(#clip-Restaurant_pin_-_open)">
+  <g id="d_restaurant_open" clip-path="url(#clip-d_restaurant_open)">
     <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)"/>
     <rect id="Rectangle_9" data-name="Rectangle 9" width="219" height="27" fill="#4cd137"/>
     <g id="restaurant" transform="translate(49.26 72.952)">

@@ -5,7 +5,7 @@ import 'package:location/location.dart';
 
 import '../widgets/map.dart';
 import '../widgets/sidebar.dart';
-import '../widgets/toiletsNearbyBar.dart';
+import '../widgets/bottomBar.dart';
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/models/toilet.dart';
 
@@ -39,17 +39,20 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: FutureBuilder(
         future: _location.getLocation(),
         builder: (context, locationSnapshot) {
+          print("FutureBuilder context, locationSnapshot");
           if (locationSnapshot.hasData) {
+            print("if (locationSnapshot.hasData) {");
             return StreamBuilder(
                 stream: toiletProvider.fetchQueriedData(
-                  50,
+                  0.5,
                   locationSnapshot.data["latitude"],
                   locationSnapshot.data["longitude"],
                 ),
                 builder: (context, dataSnapshot) {
-                  print(locationSnapshot.data["latitude"]);
-                  print(locationSnapshot.data["longitude"]);
+                  print("context, dataSnapshot");
                   if (dataSnapshot.hasData) {
+                    print("dataSnapshot.hasData");
+                    print(dataSnapshot.data.length);
                     print(dataSnapshot.data);
                     // Convert raw toilet data into mapped and classified Toilet objects
                     data = dataSnapshot.data
@@ -69,7 +72,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       panelSnapping: true,
                       minHeight: 200,
                       maxHeight: MediaQuery.of(context).size.height,
-                      panel: ToiletsNearbyBar(data),
+                      panel: BottomBar(data),
                       body: Center(
                         child: Center(
                           child: Stack(
@@ -98,15 +101,22 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     );
                   } else if (dataSnapshot.hasError) {
                     return Center(
-                        child: Text("haha el succoltak az adatok :):(:):("));
+                      child: Text("haha el succoltak az adatok :):(:):("),
+                    );
                   } else {
-                    return Center(child: Text("töltjük le z adatokat, chill <33333333"));
+                    return Center(
+                      child: Text("töltjük le z adatokat, chill <33333333"),
+                    );
                   }
                 });
           } else if (locationSnapshot.hasError) {
-            return Center(child: Text("ok szóval nem tudjuk honnan vagy geci :////"));
+            return Center(
+              child: Text("ok szóval nem tudjuk honnan vagy geci :////"),
+            );
           } else {
-            return Center(child: Text("na, még keresünk téged, chill <<<3333"));
+            return Center(
+              child: Text("na, még keresünk téged, chill <<<3333"),
+            );
           }
         },
       ),

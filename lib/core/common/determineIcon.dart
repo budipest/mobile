@@ -111,5 +111,5 @@ Future<BitmapDescriptor> determineMarkerIcon(
   result += openState(openHours);
 
   return await bitmapDescriptorFromSvgAsset(
-      context, 'assets/icons/pin/$result.svg');
+      context, 'assets/icons/pin/l_$result.svg');
 }

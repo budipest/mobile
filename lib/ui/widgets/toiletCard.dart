@@ -4,14 +4,15 @@ import '../../core/models/toilet.dart';
 import '../../core/common/determineIcon.dart';
 
 class ToiletCard extends StatelessWidget {
-  ToiletCard(this.toilet);
-  Toilet toilet;
+  const ToiletCard(this.toilet);
+  final Toilet toilet;
 
   @override
   Widget build(BuildContext context) {
+    print("toiletCard build ${toilet.title}");
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
-      margin: EdgeInsets.symmetric(vertical: 7.5),
+      margin: EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           stops: [0.02, 0.02],
@@ -28,12 +29,16 @@ class ToiletCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  toilet.title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.60),
+                  child: Text(
+                    toilet.title,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Text(
