@@ -37,8 +37,11 @@ dependencies:
 
   provider: any
   get_it: any
+  url_launcher: any
 
+  shared_preferences: any
   sliding_up_panel: ^0.3.6
+  uuid: 2.0.4
 
 dev_dependencies:
   flutter_test:

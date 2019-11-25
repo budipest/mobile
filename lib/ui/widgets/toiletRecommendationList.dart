@@ -4,12 +4,12 @@ import '../../core/models/toilet.dart';
 import './toiletCard.dart';
 
 class ToiletRecommendationList extends StatelessWidget {
-  const ToiletRecommendationList(this.toilets);
+  const ToiletRecommendationList(this.toilets, this.selectToilet);
   final List<Toilet> toilets;
+  final Function(Toilet) selectToilet;
 
   @override
   Widget build(BuildContext context) {
-    print("toiletRecommendationList build");
     return Expanded(
       child: Padding(
         padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0),
@@ -29,6 +29,7 @@ class ToiletRecommendationList extends StatelessWidget {
                 itemBuilder: (BuildContext ctxt, int index) => GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
+                    selectToilet(toilets[index]);
                     print("${toilets[index].title} got tapped!");
                   },
                   child: ToiletCard(toilets[index]),

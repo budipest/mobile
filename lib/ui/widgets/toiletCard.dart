@@ -9,7 +9,6 @@ class ToiletCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("toiletCard build ${toilet.title}");
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
       margin: EdgeInsets.only(bottom: 15),
@@ -51,7 +50,7 @@ class ToiletCard extends StatelessWidget {
               ],
             ),
             Spacer(),
-            ...describeToiletIcons(toilet, "dark"),
+            ...describeToiletIcons(toilet, "dark", false, false),
           ],
         ),
       ),

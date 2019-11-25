@@ -20,13 +20,47 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final Location _location = new Location();
 
-  Animation<double> animation;
-  AnimationController controller;
-  List<Toilet> data;
+  ValueNotifier<double> _notifier = ValueNotifier<double>(0);
+  PanelController _pc = new PanelController();
+  Animation<double> _animation;
+  AnimationController _controller;
+  List<Toilet> _data;
+  Toilet _selected = null;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+      lowerBound: 200.0,
+      upperBound: 275.0,
+    );
+
+    _animation = Tween<double>(begin: 200, end: 275).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    _controller.forward();
+  }
+
+  void selectToilet(Toilet toilet) {
+    setState(() {
+      _selected = toilet;
+    });
+    if (toilet != null) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,65 +73,108 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: FutureBuilder(
         future: _location.getLocation(),
         builder: (context, locationSnapshot) {
-          print("FutureBuilder context, locationSnapshot");
           if (locationSnapshot.hasData) {
-            print("if (locationSnapshot.hasData) {");
             return StreamBuilder(
                 stream: toiletProvider.fetchQueriedData(
-                  0.5,
+                  5,
                   locationSnapshot.data["latitude"],
                   locationSnapshot.data["longitude"],
                 ),
                 builder: (context, dataSnapshot) {
-                  print("context, dataSnapshot");
                   if (dataSnapshot.hasData) {
-                    print("dataSnapshot.hasData");
-                    print(dataSnapshot.data.length);
-                    print(dataSnapshot.data);
-                    // Convert raw toilet data into mapped and classified Toilet objects
-                    data = dataSnapshot.data
+                    // Convert raw toilet _data into mapped and classified Toilet objects
+                    _data = dataSnapshot.data
                         .map((doc) => Toilet.fromMap(doc.data, doc.documentID))
                         .toList()
                         .cast<Toilet>();
 
                     // Initialise distance property on every toilet
-                    data.forEach((toilet) {
+                    _data.forEach((toilet) {
                       toilet.calculateDistance(locationSnapshot.data);
                     });
 
                     // Sort toilets based on their distance from the user
-                    data.sort((a, b) => a.distance.compareTo(b.distance));
+                    _data.sort((a, b) => a.distance.compareTo(b.distance));
 
-                    return SlidingUpPanel(
-                      panelSnapping: true,
-                      minHeight: 200,
-                      maxHeight: MediaQuery.of(context).size.height,
-                      panel: BottomBar(data),
-                      body: Center(
-                        child: Center(
-                          child: Stack(
-                            children: <Widget>[
-                              MapWidget(data, locationSnapshot.data),
-                              SafeArea(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24.0, vertical: 12.0),
-                                  child: FloatingActionButton(
-                                    child: Icon(
-                                      Icons.menu,
-                                      color: Colors.black,
-                                    ),
-                                    mini: true,
-                                    onPressed: () =>
-                                        _scaffoldKey.currentState.openDrawer(),
-                                    backgroundColor: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
+                    return Stack(
+                      children: <Widget>[
+                        SlidingUpPanel(
+                          controller: _pc,
+                          panelSnapping: true,
+                          minHeight: _controller.value,
+                          maxHeight: MediaQuery.of(context).size.height,
+                          panel: AnimatedBuilder(
+                            animation: _notifier,
+                            builder: (context, _) => BottomBar(
+                              _data,
+                              _notifier.value,
+                              _selected,
+                              selectToilet,
+                            ),
+                          ),
+                          onPanelSlide: (double val) => _notifier.value = val,
+                          body: MapWidget(
+                            _data,
+                            locationSnapshot.data,
+                            selectToilet,
                           ),
                         ),
-                      ),
+                        SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0,
+                              vertical: 20.0,
+                            ),
+                            child: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              child: AnimatedBuilder(
+                                animation: _notifier,
+                                builder: (context, _) => _notifier.value == 1
+                                    ? RawMaterialButton(
+                                        shape: CircleBorder(),
+                                        fillColor: Colors.white,
+                                        elevation: 5.0,
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.black,
+                                          size: 30.0,
+                                        ),
+                                        onPressed: () => _pc.close(),
+                                      )
+                                    : _selected != null
+                                        ? RawMaterialButton(
+                                            shape: CircleBorder(),
+                                            fillColor: Colors.white,
+                                            elevation: 5.0,
+                                            child: Icon(
+                                              Icons.close,
+                                              color: Colors.black,
+                                              size: 30.0,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                _selected = null;
+                                              });
+                                            },
+                                          )
+                                        : RawMaterialButton(
+                                            shape: CircleBorder(),
+                                            fillColor: Colors.white,
+                                            elevation: 5.0,
+                                            child: Icon(
+                                              Icons.menu,
+                                              color: Colors.black,
+                                            ),
+                                            onPressed: () => _scaffoldKey
+                                                .currentState
+                                                .openDrawer(),
+                                          ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     );
                   } else if (dataSnapshot.hasError) {
                     return Center(

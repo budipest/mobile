@@ -10,18 +10,21 @@ import '../../core/models/clusterMarker.dart';
 import '../../core/common/determineIcon.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget(this.toilets, this.userLocation);
+  const MapWidget(this.toilets, this.userLocation, this.selectToilet);
 
   final List<Toilet> toilets;
   final Map userLocation;
+  final Function(Toilet) selectToilet;
 
   @override
-  State<StatefulWidget> createState() => MapState(toilets, userLocation);
+  State<StatefulWidget> createState() =>
+      MapState(toilets, userLocation, selectToilet);
 }
 
 class MapState extends State<MapWidget> {
-  MapState(this.toilets, this.userLocation);
+  MapState(this.toilets, this.userLocation, this.selectToilet);
 
+  final Function(Toilet) selectToilet;
   GoogleMapController _mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   List<Toilet> toilets;
@@ -59,6 +62,21 @@ class MapState extends State<MapWidget> {
 
   @override
   void initState() {
+    toilets.forEach((toilet) async {
+      double lat = toilet.geopoint.latitude;
+      double lng = toilet.geopoint.longitude;
+      MarkerId id = MarkerId(lat.toString() + lng.toString());
+      Marker _marker = Marker(
+        markerId: id,
+        position: LatLng(lat, lng),
+        icon: await determineMarkerIcon(
+            toilet.category, toilet.openHours, context),
+        onTap: () => selectToilet(toilet),
+      );
+      setState(() {
+        markers[id] = _marker;
+      });
+    });
     super.initState();
   }
 
@@ -98,23 +116,6 @@ class MapState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    toilets.forEach((toilet) async {
-      double lat = toilet.geopoint.latitude;
-      double lng = toilet.geopoint.longitude;
-      MarkerId id = MarkerId(lat.toString() + lng.toString());
-      Marker _marker = Marker(
-        markerId: id,
-        position: LatLng(lat, lng),
-        icon: await determineMarkerIcon(
-            toilet.category, toilet.openHours, context),
-        infoWindow:
-            InfoWindow(title: toilet.title, snippet: toilet.price.toString()),
-      );
-      setState(() {
-        markers[id] = _marker;
-      });
-    });
-
     return GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
@@ -129,6 +130,7 @@ class MapState extends State<MapWidget> {
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
       markers: Set<Marker>.of(markers.values),
+      onTap: (LatLng coords) => selectToilet(null),
     );
   }
 }

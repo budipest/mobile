@@ -18,9 +18,10 @@ class Sidebar extends StatelessWidget {
                       Text(
                         'Budipest',
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700),
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       Text(
                         'v2.0.0',
@@ -42,7 +43,9 @@ class Sidebar extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     title: Text('Mosdó hozzáadása'),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, "/add");
+                    },
                   ),
                   ListTile(
                     title: Text('Értékeléseim'),

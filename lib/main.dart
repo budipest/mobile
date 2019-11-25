@@ -4,7 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 
 import './ui/screens/home.dart';
-import './ui/screens/about.dart';
+import './ui/screens/addToilet.dart';
 
 import './core/viewmodels/ToiletModel.dart';
 import './core/common/variables.dart';
@@ -28,12 +28,15 @@ class Application extends StatelessWidget {
       child: MaterialApp(
         title: 'Budipest',
         theme: ThemeData(
-            primarySwatch: black,
-            textTheme: Theme.of(context)
-                .textTheme
-                .apply(fontFamily: 'Muli', fontSizeFactor: 1.4)),
+          primarySwatch: black,
+          textTheme: Theme.of(context).textTheme.apply(
+                fontFamily: 'Muli',
+                fontSizeFactor: 1.4,
+              ),
+        ),
         initialRoute: '/',
-        routes: {'/': (context) => Home(), '/about': (context) => About()},
+        routes: {'/': (context) => Home(), '/add': (context) => AddToilet()},
+        // routes: {'/': (context) => AddToilet()},
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: analytics),
         ],
