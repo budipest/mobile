@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="31px" height="31px" viewBox="0 0 31 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
-    <title>babyroom_icon-dark</title>
+<svg width="16px" height="21px" viewBox="0 0 16 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>babyroom-dark</title>
     <desc>Created with Sketch.</desc>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" transform="translate(-208.000000, -70.000000)">
-            <g id="babyroom_icon-dark" transform="translate(208.000000, 70.000000)">
-                <rect id="Rectangle" fill="#000000" x="0" y="0" width="31" height="31" rx="2.00990786"></rect>
-                <g id="mother-changing-baby-clothes" transform="translate(7.000000, 5.000000)" fill="#FFFFFF" fill-rule="nonzero">
+        <g id="icons" transform="translate(-497.000000, -89.000000)" fill="#000000" fill-rule="nonzero">
+            <g transform="translate(426.000000, 60.000000)" id="babyroom-dark">
+                <g transform="translate(71.000000, 29.000000)">
                     <circle id="Oval" cx="10.5" cy="1.5" r="1.5"></circle>
                     <path d="M12.2658532,10.1910889 C12.4853252,9.74888242 12.1202822,9.41826316 12.1202822,9.41826316 L10.8969577,8.2416948 C10.7908822,8.15458072 10.3731156,7.76516686 10.1133626,8.20716195 C9.93190941,8.52708744 9.97680925,8.86476543 10.187295,9.12061284 L11.0075263,9.93887649 C11.0372815,9.96943616 11.044194,10.0278081 11.0230166,10.0692306 L10.5461796,10.9962495 C10.5248136,11.037672 10.4937388,11.1078366 10.4779657,11.1534859 C10.0376393,12.4254951 10.7106657,12.8666449 10.9291008,12.9725259 C10.964386,12.9896866 11.0241791,13 11.0616009,13 C11.310671,13 12.2040805,13 13.0401164,13 C14.0238284,13 13.9999488,12.1692251 13.9999488,12.1692251 L13.9999488,9.61396339 C13.9999488,9.61396339 13.9999488,9.59878922 13.9999488,9.55313993 C13.9999488,9.50744836 13.9717018,8.98281959 13.5759924,8.98281959 C13.2982355,8.98281959 13.2223551,9.34070162 13.2218838,9.47735364 C13.2166365,9.52727199 13.21981,9.60910258 13.21981,9.65961269 L13.21981,10.6729425 C13.21981,10.7234526 13.1894578,10.7642834 13.1519104,10.7642834 L12.0111903,10.7642834 C11.9737999,10.7642834 11.963714,10.7339351 11.9885047,10.6961899 C12.1344214,10.451163 12.197388,10.3291357 12.2658532,10.1910889 Z" id="Path"></path>
                     <circle id="Oval" cx="15" cy="12" r="1"></circle>

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Selectable extends StatelessWidget {
-  Selectable(this.icon, this.text, this.openChildren, this.onSelect, this.index,
-      this.isSelected);
-  final IconData icon;
+  Selectable(this.iconName, this.text, this.openChildren, this.onSelect,
+      this.index, this.isSelected);
+  final String iconName;
   final String text;
   final Widget openChildren;
   final int index;
@@ -25,9 +26,11 @@ class Selectable extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(right: 15.0),
-                        child: Icon(
-                          icon,
-                          color: isSelected ? Colors.white : Colors.black,
+                        child: SvgPicture.asset(
+                          "assets/icons/bottom/${isSelected ? "light" : "dark"}/$iconName",
+                          semanticsLabel: '$iconName category icon',
+                          width: 25,
+                          height: 25,
                         ),
                       ),
                       Text(

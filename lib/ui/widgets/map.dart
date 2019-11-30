@@ -70,7 +70,10 @@ class MapState extends State<MapWidget> {
         markerId: id,
         position: LatLng(lat, lng),
         icon: await determineMarkerIcon(
-            toilet.category, toilet.openHours, context),
+          toilet.category,
+          toilet.openHours,
+          context,
+        ),
         onTap: () => selectToilet(toilet),
       );
       setState(() {

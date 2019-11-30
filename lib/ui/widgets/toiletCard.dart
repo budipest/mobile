@@ -50,7 +50,7 @@ class ToiletCard extends StatelessWidget {
               ],
             ),
             Spacer(),
-            ...describeToiletIcons(toilet, "dark", false, false),
+            ...describeToiletIcons(toilet, "light", false, false),
           ],
         ),
       ),

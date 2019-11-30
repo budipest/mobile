@@ -66,7 +66,6 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
 
   void castVote(
       SharedPreferences snapshot, ToiletModel toiletProvider, int vote) async {
-    print("ljdgoidfsgoiéfgdjgpoigfhj");
     snapshot.setInt(toilet.id, vote);
     _api.updateDocument(
         {"upvotes": toilet.upvotes, "downvotes": toilet.downvotes}, toilet.id);

@@ -23,61 +23,81 @@ class _AddToiletState extends State<AddToilet> {
     setState(() {
       title = text;
     });
+    nextPage();
   }
 
   void onCategorySubmitted(int index) {
     setState(() {
       selectedCategoryIndex = index;
     });
+    nextPage();
+  }
+
+  void nextPage() {
+    controller.nextPage(
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => nextPage(),
+        backgroundColor: Colors.black,
+        label: Text("Tovább"),
+        icon: Icon(Icons.navigate_next),
+      ),
       body: Stack(
         children: <Widget>[
-          PageView(
-            controller: controller,
-            children: <Widget>[
-              AddToiletTitle(onTitleSubmitted, controller, title),
-              AddToiletCategory(onCategorySubmitted, selectedCategoryIndex),
-            ],
+          SafeArea(
+            child: PageView(
+              controller: controller,
+              children: <Widget>[
+                AddToiletTitle(onTitleSubmitted, controller, title),
+                AddToiletCategory(onCategorySubmitted, selectedCategoryIndex),
+              ],
+            ),
           ),
           Container(
             decoration: BoxDecoration(color: Colors.black),
             width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(22, 30, 30, 30),
-              child: Stack(
-                children: <Widget>[
-                  RawMaterialButton(
-                    shape: CircleBorder(),
-                    fillColor: Colors.white,
-                    elevation: 5.0,
-                    constraints: BoxConstraints(),
-                    padding: EdgeInsets.all(0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.black,
-                        size: 30.0,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(22, 30, 30, 30),
+                child: Stack(
+                  children: <Widget>[
+                    RawMaterialButton(
+                      shape: CircleBorder(),
+                      fillColor: Colors.white,
+                      elevation: 5.0,
+                      constraints: BoxConstraints(),
+                      padding: EdgeInsets.all(0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 30.0,
+                        ),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 75, left: 4),
+                      child: Text(
+                        "Mosdó hozzáadása",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 75, left: 4),
-                    child: Text(
-                      "Mosdó hozzáadása",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

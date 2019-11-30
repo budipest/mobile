@@ -1,17 +1,15 @@
-class Review {
+class Note {
   DateTime addDate;
   String title;
-  int rating;
   String userId;
 
   // Default constructor
-  Review(this.addDate, this.title, this.rating, this.userId);
+  Note(this.addDate, this.title, this.userId);
 
   // Named constructor
-  Review.origin() {
+  Note.origin() {
     addDate = new DateTime.now();
     title = "";
-    rating = 0;
     userId = "";
   }
 
@@ -19,7 +17,6 @@ class Review {
     return {
       "addDate": addDate.toString(),
       "title": title,
-      "rating": rating,
       "userId": userId
     };
   }

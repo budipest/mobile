@@ -25,14 +25,11 @@ class AddToiletTitle extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: TextInput("Kreatív név", title, (String title) {
-              print('henlo');
-              controller.nextPage(
-                duration: Duration(milliseconds: 200),
-                curve: Curves.easeInOut,
-              );
-              onTitleSubmitted(title);
-            }),
+            child: TextInput(
+              "Kreatív név",
+              title,
+              (String title) => onTitleSubmitted(title),
+            ),
           )
         ],
       ),

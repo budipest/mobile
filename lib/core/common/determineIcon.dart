@@ -8,6 +8,74 @@ import 'dart:core';
 import '../models/toilet.dart';
 import './bitmapFromSvg.dart';
 
+Widget descriptionIcon(EdgeInsetsGeometry padding, String mode, String iconPath,
+    bool smaller, String text) {
+  return Padding(
+    padding: padding,
+    child: Container(
+      decoration: BoxDecoration(
+        color: mode == "light" ? Colors.black : Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(7.5),
+        child: Row(
+          children: <Widget>[
+            SvgPicture.asset(
+              iconPath,
+              width: smaller ? 17.5 : 20,
+              height: smaller ? 17.5 : 20,
+            ),
+            if (text != null)
+              Padding(
+                padding: EdgeInsets.only(left: 5),
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: mode == "light" ? Colors.white : Colors.black,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
+  switch (toilet.entryMethod) {
+    case EntryMethod.FREE:
+      return descriptionIcon(
+          padding, "dark", "assets/icons/bottom/dark/tag_key.svg", true, null);
+    case EntryMethod.CONSUMERS:
+      return descriptionIcon(
+          padding, "dark", "assets/icons/bottom/dark/tag_key.svg", true, null);
+    case EntryMethod.PRICE:
+      var priceIcons = List<Widget>();
+      toilet.price.forEach((dynamic currency, dynamic value) {
+        priceIcons.add(descriptionIcon(
+          padding,
+          "dark",
+          "assets/icons/bottom/dark/tag_key.svg",
+          true,
+          "$value $currency",
+        ));
+      });
+
+      return Row(
+        children: priceIcons,
+      );
+    case EntryMethod.CODE:
+      return descriptionIcon(padding, "dark",
+          "assets/icons/bottom/dark/tag_key.svg", true, "ABC123");
+    default:
+      return null;
+  }
+}
+
 String openState(List<int> openHours) {
   if (openHours[0] >= openHours[1]) {
     return "_unknown";
@@ -72,7 +140,7 @@ List<String> readableOpenState(List<int> openHours) {
 
   if (openHours[start] <= curr && curr <= openHours[end]) {
     result.add("Nyitva ");
-    if (openHours.length == 2) {
+    if (openHours[0] == 0 && openHours[1] == 1440) {
       result.add("24/7");
     } else {
       result.add("${minuteToHourFormat(openHours[end])}-ig");
@@ -125,7 +193,7 @@ List<Widget> describeToiletIcons(
   EdgeInsets padding;
   String categoryStr = stringFromCategory(toilet.category);
 
-  if (mode == "light") {
+  if (mode == "dark") {
     padding = EdgeInsets.fromLTRB(0, 0, 10.0, 0);
   } else {
     padding = EdgeInsets.fromLTRB(10.0, 0, 0, 0);
@@ -133,14 +201,12 @@ List<Widget> describeToiletIcons(
 
   // Add category icon
   result.add(
-    Padding(
-      padding: padding,
-      child: SvgPicture.asset(
-        "assets/icons/bottom/$mode/cat_$categoryStr.svg",
-        semanticsLabel: '$categoryStr category icon',
-        width: smaller ? 27.5 : 35,
-        height: smaller ? 27.5 : 35,
-      ),
+    descriptionIcon(
+      padding,
+      mode,
+      "assets/icons/bottom/$mode/cat_$categoryStr.svg",
+      smaller,
+      null,
     ),
   );
 
@@ -148,41 +214,36 @@ List<Widget> describeToiletIcons(
   toilet.tags.forEach((Tag tag) {
     String tagStr = tag.toString().toLowerCase().substring(4);
     result.add(
-      Padding(
-        padding: padding,
-        child: SvgPicture.asset(
-          "assets/icons/bottom/$mode/tag_$tagStr.svg",
-          semanticsLabel: '$tagStr tag icon',
-          width: 35,
-          height: 35,
-        ),
+      descriptionIcon(
+        padding,
+        mode,
+        "assets/icons/bottom/$mode/tag_$tagStr.svg",
+        smaller,
+        null,
       ),
     );
   });
 
   if (isDetailed) {
-    result.add(
-      Text(
-        '${toilet.price.toString()} Ft',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 22.0,
-          fontWeight: FontWeight.bold,
+    if (toilet.entryMethod != EntryMethod.UNKNOWN) {
+      result.add(
+        entryMethodIcon(
+          toilet,
+          padding,
         ),
-      ),
-    );
+      );
+    }
 
-    if(toilet.upvotes != 0 || toilet.downvotes != 0)
-    result.add(
-      Text(
-        '${((toilet.upvotes / (toilet.upvotes + toilet.downvotes)) * 100).round()}%',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 22.0,
-          fontWeight: FontWeight.bold,
+    if (toilet.upvotes != 0 || toilet.downvotes != 0)
+      result.add(
+        descriptionIcon(
+          padding,
+          mode,
+          "assets/icons/bottom/$mode/tag_key.svg",
+          smaller,
+          '${((toilet.upvotes / (toilet.upvotes + toilet.downvotes)) * 100).round()}%',
         ),
-      ),
-    );
+      );
   }
 
   return result;
@@ -196,5 +257,7 @@ Future<BitmapDescriptor> determineMarkerIcon(
   result += openState(openHours);
 
   return await bitmapDescriptorFromSvgAsset(
-      context, 'assets/icons/pin/l_$result.svg');
+    context,
+    'assets/icons/pin/l_$result.svg',
+  );
 }

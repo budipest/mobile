@@ -1,62 +1,67 @@
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:uuid/uuid.dart';
 
-import './review.dart';
+import './note.dart';
 
 enum Category { GENERAL, SHOP, RESTAURANT, PORTABLE, GAS_STATION }
 enum Tag {
   WHEELCHAIR_ACCESSIBLE,
 }
+enum EntryMethod { FREE, CODE, PRICE, CONSUMERS, UNKNOWN }
 
 class Toilet {
   String id;
   GeoFirePoint geopoint;
-  int price;
   String title;
   DateTime addDate;
   Category category;
   List<int> openHours;
   List<Tag> tags;
-  List<Review> reviews;
+  List<Note> notes;
   int upvotes;
   int downvotes;
   int distance = 0;
 
-  // Default constructor
-  Toilet(this.id, this.geopoint, this.price, this.title, this.addDate,
-      this.category, this.openHours, this.tags, this.reviews);
+  EntryMethod entryMethod;
+  Map price;
+  String code;
 
   // Named constructor
   Toilet.origin() {
     id = new Uuid().toString();
     geopoint = new GeoFirePoint(0, 0);
-    price = 0;
     title = "";
     addDate = new DateTime.now();
     category = Category.GENERAL;
     openHours = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     tags = [];
-    reviews = [];
+    notes = new List<Note>();
     upvotes = 0;
     downvotes = 0;
+    entryMethod = EntryMethod.UNKNOWN;
   }
 
-  // TODO: remove the comments when Balazs is finished with his Firebase card
   Toilet.fromMap(Map snapshot, String id)
       : id = snapshot["id"] ?? id,
         geopoint = new GeoFirePoint(snapshot["geopoint"]["geopoint"].latitude,
             snapshot["geopoint"]["geopoint"].longitude),
-        price = snapshot["price"] ?? 0,
         title = snapshot["title"] ?? "",
         category = _standariseCategory(snapshot["category"].toString()) ??
             Category.GENERAL,
         openHours = snapshot["openHours"].cast<int>() ??
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         tags = _standariseTags(snapshot["tags"].toString()) ?? [],
-        reviews = _standariseReviews(snapshot["reviews"].toString()) ??
-            new List<Review>(),
+        notes =
+            _standariseNotes(snapshot["notes"].toString()) ?? new List<Note>(),
         upvotes = snapshot["upvotes"] != null ? snapshot["upvotes"] : 0,
-        downvotes = snapshot["downvotes"] != null ? snapshot["downvotes"] : 0;
+        downvotes = snapshot["downvotes"] != null ? snapshot["downvotes"] : 0,
+        entryMethod =
+            _standariseEntryMethod(snapshot["entryMethod"].toString()) ??
+                EntryMethod.UNKNOWN,
+        price = snapshot["price"] != null && snapshot["price"] != 0
+            ? Map.from(snapshot["price"])
+            : null,
+        code = snapshot["code"] ?? null;
 
   int calculateDistance(pos) {
     int dist =
@@ -71,7 +76,6 @@ class Toilet {
     return {
       "id": id,
       "geopoint": geopoint.data,
-      "price": price,
       "title": title,
       "addDate": addDate.toString(),
       "category":
@@ -81,9 +85,13 @@ class Toilet {
           .map((Tag tag) =>
               "${tag.toString().substring(tag.toString().indexOf('.') + 1)}")
           .toList(),
-      "reviews": reviews.map((Review review) => review.toJson()).toList(),
+      "notes": notes.map((Note note) => note.toJson()).toList(),
       "upvotes": upvotes,
-      "downvotes": downvotes
+      "downvotes": downvotes,
+      "entryMethod":
+          "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}",
+      "price": price,
+      "code": code
     };
   }
 
@@ -109,8 +117,23 @@ class Toilet {
     return _tags;
   }
 
-  static List<Review> _standariseReviews(String input) {
-    List<Review> _reviews = [];
-    return _reviews;
+  static List<Note> _standariseNotes(String input) {
+    List<Note> _notes = [];
+    return _notes;
+  }
+
+  static EntryMethod _standariseEntryMethod(String input) {
+    switch (input) {
+      case "FREE":
+        return EntryMethod.FREE;
+      case "PRICE":
+        return EntryMethod.PRICE;
+      case "CONSUMERS":
+        return EntryMethod.CONSUMERS;
+      case "CODE":
+        return EntryMethod.CODE;
+      default:
+        return EntryMethod.UNKNOWN;
+    }
   }
 }
