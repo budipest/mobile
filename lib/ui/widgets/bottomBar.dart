@@ -69,9 +69,17 @@ class BottomBar extends StatelessWidget {
                   children: <Widget>[
                     ...(hasSelected
                         ? describeToiletIcons(
-                            selectedToilet, "dark", true, true)
+                            selectedToilet,
+                            "dark",
+                            true,
+                            true,
+                          )
                         : describeToiletIcons(
-                            toilets[0], "dark", false, false)),
+                            toilets[0],
+                            "dark",
+                            false,
+                            false,
+                          )),
                     if (!hasSelected)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +162,6 @@ class BottomBar extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(right: 12.0),
                           child: Button(
-                            Icons.navigation,
                             "Navigáció",
                             () async {
                               print("navigáció it is.");
@@ -171,21 +178,19 @@ class BottomBar extends StatelessWidget {
                                 // TOOD: handle error
                               }
                             },
-                            Colors.white,
-                            Colors.black,
-                            false,
-                            false,
+                            icon: Icons.navigation,
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
                           ),
                         ),
                       ),
                       Button(
-                        Icons.edit,
                         "",
                         () => {print("fasz")},
-                        Colors.transparent,
-                        Colors.white,
-                        true,
-                        false,
+                        icon: Icons.edit,
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.white,
+                        isBordered: true,
                       ),
                     ],
                   )

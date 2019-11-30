@@ -6,6 +6,7 @@ import './note.dart';
 enum Category { GENERAL, SHOP, RESTAURANT, PORTABLE, GAS_STATION }
 enum Tag {
   WHEELCHAIR_ACCESSIBLE,
+  BABY_ROOM,
 }
 enum EntryMethod { FREE, CODE, PRICE, CONSUMERS, UNKNOWN }
 
@@ -50,9 +51,11 @@ class Toilet {
             Category.GENERAL,
         openHours = snapshot["openHours"].cast<int>() ??
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        tags = _standariseTags(snapshot["tags"].toString()) ?? [],
-        notes =
-            _standariseNotes(snapshot["notes"].toString()) ?? new List<Note>(),
+        tags =
+            snapshot["Tags"] != null ? _standariseTags(snapshot["Tags"]) : [],
+        notes = snapshot["notes"] != null
+            ? _standariseNotes(snapshot["notes"])
+            : new List<Note>(),
         upvotes = snapshot["upvotes"] != null ? snapshot["upvotes"] : 0,
         downvotes = snapshot["downvotes"] != null ? snapshot["downvotes"] : 0,
         entryMethod =
@@ -112,12 +115,28 @@ class Toilet {
     }
   }
 
-  static List<Tag> _standariseTags(String input) {
+  static List<Tag> _standariseTags(Map input) {
     List<Tag> _tags = [];
+    if (input != null) {
+      input.forEach((dynamic tag, dynamic value) {
+        switch (tag) {
+          case "WHEELCHAIR_ACCESSIBLE":
+            {
+              if (value == true) _tags.add(Tag.WHEELCHAIR_ACCESSIBLE);
+              break;
+            }
+          case "BABY_ROOM":
+            {
+              if (value == true) _tags.add(Tag.BABY_ROOM);
+              break;
+            }
+        }
+      });
+    }
     return _tags;
   }
 
-  static List<Note> _standariseNotes(String input) {
+  static List<Note> _standariseNotes(Map input) {
     List<Note> _notes = [];
     return _notes;
   }

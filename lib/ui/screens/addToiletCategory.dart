@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/models/toilet.dart';
 import '../widgets/selectable.dart';
 
 class AddToiletCategory extends StatelessWidget {

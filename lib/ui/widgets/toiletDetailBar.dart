@@ -91,13 +91,14 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                         Text(
                           "Értékelés",
                           style: TextStyle(
-                              fontSize: 22.0, fontWeight: FontWeight.bold),
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: 10.0),
                           child: Button(
-                            Icons.thumb_up,
                             toilet.upvotes.toString(),
                             () => vote(
                               snapshot.data,
@@ -105,14 +106,14 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                               toilet,
                               true,
                             ),
-                            myVote == 1 ? Colors.black : Colors.grey[600],
-                            Colors.white,
-                            false,
-                            true,
+                            icon: Icons.thumb_up,
+                            backgroundColor:
+                                myVote == 1 ? Colors.black : Colors.grey[600],
+                            foregroundColor: Colors.white,
+                            isMini: true,
                           ),
                         ),
                         Button(
-                          Icons.thumb_down,
                           toilet.downvotes.toString(),
                           () => vote(
                             snapshot.data,
@@ -120,10 +121,11 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                             toilet,
                             false,
                           ),
-                          myVote == -1 ? Colors.black : Colors.grey[600],
-                          Colors.white,
-                          false,
-                          true,
+                          icon: Icons.thumb_down,
+                          backgroundColor:
+                              myVote == -1 ? Colors.black : Colors.grey[600],
+                          foregroundColor: Colors.white,
+                          isMini: true,
                         ),
                       ],
                     );
@@ -145,15 +147,13 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                 ),
                 Spacer(),
                 Button(
-                  null,
                   "Új megjegyzés",
                   () {
                     print("új megjegyzés");
                   },
-                  Colors.black,
-                  Colors.white,
-                  false,
-                  true,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  isMini: true,
                 ),
               ],
             ),

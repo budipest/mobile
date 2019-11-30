@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/models/toilet.dart';
 import './addToiletTitle.dart';
 import './addToiletCategory.dart';
+import './addToiletEntryMethod.dart';
 
 class AddToilet extends StatefulWidget {
   @override
@@ -12,11 +13,21 @@ class AddToilet extends StatefulWidget {
 
 class _AddToiletState extends State<AddToilet> {
   PageController controller = PageController();
+
   LatLng location;
+
   String title;
+
   Category category;
   int selectedCategoryIndex;
+
+  EntryMethod entryMethod = EntryMethod.UNKNOWN;
+  Map price = {"HUF": 0};
+  String code = "";
+  bool hasEUR = false;
+
   List<int> openHours;
+
   List<Tag> tags;
 
   void onTitleSubmitted(String text) {
@@ -31,6 +42,44 @@ class _AddToiletState extends State<AddToilet> {
       selectedCategoryIndex = index;
     });
     nextPage();
+  }
+
+  void onEntryMethodSubmitted(EntryMethod entryMethodValue) {
+    setState(() {
+      entryMethod = entryMethodValue;
+    });
+  }
+
+  void toggleEUR() {
+    if(hasEUR) {
+      setState(() {
+        hasEUR = false;
+        price["EUR"] = null;
+      });
+    } else {
+      setState(() {
+        hasEUR = true;
+        price["EUR"] = 0;
+      });
+    }
+  }
+
+  // void onPriceSubmitted(Map input) {
+  //   setState(() {
+  //     price = input;
+  //   });
+  // }
+
+  void onPriceSubmitted(dynamic input, String currency) {
+    setState(() {
+      price[currency] = input;
+    });
+  }
+
+  void onCodeSubmitted(String text) {
+    setState(() {
+      code = text;
+    });
   }
 
   void nextPage() {
@@ -57,6 +106,16 @@ class _AddToiletState extends State<AddToilet> {
               children: <Widget>[
                 AddToiletTitle(onTitleSubmitted, controller, title),
                 AddToiletCategory(onCategorySubmitted, selectedCategoryIndex),
+                AddToiletEntryMethod(
+                  onEntryMethodSubmitted,
+                  entryMethod,
+                  price,
+                  onPriceSubmitted,
+                  code,
+                  onCodeSubmitted,
+                  hasEUR,
+                  toggleEUR,
+                )
               ],
             ),
           ),

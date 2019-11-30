@@ -7,9 +7,9 @@ class Selectable extends StatelessWidget {
   final String iconName;
   final String text;
   final Widget openChildren;
-  final int index;
+  final dynamic index;
   final bool isSelected;
-  final Function(int) onSelect;
+  final Function onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,11 @@ class Selectable extends StatelessWidget {
                       ),
                     ],
                   ),
+                  if (isSelected && openChildren != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: openChildren,
+                    )
                 ],
               ),
             ),

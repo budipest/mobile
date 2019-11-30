@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button(this.icon, this.text, this.onTap, this.backgroundColor,
-      this.foregroundColor, this.isBordered, this.isMini);
+  const Button(
+    this.text,
+    this.onTap, {
+    this.icon,
+    this.backgroundColor = Colors.white,
+    this.foregroundColor = Colors.black,
+    this.isBordered = false,
+    this.isMini = false,
+    this.borderRadius = 40.0,
+  });
   final IconData icon;
   final String text;
   final Function onTap;
@@ -10,6 +18,7 @@ class Button extends StatelessWidget {
   final Color foregroundColor;
   final bool isBordered;
   final bool isMini;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +33,29 @@ class Button extends StatelessWidget {
             width: 2.5,
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(40.0),
+            Radius.circular(borderRadius),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (icon != null) Icon(icon, color: foregroundColor, size: isMini ? 20 : 25,),
+            if (icon != null)
+              Icon(
+                icon,
+                color: foregroundColor,
+                size: isMini ? 20 : 25,
+              ),
             if (text != null)
               Padding(
-                padding:
-                    EdgeInsets.only(left: text != "" && icon != null ? 8.0 : 0),
+                padding: EdgeInsets.only(
+                  left: text != "" && icon != null ? 8.0 : 0,
+                ),
                 child: Text(
                   text,
                   style: TextStyle(
                     color: foregroundColor,
                     fontWeight: isMini ? FontWeight.normal : FontWeight.bold,
-                    fontSize: isMini ? 14 : 16
+                    fontSize: isMini ? 14 : 16,
                   ),
                 ),
               ),

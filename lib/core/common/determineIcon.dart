@@ -13,6 +13,10 @@ Widget descriptionIcon(EdgeInsetsGeometry padding, String mode, String iconPath,
   return Padding(
     padding: padding,
     child: Container(
+      constraints: BoxConstraints(
+        minHeight: 35,
+        minWidth: 35,
+      ),
       decoration: BoxDecoration(
         color: mode == "light" ? Colors.black : Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -20,6 +24,7 @@ Widget descriptionIcon(EdgeInsetsGeometry padding, String mode, String iconPath,
       child: Padding(
         padding: const EdgeInsets.all(7.5),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             SvgPicture.asset(
               iconPath,
@@ -210,9 +215,12 @@ List<Widget> describeToiletIcons(
     ),
   );
 
+  print(toilet.tags);
+
   // Loop over tags, add corresponding icons
   toilet.tags.forEach((Tag tag) {
-    String tagStr = tag.toString().toLowerCase().substring(4);
+    String tagStr =
+        tag.toString().substring(tag.toString().indexOf('.') + 1).toLowerCase();
     result.add(
       descriptionIcon(
         padding,
