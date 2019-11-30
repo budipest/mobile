@@ -37,6 +37,7 @@ class TextInput extends StatelessWidget {
     this.isDark = false,
     this.prefixText,
     this.suffixText,
+    this.keyboardType = TextInputType.text,
   });
   TextEditingController textEditingController = TextEditingController();
   final Function onTextSubmitted;
@@ -45,6 +46,7 @@ class TextInput extends StatelessWidget {
   final bool isDark;
   final String prefixText;
   final String suffixText;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class TextInput extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
               child: TextField(
                 controller: textEditingController,
-                keyboardType: TextInputType.number,
+                keyboardType: keyboardType,
                 style: TextStyle(
                   fontSize: 18.0,
                   color: isDark ? Colors.white : Colors.black,

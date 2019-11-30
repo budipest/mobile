@@ -63,6 +63,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                     (String input) => onPriceSubmitted(input, "HUF"),
                     isDark: true,
                     suffixText: "HUF",
+                    keyboardType: TextInputType.number,
                   ),
                   hasEUR
                       ? Padding(
@@ -73,6 +74,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                             (String input) => onPriceSubmitted(input, "EUR"),
                             isDark: true,
                             suffixText: "EUR",
+                            keyboardType: TextInputType.number,
                           ),
                         )
                       : Padding(

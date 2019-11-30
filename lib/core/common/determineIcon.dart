@@ -215,8 +215,6 @@ List<Widget> describeToiletIcons(
     ),
   );
 
-  print(toilet.tags);
-
   // Loop over tags, add corresponding icons
   toilet.tags.forEach((Tag tag) {
     String tagStr =

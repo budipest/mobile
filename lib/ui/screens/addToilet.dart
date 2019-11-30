@@ -5,6 +5,7 @@ import '../../core/models/toilet.dart';
 import './addToiletTitle.dart';
 import './addToiletCategory.dart';
 import './addToiletEntryMethod.dart';
+import './addToiletTags.dart';
 
 class AddToilet extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _AddToiletState extends State<AddToilet> {
   }
 
   void toggleEUR() {
-    if(hasEUR) {
+    if (hasEUR) {
       setState(() {
         hasEUR = false;
         price["EUR"] = null;
@@ -115,7 +116,7 @@ class _AddToiletState extends State<AddToilet> {
                   onCodeSubmitted,
                   hasEUR,
                   toggleEUR,
-                )
+                ),
               ],
             ),
           ),
