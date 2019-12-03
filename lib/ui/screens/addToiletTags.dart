@@ -5,7 +5,7 @@ import '../../core/models/toilet.dart';
 
 class AddToiletTags extends StatelessWidget {
   const AddToiletTags(this.onTagToggled, this.tags);
-  final Function(int) onTagToggled;
+  final Function onTagToggled;
   final List<Tag> tags;
 
   @override

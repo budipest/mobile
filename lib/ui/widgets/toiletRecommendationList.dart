@@ -30,7 +30,6 @@ class ToiletRecommendationList extends StatelessWidget {
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
                     selectToilet(toilets[index]);
-                    print("${toilets[index].title} got tapped!");
                   },
                   child: ToiletCard(toilets[index]),
                 ),

@@ -50,12 +50,13 @@ class BottomBar extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                      0,
-                      ((MediaQuery.of(context).padding.top + 60) *
-                              scrollProgress) +
-                          15.0,
-                      0,
-                      7.5),
+                    0,
+                    ((MediaQuery.of(context).padding.top + 60) *
+                            scrollProgress) +
+                        15.0,
+                    0,
+                    7.5,
+                  ),
                   child: Text(
                     hasSelected ? selectedToilet.title : "Ajánlott mosdó",
                     style: TextStyle(
@@ -164,14 +165,11 @@ class BottomBar extends StatelessWidget {
                           child: Button(
                             "Navigáció",
                             () async {
-                              print("navigáció it is.");
                               String url = Platform.isIOS
                                   ? 'https://maps.apple.com/?q=${selectedToilet.geopoint.latitude},${selectedToilet.geopoint.longitude}'
                                   : 'https://www.google.com/maps/search/?api=1&query=${selectedToilet.geopoint.latitude},${selectedToilet.geopoint.longitude}';
-                              print(url);
                               if (await canLaunch(url)) {
                                 await launch(url);
-                                print("launched $url");
                               } else {
                                 print("error while launching $url");
                                 // error in launching map
