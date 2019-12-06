@@ -17,7 +17,7 @@ class AddToilet extends StatefulWidget {
 class _AddToiletState extends State<AddToilet> {
   final Location _location = new Location();
 
-  PageController controller = PageController();
+  PageController _controller;
 
   LatLng location;
 
@@ -101,109 +101,121 @@ class _AddToiletState extends State<AddToilet> {
   }
 
   void nextPage() {
-    controller.nextPage(
+    _controller.nextPage(
       duration: Duration(milliseconds: 200),
       curve: Curves.easeInOut,
     );
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, double>>(
-      future: _location.getLocation(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (location == null) {
-            setState(() {
-              location =
-                  LatLng(snapshot.data["latitude"], snapshot.data["longitude"]);
-            });
-          }
+  void initState() {
+    super.initState();
+    _controller = PageController();
+  }
 
-          return Scaffold(
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => nextPage(),
-              backgroundColor: Colors.black,
-              label: Text("Tovább"),
-              icon: Icon(Icons.navigate_next),
-            ),
-            body: Stack(
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => nextPage(),
+        backgroundColor: Colors.black,
+        label: Text("Tovább"),
+        icon: Icon(Icons.navigate_next),
+      ),
+      body: Stack(
+        children: <Widget>[
+          SafeArea(
+            bottom: false,
+            child: PageView(
+              controller: _controller,
+              pageSnapping: true,
+              physics: _controller.hasClients
+                  ? _controller.offset < 100
+                      ? NeverScrollableScrollPhysics()
+                      : null
+                  : NeverScrollableScrollPhysics(),
               children: <Widget>[
-                SafeArea(
-                  bottom: false,
-                  child: PageView(
-                    physics: controller.offset < 100
-                        ? NeverScrollableScrollPhysics()
-                        : null,
-                    pageSnapping: true,
-                    controller: controller,
-                    children: <Widget>[
-                      AddToiletLocation(onLocationChanged, location),
-                      AddToiletTitle(onTitleSubmitted, controller, title),
-                      AddToiletCategory(
-                          onCategorySubmitted, selectedCategoryIndex),
-                      AddToiletEntryMethod(
-                        onEntryMethodSubmitted,
-                        entryMethod,
-                        price,
-                        onPriceSubmitted,
-                        code,
-                        onCodeSubmitted,
-                        hasEUR,
-                        toggleEUR,
-                      ),
-                      AddToiletTags(onTagToggled, tags),
-                    ],
-                  ),
+                FutureBuilder<Map<String, double>>(
+                  future: _location.getLocation(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (location == null) {
+                        location = LatLng(snapshot.data["latitude"],
+                            snapshot.data["longitude"]);
+                      }
+                      return AddToiletLocation(onLocationChanged, location);
+                    } else {
+                      return Text(
+                        "Töltjük a helyzetedet, egy pillanat türelmet",
+                      );
+                    }
+                  },
                 ),
-                Container(
-                  decoration: BoxDecoration(color: Colors.black),
-                  width: MediaQuery.of(context).size.width,
-                  child: SafeArea(
-                    bottom: false,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(22, 30, 30, 30),
-                      child: Stack(
-                        children: <Widget>[
-                          RawMaterialButton(
-                            shape: CircleBorder(),
-                            fillColor: Colors.white,
-                            elevation: 5.0,
-                            constraints: BoxConstraints(),
-                            padding: EdgeInsets.all(0),
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Icon(
-                                Icons.close,
-                                color: Colors.black,
-                                size: 30.0,
-                              ),
-                            ),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 75, left: 4),
-                            child: Text(
-                              "Mosdó hozzáadása",
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                AddToiletTitle(onTitleSubmitted, _controller, title),
+                AddToiletCategory(onCategorySubmitted, selectedCategoryIndex),
+                AddToiletEntryMethod(
+                  onEntryMethodSubmitted,
+                  entryMethod,
+                  price,
+                  onPriceSubmitted,
+                  code,
+                  onCodeSubmitted,
+                  hasEUR,
+                  toggleEUR,
                 ),
+                AddToiletTags(onTagToggled, tags),
               ],
             ),
-          );
-        } else {
-          return Text("várj még egy picit, keresünk téged");
-        }
-      },
+          ),
+          Container(
+            decoration: BoxDecoration(color: Colors.black),
+            width: MediaQuery.of(context).size.width,
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(22, 30, 30, 30),
+                child: Stack(
+                  children: <Widget>[
+                    RawMaterialButton(
+                      shape: CircleBorder(),
+                      fillColor: Colors.white,
+                      elevation: 5.0,
+                      constraints: BoxConstraints(),
+                      padding: EdgeInsets.all(0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 30.0,
+                        ),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 75, left: 4),
+                      child: Text(
+                        "Mosdó hozzáadása",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
