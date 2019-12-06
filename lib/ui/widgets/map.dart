@@ -7,7 +7,7 @@ import 'dart:async';
 
 import '../../core/models/toilet.dart';
 import '../../core/models/clusterMarker.dart';
-import '../../core/common/determineIcon.dart';
+import '../../core/common/openHourUtils.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget(this.toilets, this.userLocation, this.selectToilet);

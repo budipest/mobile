@@ -6,7 +6,7 @@ import 'dart:io' show Platform;
 import './button.dart';
 import './toiletDetailBar.dart';
 import './toiletRecommendationList.dart';
-import '../../core/common/determineIcon.dart';
+import '../../core/common/openHourUtils.dart';
 import '../../core/models/toilet.dart';
 
 class BottomBar extends StatelessWidget {

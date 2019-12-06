@@ -7,6 +7,7 @@ import './addToiletLocation.dart';
 import './addToiletTitle.dart';
 import './addToiletCategory.dart';
 import './addToiletEntryMethod.dart';
+import './addToiletOpenHours.dart';
 import './addToiletTags.dart';
 
 class AddToilet extends StatefulWidget {
@@ -31,7 +32,7 @@ class _AddToiletState extends State<AddToilet> {
   String code = "";
   bool hasEUR = false;
 
-  List<int> openHours;
+  List<int> openHours = new List<int>.filled(14, 0);
 
   List<Tag> tags = new List<Tag>();
 
@@ -69,12 +70,6 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
-  // void onPriceSubmitted(Map input) {
-  //   setState(() {
-  //     price = input;
-  //   });
-  // }
-
   void onPriceSubmitted(dynamic input, String currency) {
     setState(() {
       price[currency] = input;
@@ -84,6 +79,12 @@ class _AddToiletState extends State<AddToilet> {
   void onCodeSubmitted(String text) {
     setState(() {
       code = text;
+    });
+  }
+
+  void onOpenHoursChanged(List<int> hours) {
+    setState(() {
+      openHours = hours;
     });
   }
 
@@ -169,6 +170,7 @@ class _AddToiletState extends State<AddToilet> {
                   hasEUR,
                   toggleEUR,
                 ),
+                AddToiletOpenHours(onOpenHoursChanged, openHours),
                 AddToiletTags(onTagToggled, tags),
               ],
             ),

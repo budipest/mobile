@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/models/toilet.dart';
-import '../../core/common/determineIcon.dart';
+import '../../core/common/openHourUtils.dart';
 
 class ToiletCard extends StatelessWidget {
   const ToiletCard(this.toilet);

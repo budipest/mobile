@@ -166,15 +166,6 @@ List<String> readableOpenState(List<int> openHours) {
   return result;
 }
 
-String minuteToHourFormat(int minutes) {
-  String res = "";
-  int hours = minutes ~/ 60;
-  res += hours.toString();
-  res += ':';
-  res += '${minutes % 60}'.padLeft(2, '0');
-  return res;
-}
-
 String stringFromCategory(Category category) {
   switch (category) {
     case Category.GENERAL:
@@ -266,4 +257,20 @@ Future<BitmapDescriptor> determineMarkerIcon(
     context,
     'assets/icons/pin/l_$result.svg',
   );
+}
+
+String minuteToHourFormat(int minutes) {
+  String res = "";
+  int hours = minutes ~/ 60;
+  res += hours.toString();
+  res += ':';
+  res += '${minutes % 60}'.padLeft(2, '0');
+  return res;
+}
+
+int hourToMinuteFormat(String input) {
+  List<String> splitted = input.split(":");
+  int hours = int.parse(splitted[0]);
+  int minutes = int.parse(splitted[1]);
+  return hours * 60 + minutes;
 }
