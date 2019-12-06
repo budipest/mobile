@@ -25,6 +25,7 @@ class ToiletRecommendationList extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
+                padding: EdgeInsets.only(top: 10),
                 itemCount: toilets.length,
                 itemBuilder: (BuildContext ctxt, int index) => GestureDetector(
                   behavior: HitTestBehavior.translucent,
