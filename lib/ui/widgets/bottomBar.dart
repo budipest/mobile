@@ -30,7 +30,7 @@ class BottomBar extends StatelessWidget {
           child: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {
-              selectToilet(toilets[0]);
+              if (!hasSelected) selectToilet(toilets[0]);
             },
             child: Padding(
               padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 25.0),

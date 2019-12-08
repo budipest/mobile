@@ -35,7 +35,6 @@ class _OpenHourRowState extends State<OpenHourRow> {
             checkColor: Colors.black,
             activeColor: Colors.grey[300],
             onChanged: (bool value) {
-              print(value);
               if (value == true) {
                 if (widget.index != 0) {
                   widget.openHours[widget.index] =

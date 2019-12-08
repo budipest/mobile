@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:uuid/uuid.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/models/toilet.dart';
 import './addToiletLocation.dart';
 import './addToiletTitle.dart';
@@ -18,6 +22,8 @@ class AddToilet extends StatefulWidget {
 class _AddToiletState extends State<AddToilet> {
   final Location _location = new Location();
 
+  GlobalKey headerKey = GlobalKey();
+
   PageController _controller;
 
   LatLng location;
@@ -25,10 +31,9 @@ class _AddToiletState extends State<AddToilet> {
   String title;
 
   Category category;
-  int selectedCategoryIndex;
 
   EntryMethod entryMethod = EntryMethod.UNKNOWN;
-  Map price = {"HUF": 0};
+  Map price = {"HUF": null};
   String code = "";
   bool hasEUR = false;
 
@@ -40,14 +45,12 @@ class _AddToiletState extends State<AddToilet> {
     setState(() {
       title = text;
     });
-    nextPage();
   }
 
-  void onCategorySubmitted(int index) {
+  void onCategorySubmitted(Category newCategory) {
     setState(() {
-      selectedCategoryIndex = index;
+      category = newCategory;
     });
-    nextPage();
   }
 
   void onEntryMethodSubmitted(EntryMethod entryMethodValue) {
@@ -65,12 +68,12 @@ class _AddToiletState extends State<AddToilet> {
     } else {
       setState(() {
         hasEUR = true;
-        price["EUR"] = 0;
+        price["EUR"] = null;
       });
     }
   }
 
-  void onPriceSubmitted(dynamic input, String currency) {
+  void onPriceChanged(dynamic input, String currency) {
     setState(() {
       price[currency] = input;
     });
@@ -108,6 +111,41 @@ class _AddToiletState extends State<AddToilet> {
     );
   }
 
+  double _getSizes() {
+    if (headerKey.currentContext == null) {
+      return 0;
+    }
+    final RenderBox renderBoxRed = headerKey.currentContext.findRenderObject();
+    final size = renderBoxRed.size;
+    return size.height - MediaQuery.of(context).padding.top;
+  }
+
+  void onFABPressed() async {
+    final toiletProvider = Provider.of<ToiletModel>(context);
+
+    if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
+      var data = Toilet(
+        new Uuid().toString(),
+        GeoFirePoint(location.latitude, location.longitude),
+        title,
+        new DateTime.now(),
+        category,
+        openHours,
+        tags,
+        [],
+        0,
+        0,
+        entryMethod,
+        price,
+        code,
+      );
+      await toiletProvider.uploadToilet(data);
+      Navigator.of(context).pop();
+    } else {
+      nextPage();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -124,7 +162,7 @@ class _AddToiletState extends State<AddToilet> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => nextPage(),
+        onPressed: onFABPressed,
         backgroundColor: Colors.black,
         label: Text("Tovább"),
         icon: Icon(Icons.navigate_next),
@@ -132,50 +170,59 @@ class _AddToiletState extends State<AddToilet> {
       body: Stack(
         children: <Widget>[
           SafeArea(
+            top: false,
             bottom: false,
-            child: PageView(
-              controller: _controller,
-              pageSnapping: true,
-              physics: _controller.hasClients
-                  ? _controller.offset < 100
-                      ? NeverScrollableScrollPhysics()
-                      : null
-                  : NeverScrollableScrollPhysics(),
-              children: <Widget>[
-                FutureBuilder<Map<String, double>>(
-                  future: _location.getLocation(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      if (location == null) {
-                        location = LatLng(snapshot.data["latitude"],
-                            snapshot.data["longitude"]);
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: _getSizes(),
+              ),
+              child: PageView(
+                controller: _controller,
+                pageSnapping: true,
+                physics: _controller.hasClients
+                    ? _controller.offset < 100
+                        ? NeverScrollableScrollPhysics()
+                        : null
+                    : NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  FutureBuilder<Map<String, double>>(
+                    future: _location.getLocation(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (location == null) {
+                          location = LatLng(
+                            snapshot.data["latitude"],
+                            snapshot.data["longitude"],
+                          );
+                        }
+                        return AddToiletLocation(onLocationChanged, location);
+                      } else {
+                        return Text(
+                          "Töltjük a helyzetedet, egy pillanat türelmet",
+                        );
                       }
-                      return AddToiletLocation(onLocationChanged, location);
-                    } else {
-                      return Text(
-                        "Töltjük a helyzetedet, egy pillanat türelmet",
-                      );
-                    }
-                  },
-                ),
-                AddToiletTitle(onTitleSubmitted, _controller, title),
-                AddToiletCategory(onCategorySubmitted, selectedCategoryIndex),
-                AddToiletEntryMethod(
-                  onEntryMethodSubmitted,
-                  entryMethod,
-                  price,
-                  onPriceSubmitted,
-                  code,
-                  onCodeSubmitted,
-                  hasEUR,
-                  toggleEUR,
-                ),
-                AddToiletOpenHours(onOpenHoursChanged, openHours),
-                AddToiletTags(onTagToggled, tags),
-              ],
+                    },
+                  ),
+                  AddToiletTitle(onTitleSubmitted, _controller, title),
+                  AddToiletCategory(onCategorySubmitted, category),
+                  AddToiletEntryMethod(
+                    onEntryMethodSubmitted,
+                    entryMethod,
+                    price,
+                    onPriceChanged,
+                    code,
+                    onCodeSubmitted,
+                    hasEUR,
+                    toggleEUR,
+                  ),
+                  AddToiletOpenHours(onOpenHoursChanged, openHours),
+                  AddToiletTags(onTagToggled, tags),
+                ],
+              ),
             ),
           ),
           Container(
+            key: headerKey,
             decoration: BoxDecoration(color: Colors.black),
             width: MediaQuery.of(context).size.width,
             child: SafeArea(

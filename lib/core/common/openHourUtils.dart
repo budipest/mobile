@@ -54,17 +54,17 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
   switch (toilet.entryMethod) {
     case EntryMethod.FREE:
       return descriptionIcon(
-          padding, "dark", "assets/icons/bottom/dark/tag_key.svg", true, null);
+          padding, "dark", "assets/icons/bottom/dark/tag_free.svg", true, null);
     case EntryMethod.CONSUMERS:
       return descriptionIcon(
-          padding, "dark", "assets/icons/bottom/dark/tag_key.svg", true, null);
+          padding, "dark", "assets/icons/bottom/dark/tag_guests.svg", true, null);
     case EntryMethod.PRICE:
       var priceIcons = List<Widget>();
       toilet.price.forEach((dynamic currency, dynamic value) {
         priceIcons.add(descriptionIcon(
           padding,
           "dark",
-          "assets/icons/bottom/dark/tag_key.svg",
+          "assets/icons/bottom/dark/tag_paid.svg",
           true,
           "$value $currency",
         ));
@@ -75,7 +75,7 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
       );
     case EntryMethod.CODE:
       return descriptionIcon(padding, "dark",
-          "assets/icons/bottom/dark/tag_key.svg", true, "ABC123");
+          "assets/icons/bottom/dark/tag_key.svg", true, toilet.code != null ? toilet.code : "");
     default:
       return null;
   }

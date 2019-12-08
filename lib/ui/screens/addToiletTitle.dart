@@ -11,7 +11,7 @@ class AddToiletTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 200, 30, 30),
+      padding: EdgeInsets.fromLTRB(30, 45, 30, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -26,7 +26,7 @@ class AddToiletTitle extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: TextInput(
-              "Kreatív név",
+              "Név",
               title,
               (String title) => onTitleSubmitted(title),
             ),

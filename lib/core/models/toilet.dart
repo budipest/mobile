@@ -27,6 +27,36 @@ class Toilet {
   Map price;
   String code;
 
+  Toilet(
+    String id,
+    GeoFirePoint geopoint,
+    String title,
+    DateTime addDate,
+    Category category,
+    List<int> openHours,
+    List<Tag> tags,
+    List<Note> notes,
+    int upvotes,
+    int downvotes,
+    EntryMethod entryMethod,
+    Map price,
+    String code,
+  ) {
+    this.id = id;
+    this.geopoint = geopoint;
+    this.title = title;
+    this.addDate = addDate;
+    this.category = category;
+    this.openHours = openHours;
+    this.tags = tags;
+    this.notes = notes;
+    this.upvotes = upvotes;
+    this.downvotes = downvotes;
+    this.entryMethod = entryMethod;
+    this.price = price;
+    this.code = code;
+  }
+
   // Named constructor
   Toilet.origin() {
     id = new Uuid().toString();
@@ -44,8 +74,10 @@ class Toilet {
 
   Toilet.fromMap(Map snapshot, String id)
       : id = snapshot["id"] ?? id,
-        geopoint = new GeoFirePoint(snapshot["geopoint"]["geopoint"].latitude,
-            snapshot["geopoint"]["geopoint"].longitude),
+        geopoint = new GeoFirePoint(
+          snapshot["geopoint"]["geopoint"].latitude,
+          snapshot["geopoint"]["geopoint"].longitude,
+        ),
         title = snapshot["title"] ?? "",
         category = _standariseCategory(snapshot["category"].toString()) ??
             Category.GENERAL,
@@ -53,9 +85,9 @@ class Toilet {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         tags =
             snapshot["Tags"] != null ? _standariseTags(snapshot["Tags"]) : [],
-        notes = snapshot["notes"] != null
-            ? _standariseNotes(snapshot["notes"])
-            : new List<Note>(),
+        // notes = snapshot["notes"] != null
+        //     ? _standariseNotes(snapshot["notes"])
+        //     : new List<Note>(),
         upvotes = snapshot["upvotes"] != null ? snapshot["upvotes"] : 0,
         downvotes = snapshot["downvotes"] != null ? snapshot["downvotes"] : 0,
         entryMethod =
@@ -84,16 +116,17 @@ class Toilet {
       "category":
           "${category.toString().substring(category.toString().indexOf('.') + 1)}",
       "openHours": openHours,
-      "tags": tags
-          .map((Tag tag) =>
-              "${tag.toString().substring(tag.toString().indexOf('.') + 1)}")
-          .toList(),
+      "Tags": {
+        "WHEELCHAIR_ACCESSIBLE": tags.contains(Tag.WHEELCHAIR_ACCESSIBLE),
+        "BABY_ROOM": tags.contains(Tag.BABY_ROOM)
+      },
       "notes": notes.map((Note note) => note.toJson()).toList(),
       "upvotes": upvotes,
       "downvotes": downvotes,
-      "entryMethod":
-          "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}",
-      "price": price,
+      "entryMethod": entryMethod != null
+          ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}"
+          : null,
+      "price": price["HUF"] != null ? price : null,
       "code": code
     };
   }
@@ -136,10 +169,10 @@ class Toilet {
     return _tags;
   }
 
-  static List<Note> _standariseNotes(Map input) {
-    List<Note> _notes = [];
-    return _notes;
-  }
+  // static List<Note> _standariseNotes(Map input) {
+  //   List<Note> _notes = [];
+  //   return _notes;
+  // }
 
   static EntryMethod _standariseEntryMethod(String input) {
     switch (input) {

@@ -145,11 +145,11 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     : _selected != null
                                         ? RawMaterialButton(
                                             shape: CircleBorder(),
-                                            fillColor: Colors.white,
+                                            fillColor: Colors.black,
                                             elevation: 5.0,
                                             child: Icon(
                                               Icons.close,
-                                              color: Colors.black,
+                                              color: Colors.white,
                                               size: 30.0,
                                             ),
                                             onPressed: () {

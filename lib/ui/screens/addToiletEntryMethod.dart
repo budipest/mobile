@@ -10,14 +10,14 @@ class AddToiletEntryMethod extends StatelessWidget {
     this.onEntryMethodSubmitted,
     this.selectedEntryMethod,
     this.price,
-    this.onPriceSubmitted,
+    this.onPriceChanged,
     this.code,
     this.onCodeSubmitted,
     this.hasEUR,
     this.toggleEUR,
   );
   final Function onEntryMethodSubmitted;
-  final Function onPriceSubmitted;
+  final Function onPriceChanged;
   final Function onCodeSubmitted;
   final Function toggleEUR;
   final EntryMethod selectedEntryMethod;
@@ -28,7 +28,7 @@ class AddToiletEntryMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 200, 30, 30),
+      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
       child: ListView(
         children: <Widget>[
           Text(
@@ -42,7 +42,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
-              "tag_key.svg",
+              "tag_free.svg",
               "ingyenes",
               null,
               onEntryMethodSubmitted,
@@ -53,14 +53,14 @@ class AddToiletEntryMethod extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
-              "tag_key.svg",
+              "tag_paid.svg",
               "fizetős",
               Column(
                 children: <Widget>[
                   TextInput(
                     "Ár",
-                    price["HUF"].toString(),
-                    (String input) => onPriceSubmitted(input, "HUF"),
+                    price["HUF"] != null ? price["HUF"].toString() : null,
+                    (String input) => onPriceChanged(input, "HUF"),
                     isDark: true,
                     suffixText: "HUF",
                     keyboardType: TextInputType.number,
@@ -68,15 +68,17 @@ class AddToiletEntryMethod extends StatelessWidget {
                   hasEUR
                       ? Padding(
                           padding: const EdgeInsets.only(top: 10.0),
-                          child: TextInput(
-                            "Ár (alternatív valutában)",
-                            price["EUR"].toString(),
-                            (String input) => onPriceSubmitted(input, "EUR"),
-                            isDark: true,
-                            suffixText: "EUR",
-                            keyboardType: TextInputType.number,
-                          ),
-                        )
+                          child: 
+                              TextInput(
+                                "Ár (alternatív valutában)",
+                                price["EUR"] != null ? price["EUR"].toString() : null,
+                                (String input) => onPriceChanged(input, "EUR"),
+                                isDark: true,
+                                suffixText: "EUR",
+                                keyboardType: TextInputType.number,
+                              ),
+                            
+                          )
                       : Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: Button(
@@ -96,7 +98,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
-              "tag_key.svg",
+              "tag_guests.svg",
               "vendégeknek ingyenes",
               null,
               onEntryMethodSubmitted,
@@ -110,8 +112,8 @@ class AddToiletEntryMethod extends StatelessWidget {
               "tag_key.svg",
               "kóddal védett",
               TextInput(
-                "ABC123",
                 "",
+                code,
                 onCodeSubmitted,
                 isDark: true,
                 prefixText: "KÓD",

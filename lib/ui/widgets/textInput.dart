@@ -33,13 +33,13 @@ class TextInput extends StatelessWidget {
   const TextInput(
     this.placeholder,
     this.text,
-    this.onTextSubmitted, {
+    this.onTextChanged, {
     this.isDark = false,
     this.prefixText,
     this.suffixText,
     this.keyboardType = TextInputType.text,
   });
-  final Function onTextSubmitted;
+  final Function onTextChanged;
   final String placeholder;
   final String text;
   final bool isDark;
@@ -74,10 +74,10 @@ class TextInput extends StatelessWidget {
                   border: InputBorder.none,
                   hintText: placeholder,
                   hintStyle: TextStyle(
-                    color: isDark ? Colors.grey[400] : Colors.grey[700],
+                    color: isDark ? Colors.grey[600] : Colors.grey[700],
                   ),
                 ),
-                onSubmitted: onTextSubmitted,
+                onChanged: onTextChanged,
               ),
             ),
           ),

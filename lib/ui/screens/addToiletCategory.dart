@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../../core/models/toilet.dart';
 import '../widgets/selectable.dart';
 
 class AddToiletCategory extends StatelessWidget {
-  const AddToiletCategory(this.onCategorySubmitted, this.selectedCategoryIndex);
-  final Function(int) onCategorySubmitted;
-  final int selectedCategoryIndex;
+  const AddToiletCategory(this.onCategorySubmitted, this.selectedCategory);
+  final Function(Category) onCategorySubmitted;
+  final Category selectedCategory;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 200, 30, 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+      child: ListView(
         children: <Widget>[
           Text(
             "A mosdó típusa",
@@ -29,8 +29,8 @@ class AddToiletCategory extends StatelessWidget {
               "utcai WC",
               null,
               onCategorySubmitted,
-              0,
-              selectedCategoryIndex == 0,
+              Category.GENERAL,
+              selectedCategory == Category.GENERAL,
             ),
           ),
           Padding(
@@ -40,8 +40,8 @@ class AddToiletCategory extends StatelessWidget {
               "étterem / kávézó",
               null,
               onCategorySubmitted,
-              1,
-              selectedCategoryIndex == 1,
+              Category.RESTAURANT,
+              selectedCategory == Category.RESTAURANT,
             ),
           ),
           Padding(
@@ -51,8 +51,8 @@ class AddToiletCategory extends StatelessWidget {
               "bolt / áruház",
               null,
               onCategorySubmitted,
-              2,
-              selectedCategoryIndex == 2,
+              Category.SHOP,
+              selectedCategory == Category.SHOP,
             ),
           ),
           Padding(
@@ -62,20 +62,23 @@ class AddToiletCategory extends StatelessWidget {
               "benzinkút",
               null,
               onCategorySubmitted,
-              3,
-              selectedCategoryIndex == 3,
+              Category.GAS_STATION,
+              selectedCategory == Category.GAS_STATION,
             ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "cat_temporary.svg",
-              "mobil / átmeneti WC",
+              "mobil / ideiglenes WC",
               null,
               onCategorySubmitted,
-              4,
-              selectedCategoryIndex == 4,
+              Category.PORTABLE,
+              selectedCategory == Category.PORTABLE,
             ),
+          ),
+          Container(
+            height: 80,
           ),
         ],
       ),

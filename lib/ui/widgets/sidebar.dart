@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../screens/addToilet.dart';
 
 class Sidebar extends StatelessWidget {
   @override
@@ -44,7 +47,13 @@ class Sidebar extends StatelessWidget {
                   ListTile(
                     title: Text('Mosdó hozzáadása'),
                     onTap: () {
-                      Navigator.pushNamed(context, "/add");
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => AddToilet(),
+                        ),
+                      );
+                      Scaffold.of(context).openEndDrawer();
                     },
                   ),
                   ListTile(
@@ -54,10 +63,6 @@ class Sidebar extends StatelessWidget {
                   ListTile(
                     title: Text('Rólunk'),
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => About()),
-                      // );
                     },
                   ),
                 ],

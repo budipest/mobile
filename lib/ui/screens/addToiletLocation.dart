@@ -84,7 +84,8 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
       scrollGesturesEnabled: true,
       tiltGesturesEnabled: false,
       zoomGesturesEnabled: true,
-      myLocationEnabled: false,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: false,
       markers: Set<Marker>.of(markers.values),
     );
   }

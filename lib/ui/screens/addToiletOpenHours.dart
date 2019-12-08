@@ -10,13 +10,11 @@ class AddToiletOpenHours extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(openHours);
     bool isNonStop =
         openHours[0] == 0 && openHours[1] == 1440 && openHours.length == 2;
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 200, 30, 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+      child: ListView(
         children: <Widget>[
           Text(
             "Nyitvatartás",
@@ -52,7 +50,10 @@ class AddToiletOpenHours extends StatelessWidget {
                 OpenHourRow(onOpenHoursChanged, openHours, 10),
                 OpenHourRow(onOpenHoursChanged, openHours, 12),
               ],
-            )
+            ),
+          Container(
+            height: 80,
+          ),
         ],
       ),
     );

@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.0
+version: 2.0.0+1
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -103,6 +103,9 @@ flutter:
     - assets/icons/bottom/dark/tag_babyroom.svg
     - assets/icons/bottom/dark/tag_wheelchair_accessible.svg
     - assets/icons/bottom/dark/tag_key.svg
+    - assets/icons/bottom/dark/tag_free.svg
+    - assets/icons/bottom/dark/tag_guests.svg
+    - assets/icons/bottom/dark/tag_paid.svg
 
     # Square icons - light
     - assets/icons/bottom/light/cat_general.svg
@@ -113,6 +116,9 @@ flutter:
     - assets/icons/bottom/light/tag_babyroom.svg
     - assets/icons/bottom/light/tag_wheelchair_accessible.svg
     - assets/icons/bottom/light/tag_key.svg
+    - assets/icons/bottom/light/tag_free.svg
+    - assets/icons/bottom/light/tag_guests.svg
+    - assets/icons/bottom/light/tag_paid.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -11,7 +11,7 @@ class AddToiletTags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 200, 30, 30),
+      padding: EdgeInsets.fromLTRB(30, 45, 30, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -26,8 +26,8 @@ class AddToiletTags extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
-              "cat_general.svg",
-              "utcai WC",
+              "tag_wheelchair_accessible.svg",
+              "akadálymentes",
               null,
               onTagToggled,
               0,
@@ -37,8 +37,8 @@ class AddToiletTags extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
-              "cat_restaurant.svg",
-              "étterem / kávézó",
+              "tag_babyroom.svg",
+              "pelenkázó",
               null,
               onTagToggled,
               1,
