@@ -10,17 +10,16 @@ import '../../core/common/openHourUtils.dart';
 import '../../core/models/toilet.dart';
 
 class BottomBar extends StatelessWidget {
-  BottomBar(this.toilets, this.scrollProgress, this.selectedToilet,
+  const BottomBar(this.toilets, this.scrollProgress, this.selectedToilet,
       this.selectToilet);
   final List<Toilet> toilets;
   final Toilet selectedToilet;
   final double scrollProgress;
   final Function(Toilet) selectToilet;
-  bool hasSelected = false;
 
   @override
   Widget build(BuildContext context) {
-    hasSelected = selectedToilet != null;
+    bool hasSelected = selectedToilet != null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

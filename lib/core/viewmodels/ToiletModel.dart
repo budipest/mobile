@@ -44,6 +44,6 @@ class ToiletModel extends ChangeNotifier {
   Future addProduct(Toilet data) async {
     var result = await _api.addDocument(data.toJson());
 
-    return;
+    return result;
   }
 }

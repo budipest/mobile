@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluster/fluster.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:async';
 
 import '../../core/models/toilet.dart';
-import '../../core/models/clusterMarker.dart';
 import '../../core/common/openHourUtils.dart';
 
 class MapWidget extends StatefulWidget {

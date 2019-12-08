@@ -10,7 +10,6 @@ class API {
   CollectionReference ref;
 
   Geoflutterfire _geo;
-  GeoFirePoint _center;
   GeoFireCollectionRef _geoRef;
 
   API(this.path) {
@@ -23,12 +22,14 @@ class API {
     return ref.getDocuments();
   }
 
-  Stream<List<DocumentSnapshot>> streamQueriedData(double rad, double lat, double lon) {
+  Stream<List<DocumentSnapshot>> streamQueriedData(
+      double rad, double lat, double lon) {
     return _geoRef.within(
-        center: _geo.point(latitude: lat, longitude: lon),
-        radius: rad,
-        field: 'geopoint',
-        strictMode: true);
+      center: _geo.point(latitude: lat, longitude: lon),
+      radius: rad,
+      field: 'geopoint',
+      strictMode: true,
+    );
   }
 
   Stream<QuerySnapshot> streamDataCollection() {

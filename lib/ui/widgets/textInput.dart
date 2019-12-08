@@ -30,7 +30,7 @@ Widget affix(String text, bool isPrefix,
 }
 
 class TextInput extends StatelessWidget {
-  TextInput(
+  const TextInput(
     this.placeholder,
     this.text,
     this.onTextSubmitted, {
@@ -39,7 +39,6 @@ class TextInput extends StatelessWidget {
     this.suffixText,
     this.keyboardType = TextInputType.text,
   });
-  TextEditingController textEditingController = TextEditingController();
   final Function onTextSubmitted;
   final String placeholder;
   final String text;
@@ -50,6 +49,7 @@ class TextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController textEditingController = TextEditingController();
     textEditingController.text = text;
 
     return Container(

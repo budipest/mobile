@@ -22,10 +22,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   PanelController _pc = new PanelController();
-  Animation<double> _animation;
+  // Animation<double> _animation;
   AnimationController _controller;
   List<Toilet> _data;
-  Toilet _selected = null;
+  Toilet _selected;
 
   @override
   void initState() {
@@ -38,10 +38,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       upperBound: 275.0,
     );
 
-    _animation = Tween<double>(begin: 200, end: 275).animate(_controller)
-      ..addListener(() {
-        setState(() {});
-      });
+    // _animation = Tween<double>(begin: 200, end: 275).animate(_controller)
+    //   ..addListener(() {
+    //     setState(() {});
+    //   });
 
     _controller.forward();
   }
