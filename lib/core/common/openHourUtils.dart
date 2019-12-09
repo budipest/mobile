@@ -56,26 +56,44 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
       return descriptionIcon(
           padding, "dark", "assets/icons/bottom/dark/tag_free.svg", true, null);
     case EntryMethod.CONSUMERS:
-      return descriptionIcon(
-          padding, "dark", "assets/icons/bottom/dark/tag_guests.svg", true, null);
+      return descriptionIcon(padding, "dark",
+          "assets/icons/bottom/dark/tag_guests.svg", true, null);
     case EntryMethod.PRICE:
       var priceIcons = List<Widget>();
-      toilet.price.forEach((dynamic currency, dynamic value) {
-        priceIcons.add(descriptionIcon(
-          padding,
-          "dark",
-          "assets/icons/bottom/dark/tag_paid.svg",
-          true,
-          "$value $currency",
-        ));
-      });
+      if (toilet.price != null) {
+        toilet.price.forEach((dynamic currency, dynamic value) {
+          priceIcons.add(
+            descriptionIcon(
+              padding,
+              "dark",
+              "assets/icons/bottom/dark/tag_paid.svg",
+              true,
+              "$value $currency",
+            ),
+          );
+        });
+      } else {
+        priceIcons.add(
+          descriptionIcon(
+            padding,
+            "dark",
+            "assets/icons/bottom/dark/tag_paid.svg",
+            true,
+            null,
+          ),
+        );
+      }
 
       return Row(
         children: priceIcons,
       );
     case EntryMethod.CODE:
-      return descriptionIcon(padding, "dark",
-          "assets/icons/bottom/dark/tag_key.svg", true, toilet.code != null ? toilet.code : "");
+      return descriptionIcon(
+          padding,
+          "dark",
+          "assets/icons/bottom/dark/tag_key.svg",
+          true,
+          toilet.code != null ? toilet.code : "");
     default:
       return null;
   }
@@ -156,7 +174,11 @@ List<String> readableOpenState(List<int> openHours) {
       result.add("ma ${minuteToHourFormat(openHours[start])}-ig");
     } else {
       if (end > 1) {
-        result.add("holnap ${minuteToHourFormat(openHours[end + 1])}-ig");
+        if (end > 14) {
+          result.add("holnap ${minuteToHourFormat(openHours[0])}-ig");
+        } else {
+          result.add("holnap ${minuteToHourFormat(openHours[end + 1])}-ig");
+        }
       } else {
         result.add("holnap ${minuteToHourFormat(openHours[start])}-ig");
       }
@@ -177,7 +199,7 @@ String stringFromCategory(Category category) {
     case Category.GAS_STATION:
       return "gas_station";
     case Category.PORTABLE:
-      return "portable";
+      return "temporary";
     default:
       return "general";
   }
@@ -207,19 +229,23 @@ List<Widget> describeToiletIcons(
   );
 
   // Loop over tags, add corresponding icons
-  toilet.tags.forEach((Tag tag) {
-    String tagStr =
-        tag.toString().substring(tag.toString().indexOf('.') + 1).toLowerCase();
-    result.add(
-      descriptionIcon(
-        padding,
-        mode,
-        "assets/icons/bottom/$mode/tag_$tagStr.svg",
-        smaller,
-        null,
-      ),
-    );
-  });
+  if (toilet.tags != null) {
+    toilet.tags.forEach((Tag tag) {
+      String tagStr = tag
+          .toString()
+          .substring(tag.toString().indexOf('.') + 1)
+          .toLowerCase();
+      result.add(
+        descriptionIcon(
+          padding,
+          mode,
+          "assets/icons/bottom/$mode/tag_$tagStr.svg",
+          smaller,
+          null,
+        ),
+      );
+    });
+  }
 
   if (isDetailed) {
     if (toilet.entryMethod != EntryMethod.UNKNOWN) {
