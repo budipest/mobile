@@ -14,9 +14,10 @@ Widget descriptionIcon(EdgeInsetsGeometry padding, String mode, String iconPath,
     padding: padding,
     child: Container(
       constraints: BoxConstraints(
-        minHeight: 35,
-        minWidth: 35,
-      ),
+          minHeight: 35,
+          minWidth: 35,
+          maxWidth: text != null ? double.infinity : 35,
+          maxHeight: 35),
       decoration: BoxDecoration(
         color: mode == "light" ? Colors.black : Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -199,7 +200,7 @@ String stringFromCategory(Category category) {
     case Category.GAS_STATION:
       return "gas_station";
     case Category.PORTABLE:
-      return "temporary";
+      return "portable";
     default:
       return "general";
   }
@@ -211,11 +212,7 @@ List<Widget> describeToiletIcons(
   EdgeInsets padding;
   String categoryStr = stringFromCategory(toilet.category);
 
-  if (mode == "dark") {
-    padding = EdgeInsets.fromLTRB(0, 0, 10.0, 0);
-  } else {
-    padding = EdgeInsets.fromLTRB(10.0, 0, 0, 0);
-  }
+  padding = EdgeInsets.fromLTRB(0, 0, 10.0, 0);
 
   // Add category icon
   result.add(

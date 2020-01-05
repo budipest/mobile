@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -164,7 +165,7 @@ class _AddToiletState extends State<AddToilet> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: onFABPressed,
         backgroundColor: Colors.black,
-        label: Text("Tovább"),
+        label: Text(FlutterI18n.translate(context, "continue")),
         icon: Icon(Icons.navigate_next),
       ),
       body: Stack(
@@ -250,7 +251,7 @@ class _AddToiletState extends State<AddToilet> {
                     Padding(
                       padding: EdgeInsets.only(top: 75, left: 4),
                       child: Text(
-                        "Mosdó hozzáadása",
+                        FlutterI18n.translate(context, "addToilet"),
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,

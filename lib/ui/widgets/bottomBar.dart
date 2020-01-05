@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:io' show Platform;
@@ -62,7 +63,7 @@ class BottomBar extends StatelessWidget {
                       7.5,
                     ),
                     child: Text(
-                      hasSelected ? selectedToilet.title : "Ajánlott mosdó",
+                      hasSelected ? selectedToilet.title : FlutterI18n.translate(context, "recommendedToilet"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22.0,
@@ -149,7 +150,7 @@ class BottomBar extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(text: '${selectedToilet.distance} m'),
                                 TextSpan(
-                                  text: '-re tőled',
+                                  text: FlutterI18n.translate(context, "distanceFromYou"),
                                   style: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -167,7 +168,7 @@ class BottomBar extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(right: 12.0),
                             child: Button(
-                              "Navigáció",
+                              FlutterI18n.translate(context, "navigate"),
                               () async {
                                 String url = Platform.isIOS
                                     ? 'https://maps.apple.com/?q=${selectedToilet.geopoint.latitude},${selectedToilet.geopoint.longitude}'

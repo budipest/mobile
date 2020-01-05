@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/toilet.dart';
 import '../widgets/selectable.dart';
@@ -32,7 +33,7 @@ class AddToiletEntryMethod extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Text(
-            "A mosdó jellege",
+            FlutterI18n.translate(context, "toiletEntryMethod"),
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -43,7 +44,7 @@ class AddToiletEntryMethod extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_free.svg",
-              "ingyenes",
+              FlutterI18n.translate(context, "free"),
               null,
               onEntryMethodSubmitted,
               EntryMethod.FREE,
@@ -54,11 +55,11 @@ class AddToiletEntryMethod extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_paid.svg",
-              "fizetős",
+              FlutterI18n.translate(context, "paid"),
               Column(
                 children: <Widget>[
                   TextInput(
-                    "Ár",
+                    FlutterI18n.translate(context, "price"),
                     price["HUF"] != null ? price["HUF"].toString() : null,
                     (String input) => onPriceChanged(input, "HUF"),
                     isDark: true,
@@ -70,7 +71,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 10.0),
                           child: 
                               TextInput(
-                                "Ár (alternatív valutában)",
+                                FlutterI18n.translate(context, "priceAlternative"),
                                 price["EUR"] != null ? price["EUR"].toString() : null,
                                 (String input) => onPriceChanged(input, "EUR"),
                                 isDark: true,
@@ -82,7 +83,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                       : Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: Button(
-                            "valuta hozzáadása",
+                            FlutterI18n.translate(context, "addCurrency"),
                             toggleEUR,
                             backgroundColor: Colors.grey[900],
                             foregroundColor: Colors.white,
@@ -99,7 +100,7 @@ class AddToiletEntryMethod extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_guests.svg",
-              "vendégeknek ingyenes",
+              FlutterI18n.translate(context, "guests"),
               null,
               onEntryMethodSubmitted,
               EntryMethod.CONSUMERS,
@@ -110,13 +111,13 @@ class AddToiletEntryMethod extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_key.svg",
-              "kóddal védett",
+              FlutterI18n.translate(context, "key"),
               TextInput(
                 "",
                 code,
                 onCodeSubmitted,
                 isDark: true,
-                prefixText: "KÓD",
+                prefixText: FlutterI18n.translate(context, "code"),
               ),
               onEntryMethodSubmitted,
               EntryMethod.CODE,

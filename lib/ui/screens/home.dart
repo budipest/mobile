@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
@@ -16,34 +17,33 @@ class Home extends StatefulWidget {
   State<StatefulWidget> createState() => HomeState();
 }
 
-class HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class HomeState extends State<Home>
+    with SingleTickerProviderStateMixin, AfterLayoutMixin<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final Location _location = new Location();
 
   ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   PanelController _pc = new PanelController();
-  // Animation<double> _animation;
-  AnimationController _controller;
   List<Toilet> _data;
   Toilet _selected;
 
   @override
   void initState() {
     super.initState();
+  }
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
-      lowerBound: 200.0,
-      upperBound: 275.0,
-    );
+  @override
+  void afterFirstLayout(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _pc.animatePanelToPosition(0.2);
+    });
+  }
 
-    // _animation = Tween<double>(begin: 200, end: 275).animate(_controller)
-    //   ..addListener(() {
-    //     setState(() {});
-    //   });
-
-    _controller.forward();
+  void onBottomBarDrag(double val) {
+    _notifier.value = val;
+    if (val < 0.2) {
+      _pc.animatePanelToPosition(0.2);
+    }
   }
 
   void selectToilet(Toilet toilet) {
@@ -51,16 +51,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       _selected = toilet;
     });
     if (toilet != null) {
-      _controller.forward();
+      _pc.animatePanelToPosition(0);
     } else {
-      _controller.reverse();
+      _pc.animatePanelToPosition(0);
     }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -101,18 +95,18 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         SlidingUpPanel(
                           controller: _pc,
                           panelSnapping: true,
-                          minHeight: _controller.value,
+                          minHeight: 80,
                           maxHeight: MediaQuery.of(context).size.height,
                           panel: AnimatedBuilder(
                             animation: _notifier,
                             builder: (context, _) => BottomBar(
                               _data,
-                              _notifier.value,
+                              _notifier.value > 0.2 ? _notifier.value : 0,
                               _selected,
                               selectToilet,
                             ),
                           ),
-                          onPanelSlide: (double val) => _notifier.value = val,
+                          onPanelSlide: onBottomBarDrag,
                           body: MapWidget(
                             _data,
                             locationSnapshot.data,
@@ -153,9 +147,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               size: 30.0,
                                             ),
                                             onPressed: () {
-                                              setState(() {
-                                                _selected = null;
-                                              });
+                                              selectToilet(null);
                                             },
                                           )
                                         : RawMaterialButton(

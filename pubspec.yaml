@@ -20,6 +20,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
+  flutter_i18n: any
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   # cupertino_icons: ^0.1.2
@@ -40,8 +45,10 @@ dependencies:
   url_launcher: any
 
   shared_preferences: any
-  sliding_up_panel: ^0.3.6
   uuid: 2.0.4
+
+  sliding_up_panel: ^0.3.6
+  after_layout: any
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +66,10 @@ flutter:
 
   assets:
     - assets/
+
+    # Locales
+    - assets/locales/en.json
+    - assets/locales/hu.json
 
     # Marker icons - light
     - assets/icons/pin/l_gas_station_unknown.svg
@@ -99,8 +110,8 @@ flutter:
     - assets/icons/bottom/dark/cat_gas_station.svg
     - assets/icons/bottom/dark/cat_restaurant.svg
     - assets/icons/bottom/dark/cat_shop.svg
-    - assets/icons/bottom/dark/cat_temporary.svg
-    - assets/icons/bottom/dark/tag_babyroom.svg
+    - assets/icons/bottom/dark/cat_portable.svg
+    - assets/icons/bottom/dark/tag_baby_room.svg
     - assets/icons/bottom/dark/tag_wheelchair_accessible.svg
     - assets/icons/bottom/dark/tag_key.svg
     - assets/icons/bottom/dark/tag_free.svg
@@ -112,8 +123,8 @@ flutter:
     - assets/icons/bottom/light/cat_gas_station.svg
     - assets/icons/bottom/light/cat_restaurant.svg
     - assets/icons/bottom/light/cat_shop.svg
-    - assets/icons/bottom/light/cat_temporary.svg
-    - assets/icons/bottom/light/tag_babyroom.svg
+    - assets/icons/bottom/light/cat_portable.svg
+    - assets/icons/bottom/light/tag_baby_room.svg
     - assets/icons/bottom/light/tag_wheelchair_accessible.svg
     - assets/icons/bottom/light/tag_key.svg
     - assets/icons/bottom/light/tag_free.svg

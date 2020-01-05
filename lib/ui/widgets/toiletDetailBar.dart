@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -89,7 +90,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                     return Row(
                       children: <Widget>[
                         Text(
-                          "Értékelés",
+                          FlutterI18n.translate(context, "rate"),
                           style: TextStyle(
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
@@ -142,12 +143,12 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Megjegyzések",
+                  FlutterI18n.translate(context, "notes"),
                   style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
                 Button(
-                  "Új megjegyzés",
+                  FlutterI18n.translate(context, "newNote"),
                   () {
                     print("új megjegyzés");
                   },

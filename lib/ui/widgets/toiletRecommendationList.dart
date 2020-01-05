@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/toilet.dart';
 import './toiletCard.dart';
@@ -17,7 +18,7 @@ class ToiletRecommendationList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "További mosdók",
+              FlutterI18n.translate(context, "otherToilets"),
               style: TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../screens/addToilet.dart';
 
@@ -19,7 +20,7 @@ class Sidebar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        'Budipest',
+                        FlutterI18n.translate(context, "title"),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 32,
@@ -45,7 +46,7 @@ class Sidebar extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    title: Text('Mosdó hozzáadása'),
+                    title: Text(FlutterI18n.translate(context, "addToilet")),
                     onTap: () {
                       Navigator.of(context).push(
                         CupertinoPageRoute(
@@ -57,13 +58,8 @@ class Sidebar extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: Text('Értékeléseim'),
+                    title: Text(FlutterI18n.translate(context, "aboutUs")),
                     onTap: () {},
-                  ),
-                  ListTile(
-                    title: Text('Rólunk'),
-                    onTap: () {
-                    },
                   ),
                 ],
               ))

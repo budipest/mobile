@@ -9,6 +9,8 @@ class ToiletCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> icons =
+        describeToiletIcons(toilet, "light", false, false);
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
       margin: EdgeInsets.only(bottom: 15),
@@ -30,7 +32,8 @@ class ToiletCard extends StatelessWidget {
               children: <Widget>[
                 ConstrainedBox(
                   constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.60),
+                    maxWidth: MediaQuery.of(context).size.width * 0.60,
+                  ),
                   child: Text(
                     toilet.title,
                     style: TextStyle(
@@ -47,10 +50,31 @@ class ToiletCard extends StatelessWidget {
                     fontSize: 16.0,
                   ),
                 ),
+                if (icons.length > 2)
+                  Padding(
+                    padding: EdgeInsets.only(top: 7.5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ...describeToiletIcons(
+                          toilet,
+                          "light",
+                          false,
+                          false,
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
-            Spacer(),
-            ...describeToiletIcons(toilet, "light", false, false),
+            if (icons.length <= 2) Spacer(),
+            if (icons.length <= 2)
+              ...describeToiletIcons(
+                toilet,
+                "light",
+                false,
+                false,
+              ),
           ],
         ),
       ),

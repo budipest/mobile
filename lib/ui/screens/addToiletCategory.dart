@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/toilet.dart';
 import '../widgets/selectable.dart';
@@ -15,7 +16,7 @@ class AddToiletCategory extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Text(
-            "A mosdó típusa",
+            FlutterI18n.translate(context, "toiletType"),
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -26,7 +27,7 @@ class AddToiletCategory extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "cat_general.svg",
-              "utcai WC",
+              FlutterI18n.translate(context, "general"),
               null,
               onCategorySubmitted,
               Category.GENERAL,
@@ -37,7 +38,7 @@ class AddToiletCategory extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "cat_restaurant.svg",
-              "étterem / kávézó",
+              FlutterI18n.translate(context, "restaurant"),
               null,
               onCategorySubmitted,
               Category.RESTAURANT,
@@ -48,7 +49,7 @@ class AddToiletCategory extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "cat_shop.svg",
-              "bolt / áruház",
+              FlutterI18n.translate(context, "shop"),
               null,
               onCategorySubmitted,
               Category.SHOP,
@@ -59,7 +60,7 @@ class AddToiletCategory extends StatelessWidget {
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
               "cat_gas_station.svg",
-              "benzinkút",
+              FlutterI18n.translate(context, "gasStation"),
               null,
               onCategorySubmitted,
               Category.GAS_STATION,
@@ -69,8 +70,8 @@ class AddToiletCategory extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Selectable(
-              "cat_temporary.svg",
-              "mobil / ideiglenes WC",
+              "cat_portable.svg",
+              FlutterI18n.translate(context, "portable"),
               null,
               onCategorySubmitted,
               Category.PORTABLE,

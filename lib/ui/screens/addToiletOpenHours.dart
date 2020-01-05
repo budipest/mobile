@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../widgets/button.dart';
 import '../widgets/openHourRow.dart';
@@ -17,7 +18,7 @@ class AddToiletOpenHours extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Text(
-            "Nyitvatartás",
+            FlutterI18n.translate(context, "openHours"),
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -27,7 +28,7 @@ class AddToiletOpenHours extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 15.0),
             child: Button(
-              "24/7-es nyitvatartás",
+              FlutterI18n.translate(context, "alwaysOpen"),
               () {
                 if (isNonStop) {
                   onOpenHoursChanged(List<int>.filled(14, 0));
