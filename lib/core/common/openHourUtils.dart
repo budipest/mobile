@@ -15,10 +15,11 @@ Widget descriptionIcon(EdgeInsetsGeometry padding, String mode, String iconPath,
     padding: padding,
     child: Container(
       constraints: BoxConstraints(
-          minHeight: 35,
-          minWidth: 35,
-          maxWidth: text != null ? double.infinity : 35,
-          maxHeight: 35),
+        minHeight: 35,
+        minWidth: 35,
+        maxWidth: text != null ? 100 : 35,
+        maxHeight: 35,
+      ),
       decoration: BoxDecoration(
         color: mode == "light" ? Colors.black : Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -86,16 +87,17 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
         );
       }
 
-      return Row(
+      return Wrap(
         children: priceIcons,
       );
     case EntryMethod.CODE:
       return descriptionIcon(
-          padding,
-          "dark",
-          "assets/icons/bottom/dark/tag_key.svg",
-          true,
-          toilet.code != null ? toilet.code : "");
+        padding,
+        "dark",
+        "assets/icons/bottom/dark/tag_key.svg",
+        true,
+        toilet.code != null ? toilet.code : "",
+      );
     default:
       return null;
   }

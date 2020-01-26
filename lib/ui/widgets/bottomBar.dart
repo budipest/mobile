@@ -73,7 +73,9 @@ class BottomBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Row(
+                  Wrap(
+                    direction: Axis.horizontal,
+                    runSpacing: 7.5,
                     children: <Widget>[
                       ...(hasSelected
                           ? describeToiletIcons(
