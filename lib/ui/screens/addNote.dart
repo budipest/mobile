@@ -3,6 +3,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/note.dart';
 import '../../core/models/toilet.dart';
+import '../widgets/button.dart';
 import '../widgets/blackLayoutContainer.dart';
 import '../widgets/textInput.dart';
 
@@ -18,28 +19,42 @@ class AddNote extends StatelessWidget {
 
     return BlackLayoutContainer(
       context: context,
-      title: toilet.title,
+      inlineTitle: toilet.title,
       child: Padding(
         padding: EdgeInsets.fromLTRB(30, 45, 30, 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              FlutterI18n.translate(context, "toiletName"),
+              FlutterI18n.translate(context, "newNote"),
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 20.0),
-            //   child: TextInput(
-            //     FlutterI18n.translate(context, "name"),
-            //     note,
-            //     (String title) => onNoteSubmitted(note),
-            //   ),
-            // )
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+              child: TextInput(
+                FlutterI18n.translate(context, "newNotePlaceholder"),
+                note,
+                (String title) => onNoteSubmitted(note),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Button(
+                  FlutterI18n.translate(context, "send"),
+                  onNoteSubmitted(note),
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  isMini: false,
+                  verticalPadding: 6,
+                  horizontalPadding: 30,
+                ),
+              ],
+            ),
           ],
         ),
       ),

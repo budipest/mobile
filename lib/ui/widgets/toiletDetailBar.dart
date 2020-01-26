@@ -17,17 +17,17 @@ class ToiletDetailBar extends StatefulWidget {
   final Toilet toilet;
 
   @override
-  State<StatefulWidget> createState() => ToiletDetailBarState(toilet);
+  State<StatefulWidget> createState() => ToiletDetailBarState();
 }
 
 class ToiletDetailBarState extends State<ToiletDetailBar> {
-  ToiletDetailBarState(this.toilet);
-  Toilet toilet;
+  ToiletDetailBarState();
   int myVote;
   API _api = locator<API>();
   String note;
 
   void addNote(String note) {
+    print("a new note is on its way to the server!!");
     print(note);
   }
 
@@ -75,9 +75,11 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
 
   void castVote(
       SharedPreferences snapshot, ToiletModel toiletProvider, int vote) async {
-    snapshot.setInt(toilet.id, vote);
-    _api.updateDocument(
-        {"upvotes": toilet.upvotes, "downvotes": toilet.downvotes}, toilet.id);
+    snapshot.setInt(widget.toilet.id, vote);
+    _api.updateDocument({
+      "upvotes": widget.toilet.upvotes,
+      "downvotes": widget.toilet.downvotes
+    }, widget.toilet.id);
   }
 
   @override
@@ -96,7 +98,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                 future: SharedPreferences.getInstance(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    myVote = snapshot.data.getInt(toilet.id) ?? 0;
+                    myVote = snapshot.data.getInt(widget.toilet.id) ?? 0;
                     return Row(
                       children: <Widget>[
                         Text(
@@ -110,11 +112,11 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                         Padding(
                           padding: EdgeInsets.only(right: 10.0),
                           child: Button(
-                            toilet.upvotes.toString(),
+                            widget.toilet.upvotes.toString(),
                             () => vote(
                               snapshot.data,
                               toiletProvider,
-                              toilet,
+                              widget.toilet,
                               true,
                             ),
                             icon: Icons.thumb_up,
@@ -125,11 +127,11 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                           ),
                         ),
                         Button(
-                          toilet.downvotes.toString(),
+                          widget.toilet.downvotes.toString(),
                           () => vote(
                             snapshot.data,
                             toiletProvider,
-                            toilet,
+                            widget.toilet,
                             false,
                           ),
                           icon: Icons.thumb_down,
@@ -176,7 +178,11 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                           Navigator.of(context).push(
                             CupertinoPageRoute(
                               fullscreenDialog: true,
-                              builder: (context) => AddNote(toilet, addNote, note),
+                              builder: (context) => AddNote(
+                                widget.toilet,
+                                addNote,
+                                note,
+                              ),
                             ),
                           );
                         },

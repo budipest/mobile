@@ -13,14 +13,10 @@ class AddToiletLocation extends StatefulWidget {
 
   @override
   _AddToiletLocationState createState() =>
-      _AddToiletLocationState(this.onLocationChanged, this.location);
+      _AddToiletLocationState();
 }
 
 class _AddToiletLocationState extends State<AddToiletLocation> {
-  _AddToiletLocationState(this.onLocationChanged, this.location);
-  final Function onLocationChanged;
-  final location;
-
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   GoogleMapController _mapController;
@@ -31,7 +27,7 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
 
   void _animateToUser() {
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(location.latitude, location.longitude),
+      target: LatLng(widget.location.latitude, widget.location.longitude),
       zoom: 15.0,
     )));
   }
@@ -49,14 +45,14 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
   }
 
   void _onMapCreated(GoogleMapController controller) async {
-    double lat = location.latitude;
-    double lng = location.longitude;
+    double lat = widget.location.latitude;
+    double lng = widget.location.longitude;
     MarkerId id = MarkerId(lat.toString() + lng.toString());
     Marker _marker = Marker(
       markerId: id,
-      position: location,
+      position: widget.location,
       draggable: true,
-      onDragEnd: onLocationChanged,
+      onDragEnd: widget.onLocationChanged,
       icon: await getDraggableIcon(context),
     );
     setState(() {
@@ -73,8 +69,8 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
         target: LatLng(
-          location.latitude,
-          location.longitude,
+          widget.location.latitude,
+          widget.location.longitude,
         ),
         zoom: 16.0,
       ),

@@ -15,20 +15,16 @@ class MapWidget extends StatefulWidget {
   final Function(Toilet) selectToilet;
 
   @override
-  State<StatefulWidget> createState() =>
-      MapState(toilets, userLocation, selectToilet);
+  State<StatefulWidget> createState() => MapState();
 }
 
 class MapState extends State<MapWidget> {
-  MapState(this.toilets, this.userLocation, this.selectToilet);
+  MapState();
 
-  final Function(Toilet) selectToilet;
   GoogleMapController _mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  List<Toilet> toilets;
   bool _nightMode = false;
   BitmapDescriptor generalOpen;
-  Map userLocation;
 
   // List<ClusterMarker> rawMarkers = toilets.map((Toilet data) => {
   //   return ClusterMarker()
@@ -60,7 +56,7 @@ class MapState extends State<MapWidget> {
 
   @override
   void initState() {
-    toilets.forEach((toilet) async {
+    widget.toilets.forEach((toilet) async {
       double lat = toilet.geopoint.latitude;
       double lng = toilet.geopoint.longitude;
       MarkerId id = MarkerId(lat.toString() + lng.toString());
@@ -72,7 +68,7 @@ class MapState extends State<MapWidget> {
           toilet.openHours,
           context,
         ),
-        onTap: () => selectToilet(toilet),
+        onTap: () => widget.selectToilet(toilet),
       );
       setState(() {
         markers[id] = _marker;
@@ -102,7 +98,10 @@ class MapState extends State<MapWidget> {
 
   _animateToUser() {
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(userLocation["latitude"], userLocation["longitude"]),
+      target: LatLng(
+        widget.userLocation["latitude"],
+        widget.userLocation["longitude"],
+      ),
       zoom: 15.0,
     )));
   }
@@ -131,7 +130,7 @@ class MapState extends State<MapWidget> {
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
       markers: Set<Marker>.of(markers.values),
-      onTap: (LatLng coords) => selectToilet(null),
+      onTap: (LatLng coords) => widget.selectToilet(null),
     );
   }
 }

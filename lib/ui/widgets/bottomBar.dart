@@ -63,7 +63,7 @@ class BottomBar extends StatelessWidget {
                       7.5,
                     ),
                     child: Hero(
-                      tag: "title",
+                      tag: "inlineTitle",
                       child: Text(
                         hasSelected
                             ? selectedToilet.title

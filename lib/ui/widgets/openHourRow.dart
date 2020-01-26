@@ -11,15 +11,10 @@ class OpenHourRow extends StatefulWidget {
 
   @override
   _OpenHourRowState createState() =>
-      _OpenHourRowState(onChange, openHours, index);
+      _OpenHourRowState();
 }
 
 class _OpenHourRowState extends State<OpenHourRow> {
-  _OpenHourRowState(this.onChange, this.openHours, this.index);
-  final Function onChange;
-  final List<int> openHours;
-  final int index;
-
   @override
   Widget build(BuildContext context) {
     String day = days[(widget.index / 2).floor()];

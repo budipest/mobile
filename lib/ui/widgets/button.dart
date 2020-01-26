@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button(
-    this.text,
-    this.onTap, {
-    this.icon,
-    this.backgroundColor = Colors.white,
-    this.foregroundColor = Colors.black,
-    this.isBordered = false,
-    this.isMini = false,
-    this.borderRadius = 40.0,
-  });
+  const Button(this.text, this.onTap,
+      {this.icon,
+      this.backgroundColor = Colors.white,
+      this.foregroundColor = Colors.black,
+      this.isBordered = false,
+      this.isMini = false,
+      this.borderRadius = 40.0,
+      this.verticalPadding = 6,
+      this.horizontalPadding = 12});
   final IconData icon;
   final String text;
   final Function onTap;
@@ -19,13 +18,18 @@ class Button extends StatelessWidget {
   final bool isBordered;
   final bool isMini;
   final double borderRadius;
+  final double verticalPadding;
+  final double horizontalPadding;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onTap(),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+        padding: EdgeInsets.symmetric(
+          vertical: verticalPadding,
+          horizontal: horizontalPadding,
+        ),
         decoration: BoxDecoration(
           color: isBordered ? Colors.transparent : backgroundColor,
           border: Border.all(

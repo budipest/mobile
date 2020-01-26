@@ -14,6 +14,8 @@
     "rate": "Értékelés",
     "notes": "Megjegyzések",
     "newNote": "Új megjegyzés",
+    "newNotePlaceholder": "Ez a mosdó remek, mert...",
+    "send": "Elküldés",
     "addToilet": "Mosdó hozzáadása",
     "aboutUs": "Rólunk",
     "toiletName": "A mosdó neve",
