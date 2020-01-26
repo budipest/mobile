@@ -9,8 +9,9 @@ import 'dart:core';
 import '../models/toilet.dart';
 import './bitmapFromSvg.dart';
 
-Widget descriptionIcon(EdgeInsetsGeometry padding, String mode, String iconPath,
-    bool smaller, String text) {
+Widget descriptionIcon(
+    EdgeInsetsGeometry padding, String mode, bool smaller, String text,
+    {String iconPath, IconData icon}) {
   return Padding(
     padding: padding,
     child: Container(
@@ -29,11 +30,13 @@ Widget descriptionIcon(EdgeInsetsGeometry padding, String mode, String iconPath,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            SvgPicture.asset(
-              iconPath,
-              width: smaller ? 17.5 : 20,
-              height: smaller ? 17.5 : 20,
-            ),
+            icon != null
+                ? Icon(icon, size: smaller ? 17.5 : 20)
+                : SvgPicture.asset(
+                    iconPath,
+                    width: smaller ? 17.5 : 20,
+                    height: smaller ? 17.5 : 20,
+                  ),
             if (text != null)
               Padding(
                 padding: EdgeInsets.only(left: 5),
@@ -57,10 +60,20 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
   switch (toilet.entryMethod) {
     case EntryMethod.FREE:
       return descriptionIcon(
-          padding, "dark", "assets/icons/bottom/dark/tag_free.svg", true, null);
+        padding,
+        "dark",
+        true,
+        null,
+        iconPath: "assets/icons/bottom/dark/tag_free.svg",
+      );
     case EntryMethod.CONSUMERS:
-      return descriptionIcon(padding, "dark",
-          "assets/icons/bottom/dark/tag_guests.svg", true, null);
+      return descriptionIcon(
+        padding,
+        "dark",
+        true,
+        null,
+        iconPath: "assets/icons/bottom/dark/tag_guests.svg",
+      );
     case EntryMethod.PRICE:
       var priceIcons = List<Widget>();
       if (toilet.price != null) {
@@ -69,9 +82,9 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
             descriptionIcon(
               padding,
               "dark",
-              "assets/icons/bottom/dark/tag_paid.svg",
               true,
               "$value $currency",
+              iconPath: "assets/icons/bottom/dark/tag_paid.svg",
             ),
           );
         });
@@ -80,9 +93,9 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
           descriptionIcon(
             padding,
             "dark",
-            "assets/icons/bottom/dark/tag_paid.svg",
             true,
             null,
+            iconPath: "assets/icons/bottom/dark/tag_paid.svg",
           ),
         );
       }
@@ -94,9 +107,9 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
       return descriptionIcon(
         padding,
         "dark",
-        "assets/icons/bottom/dark/tag_key.svg",
         true,
         toilet.code != null ? toilet.code : "",
+        iconPath: "assets/icons/bottom/dark/tag_key.svg",
       );
     default:
       return null;
@@ -190,20 +203,12 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
       );
     } else {
       if (end > 1) {
-        if (end > 14) {
-          result.add(FlutterI18n.translate(
-            context,
-            "tomorrowUntil",
-            Map.fromIterables(["time"], [minuteToHourFormat(openHours[0])]),
-          ));
-        } else {
-          result.add(FlutterI18n.translate(
-            context,
-            "tomorrowUntil",
-            Map.fromIterables(
-                ["time"], [minuteToHourFormat(openHours[end + 1])]),
-          ));
-        }
+        result.add(FlutterI18n.translate(
+          context,
+          "tomorrowUntil",
+          Map.fromIterables(["time"],
+              [minuteToHourFormat(openHours[end + 1 >= 14 ? 0 : end + 1])]),
+        ));
       } else {
         result.add(FlutterI18n.translate(
           context,
@@ -247,9 +252,9 @@ List<Widget> describeToiletIcons(
     descriptionIcon(
       padding,
       mode,
-      "assets/icons/bottom/$mode/cat_$categoryStr.svg",
       smaller,
       null,
+      iconPath: "assets/icons/bottom/$mode/cat_$categoryStr.svg",
     ),
   );
 
@@ -264,9 +269,9 @@ List<Widget> describeToiletIcons(
         descriptionIcon(
           padding,
           mode,
-          "assets/icons/bottom/$mode/tag_$tagStr.svg",
           smaller,
           null,
+          iconPath: "assets/icons/bottom/$mode/tag_$tagStr.svg",
         ),
       );
     });
@@ -287,9 +292,9 @@ List<Widget> describeToiletIcons(
         descriptionIcon(
           padding,
           mode,
-          "assets/icons/bottom/$mode/tag_key.svg",
           smaller,
           '${((toilet.upvotes / (toilet.upvotes + toilet.downvotes)) * 100).round()}%',
+          icon: Icons.thumb_up,
         ),
       );
   }
