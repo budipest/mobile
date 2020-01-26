@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import 'dart:async';
 import 'dart:core';
@@ -144,10 +145,10 @@ Color coloredOpenState(List<int> openHours) {
   }
 }
 
-List<String> readableOpenState(List<int> openHours) {
+List<String> readableOpenState(List<int> openHours, BuildContext context) {
   List<String> result = [];
   if (openHours[0] >= openHours[1]) {
-    result.add("Ismeretlen nyitvatartási idő");
+    result.add(FlutterI18n.translate(context, "unknown"));
     result.add("");
     return result;
   }
@@ -163,25 +164,50 @@ List<String> readableOpenState(List<int> openHours) {
   }
 
   if (openHours[start] <= curr && curr <= openHours[end]) {
-    result.add("Nyitva ");
+    result.add(FlutterI18n.translate(context, "open") + " ");
     if (openHours[0] == 0 && openHours[1] == 1440) {
       result.add("24/7");
     } else {
-      result.add("${minuteToHourFormat(openHours[end])}-ig");
+      result.add(
+        FlutterI18n.translate(
+          context,
+          "todayUntil",
+          Map.fromIterables(["time"], [minuteToHourFormat(openHours[end])]),
+        ),
+      );
     }
   } else {
-    result.add("Zárva ");
+    result.add(FlutterI18n.translate(context, "closed") + " ");
     if (openHours[start] > curr) {
-      result.add("ma ${minuteToHourFormat(openHours[start])}-ig");
+      result.add(
+        FlutterI18n.translate(
+          context,
+          "todayUntil",
+          Map.fromIterables(["time"], [minuteToHourFormat(openHours[start])]),
+        ),
+      );
     } else {
       if (end > 1) {
         if (end > 14) {
-          result.add("holnap ${minuteToHourFormat(openHours[0])}-ig");
+          result.add(FlutterI18n.translate(
+            context,
+            "tomorrowUntil",
+            Map.fromIterables(["time"], [minuteToHourFormat(openHours[0])]),
+          ));
         } else {
-          result.add("holnap ${minuteToHourFormat(openHours[end + 1])}-ig");
+          result.add(FlutterI18n.translate(
+            context,
+            "tomorrowUntil",
+            Map.fromIterables(
+                ["time"], [minuteToHourFormat(openHours[end + 1])]),
+          ));
         }
       } else {
-        result.add("holnap ${minuteToHourFormat(openHours[start])}-ig");
+        result.add(FlutterI18n.translate(
+          context,
+          "tomorrowUntil",
+          Map.fromIterables(["time"], [minuteToHourFormat(openHours[start])]),
+        ));
       }
     }
   }

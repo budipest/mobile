@@ -63,7 +63,9 @@ class BottomBar extends StatelessWidget {
                       7.5,
                     ),
                     child: Text(
-                      hasSelected ? selectedToilet.title : FlutterI18n.translate(context, "recommendedToilet"),
+                      hasSelected
+                          ? selectedToilet.title
+                          : FlutterI18n.translate(context, "recommendedToilet"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22.0,
@@ -129,10 +131,14 @@ class BottomBar extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                     text: readableOpenState(
-                                        selectedToilet.openHours)[0]),
+                                  selectedToilet.openHours,
+                                  context,
+                                )[0]),
                                 TextSpan(
                                   text: readableOpenState(
-                                      selectedToilet.openHours)[1],
+                                    selectedToilet.openHours,
+                                    context,
+                                  )[1],
                                   style: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -150,7 +156,8 @@ class BottomBar extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(text: '${selectedToilet.distance} m'),
                                 TextSpan(
-                                  text: FlutterI18n.translate(context, "distanceFromYou"),
+                                  text: FlutterI18n.translate(
+                                      context, "distanceFromYou"),
                                   style: TextStyle(
                                     color: Colors.grey,
                                   ),

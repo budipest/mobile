@@ -1,30 +1,29 @@
 {
   "title": "Budipest",
   "continue": "Continue",
-
   "recommendedToilet": "Recommended toilet",
   "otherToilets": "Other toilets",
   "open": "Open",
   "closed": "Closed",
+  "unknown": "Unknown opening times",
+  "until": "until {time}",
+  "todayUntil": "today until {time}",
+  "tomorrowUntil": "tomorrow until {time}",
   "distanceFromYou": " away from you",
   "navigate": "Navigate",
   "rate": "Rating",
   "notes": "Notes",
   "newNote": "Add note",
-
   "addToilet": "Add toilet",
   "aboutUs": "About us",
-
   "toiletName": "The name of the toilet",
   "name": "Name",
-
   "toiletType": "The type of the toilet",
   "general": "general",
   "restaurant": "restaurant / café",
   "shop": "shop / mall",
   "gasStation": "gas station",
   "portable": "portable / temporary toilet",
-
   "toiletEntryMethod": "Compensation mode",
   "free": "free",
   "paid": "paid",
