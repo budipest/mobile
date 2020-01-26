@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/models/toilet.dart';
+import '../widgets/blackLayoutContainer.dart';
 import './addToiletLocation.dart';
 import './addToiletTitle.dart';
 import './addToiletCategory.dart';
@@ -112,15 +113,6 @@ class _AddToiletState extends State<AddToilet> {
     );
   }
 
-  double _getSizes() {
-    if (headerKey.currentContext == null) {
-      return 0;
-    }
-    final RenderBox renderBoxRed = headerKey.currentContext.findRenderObject();
-    final size = renderBoxRed.size;
-    return size.height - MediaQuery.of(context).padding.top;
-  }
-
   void onFABPressed() async {
     final toiletProvider = Provider.of<ToiletModel>(context);
 
@@ -161,109 +153,54 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
+    return BlackLayoutContainer(
+      context: context,
+      title: FlutterI18n.translate(context, "addToilet"),
+      fab: FloatingActionButton.extended(
         onPressed: onFABPressed,
         backgroundColor: Colors.black,
         label: Text(FlutterI18n.translate(context, "continue")),
         icon: Icon(Icons.navigate_next),
       ),
-      body: Stack(
+      child: PageView(
+        controller: _controller,
+        pageSnapping: true,
+        physics: _controller.hasClients
+            ? _controller.offset < 100 ? NeverScrollableScrollPhysics() : null
+            : NeverScrollableScrollPhysics(),
         children: <Widget>[
-          SafeArea(
-            top: false,
-            bottom: false,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: _getSizes(),
-              ),
-              child: PageView(
-                controller: _controller,
-                pageSnapping: true,
-                physics: _controller.hasClients
-                    ? _controller.offset < 100
-                        ? NeverScrollableScrollPhysics()
-                        : null
-                    : NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  FutureBuilder<Map<String, double>>(
-                    future: _location.getLocation(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        if (location == null) {
-                          location = LatLng(
-                            snapshot.data["latitude"],
-                            snapshot.data["longitude"],
-                          );
-                        }
-                        return AddToiletLocation(onLocationChanged, location);
-                      } else {
-                        return Text(
-                          "Töltjük a helyzetedet, egy pillanat türelmet",
-                        );
-                      }
-                    },
-                  ),
-                  AddToiletTitle(onTitleSubmitted, _controller, title),
-                  AddToiletCategory(onCategorySubmitted, category),
-                  AddToiletEntryMethod(
-                    onEntryMethodSubmitted,
-                    entryMethod,
-                    price,
-                    onPriceChanged,
-                    code,
-                    onCodeSubmitted,
-                    hasEUR,
-                    toggleEUR,
-                  ),
-                  AddToiletOpenHours(onOpenHoursChanged, openHours),
-                  AddToiletTags(onTagToggled, tags),
-                ],
-              ),
-            ),
+          FutureBuilder<Map<String, double>>(
+            future: _location.getLocation(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (location == null) {
+                  location = LatLng(
+                    snapshot.data["latitude"],
+                    snapshot.data["longitude"],
+                  );
+                }
+                return AddToiletLocation(onLocationChanged, location);
+              } else {
+                return Text(
+                  "Töltjük a helyzetedet, egy pillanat türelmet",
+                );
+              }
+            },
           ),
-          Container(
-            key: headerKey,
-            decoration: BoxDecoration(color: Colors.black),
-            width: MediaQuery.of(context).size.width,
-            child: SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(22, 30, 30, 30),
-                child: Stack(
-                  children: <Widget>[
-                    RawMaterialButton(
-                      shape: CircleBorder(),
-                      fillColor: Colors.white,
-                      elevation: 5.0,
-                      constraints: BoxConstraints(),
-                      padding: EdgeInsets.all(0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Icon(
-                          Icons.close,
-                          color: Colors.black,
-                          size: 30.0,
-                        ),
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 75, left: 4),
-                      child: Text(
-                        FlutterI18n.translate(context, "addToilet"),
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          AddToiletTitle(onTitleSubmitted, _controller, title),
+          AddToiletCategory(onCategorySubmitted, category),
+          AddToiletEntryMethod(
+            onEntryMethodSubmitted,
+            entryMethod,
+            price,
+            onPriceChanged,
+            code,
+            onCodeSubmitted,
+            hasEUR,
+            toggleEUR,
           ),
+          AddToiletOpenHours(onOpenHoursChanged, openHours),
+          AddToiletTags(onTagToggled, tags),
         ],
       ),
     );

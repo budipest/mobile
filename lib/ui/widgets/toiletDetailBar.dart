@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../core/models/toilet.dart';
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/services/api.dart';
 import './button.dart';
 import '../../locator.dart';
+import '../screens/addNote.dart';
 
 class ToiletDetailBar extends StatefulWidget {
   const ToiletDetailBar(this.toilet);
@@ -22,6 +25,11 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
   Toilet toilet;
   int myVote;
   API _api = locator<API>();
+  String note;
+
+  void addNote(String note) {
+    print(note);
+  }
 
   void vote(SharedPreferences snapshot, ToiletModel toiletProvider,
       Toilet toilet, bool isUpvote) {
@@ -75,6 +83,8 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
   @override
   Widget build(BuildContext context) {
     final toiletProvider = Provider.of<ToiletModel>(context);
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
     return Expanded(
       child: Column(
         children: <Widget>[
@@ -131,33 +141,58 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                       ],
                     );
                   } else {
-                    return Text("Betöltés...");
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                 },
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  FlutterI18n.translate(context, "notes"),
-                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-                Button(
-                  FlutterI18n.translate(context, "newNote"),
-                  () {
-                    print("új megjegyzés");
-                  },
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  isMini: true,
-                ),
-              ],
-            ),
+          StreamBuilder<FirebaseUser>(
+            stream: _auth.onAuthStateChanged,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                FirebaseUser user = snapshot.data;
+                if (user == null) {
+                  _auth.signInAnonymously();
+                }
+                return Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        FlutterI18n.translate(context, "notes"),
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                      Button(
+                        FlutterI18n.translate(context, "newNote"),
+                        () {
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              fullscreenDialog: true,
+                              builder: (context) => AddNote(toilet, addNote, note),
+                            ),
+                          );
+                        },
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        isMini: true,
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
           ),
         ],
       ),

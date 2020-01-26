@@ -170,21 +170,21 @@ class HomeState extends State<Home>
                     );
                   } else if (dataSnapshot.hasError) {
                     return Center(
-                      child: Text("haha el succoltak az adatok :):(:):("),
+                      child: Text("hiba tortent es nem tudtuk leszedni az adatokat :(((("),
                     );
                   } else {
                     return Center(
-                      child: Text("töltjük le z adatokat, chill <33333333"),
+                      child: CircularProgressIndicator(),
                     );
                   }
                 });
           } else if (locationSnapshot.hasError) {
             return Center(
-              child: Text("ok szóval nem tudjuk honnan vagy geci :////"),
+              child: Text("hiba tortent es nem tudjuk h hol vagy geci :////"),
             );
           } else {
             return Center(
-              child: Text("na, még keresünk téged, chill <<<3333"),
+              child: CircularProgressIndicator(),
             );
           }
         },

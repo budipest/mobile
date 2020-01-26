@@ -33,6 +33,7 @@ dependencies:
 
   firebase_core: ^0.4.0
   firebase_analytics: any
+  firebase_auth: any
   cloud_firestore: ^0.12.5
   geoflutterfire: 2.0.3+5
   fluster: 1.1.2
