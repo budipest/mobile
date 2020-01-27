@@ -1,22 +1,19 @@
 class Note {
   DateTime addDate;
-  String title;
+  String text;
   String userId;
 
   // Default constructor
-  Note(this.addDate, this.title, this.userId);
-
-  // Named constructor
-  Note.origin() {
+  Note(String text, String uid) {
     addDate = new DateTime.now();
-    title = "";
-    userId = "";
+    this.text = text;
+    this.userId = uid;
   }
 
   toJson() {
     return {
       "addDate": addDate.toString(),
-      "title": title,
+      "text": text,
       "userId": userId
     };
   }

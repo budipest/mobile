@@ -48,7 +48,11 @@ class API {
     return ref.add(data);
   }
 
-  Future<void> updateDocument(Map data, String id) {
+  Future<void> updateDocument(Map<String, dynamic> data, String id) {
     return ref.document(id).updateData(data);
+  }
+
+  Future<void> addToArray(List data, String id, String field) {
+    return ref.document(id).updateData({field: FieldValue.arrayUnion(data)});
   }
 }

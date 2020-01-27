@@ -7,19 +7,25 @@ import '../widgets/button.dart';
 import '../widgets/blackLayoutContainer.dart';
 import '../widgets/textInput.dart';
 
-class AddNote extends StatelessWidget {
-  const AddNote(this.toilet, this.onNoteSubmitted, this.note);
-  final Toilet toilet;
+class AddNote extends StatefulWidget {
+  AddNote(this.toilet, this.onNoteSubmitted);
   final Function(String) onNoteSubmitted;
-  final String note;
+  final Toilet toilet;
+
+  @override
+  _AddNoteState createState() => _AddNoteState();
+}
+
+class _AddNoteState extends State<AddNote> {
+  String note;
 
   @override
   Widget build(BuildContext context) {
-    final List<Note> notes = toilet.notes;
+    final List<Note> notes = widget.toilet.notes;
 
     return BlackLayoutContainer(
       context: context,
-      inlineTitle: toilet.title,
+      inlineTitle: widget.toilet.title,
       child: Padding(
         padding: EdgeInsets.fromLTRB(30, 45, 30, 30),
         child: Column(
@@ -36,17 +42,19 @@ class AddNote extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
               child: TextInput(
-                FlutterI18n.translate(context, "newNotePlaceholder"),
-                note,
-                (String title) => onNoteSubmitted(note),
-              ),
+                  FlutterI18n.translate(context, "newNotePlaceholder"), note,
+                  (String newNote) {
+                setState(() {
+                  note = newNote;
+                });
+              }),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Button(
                   FlutterI18n.translate(context, "send"),
-                  onNoteSubmitted(note),
+                  () => widget.onNoteSubmitted(note),
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   isMini: false,

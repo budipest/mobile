@@ -118,7 +118,7 @@ class _AddToiletState extends State<AddToilet> {
 
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
       var data = Toilet(
-        new Uuid().toString(),
+        new Uuid().v4.toString(),
         GeoFirePoint(location.latitude, location.longitude),
         title,
         new DateTime.now(),

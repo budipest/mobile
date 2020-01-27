@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './cardTemplate.dart';
 import '../../core/models/toilet.dart';
 import '../../core/common/openHourUtils.dart';
 
@@ -11,72 +12,62 @@ class ToiletCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> icons =
         describeToiletIcons(toilet, "light", false, false);
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.85,
-      margin: EdgeInsets.only(bottom: 15),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          stops: [0.02, 0.02],
-          colors: [coloredOpenState(toilet.openHours), Colors.grey[200]],
-        ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(3.0),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-        child: Row(
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.60,
-                  ),
-                  child: Text(
-                    toilet.title,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+    return CardTemplate(
+      Row(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.60,
                 ),
-                Text(
-                  "${toilet.distance} m",
+                child: Text(
+                  toilet.title,
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.black,
                     fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                if (icons.length > 2)
-                  Padding(
-                    padding: EdgeInsets.only(top: 7.5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ...describeToiletIcons(
-                          toilet,
-                          "light",
-                          false,
-                          false,
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-            if (icons.length <= 2) Spacer(),
-            if (icons.length <= 2)
-              ...describeToiletIcons(
-                toilet,
-                "light",
-                false,
-                false,
               ),
-          ],
-        ),
+              Text(
+                "${toilet.distance} m",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16.0,
+                ),
+              ),
+              if (icons.length > 2)
+                Padding(
+                  padding: EdgeInsets.only(top: 7.5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ...describeToiletIcons(
+                        toilet,
+                        "light",
+                        false,
+                        false,
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+          if (icons.length <= 2) Spacer(),
+          if (icons.length <= 2)
+            ...describeToiletIcons(
+              toilet,
+              "light",
+              false,
+              false,
+            ),
+        ],
+      ),
+      gradient: LinearGradient(
+        stops: [0.02, 0.02],
+        colors: [coloredOpenState(toilet.openHours), Colors.grey[200]],
       ),
     );
   }

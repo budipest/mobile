@@ -59,7 +59,7 @@ class Toilet {
 
   // Named constructor
   Toilet.origin() {
-    id = new Uuid().toString();
+    id = new Uuid().v4().toString();
     geopoint = new GeoFirePoint(0, 0);
     title = "";
     addDate = new DateTime.now();
@@ -73,7 +73,7 @@ class Toilet {
   }
 
   Toilet.fromMap(Map snapshot, String id)
-      : id = snapshot["id"] ?? id,
+      : id = id,
         geopoint = new GeoFirePoint(
           snapshot["geopoint"]["geopoint"].latitude,
           snapshot["geopoint"]["geopoint"].longitude,
@@ -85,9 +85,9 @@ class Toilet {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         tags =
             snapshot["Tags"] != null ? _standariseTags(snapshot["Tags"]) : [],
-        // notes = snapshot["notes"] != null
-        //     ? _standariseNotes(snapshot["notes"])
-        //     : new List<Note>(),
+        notes = snapshot["notes"] != null
+            ? _standariseNotes(snapshot["notes"])
+            : new List<Note>(),
         upvotes = snapshot["upvotes"] != null ? snapshot["upvotes"] : 0,
         downvotes = snapshot["downvotes"] != null ? snapshot["downvotes"] : 0,
         entryMethod =
@@ -152,27 +152,34 @@ class Toilet {
     List<Tag> _tags = [];
     if (input != null) {
       input.forEach((dynamic tag, dynamic value) {
-        switch (tag) {
-          case "WHEELCHAIR_ACCESSIBLE":
-            {
-              if (value == true) _tags.add(Tag.WHEELCHAIR_ACCESSIBLE);
-              break;
-            }
-          case "BABY_ROOM":
-            {
-              if (value == true) _tags.add(Tag.BABY_ROOM);
-              break;
-            }
+        if (value == true) {
+          switch (tag) {
+            case "WHEELCHAIR_ACCESSIBLE":
+              {
+                _tags.add(Tag.WHEELCHAIR_ACCESSIBLE);
+                break;
+              }
+            case "BABY_ROOM":
+              {
+                _tags.add(Tag.BABY_ROOM);
+                break;
+              }
+          }
         }
       });
     }
     return _tags;
   }
 
-  // static List<Note> _standariseNotes(Map input) {
-  //   List<Note> _notes = [];
-  //   return _notes;
-  // }
+  static List<Note> _standariseNotes(List<dynamic> input) {
+    List<Note> _notes = [];
+    if (input != null) {
+      input.forEach((dynamic val) {
+        print(val);
+      });
+    }
+    return _notes;
+  }
 
   static EntryMethod _standariseEntryMethod(String input) {
     switch (input) {

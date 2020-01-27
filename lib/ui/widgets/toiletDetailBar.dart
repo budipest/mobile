@@ -8,9 +8,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../core/models/toilet.dart';
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/services/api.dart';
+import '../../core/models/note.dart';
 import './button.dart';
 import '../../locator.dart';
 import '../screens/addNote.dart';
+import './noteCard.dart';
 
 class ToiletDetailBar extends StatefulWidget {
   const ToiletDetailBar(this.toilet);
@@ -24,11 +26,15 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
   ToiletDetailBarState();
   int myVote;
   API _api = locator<API>();
-  String note;
 
-  void addNote(String note) {
-    print("a new note is on its way to the server!!");
-    print(note);
+  void addNote(String noteText, String uid) async {
+    widget.toilet.notes.add(Note(noteText, uid));
+    _api.addToArray(
+      widget.toilet.notes.map((Note note) => note.toJson()).toList(),
+      widget.toilet.id,
+      "notes",
+    );
+    Navigator.of(context).pop();
   }
 
   void vote(SharedPreferences snapshot, ToiletModel toiletProvider,
@@ -76,10 +82,10 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
   void castVote(
       SharedPreferences snapshot, ToiletModel toiletProvider, int vote) async {
     snapshot.setInt(widget.toilet.id, vote);
-    _api.updateDocument({
-      "upvotes": widget.toilet.upvotes,
-      "downvotes": widget.toilet.downvotes
-    }, widget.toilet.id);
+    Map<String, dynamic> votes = new Map<String, dynamic>();
+    votes["upvotes"] = widget.toilet.upvotes;
+    votes["downvotes"] = widget.toilet.downvotes;
+    _api.updateDocument(votes, widget.toilet.id);
   }
 
   @override
@@ -180,8 +186,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                               fullscreenDialog: true,
                               builder: (context) => AddNote(
                                 widget.toilet,
-                                addNote,
-                                note,
+                                (String newNote) => addNote(newNote, user.uid),
                               ),
                             ),
                           );
@@ -199,6 +204,19 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                 );
               }
             },
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.only(top: 10),
+              itemCount: widget.toilet.notes.length,
+              itemBuilder: (BuildContext ctxt, int index) => GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  // selectToilet(toilets[index]);
+                },
+                child: NoteCard(widget.toilet.notes[index]),
+              ),
+            ),
           ),
         ],
       ),
