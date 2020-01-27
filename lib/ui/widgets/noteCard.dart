@@ -9,16 +9,39 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardTemplate(
-      Row(children: <Widget>[
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: CardTemplate(
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Text(note.text),
-            Text("itt kellene lennie egy notenak")
+            Text(
+              note.text,
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    note.addDate.toString().substring(0, 16),
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
-      ]),
+        gradient: LinearGradient(
+          stops: [0],
+          colors: [Colors.grey[100]],
+        ),
+        verticalPadding: 25,
+      ),
     );
   }
 }

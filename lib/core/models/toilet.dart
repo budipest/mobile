@@ -96,7 +96,8 @@ class Toilet {
         price = snapshot["price"] != null && snapshot["price"] != 0
             ? Map.from(snapshot["price"])
             : null,
-        code = snapshot["code"] ?? null;
+        code = snapshot["code"] ?? null,
+        addDate = DateTime.parse(snapshot["addDate"]) ?? new DateTime.now();
 
   int calculateDistance(pos) {
     int dist =
@@ -176,8 +177,10 @@ class Toilet {
     if (input != null) {
       input.forEach((dynamic val) {
         print(val);
+        _notes.add(Note.fromMap(val));
       });
     }
+    _notes.sort((a, b) => b.addDate.compareTo(a.addDate));
     return _notes;
   }
 
