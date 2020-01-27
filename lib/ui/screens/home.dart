@@ -8,7 +8,9 @@ import '../widgets/map.dart';
 import '../widgets/sidebar.dart';
 import '../widgets/bottomBar.dart';
 import '../../core/viewmodels/ToiletModel.dart';
+import '../../core/viewmodels/UserModel.dart';
 import '../../core/models/toilet.dart';
+import '../../locator.dart';
 
 class Home extends StatefulWidget {
   const Home();
@@ -21,6 +23,7 @@ class HomeState extends State<Home>
     with SingleTickerProviderStateMixin, AfterLayoutMixin<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final Location _location = new Location();
+  final UserModel userModel = locator<UserModel>();
 
   ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   PanelController _pc = new PanelController();
@@ -29,6 +32,7 @@ class HomeState extends State<Home>
 
   @override
   void initState() {
+    userModel.authenticate();
     super.initState();
   }
 
@@ -170,7 +174,8 @@ class HomeState extends State<Home>
                     );
                   } else if (dataSnapshot.hasError) {
                     return Center(
-                      child: Text("hiba tortent es nem tudtuk leszedni az adatokat :(((("),
+                      child: Text(
+                          "hiba tortent es nem tudtuk leszedni az adatokat :(((("),
                     );
                   } else {
                     return Center(

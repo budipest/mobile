@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../../core/models/note.dart';
+
+import '../../core/viewmodels/UserModel.dart';
 import './noteCard.dart';
+import '../../locator.dart';
 
 class NoteList extends StatelessWidget {
   const NoteList(this.notes);
@@ -8,6 +12,7 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserModel userModel = locator<UserModel>();
     return Expanded(
       child: Hero(
         tag: "notelist",
@@ -17,9 +22,12 @@ class NoteList extends StatelessWidget {
           itemBuilder: (BuildContext ctxt, int index) => GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {
-              // selectToilet(toilets[index]);
+              // TODO: implement reporting of a toilet
             },
-            child: NoteCard(notes[index]),
+            child: NoteCard(
+              notes[index],
+              isMine: notes[index].userId == userModel.userId,
+            ),
           ),
         ),
       ),

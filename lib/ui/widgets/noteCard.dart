@@ -4,8 +4,9 @@ import './cardTemplate.dart';
 import '../../core/models/note.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard(this.note);
+  const NoteCard(this.note, {this.isMine = false});
   final Note note;
+  final bool isMine;
 
   @override
   Widget build(BuildContext context) {

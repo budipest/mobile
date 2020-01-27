@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../core/viewmodels/UserModel.dart';
 import '../../core/models/toilet.dart';
-import '../../core/services/api.dart';
 import '../../core/models/note.dart';
-import './button.dart';
-import '../../locator.dart';
+import '../../core/services/api.dart';
 import '../screens/addNote.dart';
+import '../../locator.dart';
+import './button.dart';
 import './noteList.dart';
 import './rateBar.dart';
 
@@ -23,6 +23,7 @@ class ToiletDetailBar extends StatefulWidget {
 class ToiletDetailBarState extends State<ToiletDetailBar> {
   ToiletDetailBarState();
   API _api = locator<API>();
+  UserModel userModel = locator<UserModel>();
 
   void addNote(String noteText, String uid) async {
     widget.toilet.notes.insert(0, Note(noteText, uid));
@@ -36,8 +37,6 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-
     return Expanded(
       child: Column(
         children: <Widget>[
@@ -48,57 +47,42 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
               child: RateBar(widget.toilet, _api),
             ),
           ),
-          StreamBuilder<FirebaseUser>(
-            stream: _auth.onAuthStateChanged,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                FirebaseUser user = snapshot.data;
-                if (user == null) {
-                  _auth.signInAnonymously();
-                }
-                return Padding(
-                  padding: EdgeInsets.all(24.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        FlutterI18n.translate(context, "notes"),
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Spacer(),
-                      Hero(
-                        tag: "addNoteButton",
-                        child: Button(
-                          FlutterI18n.translate(context, "newNote"),
-                          () {
-                            Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => AddNote(
-                                  widget.toilet,
-                                  (String newNote) =>
-                                      addNote(newNote, user.uid),
-                                ),
-                              ),
-                            );
-                          },
-                          backgroundColor: Colors.black,
-                          foregroundColor: Colors.white,
-                          isMini: true,
-                        ),
-                      ),
-                    ],
+          Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  FlutterI18n.translate(context, "notes"),
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
+                ),
+                Spacer(),
+                Hero(
+                  tag: "addNoteButton",
+                  child: Button(
+                    FlutterI18n.translate(context, "newNote"),
+                    () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => AddNote(
+                            widget.toilet,
+                            (String newNote) =>
+                                addNote(newNote, userModel.userId),
+                          ),
+                        ),
+                      );
+                    },
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    isMini: true,
+                  ),
+                ),
+              ],
+            ),
           ),
           NoteList(widget.toilet.notes),
         ],

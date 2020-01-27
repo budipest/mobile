@@ -10,6 +10,7 @@ import './ui/screens/home.dart';
 import './ui/screens/addToilet.dart';
 
 import './core/viewmodels/ToiletModel.dart';
+import './core/viewmodels/UserModel.dart';
 import './core/common/variables.dart';
 
 import './locator.dart';
@@ -37,7 +38,8 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (context) => locator<ToiletModel>())
+        ChangeNotifierProvider(builder: (context) => locator<ToiletModel>()),
+        ChangeNotifierProvider(builder: (context) => locator<UserModel>())
       ],
       child: MaterialApp(
         title: "Budipest",
