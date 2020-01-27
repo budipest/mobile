@@ -22,8 +22,6 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Note> notes = widget.toilet.notes;
-
     return BlackLayoutContainer(
       context: context,
       inlineTitle: widget.toilet.title,
@@ -75,7 +73,7 @@ class _AddNoteState extends State<AddNote> {
                   ],
                 ),
               ),
-              NoteList(widget.toilet.notes),
+              NoteList(widget.toilet),
             ],
           ),
         ),

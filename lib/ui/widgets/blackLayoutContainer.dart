@@ -18,7 +18,6 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
   GlobalKey headerKey = GlobalKey();
 
   double _getSizes() {
-    print(headerKey.currentContext);
     if (headerKey.currentContext == null) {
       return 0;
     }

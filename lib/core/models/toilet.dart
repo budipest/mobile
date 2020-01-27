@@ -176,7 +176,6 @@ class Toilet {
     List<Note> _notes = [];
     if (input != null) {
       input.forEach((dynamic val) {
-        print(val);
         _notes.add(Note.fromMap(val));
       });
     }

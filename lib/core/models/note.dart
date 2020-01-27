@@ -1,5 +1,3 @@
-import 'package:uuid/uuid.dart';
-
 class Note {
   DateTime addDate;
   String text;
@@ -14,7 +12,7 @@ class Note {
 
   Note.fromMap(Map snapshot)
       : text = snapshot["text"] ?? "",
-        userId = snapshot["userId"] ?? new Uuid().v4().toString(),
+        userId = snapshot["userId"] ?? "",
         addDate = DateTime.parse(snapshot["addDate"]) ?? new DateTime.now();
 
   toJson() {

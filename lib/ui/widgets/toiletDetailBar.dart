@@ -84,7 +84,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
               ],
             ),
           ),
-          NoteList(widget.toilet.notes),
+          NoteList(widget.toilet),
         ],
       ),
     );

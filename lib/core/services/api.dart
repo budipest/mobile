@@ -55,4 +55,8 @@ class API {
   Future<void> addToArray(List data, String id, String field) {
     return ref.document(id).updateData({field: FieldValue.arrayUnion(data)});
   }
+
+  Future<void> removeFromArray(List data, String id, String field) {
+    return ref.document(id).updateData({field: FieldValue.arrayRemove(data)});
+  }
 }
