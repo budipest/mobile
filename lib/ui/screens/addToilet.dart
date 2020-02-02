@@ -43,19 +43,19 @@ class _AddToiletState extends State<AddToilet> {
 
   List<Tag> tags = new List<Tag>();
 
-  void onTitleSubmitted(String text) {
+  void onTitleChanged(String text) {
     setState(() {
       title = text;
     });
   }
 
-  void onCategorySubmitted(Category newCategory) {
+  void onCategoryChanged(Category newCategory) {
     setState(() {
       category = newCategory;
     });
   }
 
-  void onEntryMethodSubmitted(EntryMethod entryMethodValue) {
+  void onEntryMethodChanged(EntryMethod entryMethodValue) {
     setState(() {
       entryMethod = entryMethodValue;
     });
@@ -81,7 +81,7 @@ class _AddToiletState extends State<AddToilet> {
     });
   }
 
-  void onCodeSubmitted(String text) {
+  void onCodeChanged(String text) {
     setState(() {
       code = text;
     });
@@ -106,11 +106,37 @@ class _AddToiletState extends State<AddToilet> {
     });
   }
 
+  bool validate() {
+    int position =
+        (_controller.offset / MediaQuery.of(context).size.width).round();
+
+    switch (position) {
+      case 1:
+        {
+          return title != null;
+        }
+      case 2:
+        {
+          return category != null;
+        }
+      case 3:
+        {
+          return entryMethod != EntryMethod.UNKNOWN;
+        }
+      default:
+        {
+          return true;
+        }
+    }
+  }
+
   void nextPage() {
-    _controller.nextPage(
-      duration: Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-    );
+    if (validate()) {
+      _controller.nextPage(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   void onFABPressed() async {
@@ -118,7 +144,7 @@ class _AddToiletState extends State<AddToilet> {
 
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
       var data = Toilet(
-        new Uuid().v4.toString(),
+        new Uuid().v1(),
         GeoFirePoint(location.latitude, location.longitude),
         title,
         new DateTime.now(),
@@ -187,14 +213,14 @@ class _AddToiletState extends State<AddToilet> {
               }
             },
           ),
-          AddToiletTitle(onTitleSubmitted),
-          AddToiletCategory(onCategorySubmitted, category),
+          AddToiletTitle(onTitleChanged),
+          AddToiletCategory(onCategoryChanged, category),
           AddToiletEntryMethod(
-            onEntryMethodSubmitted,
+            onEntryMethodChanged,
             entryMethod,
             price,
             onPriceChanged,
-            onCodeSubmitted,
+            onCodeChanged,
             hasEUR,
             toggleEUR,
           ),

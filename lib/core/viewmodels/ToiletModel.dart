@@ -27,20 +27,6 @@ class ToiletModel extends ChangeNotifier {
     return _api.streamDataCollection();
   }
 
-  Stream<List<Toilet>> streamToilets() {
-    return _api.streamDataCollection().map((list) => list.documents
-        .map((f) {
-          if (f.data["geopoint"] != null) {
-            return Toilet.fromMap(f.data, f.documentID);
-          } else {
-            print(f.documentID);
-            return null;
-          }
-        })
-        .cast<Toilet>()
-        .toList());
-  }
-
   Future uploadToilet(Toilet data) async {
     var result = await _api.addDocument(data.toJson());
 

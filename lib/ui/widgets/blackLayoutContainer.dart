@@ -16,14 +16,23 @@ class BlackLayoutContainer extends StatefulWidget {
 
 class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
   GlobalKey headerKey = GlobalKey();
+  double height = 0;
 
-  double _getSizes() {
-    if (headerKey.currentContext == null) {
-      return 0;
-    }
+  @override
+  initState() {
+    //calling the getHeight Function after the Layout is Rendered
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getSizes());
+
+    super.initState();
+  }
+
+  void _getSizes() {
     final RenderBox renderBoxRed = headerKey.currentContext.findRenderObject();
     final size = renderBoxRed.size;
-    return size.height;
+    setState(() {
+      height = size.height;
+    });
+    // return size.height;
   }
 
   @override
@@ -34,7 +43,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-              top: _getSizes(),
+              top: height,
             ),
             child: widget.child,
           ),
@@ -76,6 +85,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                               constraints: BoxConstraints(maxHeight: 60),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Padding(
                                     padding: EdgeInsets.only(

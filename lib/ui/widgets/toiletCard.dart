@@ -20,7 +20,7 @@ class ToiletCard extends StatelessWidget {
             children: <Widget>[
               ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.60,
+                  maxWidth: MediaQuery.of(context).size.width * 0.50,
                 ),
                 child: Text(
                   toilet.title,
