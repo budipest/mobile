@@ -31,9 +31,8 @@ Widget affix(String text, bool isPrefix,
 
 class TextInput extends StatelessWidget {
   const TextInput(
-    this.placeholder,
-    this.text,
-    this.onTextChanged, {
+    this.placeholder, {
+    this.onTextChanged,
     this.isDark = false,
     this.prefixText,
     this.suffixText,
@@ -41,7 +40,6 @@ class TextInput extends StatelessWidget {
   });
   final Function onTextChanged;
   final String placeholder;
-  final String text;
   final bool isDark;
   final String prefixText;
   final String suffixText;
@@ -49,9 +47,6 @@ class TextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController();
-    textEditingController.text = text;
-
     return Container(
       decoration: BoxDecoration(
         color: isDark ? Colors.grey[900] : Colors.grey[200],
@@ -64,7 +59,6 @@ class TextInput extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
               child: TextField(
-                controller: textEditingController,
                 keyboardType: keyboardType,
                 style: TextStyle(
                   fontSize: 18.0,

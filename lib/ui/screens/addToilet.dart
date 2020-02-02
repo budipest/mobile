@@ -187,14 +187,13 @@ class _AddToiletState extends State<AddToilet> {
               }
             },
           ),
-          AddToiletTitle(onTitleSubmitted, _controller, title),
+          AddToiletTitle(onTitleSubmitted),
           AddToiletCategory(onCategorySubmitted, category),
           AddToiletEntryMethod(
             onEntryMethodSubmitted,
             entryMethod,
             price,
             onPriceChanged,
-            code,
             onCodeSubmitted,
             hasEUR,
             toggleEUR,

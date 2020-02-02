@@ -12,7 +12,7 @@ class AddToiletCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+      padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
       child: ListView(
         children: <Widget>[
           Text(

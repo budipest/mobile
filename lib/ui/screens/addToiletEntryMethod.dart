@@ -12,7 +12,6 @@ class AddToiletEntryMethod extends StatelessWidget {
     this.selectedEntryMethod,
     this.price,
     this.onPriceChanged,
-    this.code,
     this.onCodeSubmitted,
     this.hasEUR,
     this.toggleEUR,
@@ -23,13 +22,12 @@ class AddToiletEntryMethod extends StatelessWidget {
   final Function toggleEUR;
   final EntryMethod selectedEntryMethod;
   final Map price;
-  final String code;
   final bool hasEUR;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+      padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
       child: ListView(
         children: <Widget>[
           Text(
@@ -60,8 +58,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                 children: <Widget>[
                   TextInput(
                     FlutterI18n.translate(context, "price"),
-                    price["HUF"] != null ? price["HUF"].toString() : null,
-                    (String input) => onPriceChanged(input, "HUF"),
+                    onTextChanged: (String input) => onPriceChanged(input, "HUF"),
                     isDark: true,
                     suffixText: "HUF",
                     keyboardType: TextInputType.number,
@@ -72,8 +69,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                           child: 
                               TextInput(
                                 FlutterI18n.translate(context, "priceAlternative"),
-                                price["EUR"] != null ? price["EUR"].toString() : null,
-                                (String input) => onPriceChanged(input, "EUR"),
+                                onTextChanged: (String input) => onPriceChanged(input, "EUR"),
                                 isDark: true,
                                 suffixText: "EUR",
                                 keyboardType: TextInputType.number,
@@ -114,8 +110,7 @@ class AddToiletEntryMethod extends StatelessWidget {
               FlutterI18n.translate(context, "key"),
               TextInput(
                 "",
-                code,
-                onCodeSubmitted,
+                onTextChanged: onCodeSubmitted,
                 isDark: true,
                 prefixText: FlutterI18n.translate(context, "code"),
               ),

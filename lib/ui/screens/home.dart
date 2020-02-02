@@ -19,8 +19,7 @@ class Home extends StatefulWidget {
   State<StatefulWidget> createState() => HomeState();
 }
 
-class HomeState extends State<Home>
-    with SingleTickerProviderStateMixin, AfterLayoutMixin<Home> {
+class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final Location _location = new Location();
   final UserModel userModel = locator<UserModel>();
@@ -36,13 +35,6 @@ class HomeState extends State<Home>
     super.initState();
   }
 
-  @override
-  void afterFirstLayout(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _pc.animatePanelToPosition(0.2);
-    });
-  }
-
   void onBottomBarDrag(double val) {
     _notifier.value = val;
     if (val < 0.2) {
@@ -54,10 +46,8 @@ class HomeState extends State<Home>
     setState(() {
       _selected = toilet;
     });
-    if (toilet != null) {
-      _pc.animatePanelToPosition(0);
-    } else {
-      _pc.animatePanelToPosition(0);
+    if (toilet == null) {
+      _pc.animatePanelToPosition(0.2);
     }
   }
 
@@ -73,15 +63,11 @@ class HomeState extends State<Home>
         builder: (context, locationSnapshot) {
           if (locationSnapshot.hasData) {
             return StreamBuilder(
-                stream: toiletProvider.fetchQueriedData(
-                  5,
-                  locationSnapshot.data["latitude"],
-                  locationSnapshot.data["longitude"],
-                ),
+                stream: toiletProvider.fetchDataAsStream(),
                 builder: (context, dataSnapshot) {
                   if (dataSnapshot.hasData) {
                     // Convert raw toilet _data into mapped and classified Toilet objects
-                    _data = dataSnapshot.data
+                    _data = dataSnapshot.data.documents
                         .map((doc) => Toilet.fromMap(doc.data, doc.documentID))
                         .toList()
                         .cast<Toilet>();

@@ -14,7 +14,7 @@ class AddToiletOpenHours extends StatelessWidget {
     bool isNonStop =
         openHours[0] == 0 && openHours[1] == 1440 && openHours.length == 2;
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+      padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
       child: ListView(
         children: <Widget>[
           Text(

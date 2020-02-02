@@ -4,11 +4,11 @@ class BlackLayoutContainer extends StatefulWidget {
   BlackLayoutContainer(
       {this.context, this.child, this.title, this.fab, this.inlineTitle});
 
-  BuildContext context;
-  Widget child;
-  String title;
-  String inlineTitle;
-  FloatingActionButton fab;
+  final BuildContext context;
+  final Widget child;
+  final String title;
+  final String inlineTitle;
+  final FloatingActionButton fab;
 
   @override
   _BlackLayoutContainerState createState() => _BlackLayoutContainerState();
@@ -23,25 +23,21 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
     }
     final RenderBox renderBoxRed = headerKey.currentContext.findRenderObject();
     final size = renderBoxRed.size;
-    return size.height - MediaQuery.of(widget.context).padding.top;
+    return size.height;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: widget.fab,
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          // SafeArea(
-          //   top: false,
-          //   bottom: false,
-          //   child: Padding(
-          //     padding: EdgeInsets.only(
-          //       top: _getSizes(),
-          //     ),
-          //     child: widget.child,
-          //   ),
-          // ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: _getSizes(),
+            ),
+            child: widget.child,
+          ),
           Container(
             key: headerKey,
             decoration: BoxDecoration(color: Colors.black),
@@ -77,6 +73,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                         if (widget.inlineTitle != null)
                           Flexible(
                             child: Container(
+                              constraints: BoxConstraints(maxHeight: 60),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
@@ -86,7 +83,6 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                                     child: Hero(
                                       tag: "inlineTitle",
                                       child: SizedBox(
-                                        width: 400,
                                         child: Text(
                                           widget.inlineTitle,
                                           maxLines: 2,
@@ -125,7 +121,6 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
               ),
             ),
           ),
-          widget.child
         ],
       ),
     );

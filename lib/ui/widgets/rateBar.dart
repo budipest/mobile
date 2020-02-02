@@ -12,8 +12,8 @@ import './button.dart';
 class RateBar extends StatefulWidget {
   RateBar(this.toilet, this._api);
   Toilet toilet;
-  int myVote;
   API _api;
+  int myVote;
 
   @override
   _RateBarState createState() => _RateBarState();

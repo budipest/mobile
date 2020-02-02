@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../../core/models/note.dart';
@@ -31,7 +30,6 @@ class NoteList extends StatelessWidget {
 
     toilet.notes.forEach((Note note) {
       if (note.userId == userModel.userId) {
-        Note temp = note;
         toilet.notes.remove(note);
         toilet.notes.insert(0, note);
       }

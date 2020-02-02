@@ -18,12 +18,27 @@ class ToiletModel extends ChangeNotifier {
     return data;
   }
 
-  Stream<List<DocumentSnapshot>> fetchQueriedData(double rad, double lat, double lon) {
+  Stream<List<DocumentSnapshot>> fetchQueriedData(
+      double rad, double lat, double lon) {
     return _api.streamQueriedData(rad, lat, lon);
   }
 
   Stream<QuerySnapshot> fetchDataAsStream() {
     return _api.streamDataCollection();
+  }
+
+  Stream<List<Toilet>> streamToilets() {
+    return _api.streamDataCollection().map((list) => list.documents
+        .map((f) {
+          if (f.data["geopoint"] != null) {
+            return Toilet.fromMap(f.data, f.documentID);
+          } else {
+            print(f.documentID);
+            return null;
+          }
+        })
+        .cast<Toilet>()
+        .toList());
   }
 
   Future uploadToilet(Toilet data) async {
