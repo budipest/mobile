@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../screens/addToilet.dart';
+import '../screens/aboutUs.dart';
 
 class Sidebar extends StatelessWidget {
   @override
@@ -59,7 +60,15 @@ class Sidebar extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text(FlutterI18n.translate(context, "aboutUs")),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => AboutUs(),
+                        ),
+                      );
+                      Scaffold.of(context).openEndDrawer();
+                    },
                   ),
                 ],
               ))
