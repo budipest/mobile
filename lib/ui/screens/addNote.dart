@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as services;
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/toilet.dart';
@@ -17,6 +18,12 @@ class AddNote extends StatefulWidget {
 }
 
 class _AddNoteState extends State<AddNote> {
+  @override
+  void initState() {
+    services.SystemChrome.setSystemUIOverlayStyle(services.SystemUiOverlayStyle.dark);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlackLayoutContainer(

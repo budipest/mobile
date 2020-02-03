@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:location/location.dart';
@@ -8,6 +10,7 @@ import '../widgets/sidebar.dart';
 import '../widgets/bottomBar.dart';
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/viewmodels/UserModel.dart';
+import '../../core/common/openHourUtils.dart';
 import '../../core/models/toilet.dart';
 import '../../locator.dart';
 
@@ -31,6 +34,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     userModel.authenticate();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     super.initState();
   }
 
@@ -79,6 +83,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     // Sort toilets based on their distance from the user
                     _data.sort((a, b) => a.distance.compareTo(b.distance));
 
+                    Toilet recommendedToilet = _data.firstWhere(
+                      (Toilet toilet) => isOpen(toilet.openHours),
+                    );
+
                     return Stack(
                       children: <Widget>[
                         SlidingUpPanel(
@@ -93,6 +101,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               _notifier.value > 0.2 ? _notifier.value : 0,
                               _selected,
                               selectToilet,
+                              recommendedToilet,
                             ),
                           ),
                           onPanelSlide: onBottomBarDrag,
@@ -100,6 +109,11 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             _data,
                             locationSnapshot.data,
                             selectToilet,
+                            onMapCreated: () {
+                              setState(() {
+                                _pc.animatePanelToPosition(0.2);
+                              });
+                            },
                           ),
                         ),
                         SafeArea(

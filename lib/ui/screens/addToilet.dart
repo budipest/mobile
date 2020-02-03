@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -132,6 +133,7 @@ class _AddToiletState extends State<AddToilet> {
 
   void nextPage() {
     if (validate()) {
+      FocusScope.of(context).requestFocus(FocusNode());
       _controller.nextPage(
         duration: Duration(milliseconds: 200),
         curve: Curves.easeInOut,
@@ -167,8 +169,9 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   void initState() {
-    super.initState();
     _controller = PageController();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    super.initState();
   }
 
   @override

@@ -12,11 +12,12 @@ import '../../core/models/toilet.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar(this.toilets, this.scrollProgress, this.selectedToilet,
-      this.selectToilet);
+      this.selectToilet, this.recommendedToilet);
   final List<Toilet> toilets;
   final Toilet selectedToilet;
   final double scrollProgress;
   final Function(Toilet) selectToilet;
+  final Toilet recommendedToilet;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class BottomBar extends StatelessWidget {
           child: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {
-              if (!hasSelected) selectToilet(toilets[0]);
+              if (!hasSelected) selectToilet(recommendedToilet);
             },
             child: Padding(
               padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 25.0),
@@ -91,7 +92,7 @@ class BottomBar extends StatelessWidget {
                               true,
                             )
                           : describeToiletIcons(
-                              toilets[0],
+                              recommendedToilet,
                               "dark",
                               false,
                               false,
@@ -103,7 +104,7 @@ class BottomBar extends StatelessWidget {
                             Text(
                               hasSelected
                                   ? selectedToilet.title
-                                  : toilets[0].title,
+                                  : recommendedToilet.title,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
@@ -113,7 +114,7 @@ class BottomBar extends StatelessWidget {
                             Text(
                               hasSelected
                                   ? "${selectedToilet.distance} m"
-                                  : "${toilets[0].distance} m",
+                                  : "${recommendedToilet.distance} m",
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16.0,

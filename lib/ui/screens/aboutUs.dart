@@ -13,16 +13,17 @@ class AboutUs extends StatelessWidget {
         title: Text(FlutterI18n.translate(context, "aboutUs.title")),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 35, horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+        child: ListView(
           children: <Widget>[
-            Text(
-              FlutterI18n.translate(context, "title"),
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w700,
+            Padding(
+              padding: EdgeInsets.only(top: 30.0),
+              child: Text(
+                FlutterI18n.translate(context, "title"),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             Text(
@@ -85,16 +86,19 @@ class AboutUs extends StatelessWidget {
                 ),
               ),
             ),
-            Button(
-              FlutterI18n.translate(context, "aboutUs.paypal"),
-              () async {
-                String url = "https://paypal.me/danielgrgly";
-                if (await canLaunch(url)) {
-                  await launch(url);
-                }
-              },
-              backgroundColor: Color.fromRGBO(59, 123, 191, 1),
-              foregroundColor: Colors.white,
+            Padding(
+              padding: EdgeInsets.only(bottom: 30.0),
+              child: Button(
+                FlutterI18n.translate(context, "aboutUs.paypal"),
+                () async {
+                  String url = "https://paypal.me/danielgrgly";
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  }
+                },
+                backgroundColor: Color.fromRGBO(59, 123, 191, 1),
+                foregroundColor: Colors.white,
+              ),
             ),
           ],
         ),

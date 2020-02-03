@@ -51,7 +51,8 @@ class Sidebar extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: Text(FlutterI18n.translate(context, "aboutUs.title")),
+                    title:
+                        Text(FlutterI18n.translate(context, "aboutUs.title")),
                     onTap: () {
                       Navigator.pushNamed(context, '/about');
                       Scaffold.of(context).openEndDrawer();

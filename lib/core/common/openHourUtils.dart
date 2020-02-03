@@ -18,7 +18,7 @@ Widget descriptionIcon(
       constraints: BoxConstraints(
         minHeight: 35,
         minWidth: 35,
-        maxWidth: text != null ? 100 : 35,
+        // maxWidth: text != null ? 200 : 35,
         maxHeight: 35,
       ),
       decoration: BoxDecoration(
@@ -26,9 +26,13 @@ Widget descriptionIcon(
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(7.5),
+        padding: EdgeInsets.symmetric(
+          vertical: 7.5,
+          horizontal: text != null ? 12.5 : 7.5,
+        ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             icon != null
                 ? Icon(icon, size: smaller ? 17.5 : 20)
@@ -39,7 +43,7 @@ Widget descriptionIcon(
                   ),
             if (text != null)
               Padding(
-                padding: EdgeInsets.only(left: 5),
+                padding: EdgeInsets.only(left: 12.5),
                 child: Text(
                   text,
                   style: TextStyle(
@@ -56,7 +60,36 @@ Widget descriptionIcon(
   );
 }
 
-Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding) {
+Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding, String mode) {
+  String path;
+
+  switch (toilet.entryMethod) {
+    case EntryMethod.FREE:
+      path = "assets/icons/bottom/$mode/tag_free.svg";
+      break;
+    case EntryMethod.CONSUMERS:
+      path = "assets/icons/bottom/$mode/tag_guests.svg";
+      break;
+    case EntryMethod.PRICE:
+      path = "assets/icons/bottom/$mode/tag_paid.svg";
+      break;
+    case EntryMethod.CODE:
+      path = "assets/icons/bottom/$mode/tag_key.svg";
+      break;
+    default:
+      return null;
+  }
+
+  return descriptionIcon(
+    padding,
+    mode,
+    true,
+    null,
+    iconPath: path,
+  );
+}
+
+Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
   switch (toilet.entryMethod) {
     case EntryMethod.FREE:
       return descriptionIcon(
@@ -136,6 +169,13 @@ String openState(List<int> openHours) {
   } else {
     return "_closed";
   }
+}
+
+bool isOpen(List<int> openHours) {
+  if (openState(openHours) == "_open") {
+    return true;
+  }
+  return false;
 }
 
 Color coloredOpenState(List<int> openHours) {
@@ -280,7 +320,7 @@ List<Widget> describeToiletIcons(
   if (isDetailed) {
     if (toilet.entryMethod != EntryMethod.UNKNOWN) {
       result.add(
-        entryMethodIcon(
+        entryMethodIconDetailed(
           toilet,
           padding,
         ),
@@ -297,6 +337,16 @@ List<Widget> describeToiletIcons(
           icon: Icons.thumb_up,
         ),
       );
+  } else {
+    if (toilet.entryMethod != EntryMethod.UNKNOWN) {
+      result.add(
+        entryMethodIcon(
+          toilet,
+          padding,
+          mode,
+        ),
+      );
+    }
   }
 
   return result;

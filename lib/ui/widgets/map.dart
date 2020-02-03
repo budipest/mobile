@@ -8,11 +8,17 @@ import '../../core/models/toilet.dart';
 import '../../core/common/openHourUtils.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget(this.toilets, this.userLocation, this.selectToilet);
+  const MapWidget(
+    this.toilets,
+    this.userLocation,
+    this.selectToilet, {
+    this.onMapCreated,
+  });
 
   final List<Toilet> toilets;
   final Map userLocation;
   final Function(Toilet) selectToilet;
+  final Function onMapCreated;
 
   @override
   State<StatefulWidget> createState() => MapState();
@@ -112,6 +118,7 @@ class MapState extends State<MapWidget> {
       _animateToUser();
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
+    widget.onMapCreated();
   }
 
   @override
