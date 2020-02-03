@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' as services;
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/toilet.dart';
@@ -9,7 +8,7 @@ import '../widgets/textInput.dart';
 import '../widgets/noteList.dart';
 
 class AddNote extends StatefulWidget {
-  AddNote(this.toilet, this.onNoteSubmitted);
+  AddNote({this.toilet, this.onNoteSubmitted});
   final Function(String) onNoteSubmitted;
   final Toilet toilet;
 
@@ -18,12 +17,6 @@ class AddNote extends StatefulWidget {
 }
 
 class _AddNoteState extends State<AddNote> {
-  @override
-  void initState() {
-    services.SystemChrome.setSystemUIOverlayStyle(services.SystemUiOverlayStyle.dark);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlackLayoutContainer(

@@ -69,8 +69,8 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                         CupertinoPageRoute(
                           fullscreenDialog: true,
                           builder: (context) => AddNote(
-                            widget.toilet,
-                            (String newNote) =>
+                            toilet: widget.toilet,
+                            onNoteSubmitted: (String newNote) =>
                                 addNote(newNote, userModel.userId),
                           ),
                         ),

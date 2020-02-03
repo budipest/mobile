@@ -8,11 +8,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './ui/screens/home.dart';
 import './ui/screens/addToilet.dart';
+import './ui/screens/addNote.dart';
 import './ui/screens/aboutUs.dart';
 
 import './core/viewmodels/ToiletModel.dart';
 import './core/viewmodels/UserModel.dart';
 import './core/common/variables.dart';
+import './core/common/statusBarObserver.dart';
 
 import './locator.dart';
 
@@ -54,12 +56,13 @@ class Application extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => Home(),
-          '/add': (context) => AddToilet(),
+          '/addToilet': (context) => AddToilet(),
+          '/addNote': (context) => AddNote(),
           '/about': (context) => AboutUs()
         },
-        // routes: {'/': (context) => AddToilet()},
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: analytics),
+          StatusBarObserver(),
         ],
         localizationsDelegates: [
           // ... app-specific localization delegate[s] here

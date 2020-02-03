@@ -46,7 +46,7 @@ class Sidebar extends StatelessWidget {
                   ListTile(
                     title: Text(FlutterI18n.translate(context, "addToilet")),
                     onTap: () {
-                      Navigator.pushNamed(context, '/add');
+                      Navigator.pushNamed(context, '/addToilet');
                       Scaffold.of(context).openEndDrawer();
                     },
                   ),

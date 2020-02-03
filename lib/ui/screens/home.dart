@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +33,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     userModel.authenticate();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     super.initState();
   }
 
@@ -42,6 +40,16 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _notifier.value = val;
     if (val < 0.2) {
       _pc.animatePanelToPosition(0.2);
+    }
+
+    if (val < 0.8) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark,
+      );
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.light,
+      );
     }
   }
 
