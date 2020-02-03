@@ -18,7 +18,6 @@
   "newNotePlaceholder": "This toilet was nice, because...",
   "send": "Send",
   "addToilet": "Add toilet",
-  "aboutUs": "About us",
   "toiletName": "The name of the toilet",
   "name": "Name",
   "toiletType": "The type of the toilet",
@@ -47,5 +46,17 @@
   "sunday": "Sun",
   "services": "Services",
   "accessible": "wheelchair accessible",
-  "babyRoom": "baby room"
+  "babyRoom": "baby room",
+  "aboutUs": {
+    "title": "About us",
+    "development": "Development: Daniel Gergely",
+    "design": "Design: David Jobbagy",
+    "qa": "Quality assurance: Balazs Szulovszky",
+    "budapest": "Made with ❤️ in Budapest",
+    "feedback": "Feedback: danielgrgly@gmail.com",
+    "opensource": "This project was made with Flutter and is open-source.",
+    "github": "Open GitHub repository",
+    "toiletPaper": "Buy us some toilet rolls!",
+    "paypal": "Donate via PayPal"
+  }
 }

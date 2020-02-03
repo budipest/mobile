@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 

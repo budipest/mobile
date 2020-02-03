@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './ui/screens/home.dart';
 import './ui/screens/addToilet.dart';
+import './ui/screens/aboutUs.dart';
 
 import './core/viewmodels/ToiletModel.dart';
 import './core/viewmodels/UserModel.dart';
@@ -51,7 +52,11 @@ class Application extends StatelessWidget {
               ),
         ),
         initialRoute: '/',
-        routes: {'/': (context) => Home(), '/add': (context) => AddToilet()},
+        routes: {
+          '/': (context) => Home(),
+          '/add': (context) => AddToilet(),
+          '/about': (context) => AboutUs()
+        },
         // routes: {'/': (context) => AddToilet()},
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: analytics),

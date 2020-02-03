@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../screens/addToilet.dart';
-import '../screens/aboutUs.dart';
-
 class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,24 +46,14 @@ class Sidebar extends StatelessWidget {
                   ListTile(
                     title: Text(FlutterI18n.translate(context, "addToilet")),
                     onTap: () {
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (context) => AddToilet(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, '/add');
                       Scaffold.of(context).openEndDrawer();
                     },
                   ),
                   ListTile(
-                    title: Text(FlutterI18n.translate(context, "aboutUs")),
+                    title: Text(FlutterI18n.translate(context, "aboutUs.title")),
                     onTap: () {
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (context) => AboutUs(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, '/about');
                       Scaffold.of(context).openEndDrawer();
                     },
                   ),

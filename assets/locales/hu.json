@@ -18,7 +18,6 @@
     "newNotePlaceholder": "Ez a mosdó remek, mert...",
     "send": "Elküldés",
     "addToilet": "Mosdó hozzáadása",
-    "aboutUs": "Rólunk",
     "toiletName": "A mosdó neve",
     "name": "Név",
     "toiletType": "A mosdó típusa",
@@ -47,5 +46,17 @@
     "sunday": "V",
     "services": "Szolgáltatások",
     "accessible": "akadálymentes",
-    "babyRoom": "pelenkázó"
+    "babyRoom": "pelenkázó",
+    "aboutUs": {
+        "title": "Rólunk",
+        "development": "Fejlesztés: Gergely Dániel",
+        "design": "Design: Jobbágy Dávid",
+        "qa": "Tesztelés: Szulovszky Balázs",
+        "budapest": "Szeretettel ❤️ Budapestről",
+        "feedback": "Visszajelzések: danielgrgly@gmail.com",
+        "opensource": "A projektet Flutter-rel készítettük, az alkalmazás pedig nyílt forráskódú.",
+        "github": "GitHub repo megnyitása",
+        "toiletPaper": "Vegyél nekünk WC papírt!",
+        "paypal": "Adományozás PayPal-lal"
+    }
 }
