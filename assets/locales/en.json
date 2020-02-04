@@ -17,6 +17,9 @@
     "numOfToilets-1": "There is a toilet that is closer to you. Are you sure you wanna go to the further one?",
     "numOfToilets-2": "There are {numOfToilets} toilets that are closer to you. Are you sure you wanna go there?"
   },
+  "areYouSure": "Are you sure?",
+  "notIrreversible": "This action is not irreversible. Do you really want to delete your note? There is no magic undo button!",
+  "remove": "Remove",
   "navigate": "Navigate",
   "rate": "Rating",
   "notes": "Notes",

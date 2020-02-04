@@ -38,7 +38,7 @@ dependencies:
   geoflutterfire: 2.0.3+5
   fluster: 1.1.2
 
-  google_maps_flutter: ^0.5.12
+  google_maps_flutter: ^0.5.19
   location: 1.4.1
 
   provider: any

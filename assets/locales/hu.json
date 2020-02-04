@@ -17,6 +17,9 @@
         "numOfToilets-1": "Van egy ennél közelebbi mosdó is. Biztosan a távolabbiba szeretnél menni?",
         "numOfToilets-2": "Van {numOfToilets} mosdó ami közelebb van hozzád ennél. Biztosan ezt szeretnéd?"
     },
+    "areYouSure": "Biztosan?",
+    "notIrreversible": "Ez a művelet visszafordíthatatlan. Biztosan ki akarod törölni a jegyzetedet? Még mágiával sem tudjuk majd visszahozni!",
+    "remove": "Törlés",
     "navigate": "Navigáció",
     "rate": "Értékelés",
     "notes": "Megjegyzések",

@@ -255,20 +255,22 @@ class BottomBar extends StatelessWidget {
                     if (hasSelected)
                       Row(
                         children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(right: 12.0),
-                            child: Button(
-                              FlutterI18n.translate(context, "navigate"),
-                              () async {
-                                if (selectedToilet.distance < 10000) {
-                                  _navigate(selectedToilet);
-                                } else {
-                                  _tooFarNavigate(context, selectedToilet);
-                                }
-                              },
-                              icon: Icons.navigation,
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.black,
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 12.0),
+                              child: Button(
+                                FlutterI18n.translate(context, "navigate"),
+                                () async {
+                                  if (selectedToilet.distance < 10000) {
+                                    _navigate(selectedToilet);
+                                  } else {
+                                    _tooFarNavigate(context, selectedToilet);
+                                  }
+                                },
+                                icon: Icons.navigation,
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                              ),
                             ),
                           ),
                           Button(

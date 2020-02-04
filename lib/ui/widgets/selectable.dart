@@ -25,12 +25,15 @@ class Selectable extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(right: 15.0),
-                        child: SvgPicture.asset(
-                          "assets/icons/bottom/${isSelected ? "light" : "dark"}/$iconName",
-                          semanticsLabel: '$iconName category icon',
+                        padding: EdgeInsets.only(right: 20.0),
+                        child: Container(
                           width: 25,
-                          height: 25,
+                          child: SvgPicture.asset(
+                            "assets/icons/bottom/${isSelected ? "light" : "dark"}/$iconName",
+                            semanticsLabel: '$iconName category icon',
+                            width: 25,
+                            height: 25,
+                          ),
                         ),
                       ),
                       Text(
