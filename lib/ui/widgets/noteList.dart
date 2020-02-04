@@ -26,10 +26,10 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel userModel = locator<UserModel>();
+    final String userId = locator<UserModel>().userId;
 
     toilet.notes.forEach((Note note) {
-      if (note.userId == userModel.userId) {
+      if (note.userId == userId) {
         toilet.notes.remove(note);
         toilet.notes.insert(0, note);
       }
@@ -38,18 +38,19 @@ class NoteList extends StatelessWidget {
     return Hero(
       tag: "notelist",
       child: Padding(
-          padding: EdgeInsets.only(top: 0, left: 20, right: 20),
-          child: Column(
-            children: <Widget>[
-              ...toilet.notes.map(
-                (Note note) => NoteCard(
-                  note,
-                  isMine: note.userId == userModel.userId,
-                  removeHandler: removeNote,
-                ),
+        padding: EdgeInsets.only(top: 0, left: 20, right: 20),
+        child: Column(
+          children: <Widget>[
+            ...toilet.notes.map(
+              (Note note) => NoteCard(
+                note,
+                isMine: note.userId == userId,
+                removeHandler: removeNote,
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

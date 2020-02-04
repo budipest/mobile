@@ -215,7 +215,8 @@ class BottomBar extends StatelessWidget {
                           ),
                           Button(
                             "",
-                            () => {print("fasz")},
+                            // TODO: implement suggesting toilet data modifications
+                            () => {print("not implemented yet")},
                             icon: Icons.edit,
                             backgroundColor: Colors.transparent,
                             foregroundColor: Colors.white,

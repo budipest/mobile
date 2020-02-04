@@ -17,6 +17,8 @@ class AddNote extends StatefulWidget {
 }
 
 class _AddNoteState extends State<AddNote> {
+  String note;
+
   @override
   Widget build(BuildContext context) {
     return BlackLayoutContainer(
@@ -43,6 +45,11 @@ class _AddNoteState extends State<AddNote> {
                     padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                     child: TextInput(
                       FlutterI18n.translate(context, "newNotePlaceholder"),
+                      onTextChanged: (String text) {
+                        setState(() {
+                          note = text;
+                        });
+                      },
                     ),
                   ),
                   Row(
@@ -52,7 +59,9 @@ class _AddNoteState extends State<AddNote> {
                         tag: "addNoteButton",
                         child: Button(
                           FlutterI18n.translate(context, "send"),
-                          (String note) => widget.onNoteSubmitted(note),
+                          () {
+                            widget.onNoteSubmitted(note);
+                          },
                           backgroundColor: Colors.black,
                           foregroundColor: Colors.white,
                           isMini: false,

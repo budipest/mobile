@@ -327,16 +327,16 @@ List<Widget> describeToiletIcons(
       );
     }
 
-    if (toilet.upvotes != 0 || toilet.downvotes != 0)
-      result.add(
-        descriptionIcon(
-          padding,
-          mode,
-          smaller,
-          '${((toilet.upvotes / (toilet.upvotes + toilet.downvotes)) * 100).round()}%',
-          icon: Icons.thumb_up,
-        ),
-      );
+    // if (toilet.upvotes != 0 || toilet.downvotes != 0)
+    //   result.add(
+    //     descriptionIcon(
+    //       padding,
+    //       mode,
+    //       smaller,
+    //       '${((toilet.upvotes / (toilet.upvotes + toilet.downvotes)) * 100).round()}%',
+    //       icon: Icons.thumb_up,
+    //     ),
+    //   );
   } else {
     if (toilet.entryMethod != EntryMethod.UNKNOWN) {
       result.add(

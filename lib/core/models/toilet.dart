@@ -19,8 +19,7 @@ class Toilet {
   List<int> openHours;
   List<Tag> tags;
   List<Note> notes;
-  int upvotes;
-  int downvotes;
+  Map<String, int> votes;
   int distance = 0;
 
   EntryMethod entryMethod;
@@ -36,8 +35,7 @@ class Toilet {
     List<int> openHours,
     List<Tag> tags,
     List<Note> notes,
-    int upvotes,
-    int downvotes,
+    Map<String, int> votes,
     EntryMethod entryMethod,
     Map price,
     String code,
@@ -50,8 +48,7 @@ class Toilet {
     this.openHours = openHours;
     this.tags = tags;
     this.notes = notes;
-    this.upvotes = upvotes;
-    this.downvotes = downvotes;
+    this.votes = votes;
     this.entryMethod = entryMethod;
     this.price = price;
     this.code = code;
@@ -67,8 +64,7 @@ class Toilet {
     openHours = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     tags = [];
     notes = new List<Note>();
-    upvotes = 0;
-    downvotes = 0;
+    votes = new Map<String, int>();
     entryMethod = EntryMethod.UNKNOWN;
   }
 
@@ -88,8 +84,9 @@ class Toilet {
         notes = snapshot["notes"] != null
             ? _standariseNotes(snapshot["notes"])
             : new List<Note>(),
-        upvotes = snapshot["upvotes"] != null ? snapshot["upvotes"] : 0,
-        downvotes = snapshot["downvotes"] != null ? snapshot["downvotes"] : 0,
+        votes = snapshot["downvotes"] != null
+            ? _standariseVotes(snapshot["votes"])
+            : new Map<String, int>(),
         entryMethod =
             _standariseEntryMethod(snapshot["entryMethod"].toString()) ??
                 EntryMethod.UNKNOWN,
@@ -122,14 +119,24 @@ class Toilet {
         "BABY_ROOM": tags.contains(Tag.BABY_ROOM)
       },
       "notes": notes.map((Note note) => note.toJson()).toList(),
-      "upvotes": upvotes,
-      "downvotes": downvotes,
+      "votes": votes.toString(),
       "entryMethod": entryMethod != null
           ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}"
           : null,
       "price": price["HUF"] != null ? price : null,
       "code": code
     };
+  }
+
+  static Map<String, int> _standariseVotes(dynamic input) {
+    Map<String, int> _votes = new Map<String, int>();
+    if (input != null) {
+      input.forEach((dynamic val) {
+        print(val);
+        // _votes.addEntries(newEntries) .add(Note.fromMap(val));
+      });
+    }
+    return _votes;
   }
 
   static Category _standariseCategory(String input) {

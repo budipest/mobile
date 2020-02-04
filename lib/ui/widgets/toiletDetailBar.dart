@@ -23,7 +23,7 @@ class ToiletDetailBar extends StatefulWidget {
 class ToiletDetailBarState extends State<ToiletDetailBar> {
   ToiletDetailBarState();
   API _api = locator<API>();
-  UserModel userModel = locator<UserModel>();
+  String userId = locator<UserModel>().userId;
 
   void addNote(String noteText, String uid) async {
     widget.toilet.notes.insert(0, Note(noteText, uid));
@@ -70,7 +70,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                         builder: (context) => AddNote(
                           toilet: widget.toilet,
                           onNoteSubmitted: (String newNote) =>
-                              addNote(newNote, userModel.userId),
+                              addNote(newNote, userId),
                         ),
                       ),
                     );
