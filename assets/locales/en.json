@@ -40,7 +40,7 @@
   "free": "free",
   "paid": "paid",
   "price": "Price",
-  "priceAlternative": "Price (in alternative currency)",
+  "priceAlternative": "Price (in EUR)",
   "addCurrency": "Add currency",
   "guests": "free for guests",
   "key": "keycode",

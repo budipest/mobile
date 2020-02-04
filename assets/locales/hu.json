@@ -40,7 +40,7 @@
     "free": "ingyenes",
     "paid": "fizetős",
     "price": "Ár",
-    "priceAlternative": "Ár (alternatív valutában)",
+    "priceAlternative": "Ár (euróban)",
     "addCurrency": "valuta hozzáadása",
     "guests": "vendégeknek ingyenes",
     "key": "kóddal védett",

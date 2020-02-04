@@ -26,101 +26,98 @@ class AddToiletEntryMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
-      child: ListView(
-        children: <Widget>[
-          Text(
-            FlutterI18n.translate(context, "toiletEntryMethod"),
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-            ),
+    return ListView(
+      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+      children: <Widget>[
+        Text(
+          FlutterI18n.translate(context, "toiletEntryMethod"),
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 15.0),
-            child: Selectable(
-              "tag_free.svg",
-              FlutterI18n.translate(context, "free"),
-              null,
-              onEntryMethodSubmitted,
-              EntryMethod.FREE,
-              selectedEntryMethod == EntryMethod.FREE,
-            ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 15.0),
+          child: Selectable(
+            "tag_free.svg",
+            FlutterI18n.translate(context, "free"),
+            null,
+            onEntryMethodSubmitted,
+            EntryMethod.FREE,
+            selectedEntryMethod == EntryMethod.FREE,
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 15.0),
-            child: Selectable(
-              "tag_paid.svg",
-              FlutterI18n.translate(context, "paid"),
-              Column(
-                children: <Widget>[
-                  TextInput(
-                    FlutterI18n.translate(context, "price"),
-                    onTextChanged: (String input) => onPriceChanged(input, "HUF"),
-                    isDark: true,
-                    suffixText: "HUF",
-                    keyboardType: TextInputType.number,
-                  ),
-                  hasEUR
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: 
-                              TextInput(
-                                FlutterI18n.translate(context, "priceAlternative"),
-                                onTextChanged: (String input) => onPriceChanged(input, "EUR"),
-                                isDark: true,
-                                suffixText: "EUR",
-                                keyboardType: TextInputType.number,
-                              ),
-                            
-                          )
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Button(
-                            FlutterI18n.translate(context, "addCurrency"),
-                            toggleEUR,
-                            backgroundColor: Colors.grey[900],
-                            foregroundColor: Colors.white,
-                          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 15.0),
+          child: Selectable(
+            "tag_paid.svg",
+            FlutterI18n.translate(context, "paid"),
+            Column(
+              children: <Widget>[
+                TextInput(
+                  FlutterI18n.translate(context, "price"),
+                  onTextChanged: (String input) => onPriceChanged(input, "HUF"),
+                  isDark: true,
+                  suffixText: "HUF",
+                  keyboardType: TextInputType.number,
+                ),
+                hasEUR
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: TextInput(
+                          FlutterI18n.translate(context, "priceAlternative"),
+                          onTextChanged: (String input) =>
+                              onPriceChanged(input, "EUR"),
+                          isDark: true,
+                          suffixText: "EUR",
+                          keyboardType: TextInputType.number,
                         ),
-                ],
-              ),
-              onEntryMethodSubmitted,
-              EntryMethod.PRICE,
-              selectedEntryMethod == EntryMethod.PRICE,
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Button(
+                          FlutterI18n.translate(context, "addCurrency"),
+                          toggleEUR,
+                          backgroundColor: Colors.grey[900],
+                          foregroundColor: Colors.white,
+                        ),
+                      ),
+              ],
             ),
+            onEntryMethodSubmitted,
+            EntryMethod.PRICE,
+            selectedEntryMethod == EntryMethod.PRICE,
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 15.0),
-            child: Selectable(
-              "tag_guests.svg",
-              FlutterI18n.translate(context, "guests"),
-              null,
-              onEntryMethodSubmitted,
-              EntryMethod.CONSUMERS,
-              selectedEntryMethod == EntryMethod.CONSUMERS,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 15.0),
+          child: Selectable(
+            "tag_guests.svg",
+            FlutterI18n.translate(context, "guests"),
+            null,
+            onEntryMethodSubmitted,
+            EntryMethod.CONSUMERS,
+            selectedEntryMethod == EntryMethod.CONSUMERS,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 15.0),
+          child: Selectable(
+            "tag_key.svg",
+            FlutterI18n.translate(context, "key"),
+            TextInput(
+              "",
+              onTextChanged: onCodeSubmitted,
+              isDark: true,
+              prefixText: FlutterI18n.translate(context, "code"),
             ),
+            onEntryMethodSubmitted,
+            EntryMethod.CODE,
+            selectedEntryMethod == EntryMethod.CODE,
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 15.0),
-            child: Selectable(
-              "tag_key.svg",
-              FlutterI18n.translate(context, "key"),
-              TextInput(
-                "",
-                onTextChanged: onCodeSubmitted,
-                isDark: true,
-                prefixText: FlutterI18n.translate(context, "code"),
-              ),
-              onEntryMethodSubmitted,
-              EntryMethod.CODE,
-              selectedEntryMethod == EntryMethod.CODE,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
