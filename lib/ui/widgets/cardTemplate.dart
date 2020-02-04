@@ -4,13 +4,11 @@ class CardTemplate extends StatelessWidget {
   const CardTemplate(
     this.child, {
     this.gradient,
-    this.horizontalPadding = 25.0,
-    this.verticalPadding = 15.0,
+    this.padding = const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
   });
   final Widget child;
   final LinearGradient gradient;
-  final double horizontalPadding;
-  final double verticalPadding;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +22,7 @@ class CardTemplate extends StatelessWidget {
         gradient: gradient,
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: horizontalPadding,
-          vertical: verticalPadding,
-        ),
+        padding: padding,
         child: child,
       ),
     );

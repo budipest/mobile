@@ -23,11 +23,14 @@ class _RateBarState extends State<RateBar> {
   void vote(SharedPreferences snapshot, ToiletModel toiletProvider,
       Toilet toilet, bool isUpvote) {
     switch (widget.myVote) {
+      // i had an upvote
       case 1:
         {
           if (isUpvote) {
+            // and i want to remove upvote
             toilet.upvotes -= 1;
           } else {
+            // and i want to downvote
             toilet.upvotes -= 1;
             toilet.downvotes += 1;
           }
@@ -36,7 +39,7 @@ class _RateBarState extends State<RateBar> {
           });
           break;
         }
-      // if I don't have anything, add a vote
+      // i didn't have a vote
       case 0:
         {
           isUpvote ? toilet.upvotes += 1 : toilet.downvotes += 1;
@@ -45,12 +48,15 @@ class _RateBarState extends State<RateBar> {
           });
           break;
         }
+      // i had a downvote
       case -1:
         {
+          // and i want to upvote
           if (isUpvote) {
             toilet.upvotes += 1;
             toilet.downvotes -= 1;
           } else {
+            // and i want remove downvote
             toilet.downvotes -= 1;
           }
           setState(() {

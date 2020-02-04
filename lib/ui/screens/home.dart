@@ -102,7 +102,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           panelSnapping: true,
                           minHeight: 80,
                           maxHeight: MediaQuery.of(context).size.height,
-                          panel: AnimatedBuilder(
+                          panelBuilder: (ScrollController sc) => AnimatedBuilder(
                             animation: _notifier,
                             builder: (context, _) => BottomBar(
                               _data,
@@ -110,6 +110,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               _selected,
                               selectToilet,
                               recommendedToilet,
+                              sc
                             ),
                           ),
                           onPanelSlide: onBottomBarDrag,

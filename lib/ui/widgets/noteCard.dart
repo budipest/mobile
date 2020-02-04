@@ -79,7 +79,6 @@ class NoteCard extends StatelessWidget {
           stops: [0],
           colors: [Colors.grey[100]],
         ),
-        verticalPadding: 25,
       ),
     );
   }

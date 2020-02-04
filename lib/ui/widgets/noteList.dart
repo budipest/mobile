@@ -35,25 +35,21 @@ class NoteList extends StatelessWidget {
       }
     });
 
-    return Expanded(
-      child: Hero(
-        tag: "notelist",
-        child: ListView.builder(
+    return Hero(
+      tag: "notelist",
+      child: Padding(
           padding: EdgeInsets.only(top: 0, left: 20, right: 20),
-          itemCount: toilet.notes.length,
-          itemBuilder: (BuildContext ctxt, int index) => GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              // TODO: implement reporting of a toilet
-            },
-            child: NoteCard(
-              toilet.notes[index],
-              isMine: toilet.notes[index].userId == userModel.userId,
-              removeHandler: removeNote,
-            ),
-          ),
-        ),
-      ),
+          child: Column(
+            children: <Widget>[
+              ...toilet.notes.map(
+                (Note note) => NoteCard(
+                  note,
+                  isMine: note.userId == userModel.userId,
+                  removeHandler: removeNote,
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

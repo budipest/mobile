@@ -11,34 +11,28 @@ class ToiletRecommendationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              FlutterI18n.translate(context, "otherToilets"),
-              style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-              ),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            FlutterI18n.translate(context, "otherToilets"),
+            style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.bold,
             ),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(top: 10),
-                itemCount: toilets.length,
-                itemBuilder: (BuildContext ctxt, int index) => GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    selectToilet(toilets[index]);
-                  },
-                  child: ToiletCard(toilets[index]),
-                ),
-              ),
+          ),
+          ...toilets.map(
+            (Toilet toilet) => GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                selectToilet(toilet);
+              },
+              child: ToiletCard(toilet),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

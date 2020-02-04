@@ -48,7 +48,7 @@ dependencies:
   shared_preferences: any
   uuid: 2.0.4
 
-  sliding_up_panel: ^0.3.6
+  sliding_up_panel: 1.0.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.3"

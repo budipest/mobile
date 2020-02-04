@@ -37,56 +37,54 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(color: Colors.grey[100]),
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: RateBar(widget.toilet, _api),
-            ),
+    return Column(
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(color: Colors.grey[100]),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: RateBar(widget.toilet, _api),
           ),
-          Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  FlutterI18n.translate(context, "notes"),
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(24.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                FlutterI18n.translate(context, "notes"),
+                style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                Spacer(),
-                Hero(
-                  tag: "addNoteButton",
-                  child: Button(
-                    FlutterI18n.translate(context, "newNote"),
-                    () {
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (context) => AddNote(
-                            toilet: widget.toilet,
-                            onNoteSubmitted: (String newNote) =>
-                                addNote(newNote, userModel.userId),
-                          ),
+              ),
+              Spacer(),
+              Hero(
+                tag: "addNoteButton",
+                child: Button(
+                  FlutterI18n.translate(context, "newNote"),
+                  () {
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(
+                        fullscreenDialog: true,
+                        builder: (context) => AddNote(
+                          toilet: widget.toilet,
+                          onNoteSubmitted: (String newNote) =>
+                              addNote(newNote, userModel.userId),
                         ),
-                      );
-                    },
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                    isMini: true,
-                  ),
+                      ),
+                    );
+                  },
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  isMini: true,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          NoteList(widget.toilet),
-        ],
-      ),
+        ),
+        NoteList(widget.toilet),
+      ],
     );
   }
 }
