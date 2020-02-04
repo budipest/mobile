@@ -35,6 +35,16 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
     Navigator.of(context).pop();
   }
 
+  bool userHasNote(Toilet toilet) {
+    bool vote = false;
+    toilet.notes.forEach((Note note) {
+      if (note.userId == userId) {
+        vote = true;
+      }
+    });
+    return vote;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -59,27 +69,28 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                 ),
               ),
               Spacer(),
-              Hero(
-                tag: "addNoteButton",
-                child: Button(
-                  FlutterI18n.translate(context, "newNote"),
-                  () {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        fullscreenDialog: true,
-                        builder: (context) => AddNote(
-                          toilet: widget.toilet,
-                          onNoteSubmitted: (String newNote) =>
-                              addNote(newNote, userId),
+              if (!userHasNote(widget.toilet))
+                Hero(
+                  tag: "addNoteButton",
+                  child: Button(
+                    FlutterI18n.translate(context, "newNote"),
+                    () {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => AddNote(
+                            toilet: widget.toilet,
+                            onNoteSubmitted: (String newNote) =>
+                                addNote(newNote, userId),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  isMini: true,
+                      );
+                    },
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    isMini: true,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
