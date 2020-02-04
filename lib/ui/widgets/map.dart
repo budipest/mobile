@@ -83,11 +83,15 @@ class MapState extends State<MapWidget> {
   // }
 
   animateToUser() {
+    animateToLocation(
+      widget.userLocation["latitude"],
+      widget.userLocation["longitude"],
+    );
+  }
+
+  animateToLocation(double lat, double lon) {
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(
-        widget.userLocation["latitude"],
-        widget.userLocation["longitude"],
-      ),
+      target: LatLng(lat, lon),
       zoom: 15.0,
     )));
   }

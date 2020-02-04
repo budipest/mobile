@@ -128,17 +128,11 @@ class Toilet {
     };
   }
 
-  static Map<String, int> _standariseVotes(dynamic input) {
-    Map<String, int> _votes = new Map<String, int>();
-    print(input);
-    // TODO: implement converting cloud votes to local votes
-    // if (input != null) {
-    //   input.forEach((dynamic val) {
-    //     print(val);
-    //     // _votes.addEntries(newEntries) .add(Note.fromMap(val));
-    //   });
-    // }
-    return _votes;
+  static Map<String, int> _standariseVotes(Map<dynamic, dynamic> input) {
+    if (input != null) {
+      return Map<String, int>.from(input);
+    }
+    return new Map<String, int>();
   }
 
   static Category _standariseCategory(String input) {

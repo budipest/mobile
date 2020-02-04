@@ -7,6 +7,7 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
+        physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(

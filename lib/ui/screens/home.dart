@@ -40,11 +40,17 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   void onBottomBarDrag(double val) {
     _notifier.value = val;
-    if (val < 0.2) {
-      _pc.animatePanelToPosition(0.2);
-    }
 
     if (val < 0.8) {
+      if (_selected == null) {
+        if (val < 0.15) {
+          _pc.animatePanelToPosition(0.15);
+        }
+      } else {
+        if (val < 0.3) {
+          _pc.animatePanelToPosition(0.3);
+        }
+      }
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark,
       );
@@ -59,14 +65,20 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     setState(() {
       _selected = toilet;
     });
+    if (toilet == null) {
+      if (_notifier.value < 0.5) _pc.animatePanelToPosition(0.15);
+    } else {
+      _mapKey.currentState.animateToLocation(
+        toilet.geopoint.latitude,
+        toilet.geopoint.longitude,
+      );
+      if (_notifier.value < 0.5) _pc.animatePanelToPosition(0.3);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // _mapKey.currentState.animateToUser();
-
     final toiletProvider = Provider.of<ToiletModel>(context);
-
     return Scaffold(
       key: _scaffoldKey,
       drawer: Sidebar(),
@@ -107,12 +119,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               AnimatedBuilder(
                             animation: _notifier,
                             builder: (context, _) => BottomBar(
-                                _data,
-                                _notifier.value > 0.2 ? _notifier.value : 0,
-                                _selected,
-                                selectToilet,
-                                recommendedToilet,
-                                sc),
+                              _data,
+                              _notifier.value > 0.3 ? _notifier.value : 0,
+                              _selected,
+                              selectToilet,
+                              recommendedToilet,
+                              sc,
+                            ),
                           ),
                           onPanelSlide: onBottomBarDrag,
                           body: MapWidget(
@@ -120,11 +133,33 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             locationSnapshot.data,
                             selectToilet,
                             onMapCreated: () {
-                              setState(() {
-                                _pc.animatePanelToPosition(0.2);
-                              });
+                              _pc.animatePanelToPosition(0.15);
                             },
                             key: _mapKey,
+                          ),
+                        ),
+                        AnimatedBuilder(
+                          animation: _notifier,
+                          builder: (context, _) => Positioned(
+                            right: 0,
+                            bottom: (_notifier.value + 0.125) *
+                                ((MediaQuery.of(context).size.height)),
+                            child: RawMaterialButton(
+                              shape: CircleBorder(),
+                              fillColor: Colors.white,
+                              elevation: 5.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.my_location,
+                                  color: Colors.black,
+                                  size: 25.0,
+                                ),
+                              ),
+                              onPressed: () {
+                                _mapKey.currentState.animateToUser();
+                              },
+                            ),
                           ),
                         ),
                         SafeArea(
@@ -137,41 +172,41 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               width: 50.0,
                               height: 50.0,
                               child: AnimatedBuilder(
-                                  animation: _notifier,
-                                  builder: (context, _) => RawMaterialButton(
-                                        shape: CircleBorder(),
-                                        fillColor: _notifier.value == 1
+                                animation: _notifier,
+                                builder: (context, _) => RawMaterialButton(
+                                  shape: CircleBorder(),
+                                  fillColor: _notifier.value == 1
+                                      ? Colors.white
+                                      : _selected != null
+                                          ? Colors.black
+                                          : Colors.white,
+                                  elevation: 5.0,
+                                  child: Icon(
+                                    _notifier.value == 1
+                                        ? Icons.close
+                                        : _selected != null
+                                            ? Icons.close
+                                            : Icons.menu,
+                                    color: _notifier.value == 1
+                                        ? Colors.black
+                                        : _selected != null
                                             ? Colors.white
-                                            : _selected != null
-                                                ? Colors.black
-                                                : Colors.white,
-                                        elevation: 5.0,
-                                        child: Icon(
-                                          _notifier.value == 1
-                                              ? Icons.close
-                                              : _selected != null
-                                                  ? Icons.close
-                                                  : Icons.menu,
-                                          color: _notifier.value == 1
-                                              ? Colors.black
-                                              : _selected != null
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                          size: 30.0,
-                                        ),
-                                        onPressed: () {
-                                          if (_selected != null) {
-                                            selectToilet(null);
-                                          } else {
-                                            if (_notifier.value == 1) {
-                                              _pc.close();
-                                            } else {
-                                              _scaffoldKey.currentState
-                                                  .openDrawer();
-                                            }
-                                          }
-                                        },
-                                      )),
+                                            : Colors.black,
+                                    size: 30.0,
+                                  ),
+                                  onPressed: () {
+                                    if (_selected != null) {
+                                      selectToilet(null);
+                                    } else {
+                                      if (_notifier.value == 1) {
+                                        _pc.close();
+                                      } else {
+                                        _scaffoldKey.currentState.openDrawer();
+                                      }
+                                    }
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         ),
