@@ -28,7 +28,7 @@ class NoteList extends StatelessWidget {
             ),
           ),
           content: new Text(
-            FlutterI18n.translate(context, "notIrreversible"),
+            FlutterI18n.translate(context, "irreversibleNote"),
             style: TextStyle(
               fontSize: 18.0,
             ),
