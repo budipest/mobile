@@ -23,7 +23,6 @@ Future main() async {
     useCountryCode: false,
     fallbackFile: 'en',
     path: 'assets/locales',
-    forcedLocale: new Locale('en'),
   );
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
