@@ -131,6 +131,7 @@ class Toilet {
   static Map<String, int> _standariseVotes(dynamic input) {
     Map<String, int> _votes = new Map<String, int>();
     print(input);
+    // TODO: implement converting cloud votes to local votes
     // if (input != null) {
     //   input.forEach((dynamic val) {
     //     print(val);

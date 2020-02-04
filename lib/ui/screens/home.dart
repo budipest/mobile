@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../widgets/map.dart';
 import '../widgets/sidebar.dart';
@@ -22,6 +23,7 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<MapState> _mapKey = new GlobalKey<MapState>();
   final Location _location = new Location();
   final UserModel userModel = locator<UserModel>();
 
@@ -57,13 +59,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     setState(() {
       _selected = toilet;
     });
-    if (toilet == null) {
-      _pc.animatePanelToPosition(0.2);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    // _mapKey.currentState.animateToUser();
+
     final toiletProvider = Provider.of<ToiletModel>(context);
 
     return Scaffold(
@@ -102,16 +103,16 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           panelSnapping: true,
                           minHeight: 80,
                           maxHeight: MediaQuery.of(context).size.height,
-                          panelBuilder: (ScrollController sc) => AnimatedBuilder(
+                          panelBuilder: (ScrollController sc) =>
+                              AnimatedBuilder(
                             animation: _notifier,
                             builder: (context, _) => BottomBar(
-                              _data,
-                              _notifier.value > 0.2 ? _notifier.value : 0,
-                              _selected,
-                              selectToilet,
-                              recommendedToilet,
-                              sc
-                            ),
+                                _data,
+                                _notifier.value > 0.2 ? _notifier.value : 0,
+                                _selected,
+                                selectToilet,
+                                recommendedToilet,
+                                sc),
                           ),
                           onPanelSlide: onBottomBarDrag,
                           body: MapWidget(
@@ -123,6 +124,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 _pc.animatePanelToPosition(0.2);
                               });
                             },
+                            key: _mapKey,
                           ),
                         ),
                         SafeArea(
@@ -135,46 +137,41 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               width: 50.0,
                               height: 50.0,
                               child: AnimatedBuilder(
-                                animation: _notifier,
-                                builder: (context, _) => _notifier.value == 1
-                                    ? RawMaterialButton(
+                                  animation: _notifier,
+                                  builder: (context, _) => RawMaterialButton(
                                         shape: CircleBorder(),
-                                        fillColor: Colors.white,
+                                        fillColor: _notifier.value == 1
+                                            ? Colors.white
+                                            : _selected != null
+                                                ? Colors.black
+                                                : Colors.white,
                                         elevation: 5.0,
                                         child: Icon(
-                                          Icons.close,
-                                          color: Colors.black,
+                                          _notifier.value == 1
+                                              ? Icons.close
+                                              : _selected != null
+                                                  ? Icons.close
+                                                  : Icons.menu,
+                                          color: _notifier.value == 1
+                                              ? Colors.black
+                                              : _selected != null
+                                                  ? Colors.white
+                                                  : Colors.black,
                                           size: 30.0,
                                         ),
-                                        onPressed: () => _pc.close(),
-                                      )
-                                    : _selected != null
-                                        ? RawMaterialButton(
-                                            shape: CircleBorder(),
-                                            fillColor: Colors.black,
-                                            elevation: 5.0,
-                                            child: Icon(
-                                              Icons.close,
-                                              color: Colors.white,
-                                              size: 30.0,
-                                            ),
-                                            onPressed: () {
-                                              selectToilet(null);
-                                            },
-                                          )
-                                        : RawMaterialButton(
-                                            shape: CircleBorder(),
-                                            fillColor: Colors.white,
-                                            elevation: 5.0,
-                                            child: Icon(
-                                              Icons.menu,
-                                              color: Colors.black,
-                                            ),
-                                            onPressed: () => _scaffoldKey
-                                                .currentState
-                                                .openDrawer(),
-                                          ),
-                              ),
+                                        onPressed: () {
+                                          if (_selected != null) {
+                                            selectToilet(null);
+                                          } else {
+                                            if (_notifier.value == 1) {
+                                              _pc.close();
+                                            } else {
+                                              _scaffoldKey.currentState
+                                                  .openDrawer();
+                                            }
+                                          }
+                                        },
+                                      )),
                             ),
                           ),
                         ),

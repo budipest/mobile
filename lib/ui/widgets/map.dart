@@ -8,17 +8,14 @@ import '../../core/models/toilet.dart';
 import '../../core/common/openHourUtils.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget(
-    this.toilets,
-    this.userLocation,
-    this.selectToilet, {
-    this.onMapCreated,
-  });
+  const MapWidget(this.toilets, this.userLocation, this.selectToilet,
+      {this.onMapCreated, this.key});
 
   final List<Toilet> toilets;
   final Map userLocation;
   final Function(Toilet) selectToilet;
   final Function onMapCreated;
+  final GlobalKey key;
 
   @override
   State<StatefulWidget> createState() => MapState();
@@ -27,7 +24,7 @@ class MapWidget extends StatefulWidget {
 class MapState extends State<MapWidget> {
   MapState();
 
-  GoogleMapController _mapController;
+  GoogleMapController mapController;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   bool _nightMode = false;
   BitmapDescriptor generalOpen;
@@ -39,7 +36,7 @@ class MapState extends State<MapWidget> {
   void _setMapStyle(String mapStyle) {
     setState(() {
       _nightMode = !_nightMode;
-      _mapController.setMapStyle(mapStyle);
+      mapController.setMapStyle(mapStyle);
     });
   }
 
@@ -85,8 +82,8 @@ class MapState extends State<MapWidget> {
   //   );
   // }
 
-  _animateToUser() {
-    _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+  animateToUser() {
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(
         widget.userLocation["latitude"],
         widget.userLocation["longitude"],
@@ -97,9 +94,9 @@ class MapState extends State<MapWidget> {
 
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
-      _mapController = controller;
-      _animateToUser();
+      mapController = controller;
       _getFileData('assets/light_mode.json').then(_setMapStyle);
+      animateToUser();
     });
     widget.onMapCreated();
   }

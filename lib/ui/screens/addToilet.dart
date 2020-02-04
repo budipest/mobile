@@ -24,8 +24,6 @@ class AddToilet extends StatefulWidget {
 class _AddToiletState extends State<AddToilet> {
   final Location _location = new Location();
 
-  GlobalKey headerKey = GlobalKey();
-
   PageController _controller;
 
   LatLng location;
