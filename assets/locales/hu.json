@@ -1,6 +1,7 @@
 {
     "title": "Budipest",
     "continue": "Tovább",
+    "cancel": "Mégsem",
     "recommendedToilet": "Ajánlott mosdó",
     "otherToilets": "További mosdók",
     "open": "Nyitva",
@@ -9,7 +10,13 @@
     "until": "{time}-ig",
     "todayUntil": "ma {time}-ig",
     "tomorrowUntil": "holnap {time}-ig",
-    "distanceFromYou": "-re tőled",
+    "tooFar": "Túl távol",
+    "distanceFromYou": " tőled",
+    "notGonnaGetThere": "Nem hisszük hogy időben odaérnél...",
+    "closerToilets": {
+        "numOfToilets-1": "Van egy ennél közelebbi mosdó is. Biztosan a távolabbiba szeretnél menni?",
+        "numOfToilets-2": "Van {numOfToilets} mosdó ami közelebb van hozzád ennél. Biztosan ezt szeretnéd?"
+    },
     "navigate": "Navigáció",
     "rate": "Értékelés",
     "notes": "Megjegyzések",

@@ -205,4 +205,13 @@ class Toilet {
         return EntryMethod.UNKNOWN;
     }
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Toilet &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          title == other.title &&
+          distance == other.distance;
 }

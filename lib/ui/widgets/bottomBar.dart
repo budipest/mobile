@@ -26,6 +26,63 @@ class BottomBar extends StatelessWidget {
   final Toilet recommendedToilet;
   final ScrollController sc;
 
+  void _navigate(Toilet toilet) async {
+    String url = Platform.isIOS
+        ? 'https://maps.apple.com/?q=${toilet.geopoint.latitude},${toilet.geopoint.longitude}'
+        : 'https://www.google.com/maps/search/?api=1&query=${toilet.geopoint.latitude},${toilet.geopoint.longitude}';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print("error while launching $url");
+      // error in launching map
+      // TOOD: handle error
+    }
+  }
+
+  void _tooFarNavigate(BuildContext context, Toilet toilet) {
+    int index = toilets.indexOf(selectedToilet);
+    if (index > 0) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text(
+              FlutterI18n.translate(context, "notGonnaGetThere"),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0,
+              ),
+            ),
+            content: new Text(
+              FlutterI18n.plural(context, "closerToilets.numOfToilets", index),
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: Text(FlutterI18n.translate(context, "cancel")),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              new FlatButton(
+                child: Text(FlutterI18n.translate(context, "navigate")),
+                onPressed: () {
+                  _navigate(toilet);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      _navigate(toilet);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     bool hasSelected = selectedToilet != null;
@@ -175,10 +232,16 @@ class BottomBar extends StatelessWidget {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: '${selectedToilet.distance} m'),
+                                    text: selectedToilet.distance < 10000
+                                        ? '${selectedToilet.distance} m'
+                                        : FlutterI18n.translate(
+                                            context, "tooFar"),
+                                  ),
                                   TextSpan(
                                     text: FlutterI18n.translate(
-                                        context, "distanceFromYou"),
+                                      context,
+                                      "distanceFromYou",
+                                    ),
                                     style: TextStyle(
                                       color: Colors.grey,
                                     ),
@@ -197,15 +260,10 @@ class BottomBar extends StatelessWidget {
                             child: Button(
                               FlutterI18n.translate(context, "navigate"),
                               () async {
-                                String url = Platform.isIOS
-                                    ? 'https://maps.apple.com/?q=${selectedToilet.geopoint.latitude},${selectedToilet.geopoint.longitude}'
-                                    : 'https://www.google.com/maps/search/?api=1&query=${selectedToilet.geopoint.latitude},${selectedToilet.geopoint.longitude}';
-                                if (await canLaunch(url)) {
-                                  await launch(url);
+                                if (selectedToilet.distance < 10000) {
+                                  _navigate(selectedToilet);
                                 } else {
-                                  print("error while launching $url");
-                                  // error in launching map
-                                  // TOOD: handle error
+                                  _tooFarNavigate(context, selectedToilet);
                                 }
                               },
                               icon: Icons.navigation,
