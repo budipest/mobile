@@ -84,7 +84,7 @@ class Toilet {
         notes = snapshot["notes"] != null
             ? _standariseNotes(snapshot["notes"])
             : new List<Note>(),
-        votes = snapshot["downvotes"] != null
+        votes = snapshot["votes"] != null
             ? _standariseVotes(snapshot["votes"])
             : new Map<String, int>(),
         entryMethod =
@@ -130,12 +130,13 @@ class Toilet {
 
   static Map<String, int> _standariseVotes(dynamic input) {
     Map<String, int> _votes = new Map<String, int>();
-    if (input != null) {
-      input.forEach((dynamic val) {
-        print(val);
-        // _votes.addEntries(newEntries) .add(Note.fromMap(val));
-      });
-    }
+    print(input);
+    // if (input != null) {
+    //   input.forEach((dynamic val) {
+    //     print(val);
+    //     // _votes.addEntries(newEntries) .add(Note.fromMap(val));
+    //   });
+    // }
     return _votes;
   }
 

@@ -327,16 +327,32 @@ List<Widget> describeToiletIcons(
       );
     }
 
-    // if (toilet.upvotes != 0 || toilet.downvotes != 0)
-    //   result.add(
-    //     descriptionIcon(
-    //       padding,
-    //       mode,
-    //       smaller,
-    //       '${((toilet.upvotes / (toilet.upvotes + toilet.downvotes)) * 100).round()}%',
-    //       icon: Icons.thumb_up,
-    //     ),
-    //   );
+    if (toilet.votes.length != 0) {
+      int upvotes = 0;
+      int downvotes = 0;
+
+      toilet.votes.values.forEach((int value) {
+        switch (value) {
+          case 1:
+            upvotes++;
+            break;
+          case -1:
+            downvotes++;
+            break;
+        }
+      });
+
+      if (upvotes != 0 || downvotes != 0)
+        result.add(
+          descriptionIcon(
+            padding,
+            mode,
+            smaller,
+            '${((upvotes / (upvotes + downvotes)) * 100).round()}%',
+            icon: Icons.thumb_up,
+          ),
+        );
+    }
   } else {
     if (toilet.entryMethod != EntryMethod.UNKNOWN) {
       result.add(
