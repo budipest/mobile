@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:provider/provider.dart';
 
-import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/viewmodels/UserModel.dart';
 import '../../core/models/toilet.dart';
 import '../../core/services/api.dart';

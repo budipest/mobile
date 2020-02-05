@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:location/location.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../widgets/map.dart';
 import '../widgets/sidebar.dart';

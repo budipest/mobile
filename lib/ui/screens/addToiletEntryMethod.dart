@@ -65,13 +65,41 @@ class AddToiletEntryMethod extends StatelessWidget {
                 hasEUR
                     ? Padding(
                         padding: const EdgeInsets.only(top: 10.0),
-                        child: TextInput(
-                          FlutterI18n.translate(context, "priceAlternative"),
-                          onTextChanged: (String input) =>
-                              onPriceChanged(input, "EUR"),
-                          isDark: true,
-                          suffixText: "EUR",
-                          keyboardType: TextInputType.number,
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextInput(
+                                FlutterI18n.translate(
+                                    context, "priceAlternative"),
+                                onTextChanged: (String input) =>
+                                    onPriceChanged(input, "EUR"),
+                                isDark: true,
+                                suffixText: "EUR",
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: InkWell(
+                                onTap: toggleEUR,
+                                child: Container(
+                                  width: 51,
+                                  height: 51,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[800],
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     : Padding(
