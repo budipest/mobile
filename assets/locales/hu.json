@@ -68,5 +68,10 @@
         "github": "GitHub repo megnyitása",
         "toiletPaper": "Vegyél nekünk WC papírt!",
         "paypal": "Adományozás PayPal-lal"
+    },
+    "error": {
+        "title": "Végzetes hiba történt.",
+        "location": "Nem találunk téged, és nem tudjuk hogy hol vagy, nem működik az app. Lehet hogy nem adtál nekünk engedélyt erre?",
+        "data": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?"
     }
 }

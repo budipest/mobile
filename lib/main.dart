@@ -33,6 +33,7 @@ Future main() async {
 class Application extends StatelessWidget {
   final FirebaseAnalytics analytics = FirebaseAnalytics();
   final FlutterI18nDelegate flutterI18nDelegate;
+  final GlobalKey<HomeState> _homeKey = new GlobalKey<HomeState>();
 
   Application(this.flutterI18nDelegate);
 
@@ -54,8 +55,8 @@ class Application extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => Home(),
-          '/addToilet': (context) => AddToilet(),
+          '/': (context) => Home(key: _homeKey),
+          '/addToilet': (context) => AddToilet(_homeKey),
           '/addNote': (context) => AddNote(),
           '/about': (context) => AboutUs()
         },

@@ -21,7 +21,6 @@ class Toilet {
   List<Note> notes;
   Map<String, int> votes;
   int distance = 0;
-
   EntryMethod entryMethod;
   Map price;
   String code;
@@ -119,7 +118,7 @@ class Toilet {
         "BABY_ROOM": tags.contains(Tag.BABY_ROOM)
       },
       "notes": notes.map((Note note) => note.toJson()).toList(),
-      "votes": votes.toString(),
+      "votes": votes.length > 0 ? votes.toString() : null,
       "entryMethod": entryMethod != null
           ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}"
           : null,

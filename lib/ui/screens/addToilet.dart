@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/models/toilet.dart';
 import '../widgets/blackLayoutContainer.dart';
+import './home.dart';
 import './addToiletLocation.dart';
 import './addToiletTitle.dart';
 import './addToiletCategory.dart';
@@ -17,6 +18,9 @@ import './addToiletOpenHours.dart';
 import './addToiletTags.dart';
 
 class AddToilet extends StatefulWidget {
+  const AddToilet(this.homeKey);
+  final GlobalKey<HomeState> homeKey;
+
   @override
   _AddToiletState createState() => _AddToiletState();
 }
@@ -157,6 +161,7 @@ class _AddToiletState extends State<AddToilet> {
         code,
       );
       await toiletProvider.uploadToilet(data);
+      widget.homeKey.currentState.selectToilet(data);
       Navigator.of(context).pop();
     } else {
       nextPage();
@@ -193,23 +198,12 @@ class _AddToiletState extends State<AddToilet> {
             ? _controller.offset < 100 ? NeverScrollableScrollPhysics() : null
             : NeverScrollableScrollPhysics(),
         children: <Widget>[
-          FutureBuilder<Map<String, double>>(
-            future: _location.getLocation(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                if (location == null) {
-                  location = LatLng(
-                    snapshot.data["latitude"],
-                    snapshot.data["longitude"],
-                  );
-                }
-                return AddToiletLocation(onLocationChanged, location);
-              } else {
-                return Text(
-                  "Töltjük a helyzetedet, egy pillanat türelmet",
-                );
-              }
-            },
+          AddToiletLocation(
+            onLocationChanged,
+            LatLng(
+              widget.homeKey.currentState.location["latitude"],
+              widget.homeKey.currentState.location["longitude"],
+            ),
           ),
           AddToiletTitle(onTitleChanged),
           AddToiletCategory(onCategoryChanged, category),

@@ -40,34 +40,6 @@ class MapState extends State<MapWidget> {
     });
   }
 
-  @override
-  void initState() {
-    widget.toilets.forEach((toilet) async {
-      double lat = toilet.geopoint.latitude;
-      double lng = toilet.geopoint.longitude;
-      MarkerId id = MarkerId(lat.toString() + lng.toString());
-      Marker _marker = Marker(
-        markerId: id,
-        position: LatLng(lat, lng),
-        icon: await determineMarkerIcon(
-          toilet.category,
-          toilet.openHours,
-          context,
-        ),
-        onTap: () => widget.selectToilet(toilet),
-      );
-      setState(() {
-        markers[id] = _marker;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   // Widget _nightModeToggler() {
   //   return FlatButton(
   //     child: Text('${_nightMode ? 'disable' : 'enable'} night mode'),
@@ -107,6 +79,25 @@ class MapState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
+    widget.toilets.forEach((toilet) async {
+      double lat = toilet.geopoint.latitude;
+      double lng = toilet.geopoint.longitude;
+      MarkerId id = MarkerId(lat.toString() + lng.toString());
+      Marker _marker = Marker(
+        markerId: id,
+        position: LatLng(lat, lng),
+        icon: await determineMarkerIcon(
+          toilet.category,
+          toilet.openHours,
+          context,
+        ),
+        onTap: () => widget.selectToilet(toilet),
+      );
+      setState(() {
+        markers[id] = _marker;
+      });
+    });
+
     return GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(

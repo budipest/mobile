@@ -68,5 +68,10 @@
     "github": "Open GitHub repository",
     "toiletPaper": "Buy us a roll of toilet paper!",
     "paypal": "Donate via PayPal"
+  },
+  "error": {
+    "title": "Something fatally bad just happened.",
+    "location": "We can't find you. Or at least we don't know where you at. Maybe you declined the location permissions?",
+    "data": "We couldn't retrieve data from the server. Maybe check your connection?"
   }
 }
