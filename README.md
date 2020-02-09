@@ -6,7 +6,7 @@ Budipest is a community-based toilet finder app.
 
 ## What's the deal with the name?
 
-Budapest is the capital of Hungary, and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you...
+Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you...
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ A few resources to get you started if this is your first Flutter project:
 
 ### Setting up the project
 
-For the backend, we use Firebase. We use Firebase Databases, Anonymous Authentication and Analytics. To configure it, create a Firebase project and [follow this documentation](https://firebase.google.com/docs/flutter/setup). **Make sure that you run over these docs for all of your desired build platforms!**
+For the backend, we use Firebase. We use Firebase Databases, Anonymous Authentication, and Analytics. To configure it, create a Firebase project and [follow this documentation](https://firebase.google.com/docs/flutter/setup). **Make sure that you run over these docs for all of your desired build platforms!**
 
 ### Running on iOS
 
@@ -47,7 +47,7 @@ flutter run
 
 ### Running on Android
 
-Once you're all set with the Firebase thingy and made sure that there is an Android device connected to your machine, you can just run `flutter run` and expect thing to be going fine.
+Once you're all set with the Firebase thingy and made sure that there is an Android device connected to your machine, you can just run `flutter run` and expect things to be going fine.
 
 ## Contributing
 
