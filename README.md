@@ -1,6 +1,6 @@
 # Budipest
 
-![Budipest logo with slogan](https://github.com/danielgrgly/budipest/blob/master/assets/icons/icon.png?raw=true)
+![Budipest logo with slogan](https://github.com/danielgrgly/budipest/blob/master/assets/icons/icon.png?raw=true | width=100)
 
 Budipest is a community-based toilet finder app.
 
