@@ -87,6 +87,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: StreamBuilder(
         stream: _location.onLocationChanged(),
         builder: (context, locationSnapshot) {
+          print("locationSnapshot.data");
+          print(locationSnapshot.data);
           if (locationSnapshot.hasData) {
             location = locationSnapshot.data;
 
@@ -227,6 +229,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           } else if (locationSnapshot.hasError) {
             return Error(FlutterI18n.translate(context, "error.location"));
           } else {
+            _location.getLocation(); // sometimes the location package needs a manual kick to get working with the stream.
             return Center(child: CircularProgressIndicator());
           }
         },

@@ -1,12 +1,13 @@
-# Budipest
-
-<img src="https://github.com/danielgrgly/budipest/blob/master/assets/icons/icon.png?raw=true" alt="Budipest logo with slogan" height="100" width="100" >
-
-Budipest is a community-based toilet finder app.
+![Budipest logo](https://github.com/danielgrgly/budipest/blob/master/github_assets/titlecard.png?raw=true)
 
 ## What's the deal with the name?
 
 Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you...
+
+## App features
+The app shows the toilets nearby you on a map and in a list, ordered by distance from you. It recommends you the nearest open toilet, and when selecting a toilet, you'll see the opening hours, notes and ratings of the toilet. You can also add new toilets, or edit and rate existing ones.
+
+![App screenshots](https://github.com/danielgrgly/budipest/blob/master/github_assets/appfeatures.png?raw=true)
 
 ## Getting Started
 
@@ -16,6 +17,12 @@ A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+### Tech stack
+- Dart and Flutter
+- Firebase
+- [google_maps_flutter](https://pub.dev/packages/google_maps_flutter)
+
 
 ### Setting up the project
 

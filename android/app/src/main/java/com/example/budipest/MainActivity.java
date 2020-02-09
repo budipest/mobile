@@ -1,4 +1,4 @@
-package com.example.budipest;
+package hu.funbyte.budipest;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
