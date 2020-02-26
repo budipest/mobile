@@ -44,6 +44,7 @@ class _AddNoteState extends State<AddNote> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                     child: TextInput(
+                      note,
                       FlutterI18n.translate(context, "newNotePlaceholder"),
                       onTextChanged: (String text) {
                         setState(() {

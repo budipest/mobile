@@ -12,16 +12,18 @@ class AddToiletEntryMethod extends StatelessWidget {
     this.selectedEntryMethod,
     this.price,
     this.onPriceChanged,
+    this.code,
     this.onCodeSubmitted,
     this.hasEUR,
     this.toggleEUR,
   );
+  final EntryMethod selectedEntryMethod;
   final Function onEntryMethodSubmitted;
+  final Map price;
   final Function onPriceChanged;
+  final String code;
   final Function onCodeSubmitted;
   final Function toggleEUR;
-  final EntryMethod selectedEntryMethod;
-  final Map price;
   final bool hasEUR;
 
   @override
@@ -56,6 +58,7 @@ class AddToiletEntryMethod extends StatelessWidget {
             Column(
               children: <Widget>[
                 TextInput(
+                  price["HUF"] != null ? price["HUF"].toString() : null,
                   FlutterI18n.translate(context, "price"),
                   onTextChanged: (String input) => onPriceChanged(input, "HUF"),
                   isDark: true,
@@ -69,6 +72,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                           children: <Widget>[
                             Expanded(
                               child: TextInput(
+                                price["EUR"] != null ? price["EUR"].toString() : null,
                                 FlutterI18n.translate(
                                     context, "priceAlternative"),
                                 onTextChanged: (String input) =>
@@ -135,6 +139,7 @@ class AddToiletEntryMethod extends StatelessWidget {
             "tag_key.svg",
             FlutterI18n.translate(context, "key"),
             TextInput(
+              code,
               "",
               onTextChanged: onCodeSubmitted,
               isDark: true,

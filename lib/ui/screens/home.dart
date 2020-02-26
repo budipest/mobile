@@ -147,18 +147,18 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         animation: _notifier,
                         builder: (context, _) => Positioned(
                           right: 0,
-                          bottom: (_notifier.value + 0.125) *
-                              ((MediaQuery.of(context).size.height)),
+                          bottom: ((MediaQuery.of(context).size.height - 80) *
+                              _notifier.value) + 95,
                           child: RawMaterialButton(
                             shape: CircleBorder(),
                             fillColor: Colors.white,
-                            elevation: 5.0,
+                            elevation: 12.5,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.my_location,
-                                color: Colors.black,
-                                size: 25.0,
+                                color: Colors.grey[800],
+                                size: 27.5,
                               ),
                             ),
                             onPressed: () {
@@ -229,7 +229,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           } else if (locationSnapshot.hasError) {
             return Error(FlutterI18n.translate(context, "error.location"));
           } else {
-            _location.getLocation(); // sometimes the location package needs a manual kick to get working with the stream.
+            _location
+                .getLocation(); // sometimes the location package needs a manual kick to get working with the stream.
             return Center(child: CircularProgressIndicator());
           }
         },

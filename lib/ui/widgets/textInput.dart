@@ -29,8 +29,9 @@ Widget affix(String text, bool isPrefix,
   );
 }
 
-class TextInput extends StatelessWidget {
-  const TextInput(
+class TextInput extends StatefulWidget {
+  TextInput(
+    this.text,
     this.placeholder, {
     this.onTextChanged,
     this.isDark = false,
@@ -38,6 +39,7 @@ class TextInput extends StatelessWidget {
     this.suffixText,
     this.keyboardType = TextInputType.text,
   });
+  final String text;
   final Function onTextChanged;
   final String placeholder;
   final bool isDark;
@@ -46,36 +48,55 @@ class TextInput extends StatelessWidget {
   final TextInputType keyboardType;
 
   @override
+  _TextInputState createState() => _TextInputState();
+}
+
+class _TextInputState extends State<TextInput> {
+  final TextEditingController _textEditingController =
+      new TextEditingController(text: "");
+
+  @override
   Widget build(BuildContext context) {
+    var cursorPos = _textEditingController.selection;
+
+    _textEditingController.text = widget.text ?? '';
+
+    if (cursorPos.start > _textEditingController.text.length) {
+      cursorPos = new TextSelection.fromPosition(
+          new TextPosition(offset: _textEditingController.text.length));
+    }
+    _textEditingController.selection = cursorPos;
+
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey[900] : Colors.grey[200],
+        color: widget.isDark ? Colors.grey[900] : Colors.grey[200],
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
       ),
       child: Row(
         children: <Widget>[
-          if (prefixText != null) affix(prefixText, true),
+          if (widget.prefixText != null) affix(widget.prefixText, true),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
               child: TextField(
-                keyboardType: keyboardType,
+                keyboardType: widget.keyboardType,
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: isDark ? Colors.white : Colors.black,
+                  color: widget.isDark ? Colors.white : Colors.black,
                 ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: placeholder,
+                  hintText: widget.placeholder,
                   hintStyle: TextStyle(
-                    color: isDark ? Colors.grey[600] : Colors.grey[700],
+                    color: widget.isDark ? Colors.grey[600] : Colors.grey[700],
                   ),
                 ),
-                onChanged: onTextChanged,
+                onChanged: widget.onTextChanged,
+                controller: _textEditingController,
               ),
             ),
           ),
-          if (suffixText != null) affix(suffixText, false),
+          if (widget.suffixText != null) affix(widget.suffixText, false),
         ],
       ),
     );

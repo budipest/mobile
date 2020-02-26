@@ -4,7 +4,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import '../widgets/textInput.dart';
 
 class AddToiletTitle extends StatelessWidget {
-  const AddToiletTitle(this.onTitleChanged);
+  const AddToiletTitle(this.title, this.onTitleChanged);
+  final String title;
   final Function(String) onTitleChanged;
 
   @override
@@ -25,6 +26,7 @@ class AddToiletTitle extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: TextInput(
+              title,
               FlutterI18n.translate(context, "name"),
               onTextChanged: onTitleChanged,
             ),
