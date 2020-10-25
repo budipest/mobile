@@ -23,7 +23,7 @@ class _AddNoteState extends State<AddNote> {
   Widget build(BuildContext context) {
     return BlackLayoutContainer(
       context: context,
-      inlineTitle: widget.toilet.title,
+      inlineTitle: widget.toilet.name,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
