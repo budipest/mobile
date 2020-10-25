@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../core/models/toilet.dart';
-import './toiletCard.dart';
+import '../../core/models/Toilet.dart';
+import 'ToiletCard.dart';
 
 class ToiletRecommendationList extends StatelessWidget {
   const ToiletRecommendationList(this.toilets, this.selectToilet);

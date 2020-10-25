@@ -5,14 +5,13 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
-import './error.dart';
-import '../widgets/map.dart';
-import '../widgets/sidebar.dart';
-import '../widgets/bottomBar.dart';
+import 'Error.dart';
+import '../widgets/Map.dart';
+import '../widgets/Sidebar.dart';
+import '../widgets/BottomBar.dart';
 import '../../core/viewmodels/ToiletModel.dart';
-import '../../core/viewmodels/UserModel.dart';
 import '../../core/common/openHourUtils.dart';
-import '../../core/models/toilet.dart';
+import '../../core/models/Toilet.dart';
 import '../../locator.dart';
 
 class Home extends StatefulWidget {

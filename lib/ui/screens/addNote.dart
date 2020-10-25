@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../core/models/toilet.dart';
-import '../widgets/button.dart';
-import '../widgets/blackLayoutContainer.dart';
-import '../widgets/textInput.dart';
-import '../widgets/noteList.dart';
+import '../../core/models/Toilet.dart';
+import '../widgets/Button.dart';
+import '../widgets/BlackLayoutContainer.dart';
+import '../widgets/TextInput.dart';
+import '../widgets/NoteList.dart';
 
 class AddNote extends StatefulWidget {
   AddNote({this.toilet, this.onNoteSubmitted});

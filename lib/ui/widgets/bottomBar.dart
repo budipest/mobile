@@ -4,11 +4,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:io' show Platform;
 
-import './button.dart';
-import './toiletDetailBar.dart';
-import './toiletRecommendationList.dart';
+import 'Button.dart';
+import 'ToiletDetailBar.dart';
+import 'ToiletRecommendationList.dart';
 import '../../core/common/openHourUtils.dart';
-import '../../core/models/toilet.dart';
+import '../../core/models/Toilet.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar(
@@ -28,8 +28,8 @@ class BottomBar extends StatelessWidget {
 
   void _navigate(Toilet toilet) async {
     String url = Platform.isIOS
-        ? 'https://maps.apple.com/?q=${toilet.geopoint.latitude},${toilet.geopoint.longitude}'
-        : 'https://www.google.com/maps/search/?api=1&query=${toilet.geopoint.latitude},${toilet.geopoint.longitude}';
+        ? 'https://maps.apple.com/?q=${toilet.latitude},${toilet.longitude}'
+        : 'https://www.google.com/maps/search/?api=1&query=${toilet.latitude},${toilet.longitude}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -135,7 +135,7 @@ class BottomBar extends StatelessWidget {
                         tag: "inlineTitle",
                         child: Text(
                           hasSelected
-                              ? selectedToilet.title
+                              ? selectedToilet.name
                               : FlutterI18n.translate(
                                   context,
                                   "recommendedToilet",
@@ -171,8 +171,8 @@ class BottomBar extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 hasSelected
-                                    ? selectedToilet.title
-                                    : recommendedToilet.title,
+                                    ? selectedToilet.name
+                                    : recommendedToilet.name,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16.0,

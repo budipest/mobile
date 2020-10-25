@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import './ui/screens/home.dart';
-import './ui/screens/addToilet.dart';
-import './ui/screens/addNote.dart';
-import './ui/screens/aboutUs.dart';
+import 'ui/screens/Home.dart';
+import 'ui/screens/AddToilet.dart';
+import 'ui/screens/AddNote.dart';
+import 'ui/screens/AboutUs.dart';
 
 import './core/viewmodels/ToiletModel.dart';
-import './core/viewmodels/UserModel.dart';
 import './core/common/variables.dart';
 import './core/common/statusBarObserver.dart';
 
@@ -31,7 +28,6 @@ Future main() async {
 }
 
 class Application extends StatelessWidget {
-  final FirebaseAnalytics analytics = FirebaseAnalytics();
   final FlutterI18nDelegate flutterI18nDelegate;
   final GlobalKey<HomeState> _homeKey = new GlobalKey<HomeState>();
 
@@ -40,10 +36,10 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(builder: (context) => locator<ToiletModel>()),
-        ChangeNotifierProvider(builder: (context) => locator<UserModel>())
-      ],
+      // providers: [
+      //   ChangeNotifierProvider(builder: (context) => locator<ToiletModel>()),
+      //   ChangeNotifierProvider(builder: (context) => locator<UserModel>())
+      // ],
       child: MaterialApp(
         title: "Budipest",
         theme: ThemeData(
@@ -61,7 +57,6 @@ class Application extends StatelessWidget {
           '/about': (context) => AboutUs()
         },
         navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: analytics),
           StatusBarObserver(),
         ],
         localizationsDelegates: [

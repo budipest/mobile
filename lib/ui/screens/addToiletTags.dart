@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../widgets/selectable.dart';
-import '../../core/models/toilet.dart';
+import '../widgets/Selectable.dart';
+import '../../core/models/Toilet.dart';
 
 class AddToiletTags extends StatelessWidget {
   const AddToiletTags(this.onTagToggled, this.tags);

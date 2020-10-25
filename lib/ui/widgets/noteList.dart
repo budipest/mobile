@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../core/models/note.dart';
-import '../../core/viewmodels/UserModel.dart';
-import '../../core/models/toilet.dart';
+import '../../core/models/Note.dart';
+import '../../core/models/Toilet.dart';
 import '../../core/services/api.dart';
 import '../../locator.dart';
-import './noteCard.dart';
+import 'NoteCard.dart';
 
 class NoteList extends StatelessWidget {
   NoteList(this.toilet);

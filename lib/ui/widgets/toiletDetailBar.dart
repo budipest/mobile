@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../core/viewmodels/UserModel.dart';
-import '../../core/models/toilet.dart';
-import '../../core/models/note.dart';
+import '../../core/models/Toilet.dart';
+import '../../core/models/Note.dart';
 import '../../core/services/api.dart';
-import '../screens/addNote.dart';
+import '../screens/AddNote.dart';
 import '../../locator.dart';
-import './button.dart';
-import './noteList.dart';
-import './rateBar.dart';
+import 'Button.dart';
+import 'NoteList.dart';
+import 'RatingBar.dart';
 
 class ToiletDetailBar extends StatefulWidget {
   const ToiletDetailBar(this.toilet);
@@ -53,7 +52,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
           decoration: BoxDecoration(color: Colors.grey[100]),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: RateBar(widget.toilet, _api),
+            child: RatingBar(widget.toilet, _api),
           ),
         ),
         Padding(

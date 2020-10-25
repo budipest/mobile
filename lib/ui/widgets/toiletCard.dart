@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './cardTemplate.dart';
-import '../../core/models/toilet.dart';
+import 'CardTemplate.dart';
+import '../../core/models/Toilet.dart';
 import '../../core/common/openHourUtils.dart';
 
 class ToiletCard extends StatelessWidget {
@@ -23,7 +23,7 @@ class ToiletCard extends StatelessWidget {
                   maxWidth: MediaQuery.of(context).size.width * 0.49,
                 ),
                 child: Text(
-                  toilet.title,
+                  toilet.name,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,

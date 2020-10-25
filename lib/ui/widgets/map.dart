@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:async';
 
-import '../../core/models/toilet.dart';
+import '../../core/models/Toilet.dart';
 import '../../core/common/openHourUtils.dart';
 
 class MapWidget extends StatefulWidget {

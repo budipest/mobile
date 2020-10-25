@@ -6,7 +6,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'dart:async';
 import 'dart:core';
 
-import '../models/toilet.dart';
+import '../models/Toilet.dart';
 import './bitmapFromSvg.dart';
 
 Widget descriptionIcon(

@@ -24,16 +24,8 @@ dependencies:
     sdk: flutter
 
   flutter_i18n: 0.8.3
-
   flutter_svg: ^0.17.3+1
-  font_awesome_flutter: 8.4.0
-
-  firebase_core: ^0.4.0
-  firebase_analytics: any
-  firebase_auth: any
-  cloud_firestore: ^0.12.5
-  geoflutterfire: 2.0.3+5
-  fluster: 1.1.2
+  sliding_up_panel: 1.0.0
 
   google_maps_flutter: ^0.5.19
   location: 1.4.1
@@ -41,9 +33,9 @@ dependencies:
   provider: any
   get_it: any
   url_launcher: any
-
+  http: any
   uuid: 2.0.4
-  sliding_up_panel: 1.0.0
+
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.3"

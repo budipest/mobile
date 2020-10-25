@@ -1,4 +1,4 @@
-package hu.funbyte.budipest;
+package hu.danielgrgly.budipest;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

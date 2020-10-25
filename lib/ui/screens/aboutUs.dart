@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgets/button.dart';
-import '../widgets/personCard.dart';
+import '../widgets/Button.dart';
+import '../widgets/PersonCard.dart';
 
 class AboutUs extends StatelessWidget {
   @override

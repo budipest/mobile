@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../core/viewmodels/UserModel.dart';
-import '../../core/models/toilet.dart';
+import '../../core/models/Toilet.dart';
 import '../../core/services/api.dart';
 import '../../locator.dart';
-import './button.dart';
+import 'Button.dart';
 
-class RateBar extends StatefulWidget {
-  RateBar(this.toilet, this._api);
-  Toilet toilet;
-  API _api;
+class RatingBar extends StatefulWidget {
+  RatingBar(this.toilet, this._api);
+  final Toilet toilet;
+  final API _api;
   int myVote;
 
   @override
-  _RateBarState createState() => _RateBarState();
+  _RatingBarState createState() => _RatingBarState();
 }
 
-class _RateBarState extends State<RateBar> {
+class _RatingBarState extends State<RatingBar> {
   int calculateVote(bool isUpvote) {
     // returns vote value
     // 1 is an upvote
