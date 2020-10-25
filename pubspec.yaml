@@ -28,7 +28,7 @@ dependencies:
   sliding_up_panel: ^1.0.2
 
   google_maps_flutter: ^1.0.3
-  location: ^3.0.0
+  location: ^3.0.2
 
   provider: any
   get_it: any

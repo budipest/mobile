@@ -46,6 +46,7 @@ class Application extends StatelessWidget {
               fontSizeFactor: 1.4,
             ),
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => Home(key: _homeKey),
