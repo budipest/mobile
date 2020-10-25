@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../models/Toilet.dart';
-import '../services/api.dart';
+import '../services/API.dart';
 import '../../locator.dart';
 
 class ToiletModel extends ChangeNotifier {

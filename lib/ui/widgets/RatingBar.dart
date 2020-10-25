@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/Toilet.dart';
-import '../../core/services/api.dart';
+import '../../core/services/API.dart';
 import '../../locator.dart';
 import 'Button.dart';
 

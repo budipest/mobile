@@ -4,7 +4,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/Note.dart';
 import '../../core/models/Toilet.dart';
-import '../../core/services/api.dart';
+import '../../core/services/API.dart';
 import '../../locator.dart';
 import 'NoteCard.dart';
 

@@ -20,13 +20,12 @@ A few resources to get you started if this is your first Flutter project:
 
 ### Tech stack
 - Dart and Flutter
-- Firebase
 - [google_maps_flutter](https://pub.dev/packages/google_maps_flutter)
 
 
 ### Setting up the project
 
-For the backend, we use Firebase. We use Firebase Databases, Anonymous Authentication, and Analytics. To configure it, create a Firebase project and [follow this documentation](https://firebase.google.com/docs/flutter/setup). **Make sure that you run over these docs for all of your desired build platforms!**
+For the backend, we use our own API that can be found in [this repository](https://github.com/danielgrgly/budipest-api).
 
 ### Running on iOS
 
@@ -54,7 +53,7 @@ flutter run
 
 ### Running on Android
 
-Once you're all set with the Firebase thingy and made sure that there is an Android device connected to your machine, you can just run `flutter run` and expect things to be going fine.
+Once you're all set with connecting an Android device to your machine, you can just run `flutter run` and expect things to be going fine.
 
 ## Contributing
 
