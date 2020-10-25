@@ -10,6 +10,7 @@ enum Tag {
 enum EntryMethod { FREE, CODE, PRICE, CONSUMERS, UNKNOWN }
 
 class Toilet {
+  String id;
   String name;
   DateTime addDate;
   Category category;
@@ -29,6 +30,7 @@ class Toilet {
   int distance = 0;
 
   Toilet(
+    String id,
     String name,
     DateTime addDate,
     Category category,
@@ -42,6 +44,7 @@ class Toilet {
     List<Note> notes,
     Map<String, int> votes,
   ) {
+    this.id = id;
     this.name = name;
     this.addDate = addDate;
     this.category = category;
@@ -77,7 +80,8 @@ class Toilet {
   }
 
   Toilet.fromMap(Map raw)
-      : name = raw["name"] ?? "",
+      : id = raw["id"] ?? "",
+        name = raw["name"] ?? "",
         latitude = raw["location"]["latitude"] ?? 0.0,
         longitude = raw["location"]["longitude"] ?? 0.0,
         category =
