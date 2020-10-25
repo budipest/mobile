@@ -227,7 +227,8 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
         FlutterI18n.translate(
           context,
           "todayUntil",
-          Map.fromIterables(["time"], [minuteToHourFormat(openHours[end])]),
+          translationParams:
+              Map.fromIterables(["time"], [minuteToHourFormat(openHours[end])]),
         ),
       );
     }
@@ -238,7 +239,8 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
         FlutterI18n.translate(
           context,
           "todayUntil",
-          Map.fromIterables(["time"], [minuteToHourFormat(openHours[start])]),
+          translationParams: Map.fromIterables(
+              ["time"], [minuteToHourFormat(openHours[start])]),
         ),
       );
     } else {
@@ -246,14 +248,15 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
         result.add(FlutterI18n.translate(
           context,
           "tomorrowUntil",
-          Map.fromIterables(["time"],
+          translationParams: Map.fromIterables(["time"],
               [minuteToHourFormat(openHours[end + 1 >= 14 ? 0 : end + 1])]),
         ));
       } else {
         result.add(FlutterI18n.translate(
           context,
           "tomorrowUntil",
-          Map.fromIterables(["time"], [minuteToHourFormat(openHours[start])]),
+          translationParams: Map.fromIterables(
+              ["time"], [minuteToHourFormat(openHours[start])]),
         ));
       }
     }

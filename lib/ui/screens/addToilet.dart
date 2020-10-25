@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/models/Toilet.dart';
@@ -138,7 +138,7 @@ class _AddToiletState extends State<AddToilet> {
   }
 
   void onFABPressed() async {
-    final toiletProvider = Provider.of<ToiletModel>(context);
+    // final toiletProvider = Provider.of<ToiletModel>(context);
 
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
       var data = Toilet(
@@ -156,7 +156,8 @@ class _AddToiletState extends State<AddToilet> {
         [],
         new Map<String, int>(),
       );
-      await toiletProvider.addToilet(data);
+      // TODO: implement adding a toilet
+      // await toiletProvider.addToilet(data);
       widget.homeKey.currentState.selectToilet(data);
       Navigator.of(context).pop();
     } else {

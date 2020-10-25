@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
 import 'Error.dart';
@@ -81,11 +81,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   void updateData(LocationData location) async {
-    final _newToilets =
-        await Provider.of<ToiletModel>(context).getToilets(location);
+    // TODO: implement pulling toilets
+
+    // final _newToilets =
+    //     await Provider.of<ToiletModel>(context).getToilets(location);
 
     setState(() {
-      _data = _newToilets;
+      // _data = _newToilets;
       locationData = location;
       _recommendedToilet = _data.firstWhere(
         (Toilet toilet) => isOpen(toilet.openHours),
@@ -95,7 +97,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final toiletProvider = Provider.of<ToiletModel>(context);
+    // final toiletProvider = Provider.of<ToiletModel>(context);
 
     return Scaffold(
       key: _scaffoldKey,
