@@ -142,6 +142,7 @@ class _AddToiletState extends State<AddToilet> {
 
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
       var data = Toilet(
+        "",
         name,
         new DateTime.now(),
         category,
@@ -155,7 +156,7 @@ class _AddToiletState extends State<AddToilet> {
         [],
         new Map<String, int>(),
       );
-      await toiletProvider.uploadToilet(data);
+      await toiletProvider.addToilet(data);
       widget.homeKey.currentState.selectToilet(data);
       Navigator.of(context).pop();
     } else {
@@ -196,8 +197,8 @@ class _AddToiletState extends State<AddToilet> {
           AddToiletLocation(
             onLocationChanged,
             LatLng(
-              widget.homeKey.currentState.location["latitude"],
-              widget.homeKey.currentState.location["longitude"],
+              widget.homeKey.currentState.locationData.latitude,
+              widget.homeKey.currentState.locationData.longitude,
             ),
           ),
           AddToiletName(name, onNameChanged),

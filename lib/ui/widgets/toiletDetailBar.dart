@@ -21,26 +21,27 @@ class ToiletDetailBar extends StatefulWidget {
 
 class ToiletDetailBarState extends State<ToiletDetailBar> {
   ToiletDetailBarState();
-  API _api = locator<API>();
-  String userId = locator<UserModel>().userId;
+  // String userId = locator<UserModel>().userId;
 
   void addNote(String noteText, String uid) async {
     widget.toilet.notes.insert(0, Note(noteText, uid));
-    _api.addToArray(
-      widget.toilet.notes.map((Note note) => note.toJson()).toList(),
-      widget.toilet.id,
-      "notes",
-    );
+    // TODO: implement adding a note
+    // _api.addToArray(
+    //   widget.toilet.notes.map((Note note) => note.toJson()).toList(),
+    //   widget.toilet.id,
+    //   "notes",
+    // );
     Navigator.of(context).pop();
   }
 
   bool userHasNote(Toilet toilet) {
     bool vote = false;
-    toilet.notes.forEach((Note note) {
-      if (note.userId == userId) {
-        vote = true;
-      }
-    });
+    // TODO: implement checking notes
+    // toilet.notes.forEach((Note note) {
+    //   if (note.userId == userId) {
+    //     vote = true;
+    //   }
+    // });
     return vote;
   }
 
@@ -52,7 +53,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
           decoration: BoxDecoration(color: Colors.grey[100]),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: RatingBar(widget.toilet, _api),
+            child: RatingBar(widget.toilet),
           ),
         ),
         Padding(
@@ -79,8 +80,11 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                           fullscreenDialog: true,
                           builder: (context) => AddNote(
                             toilet: widget.toilet,
-                            onNoteSubmitted: (String newNote) =>
-                                addNote(newNote, userId),
+                            onNoteSubmitted: (String note) =>
+                                print("this is not implemented yet"),
+                            // TOOD: implement submitting notes
+                            // onNoteSubmitted: (String newNote) =>
+                            //     addNote(newNote, userId),
                           ),
                         ),
                       );

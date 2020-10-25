@@ -8,9 +8,8 @@ import '../../locator.dart';
 import 'Button.dart';
 
 class RatingBar extends StatefulWidget {
-  RatingBar(this.toilet, this._api);
+  RatingBar(this.toilet);
   final Toilet toilet;
-  final API _api;
   int myVote;
 
   @override
@@ -48,13 +47,15 @@ class _RatingBarState extends State<RatingBar> {
 
     Map<String, Map<String, int>> data = new Map<String, Map<String, int>>();
     data["votes"] = votes;
-    widget._api.updateDocument(data, widget.toilet.id);
+    // TODO: implement casting votes
+    // widget._api.updateDocument(data, widget.toilet.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    final String userId = locator<UserModel>().userId;
-    widget.myVote = widget.toilet.votes[userId] ?? 0;
+    // TODO: implement checking votes
+    // final String userId = locator<UserModel>().userId;
+    // widget.myVote = widget.toilet.votes[userId] ?? 0;
     int upvotes = 0;
     int downvotes = 0;
 
@@ -84,7 +85,7 @@ class _RatingBarState extends State<RatingBar> {
           child: Button(
             // widget.toilet.upvotes.toString(),
             upvotes.toString(),
-            () => castVote(userId, true),
+            () => castVote("userId", true), // TODO: implement userId
             icon: Icons.thumb_up,
             backgroundColor:
                 widget.myVote == 1 ? Colors.black : Colors.grey[600],
@@ -95,7 +96,7 @@ class _RatingBarState extends State<RatingBar> {
         Button(
           // widget.toilet.downvotes.toString(),
           downvotes.toString(),
-          () => castVote(userId, false),
+          () => castVote("userId", false), // TODO: implement userId
           icon: Icons.thumb_down,
           backgroundColor:
               widget.myVote == -1 ? Colors.black : Colors.grey[600],

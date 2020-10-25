@@ -1,34 +1,30 @@
 import 'package:flutter/foundation.dart';
+import 'package:location/location.dart';
 
 import '../models/Toilet.dart';
 import '../services/API.dart';
-import '../../locator.dart';
 
 class ToiletModel extends ChangeNotifier {
-  API _api = locator<API>();
-
   List<Toilet> data;
 
-  // Future<List<Toilet>> fetchData() async {
-  //   var result = await _api.getDataCollection();
-  //   data = result.documents
-  //       .map((doc) => Toilet.fromMap(doc.data, doc.documentID))
-  //       .toList();
-  //   return data;
-  // }
+  Future<List<Toilet>> getToilets(LocationData location) async {
+    final result = await API.getToilets();
+    final data = result.map((toilet) => Toilet.fromMap(toilet)).toList();
 
-  // Stream<List<DocumentSnapshot>> fetchQueriedData(
-  //     double rad, double lat, double lon) {
-  //   return _api.streamQueriedData(rad, lat, lon);
-  // }
+    // Initialise distance property on every toilet
+    data.forEach((toilet) {
+      toilet.calculateDistance(location.latitude, location.longitude);
+    });
 
-  // Stream<QuerySnapshot> fetchDataAsStream() {
-  //   return _api.streamDataCollection();
-  // }
+    // Sort toilets based on their distance from the user
+    data.sort((a, b) => a.distance.compareTo(b.distance));
 
-  // Future uploadToilet(Toilet data) async {
-  //   var result = await _api.addDocument(data.toJson());
+    return data;
+  }
 
-  //   return result;
-  // }
+  Future addToilet(Toilet data) async {
+    var result = await API.addToilet(data.toJson());
+
+    return result;
+  }
 }

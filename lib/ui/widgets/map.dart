@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 import 'dart:async';
 
@@ -12,7 +13,7 @@ class MapWidget extends StatefulWidget {
       {this.onMapCreated, this.key});
 
   final List<Toilet> toilets;
-  final Map userLocation;
+  final LocationData userLocation;
   final Function(Toilet) selectToilet;
   final Function onMapCreated;
   final GlobalKey key;
@@ -56,8 +57,8 @@ class MapState extends State<MapWidget> {
 
   animateToUser() {
     animateToLocation(
-      widget.userLocation["latitude"],
-      widget.userLocation["longitude"],
+      widget.userLocation.latitude,
+      widget.userLocation.longitude,
     );
   }
 
@@ -80,8 +81,8 @@ class MapState extends State<MapWidget> {
   @override
   Widget build(BuildContext context) {
     widget.toilets.forEach((toilet) async {
-      double lat = toilet.geopoint.latitude;
-      double lng = toilet.geopoint.longitude;
+      double lat = toilet.latitude;
+      double lng = toilet.longitude;
       MarkerId id = MarkerId(lat.toString() + lng.toString());
       Marker _marker = Marker(
         markerId: id,

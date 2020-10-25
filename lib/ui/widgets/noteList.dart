@@ -50,11 +50,12 @@ class NoteList extends StatelessWidget {
               onPressed: () {
                 List<dynamic> remove = new List<dynamic>();
                 remove.add(toilet.notes[0].toJson());
-                _api.removeFromArray(
-                  remove,
-                  toilet.id,
-                  "notes",
-                );
+                // TODO: implement removing a note
+                // _api.removeFromArray(
+                //   remove,
+                //   toilet.id,
+                //   "notes",
+                // );
                 toilet.notes.removeAt(0);
                 Navigator.of(context).pop();
               },
@@ -67,14 +68,15 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userId = locator<UserModel>().userId;
+    // TODO: implement notes
+    // final String userId = locator<UserModel>().userId;
 
-    toilet.notes.forEach((Note note) {
-      if (note.userId == userId) {
-        toilet.notes.remove(note);
-        toilet.notes.insert(0, note);
-      }
-    });
+    // toilet.notes.forEach((Note note) {
+    //   if (note.userId == userId) {
+    //     toilet.notes.remove(note);
+    //     toilet.notes.insert(0, note);
+    //   }
+    // });
 
     return Hero(
       tag: "notelist",
@@ -85,7 +87,8 @@ class NoteList extends StatelessWidget {
             ...toilet.notes.map(
               (Note note) => NoteCard(
                 note,
-                isMine: note.userId == userId,
+                // isMine: note.userId == userId,
+                isMine: false,
                 removeHandler: () => removeNote(context),
               ),
             ),

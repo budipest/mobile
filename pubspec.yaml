@@ -25,10 +25,10 @@ dependencies:
 
   flutter_i18n: 0.8.3
   flutter_svg: ^0.17.3+1
-  sliding_up_panel: 1.0.0
+  sliding_up_panel: ^1.0.2
 
-  google_maps_flutter: ^0.5.19
-  location: 1.4.1
+  google_maps_flutter: 1.0.3
+  location: ^3.0.0
 
   provider: any
   get_it: any
