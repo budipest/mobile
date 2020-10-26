@@ -120,7 +120,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
     setState(() {
       // _data = _newToilets;
-      // locationData = location;
+      locationData = location;
       // _recommendedToilet = _data.firstWhere(
       //   (Toilet toilet) => isOpen(toilet.openHours),
       // );
@@ -132,144 +132,124 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     print("Home");
     // final toiletProvider = Provider.of<ToiletModel>(context);
 
-    return FutureBuilder(
-        future: _location.getLocation(),
-        builder: (context, locationSnapshot) {
-          print(locationSnapshot);
-          if (locationSnapshot.hasData) {
-            print("/hasdata");
-            locationData = locationSnapshot.data;
+    if (locationData != null) {
+      print("/hasdata");
 
-            return Scaffold(
-              key: _scaffoldKey,
-              drawer: Sidebar(),
-              body: Stack(
-                children: <Widget>[
-                  MapWidget(
-                    _data,
-                    locationData,
-                    selectToilet,
-                    onMapCreated: () {
-                      _pc.animatePanelToPosition(0.15);
-                    },
-                    key: _mapKey,
+      return Scaffold(
+        key: _scaffoldKey,
+        drawer: Sidebar(),
+        body: Stack(
+          children: <Widget>[
+            SlidingUpPanel(
+              controller: _pc,
+              panelSnapping: true,
+              minHeight: 80,
+              maxHeight: MediaQuery.of(context).size.height,
+              panelBuilder: (ScrollController sc) => AnimatedBuilder(
+                animation: _notifier,
+                builder: (context, _) => BottomBar(
+                  _data,
+                  _notifier.value > 0.3 ? _notifier.value : 0,
+                  _selected,
+                  selectToilet,
+                  _recommendedToilet,
+                  sc,
+                ),
+              ),
+              onPanelSlide: onBottomBarDrag,
+              body: MapWidget(
+                _data,
+                locationData,
+                selectToilet,
+                onMapCreated: () {
+                  _pc.animatePanelToPosition(0.15);
+                },
+                key: _mapKey,
+              ),
+            ),
+            AnimatedBuilder(
+              animation: _notifier,
+              builder: (context, _) => Positioned(
+                right: 0,
+                bottom: ((MediaQuery.of(context).size.height - 80) *
+                        _notifier.value) +
+                    95,
+                child: RawMaterialButton(
+                  shape: CircleBorder(),
+                  fillColor: Colors.white,
+                  elevation: 12.5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.my_location,
+                      color: Colors.grey[800],
+                      size: 27.5,
+                    ),
                   ),
-                  // SlidingUpPanel(
-                  //   controller: _pc,
-                  //   panelSnapping: true,
-                  //   minHeight: 80,
-                  //   maxHeight: MediaQuery.of(context).size.height,
-                  //   panelBuilder: (ScrollController sc) => AnimatedBuilder(
-                  //     animation: _notifier,
-                  //     builder: (context, _) => BottomBar(
-                  //       _data,
-                  //       _notifier.value > 0.3 ? _notifier.value : 0,
-                  //       _selected,
-                  //       selectToilet,
-                  //       _recommendedToilet,
-                  //       sc,
-                  //     ),
-                  //   ),
-                  //   onPanelSlide: onBottomBarDrag,
-                  //   body: MapWidget(
-                  //     _data,
-                  //     locationData,
-                  //     selectToilet,
-                  //     onMapCreated: () {
-                  //       _pc.animatePanelToPosition(0.15);
-                  //     },
-                  //     key: _mapKey,
-                  //   ),
-                  // ),
-                  // AnimatedBuilder(
-                  //   animation: _notifier,
-                  //   builder: (context, _) => Positioned(
-                  //     right: 0,
-                  //     bottom: ((MediaQuery.of(context).size.height - 80) *
-                  //             _notifier.value) +
-                  //         95,
-                  //     child: RawMaterialButton(
-                  //       shape: CircleBorder(),
-                  //       fillColor: Colors.white,
-                  //       elevation: 12.5,
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.all(8.0),
-                  //         child: Icon(
-                  //           Icons.my_location,
-                  //           color: Colors.grey[800],
-                  //           size: 27.5,
-                  //         ),
-                  //       ),
-                  //       onPressed: () {
-                  //         _mapKey.currentState.animateToUser();
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
-                  // SafeArea(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.symmetric(
-                  //       horizontal: 24.0,
-                  //       vertical: 20.0,
-                  //     ),
-                  //     child: Container(
-                  //       width: 50.0,
-                  //       height: 50.0,
-                  //       child: AnimatedBuilder(
-                  //         animation: _notifier,
-                  //         builder: (context, _) => RawMaterialButton(
-                  //           shape: CircleBorder(),
-                  //           fillColor: _notifier.value == 1
-                  //               ? Colors.white
-                  //               : _selected != null
-                  //                   ? Colors.black
-                  //                   : Colors.white,
-                  //           elevation: 5.0,
-                  //           child: Icon(
-                  //             _notifier.value == 1
-                  //                 ? Icons.close
-                  //                 : _selected != null
-                  //                     ? Icons.close
-                  //                     : Icons.menu,
-                  //             color: _notifier.value == 1
-                  //                 ? Colors.black
-                  //                 : _selected != null
-                  //                     ? Colors.white
-                  //                     : Colors.black,
-                  //             size: 30.0,
-                  //           ),
-                  //           onPressed: () {
-                  //             if (_selected != null) {
-                  //               selectToilet(null);
-                  //             } else {
-                  //               if (_notifier.value == 1) {
-                  //                 _pc.close();
-                  //               } else {
-                  //                 _scaffoldKey.currentState.openDrawer();
-                  //               }
-                  //             }
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                  onPressed: () {
+                    _mapKey.currentState.animateToUser();
+                  },
+                ),
               ),
-            );
-          } else if (locationSnapshot.hasError) {
-            print("/error");
-            return Error(FlutterI18n.translate(context, "error.location"));
-          } else {
-            // sometimes the location package needs a manual kick to get working with the stream.
-            _location.getLocation();
-            print("/loading");
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
+            ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 20.0,
+                ),
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  child: AnimatedBuilder(
+                    animation: _notifier,
+                    builder: (context, _) => RawMaterialButton(
+                      shape: CircleBorder(),
+                      fillColor: _notifier.value == 1
+                          ? Colors.white
+                          : _selected != null
+                              ? Colors.black
+                              : Colors.white,
+                      elevation: 5.0,
+                      child: Icon(
+                        _notifier.value == 1
+                            ? Icons.close
+                            : _selected != null
+                                ? Icons.close
+                                : Icons.menu,
+                        color: _notifier.value == 1
+                            ? Colors.black
+                            : _selected != null
+                                ? Colors.white
+                                : Colors.black,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        if (_selected != null) {
+                          selectToilet(null);
+                        } else {
+                          if (_notifier.value == 1) {
+                            _pc.close();
+                          } else {
+                            _scaffoldKey.currentState.openDrawer();
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ),
               ),
-            );
-          }
-        });
+            ),
+          ],
+        ),
+      );
+    } else {
+      print("/loading");
+      return Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+        ),
+      );
+    }
   }
 }
