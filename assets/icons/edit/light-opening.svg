@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>opening-light</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons" transform="translate(-713.000000, -63.000000)">
+            <g id="icons_naked" transform="translate(426.000000, 60.000000)">
+                <g id="opening-light" transform="translate(286.000000, 2.000000)">
+                    <path d="M9.91199978,1.91999996 C5.49599988,1.91999996 1.91999996,5.50399988 1.91999996,9.91999996 C1.91999996,14.3359997 5.49599988,17.92 9.91199978,17.92 C14.3359997,17.92 17.92,14.3359997 17.92,9.91999996 C17.92,5.50399988 14.3359997,1.91999996 9.91199978,1.91999996 Z M9.91999978,16.3199996 C6.38399986,16.3199996 3.51999992,13.4559997 3.51999992,9.91999978 C3.51999992,6.38399986 6.38399986,3.51999992 9.91999978,3.51999992 C13.4559997,3.51999992 16.3199996,6.38399986 16.3199996,9.91999978 C16.3199996,13.4559997 13.4559997,16.3199996 9.91999978,16.3199996 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    <polygon id="Path" points="0 0 19.1999996 0 19.1999996 19.1999996 0 19.1999996"></polygon>
+                    <polygon id="Path" fill="#FFFFFF" fill-rule="nonzero" points="10.2399998 5.75999987 8.9599998 5.75999987 8.9599998 10.3763932 13.4399997 12.7999997 14.0799997 11.8536391 10.2399998 9.79934404"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

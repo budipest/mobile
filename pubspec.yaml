@@ -1,0 +1,136 @@
+name: Budipest
+description: A community-based toilet finder app.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 2.0.0+4
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+
+  flutter_i18n: ^0.20.1
+  flutter_svg: ^0.19.1
+  sliding_up_panel: ^1.0.2
+
+  google_maps_flutter: ^1.0.3
+  location: ^3.0.2
+
+  provider: any
+  get_it: any
+  url_launcher: any
+  http: any
+  uuid: 2.0.4
+
+
+dev_dependencies:
+  flutter_launcher_icons: "^0.7.3"
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/
+
+    # Locales
+    - assets/locales/en.json
+    - assets/locales/hu.json
+
+    # Marker icons - light
+    - assets/icons/pin/l_gas_station_unknown.svg
+    - assets/icons/pin/l_gas_station_closed.svg
+    - assets/icons/pin/l_gas_station_open.svg
+    - assets/icons/pin/l_general_unknown.svg
+    - assets/icons/pin/l_general_closed.svg
+    - assets/icons/pin/l_general_open.svg
+    - assets/icons/pin/l_portable_unknown.svg
+    - assets/icons/pin/l_portable_closed.svg
+    - assets/icons/pin/l_portable_open.svg
+    - assets/icons/pin/l_restaurant_unknown.svg
+    - assets/icons/pin/l_restaurant_closed.svg
+    - assets/icons/pin/l_restaurant_open.svg
+    - assets/icons/pin/l_shop_unknown.svg
+    - assets/icons/pin/l_shop_closed.svg
+    - assets/icons/pin/l_shop_open.svg
+    - assets/icons/pin/l_gas_station_unknown.svg
+
+    # Marker icons - dark
+    - assets/icons/pin/d_gas_station_closed.svg
+    - assets/icons/pin/d_gas_station_open.svg
+    - assets/icons/pin/d_general_unknown.svg
+    - assets/icons/pin/d_general_closed.svg
+    - assets/icons/pin/d_general_open.svg
+    - assets/icons/pin/d_portable_unknown.svg
+    - assets/icons/pin/d_portable_closed.svg
+    - assets/icons/pin/d_portable_open.svg
+    - assets/icons/pin/d_restaurant_unknown.svg
+    - assets/icons/pin/d_restaurant_closed.svg
+    - assets/icons/pin/d_restaurant_open.svg
+    - assets/icons/pin/d_shop_unknown.svg
+    - assets/icons/pin/d_shop_closed.svg
+    - assets/icons/pin/d_shop_open.svg
+
+    # Square icons - dark
+    - assets/icons/bottom/dark/cat_general.svg
+    - assets/icons/bottom/dark/cat_gas_station.svg
+    - assets/icons/bottom/dark/cat_restaurant.svg
+    - assets/icons/bottom/dark/cat_shop.svg
+    - assets/icons/bottom/dark/cat_portable.svg
+    - assets/icons/bottom/dark/tag_baby_room.svg
+    - assets/icons/bottom/dark/tag_wheelchair_accessible.svg
+    - assets/icons/bottom/dark/tag_key.svg
+    - assets/icons/bottom/dark/tag_free.svg
+    - assets/icons/bottom/dark/tag_guests.svg
+    - assets/icons/bottom/dark/tag_paid.svg
+
+    # Square icons - light
+    - assets/icons/bottom/light/cat_general.svg
+    - assets/icons/bottom/light/cat_gas_station.svg
+    - assets/icons/bottom/light/cat_restaurant.svg
+    - assets/icons/bottom/light/cat_shop.svg
+    - assets/icons/bottom/light/cat_portable.svg
+    - assets/icons/bottom/light/tag_baby_room.svg
+    - assets/icons/bottom/light/tag_wheelchair_accessible.svg
+    - assets/icons/bottom/light/tag_key.svg
+    - assets/icons/bottom/light/tag_free.svg
+    - assets/icons/bottom/light/tag_guests.svg
+    - assets/icons/bottom/light/tag_paid.svg
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #  - images/a_dot_burr.jpeg
+  #  - images/a_dot_ham.jpeg
+  fonts:
+    - family: Muli
+      fonts:
+        - asset: fonts/Muli-Bold.ttf
+          weight: 700
+        - asset: fonts/Muli-Regular.ttf
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/icon.png"

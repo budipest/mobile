@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="219" height="381" viewBox="0 0 219 381">
+  <defs>
+    <clipPath id="clip-d_gas_station_open">
+      <rect width="219" height="381"/>
+    </clipPath>
+  </defs>
+  <g id="d_gas_station_open" clip-path="url(#clip-d_gas_station_open)">
+    <path id="Path_19" data-name="Path 19" d="M0,0H219V219L0,374.243V0Z" transform="translate(0 6)"/>
+    <rect id="Rectangle_9" data-name="Rectangle 9" width="219" height="27" fill="#4cd137"/>
+    <g id="gas-station" transform="translate(34 62)">
+      <g id="Group_7" data-name="Group 7" transform="translate(16)">
+        <path id="Path_27" data-name="Path 27" d="M130.691,30.764l.109-.109L103.709,3.636,96,11.345l15.345,15.345a18.155,18.155,0,0,0,6.473,35.127,17.965,17.965,0,0,0,7.273-1.527v52.436a7.272,7.272,0,1,1-14.545,0V80A14.542,14.542,0,0,0,96,65.455H88.728V14.546A14.542,14.542,0,0,0,74.182,0H30.546A14.541,14.541,0,0,0,16,14.546V130.909H88.727V76.364H99.636v36.364a18.182,18.182,0,1,0,36.364,0V43.636A18.259,18.259,0,0,0,130.691,30.764ZM74.182,50.909H30.546V14.546H74.182Zm43.636,0a7.273,7.273,0,1,1,7.273-7.273A7.294,7.294,0,0,1,117.819,50.909Z" transform="translate(-16)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>
