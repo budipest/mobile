@@ -2,7 +2,7 @@
 
 ## What's the deal with the name?
 
-Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you...
+Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you... (See Honolua, )
 
 ## App features
 The app shows the toilets nearby you on a map and in a list, ordered by distance from you. It recommends you the nearest open toilet, and when selecting a toilet, you'll see the opening hours, notes and ratings of the toilet. You can also add new toilets, or edit and rate existing ones.
@@ -25,6 +25,7 @@ A few resources to get you started if this is your first Flutter project:
 
 ### Setting up the project
 
+Add Google Maps API key both for Android and iOS. For instructions on how to do this, [click here](https://stackoverflow.com/a/59834585).
 For the backend, we use our own API that can be found in [this repository](https://github.com/danielgrgly/budipest-api).
 
 ### Running on iOS

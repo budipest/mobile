@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/Toilet.dart';
+
 class API {
   static http.Client client;
   static final url = "https://budipest-api.herokuapp.com/api/v1";
@@ -10,36 +12,47 @@ class API {
     client = http.Client();
   }
 
-  static Future<List<Map>> getToilets() async {
+  static Future<List<Toilet>> getToilets() async {
     try {
       final response = await client.get('$url/toilets');
-      final body = json.decode(response.body);
+      final body = json.decode(response.body)["data"];
+      final data = body
+          .map<Toilet>((toilet) => Toilet.fromMap(Map.from(toilet)))
+          .toList();
 
-      return body;
-    } finally {
-      client.close();
+      return data;
+    } catch (error) {
+      print(error);
     }
   }
 
-  static Future<Map> getToilet(String id) async {
+  static Future<Toilet> getToilet(String id) async {
     try {
       final response = await client.get('$url/toilets/$id');
       final body = json.decode(response.body);
+      final data = Toilet.fromMap(body);
 
-      return body;
-    } finally {
-      client.close();
+      return data;
+    } catch (error) {
+      print(error);
     }
   }
 
-  static Future<Map> addToilet(Map toilet) async {
+  static Future<Toilet> addToilet(Toilet toilet) async {
     try {
-      final response = await client.post('$url/toilets', body: toilet);
+      final response = await client.post(
+        '$url/toilets',
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        body: utf8.encode(json.encode(toilet.toJson())),
+      );
       final body = json.decode(response.body);
 
       return body;
-    } finally {
-      client.close();
+    } catch (error) {
+      print(error);
     }
   }
 }

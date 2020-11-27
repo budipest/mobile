@@ -285,6 +285,11 @@ String stringFromCategory(Category category) {
 List<Widget> describeToiletIcons(
     Toilet toilet, String mode, bool isDetailed, bool smaller) {
   var result = new List<Widget>();
+
+  if(toilet == null) {
+    return result;
+  }
+
   EdgeInsets padding;
   String categoryStr = stringFromCategory(toilet.category);
 

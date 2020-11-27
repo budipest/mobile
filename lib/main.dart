@@ -9,9 +9,9 @@ import 'ui/screens/AddToilet.dart';
 import 'ui/screens/AddNote.dart';
 import 'ui/screens/AboutUs.dart';
 
-import './core/viewmodels/ToiletModel.dart';
 import './core/common/variables.dart';
 import './core/common/statusBarObserver.dart';
+import './core/services/API.dart';
 
 import './locator.dart';
 
@@ -23,9 +23,14 @@ Future main() async {
       basePath: 'assets/locales',
     ),
   );
+
+  API.init();
+  
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+
   await flutterI18nDelegate.load(null);
+
   runApp(Application(flutterI18nDelegate));
 }
 

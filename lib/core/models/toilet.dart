@@ -119,7 +119,7 @@ class Toilet {
     return distance;
   }
 
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "name": name,
       "addDate": addDate.toString(),

@@ -4,7 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 // import 'package:provider/provider.dart';
 
-import '../../core/viewmodels/ToiletModel.dart';
 import '../../core/models/Toilet.dart';
 import '../widgets/BlackLayoutContainer.dart';
 import 'Home.dart';

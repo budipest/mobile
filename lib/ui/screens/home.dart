@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-// import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
-import 'Error.dart';
 import '../widgets/Map.dart';
 import '../widgets/Sidebar.dart';
 import '../widgets/BottomBar.dart';
-import '../../core/viewmodels/ToiletModel.dart';
-import '../../core/common/openHourUtils.dart';
+import '../../core/services/API.dart';
 import '../../core/models/Toilet.dart';
-import '../../locator.dart';
+import '../../core/common/openHourUtils.dart';
 
 class Home extends StatefulWidget {
   const Home({GlobalKey key}) : super(key: key);
@@ -46,9 +42,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     locationData = await _location.getLocation();
     updateData(locationData);
 
-    _location.onLocationChanged.listen((event) {
-      updateData(event);
-    });
+    // _location.onLocationChanged.listen((event) {
+    //   updateData(event);
+    // });
   }
 
   void checkPermission() async {
@@ -115,15 +111,14 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     print(location);
     // TODO: implement pulling toilets
 
-    // final _newToilets =
-    //     await Provider.of<ToiletModel>(context).getToilets(location);
+    final _newToilets = await API.getToilets();
 
     setState(() {
-      // _data = _newToilets;
+      _data = _newToilets;
       locationData = location;
-      // _recommendedToilet = _data.firstWhere(
-      //   (Toilet toilet) => isOpen(toilet.openHours),
-      // );
+      _recommendedToilet = _data.firstWhere(
+        (Toilet toilet) => isOpen(toilet.openHours),
+      );
     });
   }
 
