@@ -106,16 +106,13 @@ class Toilet {
   int calculateDistance(double userLatitude, double userLongitude) {
     var p = 0.017453292519943295;
     var c = cos;
-    // lat2, lon2 = user
-    // lat1, lon1 = wc
     var a = 0.5 -
         c((userLatitude - latitude) * p) / 2 +
-        c(latitude * p) *
-            c(userLatitude * p) *
-            (1 - c((userLongitude - longitude) * p)) /
-            2;
-    int distance = (12742 * asin(sqrt(a))).round();
+        c(latitude * p) * c(userLatitude * p) * (1 - c((userLongitude - longitude) * p)) / 2;
+
+    int distance = ((12742 * asin(sqrt(a))) * 1000).round();
     this.distance = distance;
+
     return distance;
   }
 

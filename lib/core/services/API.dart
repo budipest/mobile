@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
 
 import '../models/Toilet.dart';
 
@@ -12,13 +13,17 @@ class API {
     client = http.Client();
   }
 
-  static Future<List<Toilet>> getToilets() async {
+  static Future<List<Toilet>> getToilets(LocationData userLocation) async {
     try {
       final response = await client.get('$url/toilets');
       final body = json.decode(response.body)["data"];
-      final data = body
-          .map<Toilet>((toilet) => Toilet.fromMap(Map.from(toilet)))
-          .toList();
+      List<Toilet> data = body.map<Toilet>((toiletRaw) {
+        Toilet toilet = Toilet.fromMap(Map.from(toiletRaw));
+        toilet.calculateDistance(userLocation.latitude, userLocation.longitude);
+        return toilet;
+      }).toList();
+
+      data.sort((a, b) => a.distance.compareTo(b.distance));
 
       return data;
     } catch (error) {

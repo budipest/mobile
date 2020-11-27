@@ -108,10 +108,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   void updateData(LocationData location) async {
     print("updateData");
-    print(location);
-    // TODO: implement pulling toilets
 
-    final _newToilets = await API.getToilets();
+    final _newToilets = await API.getToilets(location);
 
     setState(() {
       _data = _newToilets;
@@ -125,8 +123,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print("Home");
-    // final toiletProvider = Provider.of<ToiletModel>(context);
-
     if (locationData != null) {
       print("/hasdata");
 
