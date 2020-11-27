@@ -38,6 +38,7 @@ class _RatingBarState extends State<RatingBar> {
 
   void castVote(String userId, bool isUpvote) {
     int vote = calculateVote(isUpvote);
+  
     setState(() {
       widget.myVote = vote;
     });
@@ -48,7 +49,7 @@ class _RatingBarState extends State<RatingBar> {
     Map<String, Map<String, int>> data = new Map<String, Map<String, int>>();
     data["votes"] = votes;
     // TODO: implement casting votes
-    // widget._api.updateDocument(data, widget.toilet.id);
+    // API.castVote();
   }
 
   @override

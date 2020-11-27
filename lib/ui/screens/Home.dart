@@ -140,7 +140,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 animation: _notifier,
                 builder: (context, _) => BottomBar(
                   _data,
-                  _notifier.value > 0.3 ? _notifier.value : 0,
+                  _selected == null
+                      ? _notifier.value
+                      : (1 / 0.7) * (_notifier.value - 0.3),
+                  // _notifier.value,
                   _selected,
                   selectToilet,
                   _recommendedToilet,
