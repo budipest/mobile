@@ -196,19 +196,19 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     animation: _notifier,
                     builder: (context, _) => RawMaterialButton(
                       shape: CircleBorder(),
-                      fillColor: _notifier.value == 1
+                      fillColor: _notifier.value > 0.99
                           ? Colors.white
                           : _selected != null
                               ? Colors.black
                               : Colors.white,
                       elevation: 5.0,
                       child: Icon(
-                        _notifier.value == 1
+                        _notifier.value > 0.99
                             ? Icons.close
                             : _selected != null
                                 ? Icons.close
                                 : Icons.menu,
-                        color: _notifier.value == 1
+                        color: _notifier.value > 0.99
                             ? Colors.black
                             : _selected != null
                                 ? Colors.white
@@ -219,7 +219,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         if (_selected != null) {
                           selectToilet(null);
                         } else {
-                          if (_notifier.value == 1) {
+                          if (_notifier.value > 0.99) {
                             _pc.close();
                           } else {
                             _scaffoldKey.currentState.openDrawer();

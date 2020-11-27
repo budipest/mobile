@@ -69,7 +69,7 @@ class BottomBar extends StatelessWidget {
                 },
               ),
               new FlatButton(
-                child: Text(FlutterI18n.translate(context, "navigate")),
+                child: Text(FlutterI18n.translate(context, "directions")),
                 onPressed: () {
                   _navigate(toilet);
                 },
@@ -259,7 +259,7 @@ class BottomBar extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.only(right: 12.0),
                               child: Button(
-                                FlutterI18n.translate(context, "navigate"),
+                                FlutterI18n.translate(context, "directions"),
                                 () async {
                                   if (selectedToilet.distance < 10000) {
                                     _navigate(selectedToilet);
