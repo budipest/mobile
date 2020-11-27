@@ -23,6 +23,7 @@ class ToiletRecommendationList extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          Container(height: 14),
           ...toilets.map(
             (Toilet toilet) => GestureDetector(
               behavior: HitTestBehavior.translucent,

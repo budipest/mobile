@@ -61,7 +61,7 @@
     "title": "About us",
     "development": "Development: Daniel Gergely",
     "design": "Design: David Jobbagy",
-    "qa": "Quality assurance: Balazs Szulovszky",
+    "special": "Special thanks to Balazs Szulovszky",
     "budapest": "Made with ❤️ in Budapest",
     "feedback": "Feedback: danielgrgly@gmail.com",
     "opensource": "This project was made with Flutter and is open-source.",

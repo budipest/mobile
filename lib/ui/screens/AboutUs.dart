@@ -38,7 +38,7 @@ class AboutUs extends StatelessWidget {
                 children: <Widget>[
                   PersonCard(
                       FlutterI18n.translate(context, "aboutUs.development"), {
-                    "LinkedIn": "https://www.linkedin.com/in/dandesz198/",
+                    "LinkedIn": "https://www.linkedin.com/in/danielgrgly/",
                     "Telegram": "https://t.me/danielgrgly",
                     "email": "mailto:danielgrgly@gmail.com"
                   }),
@@ -47,7 +47,7 @@ class AboutUs extends StatelessWidget {
                     "LinkedIn": "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
                   }),
                   PersonCard(
-                      FlutterI18n.translate(context, "aboutUs.qa"), {
+                      FlutterI18n.translate(context, "aboutUs.special"), {
                     "website": "http://sites.google.com/view/b95/",
                     "Telegram": "https://t.me/bala7s",
                     "email": "mailto:usbee@pm.me"
