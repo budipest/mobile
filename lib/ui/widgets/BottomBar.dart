@@ -12,18 +12,10 @@ import '../../core/models/Toilet.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar(
-    this.toilets,
     this.scrollProgress,
-    this.selectedToilet,
-    this.selectToilet,
-    this.recommendedToilet,
     this.sc,
   );
-  final List<Toilet> toilets;
-  final Toilet selectedToilet;
   final double scrollProgress;
-  final Function(Toilet) selectToilet;
-  final Toilet recommendedToilet;
   final ScrollController sc;
 
   void _navigate(Toilet toilet) async {
@@ -41,6 +33,7 @@ class BottomBar extends StatelessWidget {
 
   void _tooFarNavigate(BuildContext context, Toilet toilet) {
     int index = toilets.indexOf(selectedToilet);
+
     if (index > 0) {
       showDialog(
         context: context,
@@ -291,7 +284,7 @@ class BottomBar extends StatelessWidget {
           ),
           hasSelected
               ? ToiletDetailBar(selectedToilet)
-              : ToiletRecommendationList(toilets, selectToilet)
+              : ToiletRecommendationList(selectToilet)
         ],
       ),
     );

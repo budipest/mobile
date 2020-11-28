@@ -153,7 +153,7 @@ class _AddToiletState extends State<AddToilet> {
         new Map<String, int>(),
       );
       API.addToilet(data);
-      widget.homeKey.currentState.selectToilet(data);
+      // widget.homeKey.currentState.selectToilet(data);
       Navigator.of(context).pop();
     } else {
       nextPage();

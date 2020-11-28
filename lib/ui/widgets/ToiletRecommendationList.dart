@@ -5,10 +5,6 @@ import '../../core/models/Toilet.dart';
 import 'ToiletCard.dart';
 
 class ToiletRecommendationList extends StatelessWidget {
-  const ToiletRecommendationList(this.toilets, this.selectToilet);
-  final List<Toilet> toilets;
-  final Function(Toilet) selectToilet;
-
   @override
   Widget build(BuildContext context) {
     return Padding(

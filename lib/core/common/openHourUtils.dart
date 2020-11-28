@@ -7,7 +7,7 @@ import 'dart:async';
 import 'dart:core';
 
 import '../models/Toilet.dart';
-import './bitmapFromSvg.dart';
+import 'bitmapFromSvg.dart';
 
 Widget descriptionIcon(
     EdgeInsetsGeometry padding, String mode, bool smaller, String text,

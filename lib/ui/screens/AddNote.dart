@@ -8,9 +8,8 @@ import '../widgets/TextInput.dart';
 import '../widgets/NoteList.dart';
 
 class AddNote extends StatefulWidget {
-  AddNote({this.toilet, this.onNoteSubmitted});
+  AddNote({this.onNoteSubmitted});
   final Function(String) onNoteSubmitted;
-  final Toilet toilet;
 
   @override
   _AddNoteState createState() => _AddNoteState();

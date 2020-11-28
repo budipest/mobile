@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import "package:flutter_i18n/flutter_i18n.dart";
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,11 +9,11 @@ import 'ui/screens/AddToilet.dart';
 import 'ui/screens/AddNote.dart';
 import 'ui/screens/AboutUs.dart';
 
-import './core/common/variables.dart';
-import './core/common/statusBarObserver.dart';
-import './core/services/API.dart';
-
-import './locator.dart';
+import 'core/common/variables.dart';
+import 'core/common/statusBarObserver.dart';
+import 'core/providers/ToiletModel.dart';
+import 'core/providers/UserModel.dart';
+import 'core/services/API.dart';
 
 Future main() async {
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
@@ -25,13 +25,21 @@ Future main() async {
   );
 
   API.init();
-  
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
-
   await flutterI18nDelegate.load(null);
 
-  runApp(Application(flutterI18nDelegate));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ToiletModel()),
+        ChangeNotifierProxyProvider<ToiletModel, UserModel>(
+          create: (BuildContext context) => UserModel(null),
+          update: (BuildContext context, ToiletModel toilet, UserModel user) => UserModel(toilet),
+        ),
+      ],
+      child: Application(flutterI18nDelegate),
+    ),
+  );
 }
 
 class Application extends StatelessWidget {

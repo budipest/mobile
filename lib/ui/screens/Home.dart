@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:location/location.dart';
 
 import '../widgets/Map.dart';
 import '../widgets/Sidebar.dart';
 import '../widgets/BottomBar.dart';
-import '../../core/services/API.dart';
 import '../../core/models/Toilet.dart';
-import '../../core/common/openHourUtils.dart';
+import '../../core/providers/ToiletModel.dart';
 
 class Home extends StatefulWidget {
   const Home({GlobalKey key}) : super(key: key);
@@ -20,53 +20,9 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<MapState> _mapKey = new GlobalKey<MapState>();
-  final Location _location = new Location();
 
   ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   PanelController _pc = new PanelController();
-  LocationData locationData;
-  List<Toilet> _data = new List<Toilet>();
-  Toilet _recommendedToilet;
-  Toilet _selected;
-
-  @override
-  void initState() {
-    _init();
-
-    super.initState();
-  }
-
-  void _init() async {
-    checkPermission();
-
-    locationData = await _location.getLocation();
-    updateData(locationData);
-
-    // _location.onLocationChanged.listen((event) {
-    //   updateData(event);
-    // });
-  }
-
-  void checkPermission() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-
-    _serviceEnabled = await _location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _location.requestService();
-      if (!_serviceEnabled) {
-        print("does not have service enabled");
-      }
-    }
-
-    _permissionGranted = await _location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        print("denied permission");
-      }
-    }
-  }
 
   void onBottomBarDrag(double val) {
     _notifier.value = val;
@@ -106,20 +62,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  void updateData(LocationData location) async {
-    print("updateData");
-
-    final _newToilets = await API.getToilets(location);
-
-    setState(() {
-      _data = _newToilets;
-      locationData = location;
-      _recommendedToilet = _data.firstWhere(
-        (Toilet toilet) => isOpen(toilet.openHours),
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     print("Home");
@@ -139,23 +81,20 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               panelBuilder: (ScrollController sc) => AnimatedBuilder(
                 animation: _notifier,
                 builder: (context, _) => BottomBar(
-                  _data,
-                  _notifier.value < 0.3 ? 0 : (1 / 0.7) * (_notifier.value - 0.3),
-                  _selected,
-                  selectToilet,
-                  _recommendedToilet,
+                  _notifier.value < 0.3
+                      ? 0
+                      : (1 / 0.7) * (_notifier.value - 0.3),
                   sc,
                 ),
               ),
               onPanelSlide: onBottomBarDrag,
-              body: MapWidget(
-                _data,
-                locationData,
-                selectToilet,
-                onMapCreated: () {
-                  _pc.animatePanelToPosition(0.15);
-                },
-                key: _mapKey,
+              body: Consumer<ToiletModel>(
+                builder: (context, toilets, child) => MapWidget(
+                  onMapCreated: () {
+                    _pc.animatePanelToPosition(0.15);
+                  },
+                  key: _mapKey,
+                ),
               ),
             ),
             AnimatedBuilder(
