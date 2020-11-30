@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
-import '../../core/services/API.dart';
-import '../../locator.dart';
 import 'Button.dart';
 
 class RatingBar extends StatefulWidget {

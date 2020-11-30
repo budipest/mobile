@@ -14,9 +14,12 @@ class API {
   }
 
   static Future<List<Toilet>> getToilets(LocationData userLocation) async {
+    List<Toilet> data;
+
     try {
       final response = await client.get('$url/toilets');
       final body = json.decode(response.body)["data"];
+
       List<Toilet> data = body.map<Toilet>((toiletRaw) {
         Toilet toilet = Toilet.fromMap(Map.from(toiletRaw));
         toilet.calculateDistance(userLocation.latitude, userLocation.longitude);
@@ -24,26 +27,31 @@ class API {
       }).toList();
 
       data.sort((a, b) => a.distance.compareTo(b.distance));
-
-      return data;
     } catch (error) {
       print(error);
     }
+
+    return data;
   }
 
   static Future<Toilet> getToilet(String id) async {
+    Toilet data;
+
     try {
       final response = await client.get('$url/toilets/$id');
       final body = json.decode(response.body);
-      final data = Toilet.fromMap(body);
 
-      return data;
+      data = Toilet.fromMap(body);
     } catch (error) {
       print(error);
     }
+
+    return data;
   }
 
   static Future<Toilet> addToilet(Toilet toilet) async {
+    dynamic body;
+
     try {
       final response = await client.post(
         '$url/toilets',
@@ -53,11 +61,12 @@ class API {
         },
         body: utf8.encode(json.encode(toilet.toJson())),
       );
-      final body = json.decode(response.body);
 
-      return body;
+      body = json.decode(response.body);
     } catch (error) {
       print(error);
     }
+
+    return Toilet.fromMap(body);
   }
 }

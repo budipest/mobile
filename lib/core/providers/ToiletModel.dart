@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
 import '../common/openHourUtils.dart';
@@ -8,26 +7,34 @@ import '../models/Note.dart';
 import '../services/API.dart';
 
 class ToiletModel extends ChangeNotifier {
-  final List<Toilet> _items = new List<Toilet>();
+  final List<Toilet> _toilets = new List<Toilet>();
+  Toilet _selected;
 
-  List<Toilet> get items => _items;
+  List<Toilet> get toilets => _toilets;
   Toilet get suggestedToilet =>
-      _items.firstWhere((element) => isOpen(element.openHours));
+      _toilets.firstWhere((element) => isOpen(element.openHours));
+  Toilet get selectedToilet => _selected;
 
   void init(LocationData userLocation) async {
     final toilets = await API.getToilets(userLocation);
 
-    _items.clear();
+    _toilets.clear();
 
     toilets.forEach((item) {
-      _items.add(item);
+      _toilets.add(item);
     });
 
     notifyListeners();
   }
 
-  void add(Toilet item) {
-    _items.add(item);
+  void addToilet(Toilet item) {
+    API.addToilet(item);
+    _toilets.add(item);
+    selectToilet(item);
+  }
+
+  void selectToilet(Toilet item) {
+    _selected = item;
     notifyListeners();
   }
 }

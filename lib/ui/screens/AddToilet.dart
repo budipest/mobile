@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../core/services/API.dart';
+import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
+import '../../core/providers/ToiletModel.dart';
+import '../../core/providers/UserModel.dart';
 import '../widgets/BlackLayoutContainer.dart';
 
 import 'Home.dart';
@@ -135,7 +138,9 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
-  void onFABPressed() async {
+  void onFABPressed(BuildContext context) async {
+    final provider = Provider.of<ToiletModel>(context);
+
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
       var data = Toilet(
         "",
@@ -152,8 +157,8 @@ class _AddToiletState extends State<AddToilet> {
         [],
         new Map<String, int>(),
       );
-      API.addToilet(data);
-      // widget.homeKey.currentState.selectToilet(data);
+
+      provider.addToilet(data);
       Navigator.of(context).pop();
     } else {
       nextPage();
@@ -174,11 +179,13 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
+    final LocationData userLocation = Provider.of<UserModel>(context).location;
+
     return BlackLayoutContainer(
       context: context,
       title: FlutterI18n.translate(context, "addToilet"),
       fab: FloatingActionButton.extended(
-        onPressed: onFABPressed,
+        onPressed: () => onFABPressed(context),
         backgroundColor: Colors.black,
         label: Text(FlutterI18n.translate(context, "continue")),
         icon: Icon(Icons.navigate_next),
@@ -187,15 +194,14 @@ class _AddToiletState extends State<AddToilet> {
         controller: _controller,
         pageSnapping: true,
         physics: _controller.hasClients
-            ? _controller.offset < 100 ? NeverScrollableScrollPhysics() : null
+            ? _controller.offset < 100
+                ? NeverScrollableScrollPhysics()
+                : null
             : NeverScrollableScrollPhysics(),
         children: <Widget>[
           AddToiletLocation(
             onLocationChanged,
-            LatLng(
-              widget.homeKey.currentState.locationData.latitude,
-              widget.homeKey.currentState.locationData.longitude,
-            ),
+            LatLng(userLocation.latitude, userLocation.longitude),
           ),
           AddToiletName(name, onNameChanged),
           AddToiletCategory(onCategoryChanged, category),

@@ -4,34 +4,25 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/models/Note.dart';
-import '../../core/services/API.dart';
 import '../screens/AddNote.dart';
-import '../../locator.dart';
 import 'Button.dart';
 import 'NoteList.dart';
 import 'RatingBar.dart';
 
-class ToiletDetailBar extends StatefulWidget {
+class ToiletDetailBar extends StatelessWidget {
   const ToiletDetailBar(this.toilet);
   final Toilet toilet;
-
-  @override
-  State<StatefulWidget> createState() => ToiletDetailBarState();
-}
-
-class ToiletDetailBarState extends State<ToiletDetailBar> {
-  ToiletDetailBarState();
   // String userId = locator<UserModel>().userId;
 
   void addNote(String noteText, String uid) async {
-    widget.toilet.notes.insert(0, Note(noteText, uid));
+    // toilet.notes.insert(0, Note(noteText, uid));
     // TODO: implement adding a note
     // _api.addToArray(
     //   widget.toilet.notes.map((Note note) => note.toJson()).toList(),
     //   widget.toilet.id,
     //   "notes",
     // );
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   bool userHasNote(Toilet toilet) {
@@ -53,7 +44,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
           decoration: BoxDecoration(color: Colors.grey[100]),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: RatingBar(widget.toilet),
+            child: RatingBar(toilet),
           ),
         ),
         Padding(
@@ -69,7 +60,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                 ),
               ),
               Spacer(),
-              if (!userHasNote(widget.toilet))
+              if (!userHasNote(toilet))
                 Hero(
                   tag: "addNoteButton",
                   child: Button(
@@ -79,7 +70,6 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
                         CupertinoPageRoute(
                           fullscreenDialog: true,
                           builder: (context) => AddNote(
-                            toilet: widget.toilet,
                             onNoteSubmitted: (String note) =>
                                 print("this is not implemented yet"),
                             // TOOD: implement submitting notes
@@ -97,7 +87,7 @@ class ToiletDetailBarState extends State<ToiletDetailBar> {
             ],
           ),
         ),
-        NoteList(widget.toilet),
+        NoteList(toilet),
       ],
     );
   }

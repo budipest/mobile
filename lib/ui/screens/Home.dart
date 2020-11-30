@@ -1,8 +1,8 @@
+import 'package:Budipest/core/providers/UserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:location/location.dart';
 
 import '../widgets/Map.dart';
 import '../widgets/Sidebar.dart';
@@ -24,11 +24,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   PanelController _pc = new PanelController();
 
-  void onBottomBarDrag(double val) {
+  void onBottomBarDrag(double val, BuildContext context) {
+    final _selectedToilet = Provider.of<ToiletModel>(context).selectedToilet;
+
     _notifier.value = val;
 
     if (val < 0.8) {
-      if (_selected == null) {
+      if (_selectedToilet == null) {
         if (val < 0.15) {
           _pc.animatePanelToPosition(0.15);
         }
@@ -47,10 +49,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  void selectToilet(Toilet toilet) {
-    setState(() {
-      _selected = toilet;
-    });
+  void selectToilet(ToiletModel provider, Toilet toilet) {
+    provider.selectToilet(toilet);
+
     if (toilet == null) {
       if (_notifier.value < 0.5) _pc.animatePanelToPosition(0.15);
     } else {
@@ -64,8 +65,11 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("Home");
-    if (locationData != null) {
+    final _userLocation = Provider.of<UserModel>(context).location;
+    final _toiletProvider = Provider.of<ToiletModel>(context);
+    final _selectedToilet = _toiletProvider.selectedToilet;
+
+    if (_userLocation != null) {
       print("/hasdata");
 
       return Scaffold(
@@ -87,14 +91,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   sc,
                 ),
               ),
-              onPanelSlide: onBottomBarDrag,
-              body: Consumer<ToiletModel>(
-                builder: (context, toilets, child) => MapWidget(
-                  onMapCreated: () {
-                    _pc.animatePanelToPosition(0.15);
-                  },
-                  key: _mapKey,
-                ),
+              onPanelSlide: (double val) => onBottomBarDrag(val, context),
+              body: MapWidget(
+                onMapCreated: () {
+                  _pc.animatePanelToPosition(0.15);
+                },
+                key: _mapKey,
               ),
             ),
             AnimatedBuilder(
@@ -117,7 +119,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                   ),
                   onPressed: () {
-                    _mapKey.currentState.animateToUser();
+                    // TODO: re-add this function
+                    // _mapKey.currentState.animateToUser();
                   },
                 ),
               ),
@@ -137,26 +140,26 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       shape: CircleBorder(),
                       fillColor: _notifier.value > 0.99
                           ? Colors.white
-                          : _selected != null
+                          : _selectedToilet != null
                               ? Colors.black
                               : Colors.white,
                       elevation: 5.0,
                       child: Icon(
                         _notifier.value > 0.99
                             ? Icons.close
-                            : _selected != null
+                            : _selectedToilet != null
                                 ? Icons.close
                                 : Icons.menu,
                         color: _notifier.value > 0.99
                             ? Colors.black
-                            : _selected != null
+                            : _selectedToilet != null
                                 ? Colors.white
                                 : Colors.black,
                         size: 30.0,
                       ),
                       onPressed: () {
-                        if (_selected != null) {
-                          selectToilet(null);
+                        if (_selectedToilet != null) {
+                          selectToilet(_toiletProvider, null);
                         } else {
                           if (_notifier.value > 0.99) {
                             _pc.close();

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
 import "./ToiletModel.dart";
-
-import '../models/Toilet.dart';
-import '../models/Note.dart';
-import '../services/API.dart';
 
 class UserModel extends ChangeNotifier {
   UserModel(this._toiletModel);

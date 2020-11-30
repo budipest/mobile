@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
+import '../../core/providers/ToiletModel.dart';
+
 import '../widgets/Button.dart';
 import '../widgets/BlackLayoutContainer.dart';
 import '../widgets/TextInput.dart';
@@ -20,9 +23,11 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
+    final Toilet toilet = Provider.of<ToiletModel>(context).selectedToilet;
+
     return BlackLayoutContainer(
       context: context,
-      inlineTitle: widget.toilet.name,
+      inlineTitle: toilet.name,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
@@ -74,7 +79,7 @@ class _AddNoteState extends State<AddNote> {
                 ],
               ),
             ),
-            NoteList(widget.toilet),
+            NoteList(toilet),
           ],
         ),
       ),

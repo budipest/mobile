@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
 import 'dart:async';
 
-import '../../core/models/Toilet.dart';
 import '../../core/common/openHourUtils.dart';
+import '../../core/providers/ToiletModel.dart';
+import '../../core/providers/UserModel.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({this.onMapCreated, this.key});
@@ -51,13 +53,6 @@ class MapState extends State<MapWidget> {
   //   );
   // }
 
-  animateToUser() {
-    animateToLocation(
-      widget.userLocation.latitude,
-      widget.userLocation.longitude,
-    );
-  }
-
   animateToLocation(double lat, double lon) {
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(lat, lon),
@@ -65,18 +60,27 @@ class MapState extends State<MapWidget> {
     )));
   }
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller, BuildContext context) {
     setState(() {
       mapController = controller;
       _getFileData('assets/light_mode.json').then(_setMapStyle);
-      animateToUser();
     });
+
+    LocationData userLocation = Provider.of<UserModel>(context).location;
+
+    animateToLocation(
+      userLocation.latitude,
+      userLocation.longitude,
+    );
+
     widget.onMapCreated();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.toilets.forEach((toilet) async {
+    final provider = Provider.of<ToiletModel>(context);
+
+    provider.toilets.forEach((toilet) async {
       double lat = toilet.latitude;
       double lng = toilet.longitude;
       MarkerId id = MarkerId(lat.toString() + lng.toString());
@@ -88,7 +92,7 @@ class MapState extends State<MapWidget> {
           toilet.openHours,
           context,
         ),
-        onTap: () => widget.selectToilet(toilet),
+        onTap: () => provider.selectToilet(toilet),
       );
       setState(() {
         markers[id] = _marker;
@@ -96,7 +100,7 @@ class MapState extends State<MapWidget> {
     });
 
     return GoogleMap(
-      onMapCreated: _onMapCreated,
+      onMapCreated: (controller) => _onMapCreated(controller, context),
       initialCameraPosition: CameraPosition(
         target: LatLng(47.498290, 19.033493),
         zoom: 15.0,
@@ -109,7 +113,7 @@ class MapState extends State<MapWidget> {
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
       markers: Set<Marker>.of(markers.values),
-      onTap: (LatLng coords) => widget.selectToilet(null),
+      onTap: (LatLng coords) => provider.selectToilet(null),
     );
   }
 }
