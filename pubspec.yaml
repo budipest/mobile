@@ -31,9 +31,11 @@ dependencies:
   location: ^3.0.2
 
   provider: 4.3.2+2
-  url_launcher: any
+  shared_preferences: any
+  uuid: 2.2.2
+
   http: any
-  uuid: 2.0.4
+  url_launcher: any
 
 
 dev_dependencies:

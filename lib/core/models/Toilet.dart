@@ -137,7 +137,7 @@ class Toilet {
         "longitude": longitude,
       },
       "notes": notes.map((Note note) => note.toJson()).toList(),
-      "votes": votes.length > 0 ? votes.toString() : null,
+      "votes": votes.toString(),
     };
   }
 
