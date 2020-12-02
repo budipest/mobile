@@ -25,7 +25,7 @@
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
             <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="FILL-THIS-WITH-GCP-API-KEY"/>
+               android:value="AIzaSyAwCFWwWiYC8BMj0aeqgWhIK-ZYWbhK-yU"/>
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
