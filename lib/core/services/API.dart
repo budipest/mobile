@@ -10,17 +10,19 @@ class API {
   static final url = "https://budipest-api.herokuapp.com/api/v1";
 
   static void init() {
+    print("API init");
     client = http.Client();
   }
 
   static Future<List<Toilet>> getToilets(LocationData userLocation) async {
+    print("API gettoilets");
     List<Toilet> data;
 
     try {
       final response = await client.get('$url/toilets');
       final body = json.decode(response.body)["data"];
 
-      List<Toilet> data = body.map<Toilet>((toiletRaw) {
+      data = body.map<Toilet>((toiletRaw) {
         Toilet toilet = Toilet.fromMap(Map.from(toiletRaw));
         toilet.calculateDistance(userLocation.latitude, userLocation.longitude);
         return toilet;
@@ -35,6 +37,7 @@ class API {
   }
 
   static Future<Toilet> getToilet(String id) async {
+    print("API gettoilet");
     Toilet data;
 
     try {
@@ -50,6 +53,7 @@ class API {
   }
 
   static Future<Toilet> addToilet(Toilet toilet) async {
+    print("API addtoilet");
     dynamic body;
 
     try {

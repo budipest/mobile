@@ -1,4 +1,3 @@
-import 'package:Budipest/core/providers/UserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,19 +9,14 @@ import '../widgets/BottomBar.dart';
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
 
-class Home extends StatefulWidget {
-  const Home({GlobalKey key}) : super(key: key);
+class Home extends StatelessWidget {
+  Home({GlobalKey key}) : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => HomeState();
-}
-
-class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<MapState> _mapKey = new GlobalKey<MapState>();
 
-  ValueNotifier<double> _notifier = ValueNotifier<double>(0);
-  PanelController _pc = new PanelController();
+  final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
+  final PanelController _pc = new PanelController();
 
   void onBottomBarDrag(double val, BuildContext context) {
     final _selectedToilet = Provider.of<ToiletModel>(context).selectedToilet;
@@ -65,11 +59,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final _userLocation = Provider.of<UserModel>(context).location;
     final _toiletProvider = Provider.of<ToiletModel>(context);
     final _selectedToilet = _toiletProvider.selectedToilet;
 
-    if (_userLocation != null) {
+    print("rebuild home");
+
+    if (_toiletProvider.loaded) {
       print("/hasdata");
 
       return Scaffold(
@@ -120,7 +115,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                   onPressed: () {
                     // TODO: re-add this function
-                    // _mapKey.currentState.animateToUser();
+                    _mapKey.currentState.animateToLocation(
+                      _toiletProvider.location.latitude,
+                      _toiletProvider.location.longitude,
+                    );
                   },
                 ),
               ),
@@ -178,6 +176,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       );
     } else {
       print("/loading");
+
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Colors.white,

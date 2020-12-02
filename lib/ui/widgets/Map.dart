@@ -8,7 +8,6 @@ import 'dart:async';
 
 import '../../core/common/openHourUtils.dart';
 import '../../core/providers/ToiletModel.dart';
-import '../../core/providers/UserModel.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({this.onMapCreated, this.key});
@@ -66,7 +65,7 @@ class MapState extends State<MapWidget> {
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
 
-    LocationData userLocation = Provider.of<UserModel>(context).location;
+    LocationData userLocation = Provider.of<ToiletModel>(context).location;
 
     animateToLocation(
       userLocation.latitude,

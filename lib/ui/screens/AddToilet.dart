@@ -6,10 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
-import '../../core/providers/UserModel.dart';
 import '../widgets/BlackLayoutContainer.dart';
 
-import 'Home.dart';
 import 'AddToiletLocation.dart';
 import 'AddToiletName.dart';
 import 'AddToiletCategory.dart';
@@ -18,8 +16,7 @@ import 'AddToiletOpenHours.dart';
 import 'AddToiletTags.dart';
 
 class AddToilet extends StatefulWidget {
-  const AddToilet(this.homeKey);
-  final GlobalKey<HomeState> homeKey;
+  const AddToilet();
 
   @override
   _AddToiletState createState() => _AddToiletState();
@@ -179,7 +176,7 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
-    final LocationData userLocation = Provider.of<UserModel>(context).location;
+    final LocationData userLocation = Provider.of<ToiletModel>(context).location;
 
     return BlackLayoutContainer(
       context: context,

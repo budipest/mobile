@@ -12,8 +12,6 @@ import 'ui/screens/AboutUs.dart';
 import 'core/common/variables.dart';
 import 'core/common/statusBarObserver.dart';
 import 'core/providers/ToiletModel.dart';
-import 'core/providers/UserModel.dart';
-import 'core/services/API.dart';
 
 Future main() async {
   final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
@@ -24,19 +22,14 @@ Future main() async {
     ),
   );
 
-  API.init();
   WidgetsFlutterBinding.ensureInitialized();
   await flutterI18nDelegate.load(null);
 
+  print("main async before runapp");
+
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => ToiletModel()),
-        ChangeNotifierProxyProvider<ToiletModel, UserModel>(
-          create: (BuildContext context) => UserModel(null),
-          update: (BuildContext context, ToiletModel toilet, UserModel user) => UserModel(toilet),
-        ),
-      ],
+    ChangeNotifierProvider(
+      create: (context) => ToiletModel(),
       child: Application(flutterI18nDelegate),
     ),
   );
@@ -44,12 +37,13 @@ Future main() async {
 
 class Application extends StatelessWidget {
   final FlutterI18nDelegate flutterI18nDelegate;
-  final GlobalKey<HomeState> _homeKey = new GlobalKey<HomeState>();
 
   Application(this.flutterI18nDelegate);
 
   @override
   Widget build(BuildContext context) {
+    print("application build");
+
     return MaterialApp(
       title: "Budipest",
       theme: ThemeData(
@@ -62,8 +56,8 @@ class Application extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Home(key: _homeKey),
-        '/addToilet': (context) => AddToilet(_homeKey),
+        '/': (context) => Home(),
+        '/addToilet': (context) => AddToilet(),
         '/addNote': (context) => AddNote(),
         '/about': (context) => AboutUs()
       },
