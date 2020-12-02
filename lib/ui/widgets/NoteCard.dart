@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import './cardTemplate.dart';
-import '../../core/models/note.dart';
+import 'CardTemplate.dart';
+import '../../core/models/Note.dart';
 
 class NoteCard extends StatelessWidget {
   const NoteCard(this.note,

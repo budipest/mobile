@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:provider/provider.dart';
 
-import '../../core/models/toilet.dart';
-import '../widgets/button.dart';
-import '../widgets/blackLayoutContainer.dart';
-import '../widgets/textInput.dart';
-import '../widgets/noteList.dart';
+import '../../core/models/Toilet.dart';
+import '../../core/providers/ToiletModel.dart';
+
+import '../widgets/Button.dart';
+import '../widgets/BlackLayoutContainer.dart';
+import '../widgets/TextInput.dart';
+import '../widgets/NoteList.dart';
 
 class AddNote extends StatefulWidget {
-  AddNote({this.toilet, this.onNoteSubmitted});
+  AddNote({this.onNoteSubmitted});
   final Function(String) onNoteSubmitted;
-  final Toilet toilet;
 
   @override
   _AddNoteState createState() => _AddNoteState();
@@ -21,9 +23,11 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
+    final Toilet toilet = Provider.of<ToiletModel>(context).selectedToilet;
+
     return BlackLayoutContainer(
       context: context,
-      inlineTitle: widget.toilet.title,
+      inlineTitle: toilet.name,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
@@ -75,7 +79,7 @@ class _AddNoteState extends State<AddNote> {
                 ],
               ),
             ),
-            NoteList(widget.toilet),
+            NoteList(toilet),
           ],
         ),
       ),

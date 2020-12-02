@@ -1,7 +1,6 @@
-import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:uuid/uuid.dart';
+import 'dart:math';
 
-import './note.dart';
+import 'Note.dart';
 
 enum Category { GENERAL, SHOP, RESTAURANT, PORTABLE, GAS_STATION }
 enum Tag {
@@ -12,118 +11,133 @@ enum EntryMethod { FREE, CODE, PRICE, CONSUMERS, UNKNOWN }
 
 class Toilet {
   String id;
-  GeoFirePoint geopoint;
-  String title;
+  String name;
   DateTime addDate;
   Category category;
   List<int> openHours;
   List<Tag> tags;
-  List<Note> notes;
-  Map<String, int> votes;
-  int distance = 0;
+
   EntryMethod entryMethod;
   Map price;
   String code;
 
+  double latitude;
+  double longitude;
+
+  List<Note> notes;
+  Map<String, int> votes;
+
+  int distance = 0;
+
   Toilet(
     String id,
-    GeoFirePoint geopoint,
-    String title,
+    String name,
     DateTime addDate,
     Category category,
     List<int> openHours,
     List<Tag> tags,
-    List<Note> notes,
-    Map<String, int> votes,
     EntryMethod entryMethod,
     Map price,
     String code,
+    double latitude,
+    double longitude,
+    List<Note> notes,
+    Map<String, int> votes,
   ) {
     this.id = id;
-    this.geopoint = geopoint;
-    this.title = title;
+    this.name = name;
     this.addDate = addDate;
     this.category = category;
     this.openHours = openHours;
     this.tags = tags;
-    this.notes = notes;
-    this.votes = votes;
+
     this.entryMethod = entryMethod;
     this.price = price;
     this.code = code;
+
+    this.latitude = latitude;
+    this.longitude = longitude;
+
+    this.notes = notes;
+    this.votes = votes;
   }
 
   // Named constructor
   Toilet.origin() {
-    id = new Uuid().v4().toString();
-    geopoint = new GeoFirePoint(0, 0);
-    title = "";
+    name = "";
     addDate = new DateTime.now();
     category = Category.GENERAL;
     openHours = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     tags = [];
+
+    entryMethod = EntryMethod.UNKNOWN;
+
+    latitude = 0.0;
+    longitude = 0.0;
+
     notes = new List<Note>();
     votes = new Map<String, int>();
-    entryMethod = EntryMethod.UNKNOWN;
   }
 
-  Toilet.fromMap(Map snapshot, String id)
-      : id = id,
-        geopoint = new GeoFirePoint(
-          snapshot["geopoint"]["geopoint"].latitude,
-          snapshot["geopoint"]["geopoint"].longitude,
-        ),
-        title = snapshot["title"] ?? "",
-        category = _standariseCategory(snapshot["category"].toString()) ??
-            Category.GENERAL,
-        openHours = snapshot["openHours"].cast<int>() ??
+  Toilet.fromMap(Map raw)
+      : id = raw["id"] ?? "",
+        name = raw["name"] ?? "",
+        latitude = raw["location"]["latitude"] ?? 0.0,
+        longitude = raw["location"]["longitude"] ?? 0.0,
+        category =
+            _standariseCategory(raw["category"].toString()) ?? Category.GENERAL,
+        openHours = raw["openHours"].cast<int>() ??
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        tags =
-            snapshot["Tags"] != null ? _standariseTags(snapshot["Tags"]) : [],
-        notes = snapshot["notes"] != null
-            ? _standariseNotes(snapshot["notes"])
+        tags = raw["tags"] != null ? _standariseTags(raw["tags"]) : [],
+        notes = raw["notes"] != null
+            ? _standariseNotes(raw["notes"])
             : new List<Note>(),
-        votes = snapshot["votes"] != null
-            ? _standariseVotes(snapshot["votes"])
+        votes = raw["votes"] != null
+            ? _standariseVotes(raw["votes"])
             : new Map<String, int>(),
-        entryMethod =
-            _standariseEntryMethod(snapshot["entryMethod"].toString()) ??
-                EntryMethod.UNKNOWN,
-        price = snapshot["price"] != null && snapshot["price"] != 0
-            ? Map.from(snapshot["price"])
+        entryMethod = _standariseEntryMethod(raw["entryMethod"].toString()) ??
+            EntryMethod.UNKNOWN,
+        price = raw["price"] != null && raw["price"] != 0
+            ? Map.from(raw["price"])
             : null,
-        code = snapshot["code"] ?? null,
-        addDate = DateTime.parse(snapshot["addDate"]) ?? new DateTime.now();
+        code = raw["code"] ?? null,
+        addDate = DateTime.parse(raw["addDate"]) ?? new DateTime.now();
 
-  int calculateDistance(pos) {
-    int dist =
-        (this.geopoint.distance(lat: pos["latitude"], lng: pos["longitude"]) *
-                1000)
-            .toInt();
-    this.distance = dist;
-    return dist;
+  int calculateDistance(double userLatitude, double userLongitude) {
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((userLatitude - latitude) * p) / 2 +
+        c(latitude * p) * c(userLatitude * p) * (1 - c((userLongitude - longitude) * p)) / 2;
+
+    int distance = ((12742 * asin(sqrt(a))) * 1000).round();
+    this.distance = distance;
+
+    return distance;
   }
 
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
-      "id": id,
-      "geopoint": geopoint.data,
-      "title": title,
+      "name": name,
       "addDate": addDate.toString(),
       "category":
           "${category.toString().substring(category.toString().indexOf('.') + 1)}",
       "openHours": openHours,
-      "Tags": {
+      "tags": {
         "WHEELCHAIR_ACCESSIBLE": tags.contains(Tag.WHEELCHAIR_ACCESSIBLE),
         "BABY_ROOM": tags.contains(Tag.BABY_ROOM)
       },
-      "notes": notes.map((Note note) => note.toJson()).toList(),
-      "votes": votes.length > 0 ? votes.toString() : null,
       "entryMethod": entryMethod != null
           ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}"
           : null,
       "price": price["HUF"] != null ? price : null,
-      "code": code
+      "code": code,
+      "location": {
+        "latitude": latitude,
+        "longitude": longitude,
+      },
+      "notes": notes.map((Note note) => note.toJson()).toList(),
+      "votes": votes.toString(),
     };
   }
 
@@ -205,7 +219,6 @@ class Toilet {
       identical(this, other) ||
       other is Toilet &&
           runtimeType == other.runtimeType &&
-          id == other.id &&
-          title == other.title &&
+          name == other.name &&
           distance == other.distance;
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../widgets/button.dart';
-import '../widgets/openHourRow.dart';
+import '../widgets/Button.dart';
+import '../widgets/OpenHourRow.dart';
 
 class AddToiletOpenHours extends StatelessWidget {
   AddToiletOpenHours(this.onOpenHoursChanged, this.openHours);

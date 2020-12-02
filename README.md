@@ -2,7 +2,7 @@
 
 ## What's the deal with the name?
 
-Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you...
+Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you... (Alternative name ideas: Loondon, Honolua)
 
 ## App features
 The app shows the toilets nearby you on a map and in a list, ordered by distance from you. It recommends you the nearest open toilet, and when selecting a toilet, you'll see the opening hours, notes and ratings of the toilet. You can also add new toilets, or edit and rate existing ones.
@@ -20,13 +20,13 @@ A few resources to get you started if this is your first Flutter project:
 
 ### Tech stack
 - Dart and Flutter
-- Firebase
 - [google_maps_flutter](https://pub.dev/packages/google_maps_flutter)
 
 
 ### Setting up the project
 
-For the backend, we use Firebase. We use Firebase Databases, Anonymous Authentication, and Analytics. To configure it, create a Firebase project and [follow this documentation](https://firebase.google.com/docs/flutter/setup). **Make sure that you run over these docs for all of your desired build platforms!**
+Add a Google Maps API key both for Android and iOS. For instructions on how to do this, [click here](https://stackoverflow.com/a/59834585).
+For the backend, we use our own API that can be found in [this repository](https://github.com/danielgrgly/budipest-api).
 
 ### Running on iOS
 
@@ -54,7 +54,7 @@ flutter run
 
 ### Running on Android
 
-Once you're all set with the Firebase thingy and made sure that there is an Android device connected to your machine, you can just run `flutter run` and expect things to be going fine.
+Once you're all set with connecting an Android device to your machine, you can just run `flutter run` and expect things to be going fine.
 
 ## Contributing
 

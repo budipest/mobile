@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../core/models/toilet.dart';
-import '../widgets/selectable.dart';
-import '../widgets/textInput.dart';
-import '../widgets/button.dart';
+import '../../core/models/Toilet.dart';
+import '../widgets/Selectable.dart';
+import '../widgets/TextInput.dart';
+import '../widgets/Button.dart';
 
 class AddToiletEntryMethod extends StatelessWidget {
   const AddToiletEntryMethod(

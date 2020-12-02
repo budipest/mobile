@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
-import '../../core/models/note.dart';
-import '../../core/viewmodels/UserModel.dart';
-import '../../core/models/toilet.dart';
-import '../../core/services/api.dart';
-import '../../locator.dart';
-import './noteCard.dart';
+import '../../core/models/Note.dart';
+import '../../core/models/Toilet.dart';
+import 'NoteCard.dart';
 
 class NoteList extends StatelessWidget {
   NoteList(this.toilet);
   final Toilet toilet;
-  final API _api = locator<API>();
 
   void removeNote(BuildContext context) {
     showDialog(
@@ -51,11 +47,12 @@ class NoteList extends StatelessWidget {
               onPressed: () {
                 List<dynamic> remove = new List<dynamic>();
                 remove.add(toilet.notes[0].toJson());
-                _api.removeFromArray(
-                  remove,
-                  toilet.id,
-                  "notes",
-                );
+                // TODO: implement removing a note
+                // _api.removeFromArray(
+                //   remove,
+                //   toilet.id,
+                //   "notes",
+                // );
                 toilet.notes.removeAt(0);
                 Navigator.of(context).pop();
               },
@@ -68,14 +65,15 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userId = locator<UserModel>().userId;
+    // TODO: implement notes
+    // final String userId = locator<UserModel>().userId;
 
-    toilet.notes.forEach((Note note) {
-      if (note.userId == userId) {
-        toilet.notes.remove(note);
-        toilet.notes.insert(0, note);
-      }
-    });
+    // toilet.notes.forEach((Note note) {
+    //   if (note.userId == userId) {
+    //     toilet.notes.remove(note);
+    //     toilet.notes.insert(0, note);
+    //   }
+    // });
 
     return Hero(
       tag: "notelist",
@@ -86,7 +84,8 @@ class NoteList extends StatelessWidget {
             ...toilet.notes.map(
               (Note note) => NoteCard(
                 note,
-                isMine: note.userId == userId,
+                // isMine: note.userId == userId,
+                isMine: false,
                 removeHandler: () => removeNote(context),
               ),
             ),

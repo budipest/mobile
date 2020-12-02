@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:provider/provider.dart';
 
-import '../../core/viewmodels/UserModel.dart';
-import '../../core/models/toilet.dart';
-import '../../core/services/api.dart';
-import '../../locator.dart';
-import './button.dart';
+import '../../core/models/Toilet.dart';
+import 'Button.dart';
 
-class RateBar extends StatefulWidget {
-  RateBar(this.toilet, this._api);
-  Toilet toilet;
-  API _api;
+class RatingBar extends StatefulWidget {
+  RatingBar(this.toilet);
+  final Toilet toilet;
   int myVote;
 
   @override
-  _RateBarState createState() => _RateBarState();
+  _RatingBarState createState() => _RatingBarState();
 }
 
-class _RateBarState extends State<RateBar> {
+class _RatingBarState extends State<RatingBar> {
   int calculateVote(bool isUpvote) {
     // returns vote value
     // 1 is an upvote
@@ -40,6 +37,7 @@ class _RateBarState extends State<RateBar> {
 
   void castVote(String userId, bool isUpvote) {
     int vote = calculateVote(isUpvote);
+  
     setState(() {
       widget.myVote = vote;
     });
@@ -49,13 +47,15 @@ class _RateBarState extends State<RateBar> {
 
     Map<String, Map<String, int>> data = new Map<String, Map<String, int>>();
     data["votes"] = votes;
-    widget._api.updateDocument(data, widget.toilet.id);
+    // TODO: implement casting votes
+    // API.castVote();
   }
 
   @override
   Widget build(BuildContext context) {
-    final String userId = locator<UserModel>().userId;
-    widget.myVote = widget.toilet.votes[userId] ?? 0;
+    // TODO: implement checking votes
+    // final String userId = locator<UserModel>().userId;
+    // widget.myVote = widget.toilet.votes[userId] ?? 0;
     int upvotes = 0;
     int downvotes = 0;
 
@@ -85,7 +85,7 @@ class _RateBarState extends State<RateBar> {
           child: Button(
             // widget.toilet.upvotes.toString(),
             upvotes.toString(),
-            () => castVote(userId, true),
+            () => castVote("userId", true), // TODO: implement userId
             icon: Icons.thumb_up,
             backgroundColor:
                 widget.myVote == 1 ? Colors.black : Colors.grey[600],
@@ -96,7 +96,7 @@ class _RateBarState extends State<RateBar> {
         Button(
           // widget.toilet.downvotes.toString(),
           downvotes.toString(),
-          () => castVote(userId, false),
+          () => castVote("userId", false), // TODO: implement userId
           icon: Icons.thumb_down,
           backgroundColor:
               widget.myVote == -1 ? Colors.black : Colors.grey[600],

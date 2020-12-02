@@ -1,35 +1,29 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
 
-import 'dart:io' show Platform;
-
-import './button.dart';
-import './toiletDetailBar.dart';
-import './toiletRecommendationList.dart';
+import 'Button.dart';
+import 'ToiletDetailBar.dart';
+import 'ToiletRecommendationList.dart';
 import '../../core/common/openHourUtils.dart';
-import '../../core/models/toilet.dart';
+import '../../core/models/Toilet.dart';
+import '../../core/providers/ToiletModel.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar(
-    this.toilets,
     this.scrollProgress,
-    this.selectedToilet,
-    this.selectToilet,
-    this.recommendedToilet,
     this.sc,
   );
-  final List<Toilet> toilets;
-  final Toilet selectedToilet;
   final double scrollProgress;
-  final Function(Toilet) selectToilet;
-  final Toilet recommendedToilet;
   final ScrollController sc;
 
   void _navigate(Toilet toilet) async {
     String url = Platform.isIOS
-        ? 'https://maps.apple.com/?q=${toilet.geopoint.latitude},${toilet.geopoint.longitude}'
-        : 'https://www.google.com/maps/search/?api=1&query=${toilet.geopoint.latitude},${toilet.geopoint.longitude}';
+        ? 'https://maps.apple.com/?q=${toilet.latitude},${toilet.longitude}'
+        : 'https://www.google.com/maps/search/?api=1&query=${toilet.latitude},${toilet.longitude}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -40,7 +34,10 @@ class BottomBar extends StatelessWidget {
   }
 
   void _tooFarNavigate(BuildContext context, Toilet toilet) {
-    int index = toilets.indexOf(selectedToilet);
+    final provider = Provider.of<ToiletModel>(context);
+
+    int index = provider.toilets.indexOf(provider.selectedToilet);
+
     if (index > 0) {
       showDialog(
         context: context,
@@ -69,7 +66,7 @@ class BottomBar extends StatelessWidget {
                 },
               ),
               new FlatButton(
-                child: Text(FlutterI18n.translate(context, "navigate")),
+                child: Text(FlutterI18n.translate(context, "directions")),
                 onPressed: () {
                   _navigate(toilet);
                 },
@@ -85,6 +82,10 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ToiletModel>(context);
+    final Toilet selectedToilet = provider.selectedToilet;
+    final Toilet suggestedToilet = provider.suggestedToilet;
+
     bool hasSelected = selectedToilet != null;
 
     return MediaQuery.removePadding(
@@ -100,7 +101,7 @@ class BottomBar extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                if (!hasSelected) selectToilet(recommendedToilet);
+                if (!hasSelected) provider.selectToilet(provider.suggestedToilet);
               },
               child: Padding(
                 padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 25.0),
@@ -135,7 +136,7 @@ class BottomBar extends StatelessWidget {
                         tag: "inlineTitle",
                         child: Text(
                           hasSelected
-                              ? selectedToilet.title
+                              ? selectedToilet.name
                               : FlutterI18n.translate(
                                   context,
                                   "recommendedToilet",
@@ -160,7 +161,7 @@ class BottomBar extends StatelessWidget {
                                 true,
                               )
                             : describeToiletIcons(
-                                recommendedToilet,
+                                suggestedToilet,
                                 "dark",
                                 false,
                                 false,
@@ -171,8 +172,8 @@ class BottomBar extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 hasSelected
-                                    ? selectedToilet.title
-                                    : recommendedToilet.title,
+                                    ? selectedToilet.name
+                                    : suggestedToilet.name,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16.0,
@@ -182,7 +183,7 @@ class BottomBar extends StatelessWidget {
                               Text(
                                 hasSelected
                                     ? "${selectedToilet.distance} m"
-                                    : "${recommendedToilet.distance} m",
+                                    : "${suggestedToilet.distance} m",
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 16.0,
@@ -259,7 +260,7 @@ class BottomBar extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.only(right: 12.0),
                               child: Button(
-                                FlutterI18n.translate(context, "navigate"),
+                                FlutterI18n.translate(context, "directions"),
                                 () async {
                                   if (selectedToilet.distance < 10000) {
                                     _navigate(selectedToilet);
@@ -291,7 +292,7 @@ class BottomBar extends StatelessWidget {
           ),
           hasSelected
               ? ToiletDetailBar(selectedToilet)
-              : ToiletRecommendationList(toilets, selectToilet)
+              : ToiletRecommendationList()
         ],
       ),
     );

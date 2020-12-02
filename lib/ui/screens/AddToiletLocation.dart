@@ -1,8 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import 'dart:async';
 
 import '../../core/common/bitmapFromSvg.dart';
 
@@ -25,7 +25,7 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
     return await rootBundle.loadString(path);
   }
 
-  void _animateToUser() {
+  void _animateToLocation() {
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(widget.location.latitude, widget.location.longitude),
       zoom: 15.0,
@@ -55,10 +55,11 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
       onDragEnd: widget.onLocationChanged,
       icon: await getDraggableIcon(context),
     );
+
     setState(() {
       _mapController = controller;
       markers[id] = _marker;
-      _animateToUser();
+      _animateToLocation();
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
   }

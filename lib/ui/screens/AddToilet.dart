@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:uuid/uuid.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/viewmodels/ToiletModel.dart';
-import '../../core/models/toilet.dart';
-import '../widgets/blackLayoutContainer.dart';
-import './home.dart';
-import './addToiletLocation.dart';
-import './addToiletTitle.dart';
-import './addToiletCategory.dart';
-import './addToiletEntryMethod.dart';
-import './addToiletOpenHours.dart';
-import './addToiletTags.dart';
+import '../../core/models/Toilet.dart';
+import '../../core/providers/ToiletModel.dart';
+import '../widgets/BlackLayoutContainer.dart';
+
+import 'AddToiletLocation.dart';
+import 'AddToiletName.dart';
+import 'AddToiletCategory.dart';
+import 'AddToiletEntryMethod.dart';
+import 'AddToiletOpenHours.dart';
+import 'AddToiletTags.dart';
 
 class AddToilet extends StatefulWidget {
-  const AddToilet(this.homeKey);
-  final GlobalKey<HomeState> homeKey;
+  const AddToilet();
 
   @override
   _AddToiletState createState() => _AddToiletState();
 }
 
 class _AddToiletState extends State<AddToilet> {
-  final Location _location = new Location();
-
   PageController _controller;
 
   LatLng location;
-
-  String title;
-
+  String name;
   Category category;
 
   EntryMethod entryMethod = EntryMethod.UNKNOWN;
@@ -45,9 +38,9 @@ class _AddToiletState extends State<AddToilet> {
 
   List<Tag> tags = new List<Tag>();
 
-  void onTitleChanged(String text) {
+  void onNameChanged(String text) {
     setState(() {
-      title = text;
+      name = text;
     });
   }
 
@@ -115,7 +108,7 @@ class _AddToiletState extends State<AddToilet> {
     switch (position) {
       case 1:
         {
-          return title != null;
+          return name != null;
         }
       case 2:
         {
@@ -142,26 +135,27 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
-  void onFABPressed() async {
-    final toiletProvider = Provider.of<ToiletModel>(context);
+  void onFABPressed(BuildContext context) async {
+    final provider = Provider.of<ToiletModel>(context);
 
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
       var data = Toilet(
-        new Uuid().v1(),
-        GeoFirePoint(location.latitude, location.longitude),
-        title,
+        "",
+        name,
         new DateTime.now(),
         category,
         openHours,
         tags,
-        [],
-        new Map<String, int>(),
         entryMethod,
         price,
         code,
+        location.latitude,
+        location.longitude,
+        [],
+        new Map<String, int>(),
       );
-      await toiletProvider.uploadToilet(data);
-      widget.homeKey.currentState.selectToilet(data);
+
+      provider.addToilet(data);
       Navigator.of(context).pop();
     } else {
       nextPage();
@@ -182,11 +176,13 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
+    final LocationData userLocation = Provider.of<ToiletModel>(context).location;
+
     return BlackLayoutContainer(
       context: context,
       title: FlutterI18n.translate(context, "addToilet"),
       fab: FloatingActionButton.extended(
-        onPressed: onFABPressed,
+        onPressed: () => onFABPressed(context),
         backgroundColor: Colors.black,
         label: Text(FlutterI18n.translate(context, "continue")),
         icon: Icon(Icons.navigate_next),
@@ -195,17 +191,16 @@ class _AddToiletState extends State<AddToilet> {
         controller: _controller,
         pageSnapping: true,
         physics: _controller.hasClients
-            ? _controller.offset < 100 ? NeverScrollableScrollPhysics() : null
+            ? _controller.offset < 100
+                ? NeverScrollableScrollPhysics()
+                : null
             : NeverScrollableScrollPhysics(),
         children: <Widget>[
           AddToiletLocation(
             onLocationChanged,
-            LatLng(
-              widget.homeKey.currentState.location["latitude"],
-              widget.homeKey.currentState.location["longitude"],
-            ),
+            LatLng(userLocation.latitude, userLocation.longitude),
           ),
-          AddToiletTitle(title, onTitleChanged),
+          AddToiletName(name, onNameChanged),
           AddToiletCategory(onCategoryChanged, category),
           AddToiletEntryMethod(
             onEntryMethodChanged,

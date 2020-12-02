@@ -6,8 +6,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'dart:async';
 import 'dart:core';
 
-import '../models/toilet.dart';
-import './bitmapFromSvg.dart';
+import '../models/Toilet.dart';
+import 'bitmapFromSvg.dart';
 
 Widget descriptionIcon(
     EdgeInsetsGeometry padding, String mode, bool smaller, String text,
@@ -227,7 +227,8 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
         FlutterI18n.translate(
           context,
           "todayUntil",
-          Map.fromIterables(["time"], [minuteToHourFormat(openHours[end])]),
+          translationParams:
+              Map.fromIterables(["time"], [minuteToHourFormat(openHours[end])]),
         ),
       );
     }
@@ -238,7 +239,8 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
         FlutterI18n.translate(
           context,
           "todayUntil",
-          Map.fromIterables(["time"], [minuteToHourFormat(openHours[start])]),
+          translationParams: Map.fromIterables(
+              ["time"], [minuteToHourFormat(openHours[start])]),
         ),
       );
     } else {
@@ -246,14 +248,15 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
         result.add(FlutterI18n.translate(
           context,
           "tomorrowUntil",
-          Map.fromIterables(["time"],
+          translationParams: Map.fromIterables(["time"],
               [minuteToHourFormat(openHours[end + 1 >= 14 ? 0 : end + 1])]),
         ));
       } else {
         result.add(FlutterI18n.translate(
           context,
           "tomorrowUntil",
-          Map.fromIterables(["time"], [minuteToHourFormat(openHours[start])]),
+          translationParams: Map.fromIterables(
+              ["time"], [minuteToHourFormat(openHours[start])]),
         ));
       }
     }
@@ -282,6 +285,11 @@ String stringFromCategory(Category category) {
 List<Widget> describeToiletIcons(
     Toilet toilet, String mode, bool isDetailed, bool smaller) {
   var result = new List<Widget>();
+
+  if(toilet == null) {
+    return result;
+  }
+
   EdgeInsets padding;
   String categoryStr = stringFromCategory(toilet.category);
 
