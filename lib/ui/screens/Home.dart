@@ -18,13 +18,11 @@ class Home extends StatelessWidget {
   final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   final PanelController _pc = new PanelController();
 
-  void onBottomBarDrag(double val, BuildContext context) {
-    final _selectedToilet = Provider.of<ToiletModel>(context).selectedToilet;
-
+  void onBottomBarDrag(double val, bool hasSelected) {
     _notifier.value = val;
 
     if (val < 0.8) {
-      if (_selectedToilet == null) {
+      if (hasSelected) {
         if (val < 0.15) {
           _pc.animatePanelToPosition(0.15);
         }
@@ -43,15 +41,13 @@ class Home extends StatelessWidget {
     }
   }
 
-  void selectToilet(ToiletModel provider, Toilet toilet) {
-    provider.selectToilet(toilet);
-
-    if (toilet == null) {
+  void animateForSelection(Toilet selectedToilet) {
+    if (selectedToilet == null) {
       if (_notifier.value < 0.5) _pc.animatePanelToPosition(0.15);
     } else {
       _mapKey.currentState.animateToLocation(
-        toilet.latitude,
-        toilet.longitude,
+        selectedToilet.latitude,
+        selectedToilet.longitude,
       );
       if (_notifier.value < 0.5) _pc.animatePanelToPosition(0.3);
     }
@@ -66,6 +62,10 @@ class Home extends StatelessWidget {
 
     if (_toiletProvider.loaded) {
       print("/hasdata");
+
+      if (_pc.isAttached) {
+        animateForSelection(_selectedToilet);
+      }
 
       return Scaffold(
         key: _scaffoldKey,
@@ -86,7 +86,8 @@ class Home extends StatelessWidget {
                   sc,
                 ),
               ),
-              onPanelSlide: (double val) => onBottomBarDrag(val, context),
+              onPanelSlide: (double val) =>
+                  onBottomBarDrag(val, _selectedToilet == null),
               body: MapWidget(
                 onMapCreated: () {
                   _pc.animatePanelToPosition(0.15);
@@ -157,7 +158,7 @@ class Home extends StatelessWidget {
                       ),
                       onPressed: () {
                         if (_selectedToilet != null) {
-                          selectToilet(_toiletProvider, null);
+                          _toiletProvider.selectToilet(null);
                         } else {
                           if (_notifier.value > 0.99) {
                             _pc.close();

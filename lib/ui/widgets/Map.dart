@@ -65,13 +65,6 @@ class MapState extends State<MapWidget> {
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
 
-    LocationData userLocation = Provider.of<ToiletModel>(context).location;
-
-    animateToLocation(
-      userLocation.latitude,
-      userLocation.longitude,
-    );
-
     widget.onMapCreated();
   }
 
@@ -101,7 +94,10 @@ class MapState extends State<MapWidget> {
     return GoogleMap(
       onMapCreated: (controller) => _onMapCreated(controller, context),
       initialCameraPosition: CameraPosition(
-        target: LatLng(47.498290, 19.033493),
+        target: LatLng(
+          provider.location.latitude,
+          provider.location.longitude,
+        ),
         zoom: 15.0,
       ),
       compassEnabled: true,
@@ -111,6 +107,7 @@ class MapState extends State<MapWidget> {
       tiltGesturesEnabled: false,
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
+      myLocationButtonEnabled: false,
       markers: Set<Marker>.of(markers.values),
       onTap: (LatLng coords) => provider.selectToilet(null),
     );

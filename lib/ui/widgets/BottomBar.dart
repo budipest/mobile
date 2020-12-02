@@ -139,7 +139,7 @@ class BottomBar extends StatelessWidget {
                               ? selectedToilet.name
                               : FlutterI18n.translate(
                                   context,
-                                  "suggestedToilet",
+                                  "recommendedToilet",
                                 ),
                           style: TextStyle(
                             color: Colors.white,
