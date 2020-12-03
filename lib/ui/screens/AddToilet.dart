@@ -139,10 +139,8 @@ class _AddToiletState extends State<AddToilet> {
     final provider = Provider.of<ToiletModel>(context);
 
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
-      var data = Toilet(
-        "",
+      var data = Toilet.createNew(
         name,
-        new DateTime.now(),
         category,
         openHours,
         tags,
@@ -151,8 +149,6 @@ class _AddToiletState extends State<AddToilet> {
         code,
         location.latitude,
         location.longitude,
-        [],
-        new Map<String, int>(),
       );
 
       provider.addToilet(data);
@@ -176,7 +172,8 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
-    final LocationData userLocation = Provider.of<ToiletModel>(context).location;
+    final LocationData userLocation =
+        Provider.of<ToiletModel>(context).location;
 
     return BlackLayoutContainer(
       context: context,

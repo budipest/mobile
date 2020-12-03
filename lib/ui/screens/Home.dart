@@ -115,7 +115,6 @@ class Home extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // TODO: re-add this function
                     _mapKey.currentState.animateToLocation(
                       _toiletProvider.location.latitude,
                       _toiletProvider.location.longitude,

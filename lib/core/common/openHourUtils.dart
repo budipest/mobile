@@ -339,16 +339,17 @@ List<Widget> describeToiletIcons(
       int upvotes = 0;
       int downvotes = 0;
 
-      toilet.votes.values.forEach((int value) {
-        switch (value) {
-          case 1:
-            upvotes++;
-            break;
-          case -1:
-            downvotes++;
-            break;
-        }
-      });
+      // TODO: check this out later
+      // toilet.votes.values.forEach((int value) {
+      //   switch (value) {
+      //     case 1:
+      //       upvotes++;
+      //       break;
+      //     case -1:
+      //       downvotes++;
+      //       break;
+      //   }
+      // });
 
       if (upvotes != 0 || downvotes != 0)
         result.add(

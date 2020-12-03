@@ -35,18 +35,19 @@ class _RatingBarState extends State<RatingBar> {
     }
   }
 
+  // TODO: check this out later
   void castVote(String userId, bool isUpvote) {
     int vote = calculateVote(isUpvote);
-  
+
     setState(() {
       widget.myVote = vote;
     });
 
-    Map<String, int> votes = widget.toilet.votes;
-    votes[userId] = vote;
+    // Map<String, int> votes = widget.toilet.votes;
+    // votes[userId] = vote;
 
-    Map<String, Map<String, int>> data = new Map<String, Map<String, int>>();
-    data["votes"] = votes;
+    // Map<String, Map<String, int>> data = new Map<String, Map<String, int>>();
+    // data["votes"] = votes;
     // TODO: implement casting votes
     // API.castVote();
   }
@@ -59,16 +60,17 @@ class _RatingBarState extends State<RatingBar> {
     int upvotes = 0;
     int downvotes = 0;
 
-    widget.toilet.votes.values.forEach((int value) {
-      switch (value) {
-        case 1:
-          upvotes++;
-          break;
-        case -1:
-          downvotes++;
-          break;
-      }
-    });
+    // TODO: check this out later
+    // widget.toilet.votes.values.forEach((int value) {
+    //   switch (value) {
+    //     case 1:
+    //       upvotes++;
+    //       break;
+    //     case -1:
+    //       downvotes++;
+    //       break;
+    //   }
+    // });
 
     return Row(
       children: <Widget>[
