@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import '../common/openHourUtils.dart';
 import '../models/Toilet.dart';
@@ -10,7 +12,7 @@ class ToiletModel extends ChangeNotifier {
   // user-related data
   final Location _location = new Location();
   LocationData _userLocation;
-  String _userId = "hey";
+  String _userId;
 
   // toilets
   final List<Toilet> _toilets = new List<Toilet>();
@@ -28,13 +30,12 @@ class ToiletModel extends ChangeNotifier {
   bool get loaded => _toilets.length > 0;
 
   ToiletModel() {
-    init();
+    API.init();
+    initLocation();
+    initUserId();
   }
 
-  void init() async {
-    print("toiletmodel init");
-    API.init();
-
+  void initLocation() async {
     await checkLocationPermission();
 
     _location.onLocationChanged.listen((LocationData event) async {
@@ -51,6 +52,19 @@ class ToiletModel extends ChangeNotifier {
 
       notifyListeners();
     });
+  }
+
+  void initUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String storedID = prefs.getString('userId');
+    final uuid = Uuid();
+
+    if (storedID != null) {
+      _userId = storedID;
+    } else {
+      _userId = uuid.v4();
+      await prefs.setString('userId', _userId);
+    }
   }
 
   Future<void> checkLocationPermission() async {

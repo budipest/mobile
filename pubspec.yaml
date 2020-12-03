@@ -31,7 +31,7 @@ dependencies:
   location: ^3.0.2
 
   provider: 4.3.2+2
-  shared_preferences: any
+  shared_preferences: 0.5.12+4
   uuid: 2.2.2
 
   http: any
