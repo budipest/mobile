@@ -73,4 +73,31 @@ class API {
 
     return Toilet.fromMap(body);
   }
+
+  static Future<Toilet> voteToilet(
+    String toiletId,
+    String userId,
+    int vote,
+  ) async {
+    print("API votetoilet");
+    Toilet data;
+
+    try {
+      final response = await client.post(
+        '$url/toilets/$toiletId/votes/$userId',
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        body: utf8.encode(json.encode({"vote": vote})),
+      );
+      final body = json.decode(response.body);
+
+      data = Toilet.fromMap(body);
+    } catch (error) {
+      print(error);
+    }
+
+    return data;
+  }
 }

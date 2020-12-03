@@ -89,16 +89,22 @@ class ToiletModel extends ChangeNotifier {
     }
   }
 
-  void addToilet(Toilet item) {
+  Future<void> addToilet(Toilet item) async {
     print("toiletmodel addtoilet");
-    API.addToilet(item);
-    _toilets.add(item);
+    _toilets.add(await API.addToilet(item));
     selectToilet(item);
   }
 
   void selectToilet(Toilet item) {
     print("toiletmodel selecttoilet");
     _selected = item;
+    notifyListeners();
+  }
+
+  Future<void> voteToilet(Toilet item, int vote) async {
+    print("toiletmodel votetoilet");
+    int index = _toilets.indexOf(item);
+    _toilets[index] = await API.voteToilet(item.id, _userId, vote);
     notifyListeners();
   }
 }
