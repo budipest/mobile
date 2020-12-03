@@ -58,11 +58,7 @@ class Home extends StatelessWidget {
     final _toiletProvider = Provider.of<ToiletModel>(context);
     final _selectedToilet = _toiletProvider.selectedToilet;
 
-    print("rebuild home");
-
     if (_toiletProvider.loaded) {
-      print("/hasdata");
-
       if (_pc.isAttached) {
         animateForSelection(_selectedToilet);
       }
@@ -175,8 +171,6 @@ class Home extends StatelessWidget {
         ),
       );
     } else {
-      print("/loading");
-
       return Center(
         child: CircularProgressIndicator(
           backgroundColor: Colors.white,

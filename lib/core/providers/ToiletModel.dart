@@ -15,7 +15,7 @@ class ToiletModel extends ChangeNotifier {
   String _userId;
 
   // toilets
-  final List<Toilet> _toilets = new List<Toilet>();
+  List<Toilet> _toilets = new List<Toilet>();
   Toilet _selected;
 
   // user-related getters
@@ -39,7 +39,6 @@ class ToiletModel extends ChangeNotifier {
     await checkLocationPermission();
 
     _location.onLocationChanged.listen((LocationData event) async {
-      print("onLocationChanged");
       _userLocation = event;
 
       final toilets = await API.getToilets(event);
@@ -68,7 +67,6 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> checkLocationPermission() async {
-    print("toiletmodel checkPermission. location: $_userLocation");
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
 
@@ -90,21 +88,19 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> addToilet(Toilet item) async {
-    print("toiletmodel addtoilet");
     _toilets.add(await API.addToilet(item));
     selectToilet(item);
   }
 
   void selectToilet(Toilet item) {
-    print("toiletmodel selecttoilet");
     _selected = item;
     notifyListeners();
   }
 
-  Future<void> voteToilet(Toilet item, int vote) async {
-    print("toiletmodel votetoilet");
-    int index = _toilets.indexOf(item);
-    _toilets[index] = await API.voteToilet(item.id, _userId, vote);
+  Future<void> voteToilet(int vote) async {
+    final int index = _toilets.indexOf(_selected);
+    final Toilet updatedToilet = await API.voteToilet(_selected.id, _userId, vote);
+    _toilets[index] = updatedToilet;
     notifyListeners();
   }
 }

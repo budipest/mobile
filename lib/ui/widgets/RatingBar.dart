@@ -4,25 +4,21 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
+import '../../core/models/Vote.dart';
+import '../../core/providers/ToiletModel.dart';
 import 'Button.dart';
 
-class RatingBar extends StatefulWidget {
-  RatingBar(this.toilet);
+class RatingBar extends StatelessWidget {
+  const RatingBar(this.toilet);
   final Toilet toilet;
-  int myVote;
 
-  @override
-  _RatingBarState createState() => _RatingBarState();
-}
-
-class _RatingBarState extends State<RatingBar> {
-  int calculateVote(bool isUpvote) {
+  int calculateVote(int myVote, bool isUpvote) {
     // returns vote value
     // 1 is an upvote
     // 0 counts as a withdrawn, neutral vote
     // -1 is a downvote
 
-    switch (widget.myVote) {
+    switch (myVote) {
       // i had an upvote
       case 1:
         return isUpvote ? 0 : -1;
@@ -35,42 +31,34 @@ class _RatingBarState extends State<RatingBar> {
     }
   }
 
-  // TODO: check this out later
-  void castVote(String userId, bool isUpvote) {
-    int vote = calculateVote(isUpvote);
+  void castVote(BuildContext context, int currentVote, bool isUpvote) {
+    int vote = calculateVote(currentVote, isUpvote);
 
-    setState(() {
-      widget.myVote = vote;
-    });
-
-    // Map<String, int> votes = widget.toilet.votes;
-    // votes[userId] = vote;
-
-    // Map<String, Map<String, int>> data = new Map<String, Map<String, int>>();
-    // data["votes"] = votes;
-    // TODO: implement casting votes
-    // API.castVote();
+    Provider.of<ToiletModel>(context, listen: false).voteToilet(vote);
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement checking votes
-    // final String userId = locator<UserModel>().userId;
-    // widget.myVote = widget.toilet.votes[userId] ?? 0;
+    final provider = Provider.of<ToiletModel>(context);
+
     int upvotes = 0;
     int downvotes = 0;
+    int myVote = 0;
 
-    // TODO: check this out later
-    // widget.toilet.votes.values.forEach((int value) {
-    //   switch (value) {
-    //     case 1:
-    //       upvotes++;
-    //       break;
-    //     case -1:
-    //       downvotes++;
-    //       break;
-    //   }
-    // });
+    toilet.votes.forEach((Vote vote) {
+      if (vote.userId == provider.userId) {
+        myVote = vote.value;
+      }
+
+      switch (vote.value) {
+        case 1:
+          upvotes++;
+          break;
+        case -1:
+          downvotes++;
+          break;
+      }
+    });
 
     return Row(
       children: <Widget>[
@@ -85,23 +73,19 @@ class _RatingBarState extends State<RatingBar> {
         Padding(
           padding: EdgeInsets.only(right: 10.0),
           child: Button(
-            // widget.toilet.upvotes.toString(),
             upvotes.toString(),
-            () => castVote("userId", true), // TODO: implement userId
+            () => castVote(context, myVote, true),
             icon: Icons.thumb_up,
-            backgroundColor:
-                widget.myVote == 1 ? Colors.black : Colors.grey[600],
+            backgroundColor: myVote == 1 ? Colors.black : Colors.grey[600],
             foregroundColor: Colors.white,
             isMini: true,
           ),
         ),
         Button(
-          // widget.toilet.downvotes.toString(),
           downvotes.toString(),
-          () => castVote("userId", false), // TODO: implement userId
+          () => castVote(context, myVote, false),
           icon: Icons.thumb_down,
-          backgroundColor:
-              widget.myVote == -1 ? Colors.black : Colors.grey[600],
+          backgroundColor: myVote == -1 ? Colors.black : Colors.grey[600],
           foregroundColor: Colors.white,
           isMini: true,
         ),

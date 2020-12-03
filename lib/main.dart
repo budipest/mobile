@@ -25,8 +25,6 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await flutterI18nDelegate.load(null);
 
-  print("main async before runapp");
-
   runApp(
     ChangeNotifierProvider(
       create: (context) => ToiletModel(),
@@ -42,8 +40,6 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("application build");
-
     return MaterialApp(
       title: "Budipest",
       theme: ThemeData(

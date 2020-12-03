@@ -110,7 +110,7 @@ class Toilet {
   }
 
   Toilet.fromMap(Map raw)
-      : id = raw["id"] ?? "",
+      : id = raw["_id"] ?? "",
         name = raw["name"] ?? "",
         latitude = raw["location"]["latitude"] ?? 0.0,
         longitude = raw["location"]["longitude"] ?? 0.0,
@@ -163,7 +163,7 @@ class Toilet {
       "entryMethod": entryMethod != null
           ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}"
           : null,
-      "price": price["HUF"] != null ? price : null,
+      "price": price,
       "code": code,
       "location": {
         "latitude": latitude,
@@ -175,11 +175,8 @@ class Toilet {
   }
 
   static List<Vote> _standariseVotes(dynamic input) {
-    print("_standariseVotes");
     if (input != null) {
-      print(input);
-      print(input.runtimeType);
-      // return Map<String, int>.from(input);
+      return List<Vote>.from(input.map((item) => Vote.fromMap(item)));
     }
     return List<Vote>();
   }
