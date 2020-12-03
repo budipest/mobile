@@ -98,9 +98,18 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> voteToilet(int vote) async {
+    final Toilet updatedToilet =
+        await API.voteToilet(_selected.id, _userId, vote);
     final int index = _toilets.indexOf(_selected);
-    final Toilet updatedToilet = await API.voteToilet(_selected.id, _userId, vote);
+
+    updatedToilet.calculateDistance(
+      _userLocation.latitude,
+      _userLocation.longitude,
+    );
+
     _toilets[index] = updatedToilet;
+    _selected = updatedToilet;
+
     notifyListeners();
   }
 }
