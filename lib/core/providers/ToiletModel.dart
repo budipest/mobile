@@ -88,8 +88,9 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> addToilet(Toilet item) async {
-    _toilets.add(await API.addToilet(item));
-    selectToilet(item);
+    final Toilet addedToilet = await API.addToilet(item);
+    _toilets.add(addedToilet);
+    selectToilet(addedToilet);
   }
 
   void selectToilet(Toilet item) {

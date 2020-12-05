@@ -163,7 +163,7 @@ class Toilet {
       "entryMethod": entryMethod != null
           ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}"
           : null,
-      "price": price,
+      "price": price["HUF"] != null ? price : null,
       "code": code,
       "location": {
         "latitude": latitude,
