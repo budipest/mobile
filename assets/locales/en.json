@@ -6,7 +6,7 @@
   "otherToilets": "Other toilets",
   "open": "Open",
   "closed": "Closed",
-  "unknown": "Unknown opening times",
+  "unknown": "Unknown opening hours",
   "until": "until {time}",
   "todayUntil": "today until {time}",
   "tomorrowUntil": "tomorrow until {time}",

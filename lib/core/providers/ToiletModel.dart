@@ -38,19 +38,27 @@ class ToiletModel extends ChangeNotifier {
   void initLocation() async {
     await checkLocationPermission();
 
-    _location.onLocationChanged.listen((LocationData event) async {
-      _userLocation = event;
+    final toilets = await API.getToilets();
 
-      final toilets = await API.getToilets(event);
-
-      _toilets.clear();
-
-      toilets.forEach((item) {
-        _toilets.add(item);
-      });
-
-      notifyListeners();
+    toilets.forEach((item) {
+      _toilets.add(item);
     });
+
+    _location.onLocationChanged.listen((LocationData location) {
+      orderToilets(location);
+    });
+  }
+
+  void orderToilets(LocationData location) async {
+    _userLocation = location;
+
+    _toilets.forEach((Toilet toilet) {
+      toilet.calculateDistance(_userLocation.latitude, _userLocation.longitude);
+    });
+
+    _toilets.sort((a, b) => a.distance.compareTo(b.distance));
+
+    notifyListeners();
   }
 
   void initUserId() async {

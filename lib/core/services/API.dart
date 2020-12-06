@@ -13,20 +13,16 @@ class API {
     client = http.Client();
   }
 
-  static Future<List<Toilet>> getToilets(LocationData userLocation) async {
+  static Future<List<Toilet>> getToilets() async {
     List<Toilet> data;
 
     try {
       final response = await client.get('$url/toilets');
       final body = json.decode(response.body)["data"];
 
-      data = body.map<Toilet>((toiletRaw) {
-        Toilet toilet = Toilet.fromMap(Map.from(toiletRaw));
-        toilet.calculateDistance(userLocation.latitude, userLocation.longitude);
-        return toilet;
-      }).toList();
-
-      data.sort((a, b) => a.distance.compareTo(b.distance));
+      data = body
+          .map<Toilet>((toiletRaw) => Toilet.fromMap(Map.from(toiletRaw)))
+          .toList();
     } catch (error) {
       print(error);
     }
