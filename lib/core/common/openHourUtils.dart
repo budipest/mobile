@@ -151,25 +151,48 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
 }
 
 String openState(List<int> openHours) {
-  if (openHours[0] >= openHours[1]) {
-    return "_unknown";
-  }
-
   DateTime dateTime = DateTime.now();
-  int curr = (dateTime.hour * 60) + dateTime.minute;
-  int start = 0;
-  int end = 1;
+
+  int curr = (dateTime.hour * 60) + dateTime.minute; // current minute of day
+  int start = 0; // today's starting time index
+  int end = 1; // today's ending time index
 
   if (openHours.length > 2) {
     start = (dateTime.weekday - 1) * 2;
     end = start + 1;
   }
 
-  if (openHours[start] <= curr && curr <= openHours[end]) {
-    return "_open";
-  } else {
-    return "_closed";
+  bool regularHours = openHours[start] < openHours[end];
+  bool pastOpening = openHours[start] < curr;
+  bool pastClosing = openHours[end] < curr;
+
+  if (openHours.every((element) => element == 0)) {
+    return "_unknown";
   }
+
+  if (regularHours) {
+    // if it has a regular opening time, e.g. 8AM-9PM
+    if (pastOpening && !pastClosing) {
+      // if it's past opening but before closing time
+      return "_open";
+    } else if (!pastOpening || pastClosing) {
+      // if it's before opening or past closing time
+      return "_closed";
+    }
+  } else {
+    // if it has an overnight opening time, e.g. 10PM-2AM
+    // opening: 10PM
+    // closing: 2AM
+    // current: 11PM. pastOpening, pastClosing
+    // current: 1AM. !pastOpening, !pastClosing
+    if (!pastOpening && !pastClosing || pastOpening && pastClosing) {
+      return "_open";
+    } else if (pastOpening && !pastClosing || !pastOpening && pastClosing) {
+      return "_closed";
+    }
+  }
+
+  return "_unknown";
 }
 
 bool isOpen(List<int> openHours) {
@@ -180,35 +203,17 @@ bool isOpen(List<int> openHours) {
 }
 
 Color coloredOpenState(List<int> openHours) {
-  if (openHours[0] >= openHours[1]) {
-    return Colors.grey;
-  }
-
-  DateTime dateTime = DateTime.now();
-  int curr = (dateTime.hour * 60) + dateTime.minute;
-  int start = 0;
-  int end = 1;
-
-  if (openHours.length > 2) {
-    start = (dateTime.weekday - 1) * 2;
-    end = start + 1;
-  }
-
-  if (openHours[start] <= curr && curr <= openHours[end]) {
-    return Colors.green;
-  } else {
-    return Colors.red;
+  switch (openState(openHours)) {
+    case "_open":
+      return Colors.green;
+    case "_closed":
+      return Colors.red;
+    default:
+      return Colors.grey;
   }
 }
 
 List<String> readableOpenState(List<int> openHours, BuildContext context) {
-  List<String> result = [];
-  if (openHours[0] >= openHours[1]) {
-    result.add(FlutterI18n.translate(context, "unknown"));
-    result.add("");
-    return result;
-  }
-
   DateTime dateTime = DateTime.now();
   int curr = (dateTime.hour * 60) + dateTime.minute;
   int start = 0;
@@ -219,51 +224,88 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
     end = start + 1;
   }
 
-  if (openHours[start] <= curr && curr <= openHours[end]) {
-    result.add(FlutterI18n.translate(context, "open") + " ");
-    if (openHours[0] == 0 && openHours[1] == 1440) {
-      result.add("24/7");
-    } else {
-      result.add(
-        FlutterI18n.translate(
-          context,
-          "todayUntil",
-          translationParams:
-              Map.fromIterables(["time"], [minuteToHourFormat(openHours[end])]),
-        ),
-      );
-    }
-  } else {
-    result.add(FlutterI18n.translate(context, "closed") + " ");
-    if (openHours[start] > curr) {
-      result.add(
-        FlutterI18n.translate(
-          context,
-          "todayUntil",
-          translationParams: Map.fromIterables(
-              ["time"], [minuteToHourFormat(openHours[start])]),
-        ),
-      );
-    } else {
-      if (end > 1) {
-        result.add(FlutterI18n.translate(
-          context,
-          "tomorrowUntil",
-          translationParams: Map.fromIterables(["time"],
-              [minuteToHourFormat(openHours[end + 1 >= 14 ? 0 : end + 1])]),
-        ));
-      } else {
-        result.add(FlutterI18n.translate(
-          context,
-          "tomorrowUntil",
-          translationParams: Map.fromIterables(
-              ["time"], [minuteToHourFormat(openHours[start])]),
-        ));
-      }
-    }
-  }
+  bool regularHours = openHours[start] < openHours[end];
+  bool pastOpening = openHours[start] < curr;
+  bool pastClosing = openHours[end] < curr;
 
-  return result;
+  switch (openState(openHours)) {
+    case "_open":
+      return [
+        FlutterI18n.translate(context, "open") + " ",
+        openHours[0] == 0 && openHours[1] == 1440
+            ? "24/7"
+            : FlutterI18n.translate(
+                context,
+                "todayUntil",
+                translationParams: Map.fromIterables(
+                  ["time"],
+                  [minuteToHourFormat(openHours[end])],
+                ),
+              ),
+      ];
+
+    // TOOD: investigate this thing
+    case "_closed":
+      return [
+        FlutterI18n.translate(context, "closed") + " ",
+        regularHours
+            ? pastClosing
+                ? FlutterI18n.translate(
+                    context,
+                    "tomorrowUntil",
+                    translationParams: Map.fromIterables(
+                      ["time"],
+                      end > 1
+                          ? [
+                              minuteToHourFormat(
+                                  openHours[start + 1 >= 14 ? 0 : start])
+                            ]
+                          : [minuteToHourFormat(openHours[start])],
+                    ),
+                  )
+                : FlutterI18n.translate(
+                    context,
+                    "todayUntil",
+                    translationParams: Map.fromIterables(
+                      ["time"],
+                      [
+                        minuteToHourFormat(
+                          openHours[start],
+                        ),
+                      ],
+                    ),
+                  )
+            : pastOpening
+                ? FlutterI18n.translate(
+                    context,
+                    "todayUntil",
+                    translationParams: Map.fromIterables(
+                      ["time"],
+                      start > 1
+                          ? [
+                              minuteToHourFormat(
+                                  openHours[end + 1 >= 14 ? 0 : end])
+                            ]
+                          : [minuteToHourFormat(openHours[end])],
+                    ),
+                  )
+                : FlutterI18n.translate(
+                    context,
+                    "tomorrowUntil",
+                    translationParams: Map.fromIterables(
+                      ["time"],
+                      [
+                        minuteToHourFormat(
+                          openHours[start],
+                        ),
+                      ],
+                    ),
+                  )
+      ];
+
+    default:
+      return [FlutterI18n.translate(context, "unknown"), ""];
+  }
 }
 
 String stringFromCategory(Category category) {
@@ -287,7 +329,7 @@ List<Widget> describeToiletIcons(
     Toilet toilet, String mode, bool isDetailed, bool smaller) {
   var result = new List<Widget>();
 
-  if(toilet == null) {
+  if (toilet == null) {
     return result;
   }
 
