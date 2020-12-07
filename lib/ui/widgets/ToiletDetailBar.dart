@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/models/Note.dart';
-import '../screens/AddNote.dart';
+import '../../core/providers/ToiletModel.dart';
 import 'Button.dart';
 import 'NoteList.dart';
 import 'RatingBar.dart';
@@ -12,32 +13,24 @@ import 'RatingBar.dart';
 class ToiletDetailBar extends StatelessWidget {
   const ToiletDetailBar(this.toilet);
   final Toilet toilet;
-  // String userId = locator<UserModel>().userId;
 
-  void addNote(String noteText, String uid) async {
-    // toilet.notes.insert(0, Note(noteText, uid));
-    // TODO: implement adding a note
-    // _api.addToArray(
-    //   widget.toilet.notes.map((Note note) => note.toJson()).toList(),
-    //   widget.toilet.id,
-    //   "notes",
-    // );
-    // Navigator.of(context).pop();
-  }
+  bool userHasNote(Toilet toilet, String userId) {
+    bool noted = false;
 
-  bool userHasNote(Toilet toilet) {
-    bool vote = false;
-    // TODO: implement checking notes
-    // toilet.notes.forEach((Note note) {
-    //   if (note.userId == userId) {
-    //     vote = true;
-    //   }
-    // });
-    return vote;
+    toilet.notes.forEach((Note note) {
+      if (note.userId == userId) {
+        noted = true;
+      }
+    });
+
+    return noted;
   }
 
   @override
   Widget build(BuildContext context) {
+    final ToiletModel provider = Provider.of<ToiletModel>(context);
+    final String userId = provider.userId;
+
     return Column(
       children: <Widget>[
         Container(
@@ -60,24 +53,13 @@ class ToiletDetailBar extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              if (!userHasNote(toilet))
+              if (!userHasNote(toilet, userId))
                 Hero(
                   tag: "addNoteButton",
                   child: Button(
                     FlutterI18n.translate(context, "newNote"),
                     () {
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          fullscreenDialog: true,
-                          builder: (context) => AddNote(
-                            onNoteSubmitted: (String note) =>
-                                print("this is not implemented yet"),
-                            // TOOD: implement submitting notes
-                            // onNoteSubmitted: (String newNote) =>
-                            //     addNote(newNote, userId),
-                          ),
-                        ),
-                      );
+                      Navigator.pushNamed(context, '/addNote');
                     },
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,

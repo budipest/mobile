@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:core';
 
 import '../models/Toilet.dart';
+import '../models/Vote.dart';
 import 'bitmapFromSvg.dart';
 
 Widget descriptionIcon(
@@ -339,8 +340,8 @@ List<Widget> describeToiletIcons(
       int upvotes = 0;
       int downvotes = 0;
 
-      toilet.votes.values.forEach((int value) {
-        switch (value) {
+      toilet.votes.forEach((Vote vote) {
+        switch (vote.value) {
           case 1:
             upvotes++;
             break;

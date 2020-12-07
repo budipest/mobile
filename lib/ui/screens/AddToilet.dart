@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
@@ -30,7 +29,7 @@ class _AddToiletState extends State<AddToilet> {
   Category category;
 
   EntryMethod entryMethod = EntryMethod.UNKNOWN;
-  Map price = {"HUF": null};
+  Map<String, int> price = {"HUF": null};
   String code = "";
   bool hasEUR = false;
 
@@ -70,9 +69,9 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
-  void onPriceChanged(dynamic input, String currency) {
+  void onPriceChanged(String input, String currency) {
     setState(() {
-      price[currency] = input;
+      price[currency] = int.parse(input);
     });
   }
 
@@ -135,14 +134,13 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
-  void onFABPressed(BuildContext context) async {
-    final provider = Provider.of<ToiletModel>(context);
+  void onFABPressed(ToiletModel provider) async {
+    print("onFABpressed");
 
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
-      var data = Toilet(
-        "",
+      print("if");
+      var data = Toilet.createNew(
         name,
-        new DateTime.now(),
         category,
         openHours,
         tags,
@@ -151,13 +149,13 @@ class _AddToiletState extends State<AddToilet> {
         code,
         location.latitude,
         location.longitude,
-        [],
-        new Map<String, int>(),
       );
 
       provider.addToilet(data);
+
       Navigator.of(context).pop();
     } else {
+      print("else");
       nextPage();
     }
   }
@@ -176,13 +174,13 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
-    final LocationData userLocation = Provider.of<ToiletModel>(context).location;
+    final provider = Provider.of<ToiletModel>(context);
 
     return BlackLayoutContainer(
       context: context,
       title: FlutterI18n.translate(context, "addToilet"),
       fab: FloatingActionButton.extended(
-        onPressed: () => onFABPressed(context),
+        onPressed: () => onFABPressed(provider),
         backgroundColor: Colors.black,
         label: Text(FlutterI18n.translate(context, "continue")),
         icon: Icon(Icons.navigate_next),
@@ -198,7 +196,10 @@ class _AddToiletState extends State<AddToilet> {
         children: <Widget>[
           AddToiletLocation(
             onLocationChanged,
-            LatLng(userLocation.latitude, userLocation.longitude),
+            LatLng(
+              provider.location.latitude,
+              provider.location.longitude,
+            ),
           ),
           AddToiletName(name, onNameChanged),
           AddToiletCategory(onCategoryChanged, category),

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import '../common/openHourUtils.dart';
 import '../models/Toilet.dart';
-import '../models/Note.dart';
 import '../services/API.dart';
 
 class ToiletModel extends ChangeNotifier {
   // user-related data
   final Location _location = new Location();
   LocationData _userLocation;
-  String _userId = "hey";
+  String _userId;
 
   // toilets
-  final List<Toilet> _toilets = new List<Toilet>();
+  List<Toilet> _toilets = new List<Toilet>();
   Toilet _selected;
 
   // user-related getters
@@ -28,33 +29,51 @@ class ToiletModel extends ChangeNotifier {
   bool get loaded => _toilets.length > 0;
 
   ToiletModel() {
-    init();
+    API.init();
+    initLocation();
+    initUserId();
   }
 
-  void init() async {
-    print("toiletmodel init");
-    API.init();
-
+  void initLocation() async {
     await checkLocationPermission();
 
-    _location.onLocationChanged.listen((LocationData event) async {
-      print("onLocationChanged");
-      _userLocation = event;
+    final toilets = await API.getToilets();
 
-      final toilets = await API.getToilets(event);
+    toilets.forEach((item) {
+      _toilets.add(item);
+    });
 
-      _toilets.clear();
-
-      toilets.forEach((item) {
-        _toilets.add(item);
-      });
-
-      notifyListeners();
+    _location.onLocationChanged.listen((LocationData location) {
+      orderToilets(location);
     });
   }
 
+  void orderToilets(LocationData location) async {
+    _userLocation = location;
+
+    _toilets.forEach((Toilet toilet) {
+      toilet.calculateDistance(_userLocation.latitude, _userLocation.longitude);
+    });
+
+    _toilets.sort((a, b) => a.distance.compareTo(b.distance));
+
+    notifyListeners();
+  }
+
+  void initUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String storedID = prefs.getString('userId');
+    final uuid = Uuid();
+
+    if (storedID != null) {
+      _userId = storedID;
+    } else {
+      _userId = uuid.v4();
+      await prefs.setString('userId', _userId);
+    }
+  }
+
   Future<void> checkLocationPermission() async {
-    print("toiletmodel checkPermission. location: $_userLocation");
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
 
@@ -75,16 +94,60 @@ class ToiletModel extends ChangeNotifier {
     }
   }
 
-  void addToilet(Toilet item) {
-    print("toiletmodel addtoilet");
-    API.addToilet(item);
-    _toilets.add(item);
-    selectToilet(item);
+  Future<void> addToilet(Toilet item) async {
+    final Toilet addedToilet = await API.addToilet(item);
+    _toilets.add(addedToilet);
+    selectToilet(addedToilet);
   }
 
   void selectToilet(Toilet item) {
-    print("toiletmodel selecttoilet");
     _selected = item;
+    notifyListeners();
+  }
+
+  Future<void> voteToilet(int vote) async {
+    final Toilet updatedToilet =
+        await API.voteToilet(_selected.id, _userId, vote);
+    final int index = _toilets.indexOf(_selected);
+
+    updatedToilet.calculateDistance(
+      _userLocation.latitude,
+      _userLocation.longitude,
+    );
+
+    _toilets[index] = updatedToilet;
+    _selected = updatedToilet;
+
+    notifyListeners();
+  }
+
+  Future<void> addNote(String note) async {
+    final Toilet updatedToilet = await API.addNote(_selected.id, _userId, note);
+    final int index = _toilets.indexOf(_selected);
+
+    updatedToilet.calculateDistance(
+      _userLocation.latitude,
+      _userLocation.longitude,
+    );
+
+    _toilets[index] = updatedToilet;
+    _selected = updatedToilet;
+
+    notifyListeners();
+  }
+
+  Future<void> removeNote() async {
+    final Toilet updatedToilet = await API.removeNote(_selected.id, _userId);
+    final int index = _toilets.indexOf(_selected);
+
+    updatedToilet.calculateDistance(
+      _userLocation.latitude,
+      _userLocation.longitude,
+    );
+
+    _toilets[index] = updatedToilet;
+    _selected = updatedToilet;
+
     notifyListeners();
   }
 }

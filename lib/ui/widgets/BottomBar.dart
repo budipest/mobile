@@ -101,7 +101,8 @@ class BottomBar extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                if (!hasSelected) provider.selectToilet(provider.suggestedToilet);
+                if (!hasSelected)
+                  provider.selectToilet(provider.suggestedToilet);
               },
               child: Padding(
                 padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 25.0),
@@ -257,32 +258,32 @@ class BottomBar extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 12.0),
-                              child: Button(
-                                FlutterI18n.translate(context, "directions"),
-                                () async {
-                                  if (selectedToilet.distance < 10000) {
-                                    _navigate(selectedToilet);
-                                  } else {
-                                    _tooFarNavigate(context, selectedToilet);
-                                  }
-                                },
-                                icon: Icons.navigation,
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.black,
-                              ),
+                            child: Button(
+                              FlutterI18n.translate(context, "directions"),
+                              () async {
+                                if (selectedToilet.distance < 10000) {
+                                  _navigate(selectedToilet);
+                                } else {
+                                  _tooFarNavigate(context, selectedToilet);
+                                }
+                              },
+                              icon: Icons.navigation,
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
                             ),
                           ),
-                          Button(
-                            "",
-                            // TODO: implement suggesting toilet data modifications
-                            () => {print("not implemented yet")},
-                            icon: Icons.edit,
-                            backgroundColor: Colors.transparent,
-                            foregroundColor: Colors.white,
-                            isBordered: true,
-                          ),
+                          // TODO: implement suggesting toilet data modifications
+                          // Padding(
+                          //   padding: EdgeInsets.only(left: 12.0),
+                          //   child: Button(
+                          //     "",
+                          //     () => {print("not implemented yet")},
+                          //     icon: Icons.edit,
+                          //     backgroundColor: Colors.transparent,
+                          //     foregroundColor: Colors.white,
+                          //     isBordered: true,
+                          //   ),
+                          // ),
                         ],
                       )
                   ],

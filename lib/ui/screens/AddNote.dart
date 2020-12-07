@@ -11,8 +11,7 @@ import '../widgets/TextInput.dart';
 import '../widgets/NoteList.dart';
 
 class AddNote extends StatefulWidget {
-  AddNote({this.onNoteSubmitted});
-  final Function(String) onNoteSubmitted;
+  AddNote();
 
   @override
   _AddNoteState createState() => _AddNoteState();
@@ -23,7 +22,8 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    final Toilet toilet = Provider.of<ToiletModel>(context).selectedToilet;
+    final ToiletModel provider = Provider.of<ToiletModel>(context);
+    final Toilet toilet = provider.selectedToilet;
 
     return BlackLayoutContainer(
       context: context,
@@ -65,7 +65,9 @@ class _AddNoteState extends State<AddNote> {
                         child: Button(
                           FlutterI18n.translate(context, "send"),
                           () {
-                            widget.onNoteSubmitted(note);
+                            print("button addnote");
+                            provider.addNote(note);
+                            Navigator.of(context).pop();
                           },
                           backgroundColor: Colors.black,
                           foregroundColor: Colors.white,

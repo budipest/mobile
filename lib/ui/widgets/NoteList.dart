@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/models/Note.dart';
+import '../../core/providers/ToiletModel.dart';
 import '../../core/models/Toilet.dart';
 import 'NoteCard.dart';
 
@@ -13,8 +15,7 @@ class NoteList extends StatelessWidget {
   void removeNote(BuildContext context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
+      builder: (BuildContext innerContext) {
         return AlertDialog(
           title: new Text(
             FlutterI18n.translate(context, "areYouSure"),
@@ -30,7 +31,6 @@ class NoteList extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
             new FlatButton(
               child: Text(FlutterI18n.translate(context, "cancel")),
               onPressed: () {
@@ -45,15 +45,7 @@ class NoteList extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                List<dynamic> remove = new List<dynamic>();
-                remove.add(toilet.notes[0].toJson());
-                // TODO: implement removing a note
-                // _api.removeFromArray(
-                //   remove,
-                //   toilet.id,
-                //   "notes",
-                // );
-                toilet.notes.removeAt(0);
+                Provider.of<ToiletModel>(context, listen: false).removeNote();
                 Navigator.of(context).pop();
               },
             ),
@@ -65,15 +57,14 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement notes
-    // final String userId = locator<UserModel>().userId;
+    final String userId = Provider.of<ToiletModel>(context).userId;
 
-    // toilet.notes.forEach((Note note) {
-    //   if (note.userId == userId) {
-    //     toilet.notes.remove(note);
-    //     toilet.notes.insert(0, note);
-    //   }
-    // });
+    toilet.notes.forEach((Note note) {
+      if (note.userId == userId) {
+        toilet.notes.remove(note);
+        toilet.notes.insert(0, note);
+      }
+    });
 
     return Hero(
       tag: "notelist",
@@ -84,8 +75,7 @@ class NoteList extends StatelessWidget {
             ...toilet.notes.map(
               (Note note) => NoteCard(
                 note,
-                // isMine: note.userId == userId,
-                isMine: false,
+                isMine: note.userId == userId,
                 removeHandler: () => removeNote(context),
               ),
             ),

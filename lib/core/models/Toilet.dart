@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'Note.dart';
+import 'Vote.dart';
 
 enum Category { GENERAL, SHOP, RESTAURANT, PORTABLE, GAS_STATION }
 enum Tag {
@@ -25,7 +26,7 @@ class Toilet {
   double longitude;
 
   List<Note> notes;
-  Map<String, int> votes;
+  List<Vote> votes;
 
   int distance = 0;
 
@@ -42,7 +43,7 @@ class Toilet {
     double latitude,
     double longitude,
     List<Note> notes,
-    Map<String, int> votes,
+    List<Vote> votes,
   ) {
     this.id = id;
     this.name = name;
@@ -62,6 +63,35 @@ class Toilet {
     this.votes = votes;
   }
 
+  Toilet.createNew(
+    String name,
+    Category category,
+    List<int> openHours,
+    List<Tag> tags,
+    EntryMethod entryMethod,
+    Map price,
+    String code,
+    double latitude,
+    double longitude,
+  ) {
+    this.id = "";
+    this.name = name;
+    this.addDate = new DateTime.now();
+    this.category = category;
+    this.openHours = openHours;
+    this.tags = tags;
+
+    this.entryMethod = entryMethod;
+    this.price = price;
+    this.code = code;
+
+    this.latitude = latitude;
+    this.longitude = longitude;
+
+    this.notes = List<Note>();
+    this.votes = List<Vote>();
+  }
+
   // Named constructor
   Toilet.origin() {
     name = "";
@@ -76,11 +106,11 @@ class Toilet {
     longitude = 0.0;
 
     notes = new List<Note>();
-    votes = new Map<String, int>();
+    votes = new List<Vote>();
   }
 
   Toilet.fromMap(Map raw)
-      : id = raw["id"] ?? "",
+      : id = raw["_id"] ?? "",
         name = raw["name"] ?? "",
         latitude = raw["location"]["latitude"] ?? 0.0,
         longitude = raw["location"]["longitude"] ?? 0.0,
@@ -94,7 +124,7 @@ class Toilet {
             : new List<Note>(),
         votes = raw["votes"] != null
             ? _standariseVotes(raw["votes"])
-            : new Map<String, int>(),
+            : new List<Vote>(),
         entryMethod = _standariseEntryMethod(raw["entryMethod"].toString()) ??
             EntryMethod.UNKNOWN,
         price = raw["price"] != null && raw["price"] != 0
@@ -108,7 +138,10 @@ class Toilet {
     var c = cos;
     var a = 0.5 -
         c((userLatitude - latitude) * p) / 2 +
-        c(latitude * p) * c(userLatitude * p) * (1 - c((userLongitude - longitude) * p)) / 2;
+        c(latitude * p) *
+            c(userLatitude * p) *
+            (1 - c((userLongitude - longitude) * p)) /
+            2;
 
     int distance = ((12742 * asin(sqrt(a))) * 1000).round();
     this.distance = distance;
@@ -137,15 +170,15 @@ class Toilet {
         "longitude": longitude,
       },
       "notes": notes.map((Note note) => note.toJson()).toList(),
-      "votes": votes.toString(),
+      "votes": votes.map((Vote vote) => vote.toJson()).toList(),
     };
   }
 
-  static Map<String, int> _standariseVotes(Map<dynamic, dynamic> input) {
+  static List<Vote> _standariseVotes(dynamic input) {
     if (input != null) {
-      return Map<String, int>.from(input);
+      return List<Vote>.from(input.map((item) => Vote.fromMap(item)));
     }
-    return new Map<String, int>();
+    return List<Vote>();
   }
 
   static Category _standariseCategory(String input) {

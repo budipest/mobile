@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:location/location.dart';
 
 import 'dart:async';
 
@@ -53,10 +52,7 @@ class MapState extends State<MapWidget> {
   // }
 
   animateToLocation(double lat, double lon) {
-    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(lat, lon),
-      zoom: 15.0,
-    )));
+    mapController.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lon)));
   }
 
   void _onMapCreated(GoogleMapController controller, BuildContext context) {
@@ -86,9 +82,8 @@ class MapState extends State<MapWidget> {
         ),
         onTap: () => provider.selectToilet(toilet),
       );
-      setState(() {
-        markers[id] = _marker;
-      });
+
+      markers[id] = _marker;
     });
 
     return GoogleMap(
