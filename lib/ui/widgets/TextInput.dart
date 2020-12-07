@@ -56,17 +56,24 @@ class _TextInputState extends State<TextInput> {
       new TextEditingController(text: "");
 
   @override
-  Widget build(BuildContext context) {
-    var cursorPos = _textEditingController.selection;
+  void initState() {
+    super.initState();
+
+    TextSelection cursorPos = _textEditingController.selection;
 
     _textEditingController.text = widget.text ?? '';
 
     if (cursorPos.start > _textEditingController.text.length) {
       cursorPos = new TextSelection.fromPosition(
-          new TextPosition(offset: _textEditingController.text.length));
+        new TextPosition(offset: _textEditingController.text.length),
+      );
     }
-    _textEditingController.selection = cursorPos;
 
+    _textEditingController.selection = cursorPos;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: widget.isDark ? Colors.grey[900] : Colors.grey[200],
