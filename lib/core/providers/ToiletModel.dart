@@ -5,7 +5,6 @@ import 'package:uuid/uuid.dart';
 
 import '../common/openHourUtils.dart';
 import '../models/Toilet.dart';
-import '../models/Note.dart';
 import '../services/API.dart';
 
 class ToiletModel extends ChangeNotifier {
@@ -109,6 +108,36 @@ class ToiletModel extends ChangeNotifier {
   Future<void> voteToilet(int vote) async {
     final Toilet updatedToilet =
         await API.voteToilet(_selected.id, _userId, vote);
+    final int index = _toilets.indexOf(_selected);
+
+    updatedToilet.calculateDistance(
+      _userLocation.latitude,
+      _userLocation.longitude,
+    );
+
+    _toilets[index] = updatedToilet;
+    _selected = updatedToilet;
+
+    notifyListeners();
+  }
+
+  Future<void> addNote(String note) async {
+    final Toilet updatedToilet = await API.addNote(_selected.id, _userId, note);
+    final int index = _toilets.indexOf(_selected);
+
+    updatedToilet.calculateDistance(
+      _userLocation.latitude,
+      _userLocation.longitude,
+    );
+
+    _toilets[index] = updatedToilet;
+    _selected = updatedToilet;
+
+    notifyListeners();
+  }
+
+  Future<void> removeNote() async {
+    final Toilet updatedToilet = await API.removeNote(_selected.id, _userId);
     final int index = _toilets.indexOf(_selected);
 
     updatedToilet.calculateDistance(
