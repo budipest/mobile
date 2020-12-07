@@ -23,8 +23,10 @@ class ToiletModel extends ChangeNotifier {
 
   // toilet getters
   List<Toilet> get toilets => _toilets;
-  Toilet get suggestedToilet =>
-      _toilets.firstWhere((element) => isOpen(element.openHours));
+  Toilet get suggestedToilet => _toilets.firstWhere(
+        (element) => isOpen(element.openHours),
+        orElse: () => _toilets[0],
+      );
   Toilet get selectedToilet => _selected;
   bool get loaded => _toilets.length > 0;
 
