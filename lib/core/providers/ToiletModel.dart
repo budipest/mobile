@@ -124,6 +124,11 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> addNote(String note) async {
+    if (note.length < 3) {
+      // TOOD: warn user in SnackBar
+      return;
+    }
+
     final Toilet updatedToilet = await API.addNote(_selected.id, _userId, note);
     final int index = _toilets.indexOf(_selected);
 
