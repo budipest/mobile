@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget affix(String text, bool isPrefix,
-    {Color backgroundColor, Color foregroundColor}) {
+Widget affix(
+  String text,
+  bool isPrefix, {
+  Color backgroundColor,
+  Color foregroundColor,
+}) {
   return Container(
     decoration: BoxDecoration(
       color: backgroundColor ?? Colors.grey[400],
@@ -39,6 +43,7 @@ class TextInput extends StatefulWidget {
     this.suffixText,
     this.keyboardType = TextInputType.text,
   });
+
   final String text;
   final Function onTextChanged;
   final String placeholder;

@@ -11,6 +11,7 @@ import 'NoteCard.dart';
 
 class NoteList extends StatelessWidget {
   NoteList(this.toilet);
+
   final Toilet toilet;
 
   void removeNote(BuildContext context) {

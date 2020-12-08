@@ -3,6 +3,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Error extends StatelessWidget {
   const Error(this.text);
+
   final String text;
 
   @override

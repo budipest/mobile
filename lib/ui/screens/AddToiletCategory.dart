@@ -5,7 +5,11 @@ import '../../core/models/Toilet.dart';
 import '../widgets/Selectable.dart';
 
 class AddToiletCategory extends StatelessWidget {
-  const AddToiletCategory(this.onCategorySubmitted, this.selectedCategory);
+  const AddToiletCategory(
+    this.onCategorySubmitted,
+    this.selectedCategory,
+  );
+
   final Function(Category) onCategorySubmitted;
   final Category selectedCategory;
 

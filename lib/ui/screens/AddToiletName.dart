@@ -4,7 +4,11 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import '../widgets/TextInput.dart';
 
 class AddToiletName extends StatelessWidget {
-  const AddToiletName(this.name, this.onNameChanged);
+  const AddToiletName(
+    this.name,
+    this.onNameChanged,
+  );
+
   final String name;
   final Function(String) onNameChanged;
 

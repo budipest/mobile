@@ -5,8 +5,13 @@ import 'CardTemplate.dart';
 import '../../core/models/Note.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard(this.note,
-      {this.isMine = false, this.removeHandler, this.reportHandler});
+  const NoteCard(
+    this.note, {
+    this.isMine = false,
+    this.removeHandler,
+    this.reportHandler,
+  });
+
   final Note note;
   final bool isMine;
   final Function removeHandler;

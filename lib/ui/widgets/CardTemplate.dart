@@ -6,6 +6,7 @@ class CardTemplate extends StatelessWidget {
     this.gradient,
     this.padding = const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
   });
+
   final Widget child;
   final LinearGradient gradient;
   final EdgeInsetsGeometry padding;

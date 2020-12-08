@@ -6,12 +6,14 @@ import '../../core/common/openHourUtils.dart';
 
 class ToiletCard extends StatelessWidget {
   const ToiletCard(this.toilet);
+
   final Toilet toilet;
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> icons =
         describeToiletIcons(toilet, "light", false, false);
+
     return CardTemplate(
       Row(
         children: <Widget>[

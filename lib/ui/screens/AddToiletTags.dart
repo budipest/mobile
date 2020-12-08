@@ -5,7 +5,11 @@ import '../widgets/Selectable.dart';
 import '../../core/models/Toilet.dart';
 
 class AddToiletTags extends StatelessWidget {
-  const AddToiletTags(this.onTagToggled, this.tags);
+  const AddToiletTags(
+    this.onTagToggled,
+    this.tags,
+  );
+
   final Function onTagToggled;
   final List<Tag> tags;
 

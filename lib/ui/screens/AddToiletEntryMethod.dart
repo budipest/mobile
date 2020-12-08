@@ -17,6 +17,7 @@ class AddToiletEntryMethod extends StatelessWidget {
     this.hasEUR,
     this.toggleEUR,
   );
+
   final EntryMethod selectedEntryMethod;
   final Function onEntryMethodSubmitted;
   final Map price;
@@ -72,7 +73,9 @@ class AddToiletEntryMethod extends StatelessWidget {
                           children: <Widget>[
                             Expanded(
                               child: TextInput(
-                                price["EUR"] != null ? price["EUR"].toString() : null,
+                                price["EUR"] != null
+                                    ? price["EUR"].toString()
+                                    : null,
                                 FlutterI18n.translate(
                                     context, "priceAlternative"),
                                 onTextChanged: (String input) =>

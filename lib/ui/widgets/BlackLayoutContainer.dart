@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class BlackLayoutContainer extends StatefulWidget {
-  BlackLayoutContainer(
-      {this.context, this.child, this.title, this.fab, this.inlineTitle});
+  BlackLayoutContainer({
+    this.context,
+    this.child,
+    this.title,
+    this.fab,
+    this.inlineTitle,
+  });
 
   final BuildContext context;
   final Widget child;

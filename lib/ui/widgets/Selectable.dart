@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Selectable extends StatelessWidget {
-  Selectable(this.iconName, this.text, this.openChildren, this.onSelect,
-      this.index, this.isSelected);
+  Selectable(
+    this.iconName,
+    this.text,
+    this.openChildren,
+    this.onSelect,
+    this.index,
+    this.isSelected,
+  );
+
   final String iconName;
   final String text;
   final Widget openChildren;

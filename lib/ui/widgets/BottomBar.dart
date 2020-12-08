@@ -17,6 +17,7 @@ class BottomBar extends StatelessWidget {
     this.scrollProgress,
     this.sc,
   );
+
   final double scrollProgress;
   final ScrollController sc;
 

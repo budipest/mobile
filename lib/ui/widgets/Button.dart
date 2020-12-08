@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button(this.text, this.onTap,
-      {this.icon,
-      this.backgroundColor = Colors.white,
-      this.foregroundColor = Colors.black,
-      this.isBordered = false,
-      this.isMini = false,
-      this.borderRadius = 40.0,
-      this.verticalPadding = 6,
-      this.horizontalPadding = 12});
+  const Button(
+    this.text,
+    this.onTap, {
+    this.icon,
+    this.backgroundColor = Colors.white,
+    this.foregroundColor = Colors.black,
+    this.isBordered = false,
+    this.isMini = false,
+    this.borderRadius = 40.0,
+    this.verticalPadding = 6,
+    this.horizontalPadding = 12,
+  });
+
   final IconData icon;
   final String text;
   final Function onTap;

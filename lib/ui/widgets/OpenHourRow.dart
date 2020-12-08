@@ -5,7 +5,12 @@ import '../../core/common/openHourUtils.dart';
 import '../../core/common/variables.dart';
 
 class OpenHourRow extends StatefulWidget {
-  OpenHourRow(this.onChange, this.openHours, this.index);
+  OpenHourRow(
+    this.onChange,
+    this.openHours,
+    this.index,
+  );
+
   final Function onChange;
   final List<int> openHours;
   final int index;

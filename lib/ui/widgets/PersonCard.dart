@@ -4,7 +4,11 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'button.dart';
 
 class PersonCard extends StatelessWidget {
-  PersonCard(this.text, this.links);
+  PersonCard(
+    this.text,
+    this.links,
+  );
+
   final String text;
   final Map<String, String> links;
 

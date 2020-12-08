@@ -9,7 +9,10 @@ import '../../core/common/openHourUtils.dart';
 import '../../core/providers/ToiletModel.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget({this.onMapCreated, this.key});
+  const MapWidget({
+    this.onMapCreated,
+    this.key,
+  });
 
   final Function onMapCreated;
   final GlobalKey key;

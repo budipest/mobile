@@ -10,6 +10,7 @@ import 'Button.dart';
 
 class RatingBar extends StatelessWidget {
   const RatingBar(this.toilet);
+
   final Toilet toilet;
 
   int calculateVote(int myVote, bool isUpvote) {

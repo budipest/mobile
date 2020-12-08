@@ -7,13 +7,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/common/bitmapFromSvg.dart';
 
 class AddToiletLocation extends StatefulWidget {
-  AddToiletLocation(this.onLocationChanged, this.location);
+  AddToiletLocation(
+    this.onLocationChanged,
+    this.location,
+  );
+
   final Function onLocationChanged;
   final LatLng location;
 
   @override
-  _AddToiletLocationState createState() =>
-      _AddToiletLocationState();
+  _AddToiletLocationState createState() => _AddToiletLocationState();
 }
 
 class _AddToiletLocationState extends State<AddToiletLocation> {

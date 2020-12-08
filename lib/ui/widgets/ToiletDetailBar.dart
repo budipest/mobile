@@ -12,6 +12,7 @@ import 'RatingBar.dart';
 
 class ToiletDetailBar extends StatelessWidget {
   const ToiletDetailBar(this.toilet);
+
   final Toilet toilet;
 
   bool userHasNote(Toilet toilet, String userId) {
