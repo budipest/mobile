@@ -135,10 +135,7 @@ class _AddToiletState extends State<AddToilet> {
   }
 
   void onFABPressed(ToiletModel provider) async {
-    print("onFABpressed");
-
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
-      print("if");
       var data = Toilet.createNew(
         name,
         category,
@@ -155,7 +152,6 @@ class _AddToiletState extends State<AddToilet> {
 
       Navigator.of(context).pop();
     } else {
-      print("else");
       nextPage();
     }
   }

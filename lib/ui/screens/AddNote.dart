@@ -76,7 +76,6 @@ class _AddNoteState extends State<AddNote> {
                         child: Button(
                           FlutterI18n.translate(context, "send"),
                           () {
-                            print("button addnote");
                             provider.addNote(note);
                             Navigator.of(context).pop();
                           },
