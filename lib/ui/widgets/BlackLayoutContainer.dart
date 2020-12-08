@@ -92,6 +92,17 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                                         left: 12.0, right: 18.0),
                                     child: Hero(
                                       tag: "inlineTitle",
+                                      flightShuttleBuilder: (
+                                        BuildContext flightContext,
+                                        Animation<double> animation,
+                                        HeroFlightDirection flightDirection,
+                                        BuildContext fromHeroContext,
+                                        BuildContext toHeroContext,
+                                      ) =>
+                                          Material(
+                                        color: Colors.transparent,
+                                        child: toHeroContext.widget,
+                                      ),
                                       child: SizedBox(
                                         child: Text(
                                           widget.inlineTitle,
@@ -100,6 +111,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                                             fontSize: 24,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
+                                            fontFamily: "Muli",
                                           ),
                                         ),
                                       ),

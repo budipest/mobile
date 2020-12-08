@@ -66,21 +66,18 @@ class NoteList extends StatelessWidget {
       }
     });
 
-    return Hero(
-      tag: "notelist",
-      child: Padding(
-        padding: EdgeInsets.only(top: 0, left: 20, right: 20),
-        child: Column(
-          children: <Widget>[
-            ...toilet.notes.map(
-              (Note note) => NoteCard(
-                note,
-                isMine: note.userId == userId,
-                removeHandler: () => removeNote(context),
-              ),
+    return Padding(
+      padding: EdgeInsets.only(top: 0, left: 20, right: 20),
+      child: Column(
+        children: <Widget>[
+          ...toilet.notes.map(
+            (Note note) => NoteCard(
+              note,
+              isMine: note.userId == userId,
+              removeHandler: () => removeNote(context),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

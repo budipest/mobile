@@ -130,38 +130,41 @@ class Home extends StatelessWidget {
                   height: 50.0,
                   child: AnimatedBuilder(
                     animation: _notifier,
-                    builder: (context, _) => RawMaterialButton(
-                      shape: CircleBorder(),
-                      fillColor: _notifier.value > 0.99
-                          ? Colors.white
-                          : _selectedToilet != null
+                    builder: (context, _) => Hero(
+                      tag: "materialCloseButton",
+                      child: RawMaterialButton(
+                        shape: CircleBorder(),
+                        fillColor: _notifier.value > 0.99
+                            ? Colors.white
+                            : _selectedToilet != null
+                                ? Colors.black
+                                : Colors.white,
+                        elevation: 5.0,
+                        child: Icon(
+                          _notifier.value > 0.99
+                              ? Icons.close
+                              : _selectedToilet != null
+                                  ? Icons.close
+                                  : Icons.menu,
+                          color: _notifier.value > 0.99
                               ? Colors.black
-                              : Colors.white,
-                      elevation: 5.0,
-                      child: Icon(
-                        _notifier.value > 0.99
-                            ? Icons.close
-                            : _selectedToilet != null
-                                ? Icons.close
-                                : Icons.menu,
-                        color: _notifier.value > 0.99
-                            ? Colors.black
-                            : _selectedToilet != null
-                                ? Colors.white
-                                : Colors.black,
-                        size: 30.0,
-                      ),
-                      onPressed: () {
-                        if (_selectedToilet != null) {
-                          _toiletProvider.selectToilet(null);
-                        } else {
-                          if (_notifier.value > 0.99) {
-                            _pc.close();
+                              : _selectedToilet != null
+                                  ? Colors.white
+                                  : Colors.black,
+                          size: 30.0,
+                        ),
+                        onPressed: () {
+                          if (_selectedToilet != null) {
+                            _toiletProvider.selectToilet(null);
                           } else {
-                            _scaffoldKey.currentState.openDrawer();
+                            if (_notifier.value > 0.99) {
+                              _pc.close();
+                            } else {
+                              _scaffoldKey.currentState.openDrawer();
+                            }
                           }
-                        }
-                      },
+                        },
+                      ),
                     ),
                   ),
                 ),

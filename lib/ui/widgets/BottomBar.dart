@@ -135,17 +135,31 @@ class BottomBar extends StatelessWidget {
                       ),
                       child: Hero(
                         tag: "inlineTitle",
-                        child: Text(
-                          hasSelected
-                              ? selectedToilet.name
-                              : FlutterI18n.translate(
-                                  context,
-                                  "recommendedToilet",
-                                ),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                        flightShuttleBuilder: (
+                          BuildContext flightContext,
+                          Animation<double> animation,
+                          HeroFlightDirection flightDirection,
+                          BuildContext fromHeroContext,
+                          BuildContext toHeroContext,
+                        ) =>
+                            Material(
+                          color: Colors.transparent,
+                          child: toHeroContext.widget,
+                        ),
+                        child: SizedBox(
+                          child: Text(
+                            hasSelected
+                                ? selectedToilet.name
+                                : FlutterI18n.translate(
+                                    context,
+                                    "recommendedToilet",
+                                  ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Muli",
+                            ),
                           ),
                         ),
                       ),

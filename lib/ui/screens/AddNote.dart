@@ -62,6 +62,17 @@ class _AddNoteState extends State<AddNote> {
                     children: <Widget>[
                       Hero(
                         tag: "addNoteButton",
+                        flightShuttleBuilder: (
+                          BuildContext flightContext,
+                          Animation<double> animation,
+                          HeroFlightDirection flightDirection,
+                          BuildContext fromHeroContext,
+                          BuildContext toHeroContext,
+                        ) =>
+                            Material(
+                          color: Colors.transparent,
+                          child: toHeroContext.widget,
+                        ),
                         child: Button(
                           FlutterI18n.translate(context, "send"),
                           () {
