@@ -30,10 +30,10 @@ class _AddNoteState extends State<AddNote> {
       inlineTitle: toilet.name,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 45, 20, 20),
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
