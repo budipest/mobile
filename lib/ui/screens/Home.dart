@@ -21,16 +21,21 @@ class Home extends StatelessWidget {
   void onBottomBarDrag(double val, bool hasSelected) {
     _notifier.value = val;
 
-    if (val < 0.8) {
-      if (hasSelected) {
-        if (val < 0.15) {
-          _pc.animatePanelToPosition(0.15);
-        }
-      } else {
-        if (val < 0.3) {
-          _pc.animatePanelToPosition(0.3);
-        }
+    if (val < 0.4) {
+      if (!_pc.isPanelAnimating && hasSelected && val < 0.2) {
+        _pc.animatePanelToPosition(
+          0.15,
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+        );
+      } else if (!_pc.isPanelAnimating && !hasSelected && val < 0.4) {
+        _pc.animatePanelToPosition(
+          0.3,
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+        );
       }
+
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark,
       );
@@ -43,13 +48,23 @@ class Home extends StatelessWidget {
 
   void animateForSelection(Toilet selectedToilet) {
     if (selectedToilet == null) {
-      if (_notifier.value < 0.5) _pc.animatePanelToPosition(0.15);
+      if (_notifier.value < 0.5)
+        _pc.animatePanelToPosition(
+          0.15,
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+        );
     } else {
       _mapKey.currentState.animateToLocation(
         selectedToilet.latitude,
         selectedToilet.longitude,
       );
-      if (_notifier.value < 0.5) _pc.animatePanelToPosition(0.3);
+      if (_notifier.value < 0.5)
+        _pc.animatePanelToPosition(
+          0.3,
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+        );
     }
   }
 
@@ -85,9 +100,11 @@ class Home extends StatelessWidget {
               onPanelSlide: (double val) =>
                   onBottomBarDrag(val, _selectedToilet == null),
               body: MapWidget(
-                onMapCreated: () {
-                  _pc.animatePanelToPosition(0.15);
-                },
+                onMapCreated: () => _pc.animatePanelToPosition(
+                  0.15,
+                  duration: Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                ),
                 key: _mapKey,
               ),
             ),
