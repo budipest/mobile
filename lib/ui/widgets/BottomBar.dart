@@ -34,7 +34,7 @@ class BottomBar extends StatelessWidget {
   }
 
   void _tooFarNavigate(BuildContext context, Toilet toilet) {
-    final provider = Provider.of<ToiletModel>(context);
+    final provider = Provider.of<ToiletModel>(context, listen: false);
 
     int index = provider.toilets.indexOf(provider.selectedToilet);
 
@@ -260,7 +260,7 @@ class BottomBar extends StatelessWidget {
                           Expanded(
                             child: Button(
                               FlutterI18n.translate(context, "directions"),
-                              () async {
+                              () {
                                 if (selectedToilet.distance < 10000) {
                                   _navigate(selectedToilet);
                                 } else {
