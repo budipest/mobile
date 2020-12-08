@@ -22,15 +22,15 @@ class Home extends StatelessWidget {
     _notifier.value = val;
 
     if (val < 0.4) {
-      if (!_pc.isPanelAnimating && hasSelected && val < 0.2) {
+      if (!_pc.isPanelAnimating && hasSelected && val < 0.45) {
         _pc.animatePanelToPosition(
-          0.15,
+          0.3,
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         );
-      } else if (!_pc.isPanelAnimating && !hasSelected && val < 0.4) {
+      } else if (!_pc.isPanelAnimating && !hasSelected && val < 0.225) {
         _pc.animatePanelToPosition(
-          0.3,
+          0.15,
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         );
@@ -97,8 +97,10 @@ class Home extends StatelessWidget {
                   sc,
                 ),
               ),
-              onPanelSlide: (double val) =>
-                  onBottomBarDrag(val, _selectedToilet == null),
+              onPanelSlide: (double val) => onBottomBarDrag(
+                val,
+                _selectedToilet != null,
+              ),
               body: MapWidget(
                 onMapCreated: () => _pc.animatePanelToPosition(
                   0.15,
