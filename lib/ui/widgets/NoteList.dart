@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../core/models/Note.dart';
 import '../../core/providers/ToiletModel.dart';
 import '../../core/models/Toilet.dart';
+import 'CardTemplate.dart';
 import 'NoteCard.dart';
 
 class NoteList extends StatelessWidget {
@@ -66,18 +67,65 @@ class NoteList extends StatelessWidget {
       }
     });
 
-    return Padding(
-      padding: EdgeInsets.only(top: 0, left: 20, right: 20),
-      child: Column(
-        children: <Widget>[
-          ...toilet.notes.map(
-            (Note note) => NoteCard(
-              note,
-              isMine: note.userId == userId,
-              removeHandler: () => removeNote(context),
-            ),
-          ),
-        ],
+    return Hero(
+      tag: "noteList",
+      flightShuttleBuilder: (
+        BuildContext flightContext,
+        Animation<double> animation,
+        HeroFlightDirection flightDirection,
+        BuildContext fromHeroContext,
+        BuildContext toHeroContext,
+      ) =>
+          Material(
+        color: Colors.transparent,
+        child: toHeroContext.widget,
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(top: 0, left: 20, right: 20),
+        child: toilet.notes.length > 0
+            ? Column(
+                children: <Widget>[
+                  ...toilet.notes.map(
+                    (Note note) => NoteCard(
+                      note,
+                      isMine: note.userId == userId,
+                      removeHandler: () => removeNote(context),
+                    ),
+                  ),
+                ],
+              )
+            : Container(
+                child: CardTemplate(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          FlutterI18n.translate(context, "empty.notes-title"),
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Container(height: 8),
+                        Text(
+                          FlutterI18n.translate(
+                              context, "empty.notes-description"),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                    gradient: LinearGradient(
+                      stops: [0],
+                      colors: [Colors.grey[100]],
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 25, vertical: 25)),
+              ),
       ),
     );
   }

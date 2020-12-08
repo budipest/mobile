@@ -17,7 +17,7 @@ class CardTemplate extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
-          Radius.circular(3.0),
+          Radius.circular(5.0),
         ),
         gradient: gradient,
       ),

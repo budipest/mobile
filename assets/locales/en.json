@@ -69,6 +69,10 @@
     "toiletPaper": "Buy us a roll of toilet paper!",
     "paypal": "Donate via PayPal"
   },
+  "empty": {
+    "notes-title": "There are no notes yet.",
+    "notes-description": "Share your personal review or other useful details about the toilet in a note."
+  },
   "error": {
     "title": "Something stinks in here...",
     "location": "We can't find you. Or at least we don't know where you at. Maybe you declined the location permissions?",
