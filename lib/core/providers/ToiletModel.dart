@@ -15,7 +15,7 @@ class ToiletModel extends ChangeNotifier {
 
   // toilets
   List<Toilet> _toilets = new List<Toilet>();
-  Toilet _selected;
+  Toilet _selected;  
 
   // user-related getters
   LocationData get location => _userLocation;
@@ -125,7 +125,7 @@ class ToiletModel extends ChangeNotifier {
 
   Future<void> addNote(String note) async {
     if (note.length < 3) {
-      // TOOD: warn user in SnackBar
+      // TODO: warn user in SnackBar
       return;
     }
 

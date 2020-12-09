@@ -30,7 +30,7 @@ class BottomBar extends StatelessWidget {
     } else {
       print("error while launching $url");
       // error in launching map
-      // TOOD: handle error
+      // TODO: handle error
     }
   }
 

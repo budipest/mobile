@@ -244,7 +244,7 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
               ),
       ];
 
-    // TOOD: investigate this thing
+    // TODO: investigate this thing
     case "_closed":
       return [
         FlutterI18n.translate(context, "closed") + " ",

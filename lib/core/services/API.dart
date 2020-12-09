@@ -27,7 +27,7 @@ class API {
           .map<Toilet>((toiletRaw) => Toilet.fromMap(Map.from(toiletRaw)))
           .toList();
     } catch (error) {
-      // TOOD: warn user in SnackBar
+      // TODO: warn user in SnackBar
       print(error);
     }
 
@@ -43,7 +43,7 @@ class API {
 
       data = Toilet.fromMap(body);
     } catch (error) {
-      // TOOD: warn user in SnackBar
+      // TODO: warn user in SnackBar
       print(error);
     }
 
@@ -62,7 +62,7 @@ class API {
 
       body = json.decode(response.body);
     } catch (error) {
-      // TOOD: warn user in SnackBar
+      // TODO: warn user in SnackBar
       print(error);
     }
 
@@ -87,7 +87,7 @@ class API {
 
       data = Toilet.fromMap(body);
     } catch (error) {
-      // TOOD: warn user in SnackBar
+      // TODO: warn user in SnackBar
       print(error);
     }
 
@@ -112,7 +112,7 @@ class API {
 
       data = Toilet.fromMap(body);
     } catch (error) {
-      // TOOD: warn user in SnackBar
+      // TODO: warn user in SnackBar
       print(error);
     }
 
@@ -132,7 +132,7 @@ class API {
 
       data = Toilet.fromMap(body);
     } catch (error) {
-      // TOOD: warn user in SnackBar
+      // TODO: warn user in SnackBar
       print(error);
     }
 
