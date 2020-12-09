@@ -89,11 +89,7 @@ class Home extends StatelessWidget {
         body: Stack(
           children: [
             ErrorProvider(),
-            Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              ),
-            )
+            Center(child: CircularProgressIndicator())
           ],
         ),
       );
