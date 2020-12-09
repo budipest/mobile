@@ -22,9 +22,13 @@ class OpenHourRow extends StatefulWidget {
 class _OpenHourRowState extends State<OpenHourRow> {
   @override
   Widget build(BuildContext context) {
-    String day = days[(widget.index / 2).floor()];
+    String day = FlutterI18n.translate(
+      context,
+      days[(widget.index / 2).floor()],
+    );
     bool isOn = widget.openHours[widget.index] != 0 ||
         widget.openHours[widget.index + 1] != 0;
+
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Row(

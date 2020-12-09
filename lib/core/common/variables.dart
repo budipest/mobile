@@ -15,7 +15,15 @@ final Map<int, Color> color = {
 
 final MaterialColor black = MaterialColor(0xFF000000, color);
 
-List<String> days = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
+List<String> days = [
+  "days.monday",
+  "days.tuesday",
+  "days.wednesday",
+  "days.thursday",
+  "days.friday",
+  "days.saturday",
+  "days.sunday",
+];
 
 List<int> possibleOpenHours = [
   0,

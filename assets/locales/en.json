@@ -47,13 +47,16 @@
   "code": "CODE",
   "openHours": "Opening hours",
   "alwaysOpen": "Open 24/7",
-  "monday": "M",
-  "tuesday": "Tu",
-  "wednesday": "W",
-  "thursday": "Th",
-  "friday": "F",
-  "saturday": "Sat",
-  "sunday": "Sun",
+  "days": {
+    "monday": "M",
+    "tuesday": "Tu",
+    "wednesday": "W",
+    "thursday": "Th",
+    "friday": "F",
+    "saturday": "Sat",
+    "sunday": "Sun"
+  },
+
   "services": "Services",
   "accessible": "wheelchair accessible",
   "babyRoom": "baby room",
