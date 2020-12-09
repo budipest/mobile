@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -15,7 +16,11 @@ class ToiletModel extends ChangeNotifier {
 
   // toilets
   List<Toilet> _toilets = new List<Toilet>();
-  Toilet _selected;  
+  Toilet _selected;
+
+  // errors
+  String _appError;
+  BuildContext _globalContext;
 
   // user-related getters
   LocationData get location => _userLocation;
@@ -30,6 +35,12 @@ class ToiletModel extends ChangeNotifier {
   Toilet get selectedToilet => _selected;
   bool get loaded => _toilets.length > 0;
 
+  // error getters
+  String get appError => _appError;
+  set globalContext(BuildContext context) {
+    _globalContext = context;
+  }
+
   ToiletModel() {
     API.init();
     initLocation();
@@ -39,7 +50,15 @@ class ToiletModel extends ChangeNotifier {
   void initLocation() async {
     await checkLocationPermission();
 
-    final toilets = await API.getToilets();
+    List<Toilet> toilets;
+
+    try {
+      toilets = await API.getToilets();
+    } catch (error) {
+      _appError = FlutterI18n.translate(_globalContext, "error.data");
+      notifyListeners();
+      return;
+    }
 
     toilets.forEach((item) {
       _toilets.add(item);
@@ -83,7 +102,8 @@ class ToiletModel extends ChangeNotifier {
     if (!_serviceEnabled) {
       _serviceEnabled = await _location.requestService();
       if (!_serviceEnabled) {
-        print("does not have service enabled");
+        _appError = FlutterI18n.translate(_globalContext, "error.location");
+        notifyListeners();
       }
     }
 
@@ -91,13 +111,21 @@ class ToiletModel extends ChangeNotifier {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await _location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        print("denied permission");
+        _appError = FlutterI18n.translate(_globalContext, "error.location");
+        notifyListeners();
       }
     }
   }
 
   Future<void> addToilet(Toilet item) async {
-    final Toilet addedToilet = await API.addToilet(item);
+    Toilet addedToilet;
+    try {
+      addedToilet = await API.addToilet(item);
+    } catch (error) {
+      print(error);
+      showErrorSnackBar("error.onServer");
+    }
+
     _toilets.add(addedToilet);
     selectToilet(addedToilet);
   }
@@ -108,8 +136,15 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> voteToilet(int vote) async {
-    final Toilet updatedToilet =
-        await API.voteToilet(_selected.id, _userId, vote);
+    Toilet updatedToilet;
+
+    try {
+      updatedToilet = await API.voteToilet(_selected.id, _userId, vote);
+    } catch (error) {
+      print(error);
+      showErrorSnackBar("error.onServer");
+    }
+
     final int index = _toilets.indexOf(_selected);
 
     updatedToilet.calculateDistance(
@@ -124,12 +159,15 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> addNote(String note) async {
-    if (note.length < 3) {
-      // TODO: warn user in SnackBar
-      return;
+    Toilet updatedToilet;
+
+    try {
+      updatedToilet = await API.addNote(_selected.id, _userId, note);
+    } catch (error) {
+      print(error);
+      showErrorSnackBar("error.onServer");
     }
 
-    final Toilet updatedToilet = await API.addNote(_selected.id, _userId, note);
     final int index = _toilets.indexOf(_selected);
 
     updatedToilet.calculateDistance(
@@ -144,7 +182,15 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> removeNote() async {
-    final Toilet updatedToilet = await API.removeNote(_selected.id, _userId);
+    Toilet updatedToilet;
+
+    try {
+      updatedToilet = await API.removeNote(_selected.id, _userId);
+    } catch (error) {
+      print(error);
+      showErrorSnackBar("error.onServer");
+    }
+
     final int index = _toilets.indexOf(_selected);
 
     updatedToilet.calculateDistance(
@@ -156,5 +202,18 @@ class ToiletModel extends ChangeNotifier {
     _selected = updatedToilet;
 
     notifyListeners();
+  }
+
+  void showErrorSnackBar(String errorCode) {
+    Scaffold.of(_globalContext).showSnackBar(
+      SnackBar(
+        content: Text(
+          FlutterI18n.translate(_globalContext, errorCode),
+        ),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 }

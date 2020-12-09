@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ErrorProvider.dart';
 
 class BlackLayoutContainer extends StatefulWidget {
   BlackLayoutContainer({
@@ -46,6 +47,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
       floatingActionButton: widget.fab,
       body: Stack(
         children: <Widget>[
+          ErrorProvider(),
           Padding(
             padding: EdgeInsets.only(
               top: height,

@@ -76,6 +76,7 @@
   "error": {
     "title": "Itt valami bűzlik...",
     "location": "Nem találunk téged, és nem tudjuk hogy hol vagy, nem működik az app. Lehet hogy nem adtál nekünk engedélyt erre?",
-    "data": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?"
+    "data": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?",
+    "onServer": "A szerverünknél mostanában nem megy le a WC, emiatt picit elfoglalt. Kérjük, próbáld újra később!"
   }
 }

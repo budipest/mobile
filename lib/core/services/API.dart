@@ -17,54 +17,29 @@ class API {
   }
 
   static Future<List<Toilet>> getToilets() async {
-    List<Toilet> data;
+    final response = await client.get('$url/toilets');
+    final body = json.decode(response.body)["data"];
 
-    try {
-      final response = await client.get('$url/toilets');
-      final body = json.decode(response.body)["data"];
-
-      data = body
-          .map<Toilet>((toiletRaw) => Toilet.fromMap(Map.from(toiletRaw)))
-          .toList();
-    } catch (error) {
-      // TODO: warn user in SnackBar
-      print(error);
-    }
-
-    return data;
+    return body
+        .map<Toilet>((toiletRaw) => Toilet.fromMap(Map.from(toiletRaw)))
+        .toList();
   }
 
   static Future<Toilet> getToilet(String id) async {
-    Toilet data;
+    final response = await client.get('$url/toilets/$id');
+    final body = json.decode(response.body);
 
-    try {
-      final response = await client.get('$url/toilets/$id');
-      final body = json.decode(response.body);
-
-      data = Toilet.fromMap(body);
-    } catch (error) {
-      // TODO: warn user in SnackBar
-      print(error);
-    }
-
-    return data;
+    return Toilet.fromMap(body);
   }
 
   static Future<Toilet> addToilet(Toilet toilet) async {
-    dynamic body;
+    final response = await client.post(
+      '$url/toilets',
+      headers: _defaultHeaders,
+      body: utf8.encode(json.encode(toilet.toJson())),
+    );
 
-    try {
-      final response = await client.post(
-        '$url/toilets',
-        headers: _defaultHeaders,
-        body: utf8.encode(json.encode(toilet.toJson())),
-      );
-
-      body = json.decode(response.body);
-    } catch (error) {
-      // TODO: warn user in SnackBar
-      print(error);
-    }
+    final body = json.decode(response.body)["toilet"];
 
     return Toilet.fromMap(body);
   }
@@ -74,24 +49,15 @@ class API {
     String userId,
     int vote,
   ) async {
-    Toilet data;
+    final response = await client.post(
+      '$url/toilets/$toiletId/votes/$userId',
+      headers: _defaultHeaders,
+      body: utf8.encode(json.encode({"vote": vote})),
+    );
 
-    try {
-      final response = await client.post(
-        '$url/toilets/$toiletId/votes/$userId',
-        headers: _defaultHeaders,
-        body: utf8.encode(json.encode({"vote": vote})),
-      );
+    final body = json.decode(response.body)["toilet"];
 
-      final body = json.decode(response.body)["toilet"];
-
-      data = Toilet.fromMap(body);
-    } catch (error) {
-      // TODO: warn user in SnackBar
-      print(error);
-    }
-
-    return data;
+    return Toilet.fromMap(body);
   }
 
   static Future<Toilet> addNote(
@@ -99,43 +65,25 @@ class API {
     String userId,
     String note,
   ) async {
-    Toilet data;
+    final response = await client.post(
+      '$url/toilets/$toiletId/notes/$userId',
+      headers: _defaultHeaders,
+      body: utf8.encode(json.encode({"note": note})),
+    );
 
-    try {
-      final response = await client.post(
-        '$url/toilets/$toiletId/notes/$userId',
-        headers: _defaultHeaders,
-        body: utf8.encode(json.encode({"note": note})),
-      );
+    final body = json.decode(response.body)["toilet"];
 
-      final body = json.decode(response.body)["toilet"];
-
-      data = Toilet.fromMap(body);
-    } catch (error) {
-      // TODO: warn user in SnackBar
-      print(error);
-    }
-
-    return data;
+    return Toilet.fromMap(body);
   }
 
   static Future<Toilet> removeNote(String toiletId, String userId) async {
-    Toilet data;
+    final response = await client.delete(
+      '$url/toilets/$toiletId/notes/$userId',
+      headers: _defaultHeaders,
+    );
 
-    try {
-      final response = await client.delete(
-        '$url/toilets/$toiletId/notes/$userId',
-        headers: _defaultHeaders,
-      );
+    final body = json.decode(response.body)["toilet"];
 
-      final body = json.decode(response.body)["toilet"];
-
-      data = Toilet.fromMap(body);
-    } catch (error) {
-      // TODO: warn user in SnackBar
-      print(error);
-    }
-
-    return data;
+    return Toilet.fromMap(body);
   }
 }
