@@ -34,6 +34,7 @@ class _AddToiletState extends State<AddToilet> {
   bool hasEUR = false;
 
   List<int> openHours = new List<int>.filled(14, 0);
+  bool isNonStop = false;
 
   List<Tag> tags = new List<Tag>();
 
@@ -84,6 +85,12 @@ class _AddToiletState extends State<AddToilet> {
   void onOpenHoursChanged(List<int> hours) {
     setState(() {
       openHours = hours;
+    });
+  }
+
+  void onNonStopChanged(bool nonStop) {
+    setState(() {
+      isNonStop = nonStop;
     });
   }
 
@@ -140,7 +147,7 @@ class _AddToiletState extends State<AddToilet> {
         name,
         provider.userId,
         category,
-        openHours,
+        isNonStop ? [0, 1440] : openHours,
         tags,
         entryMethod,
         price,
@@ -210,7 +217,12 @@ class _AddToiletState extends State<AddToilet> {
             hasEUR,
             toggleEUR,
           ),
-          AddToiletOpenHours(onOpenHoursChanged, openHours),
+          AddToiletOpenHours(
+            onOpenHoursChanged,
+            onNonStopChanged,
+            openHours,
+            isNonStop,
+          ),
           AddToiletTags(onTagToggled, tags),
         ],
       ),

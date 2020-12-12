@@ -8,11 +8,17 @@ class OpenHourRow extends StatefulWidget {
   OpenHourRow(
     this.onChange,
     this.openHours,
+    this.lastEditedDayStartIndex,
+    this.lastEditedOpening,
+    this.lastEditedClosing,
     this.index,
   );
 
   final Function onChange;
   final List<int> openHours;
+  final int lastEditedDayStartIndex;
+  final int lastEditedOpening;
+  final int lastEditedClosing;
   final int index;
 
   @override
@@ -26,6 +32,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
       context,
       days[(widget.index / 2).floor()],
     );
+
     bool isOn = widget.openHours[widget.index] != 0 ||
         widget.openHours[widget.index + 1] != 0;
 
@@ -40,26 +47,23 @@ class _OpenHourRowState extends State<OpenHourRow> {
             activeColor: Colors.grey[300],
             onChanged: (bool value) {
               if (value == true) {
-                if (widget.index != 0) {
-                  widget.openHours[widget.index] =
-                      widget.openHours[widget.index - 2];
-                  widget.openHours[widget.index + 1] =
-                      widget.openHours[widget.index - 1];
+                if (widget.lastEditedDayStartIndex == -1) {
+                  widget.openHours[widget.index] = 0;
+                  widget.openHours[widget.index + 1] = 15;
                 } else {
-                  widget.openHours[0] = 0;
-                  widget.openHours[1] = 15;
+                  widget.openHours[widget.index] = widget.lastEditedOpening;
+                  widget.openHours[widget.index + 1] = widget.lastEditedClosing;
                 }
-                setState(() {
-                  isOn = true;
-                });
               } else {
                 widget.openHours[widget.index] = 0;
                 widget.openHours[widget.index + 1] = 0;
-                setState(() {
-                  isOn = false;
-                });
               }
-              widget.onChange(widget.openHours);
+
+              setState(() {
+                isOn = value;
+              });
+
+              widget.onChange(widget.openHours, widget.index);
             },
           ),
           Container(
@@ -140,7 +144,8 @@ class _OpenHourRowState extends State<OpenHourRow> {
                                 underline: Container(height: 0),
                                 onChanged: (int newValue) {
                                   widget.openHours[widget.index + 1] = newValue;
-                                  widget.onChange(widget.openHours);
+                                  widget.onChange(
+                                      widget.openHours, widget.index);
                                 },
                                 items: possibleOpenHours
                                     .map<DropdownMenuItem<int>>((int value) {
