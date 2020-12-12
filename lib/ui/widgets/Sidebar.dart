@@ -1,66 +1,93 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
+      child: Column(
         children: <Widget>[
-          DrawerHeader(
-            child: Stack(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        FlutterI18n.translate(context, "title"),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        'v2.0.0',
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  ),
-                ),
-              ],
+          Container(
+            padding: EdgeInsets.only(
+              top: (MediaQuery.of(context).padding.top + 60),
+              right: 20,
+              bottom: 30,
+              left: 20,
             ),
-            decoration: BoxDecoration(
-              color: Colors.black,
+            margin: EdgeInsets.only(bottom: 20),
+            color: Colors.black,
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    FlutterI18n.translate(context, "title"),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'v2.0.0',
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
             ),
           ),
           Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    title: Text(FlutterI18n.translate(context, "addToilet")),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/addToilet');
-                      Scaffold.of(context).openEndDrawer();
-                    },
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(FlutterI18n.translate(context, "addToilet")),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/addToilet');
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                ),
+                ListTile(
+                  title: Text(FlutterI18n.translate(context, "aboutUs.title")),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/about');
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                ),
+              ],
+            ),
+          ),
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 20,
+              bottom: (MediaQuery.of(context).padding.bottom + 15),
+            ),
+            child: ListTile(
+              title: Row(
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/logo-white.svg",
+                    width: 25,
+                    color: Colors.grey,
                   ),
-                  ListTile(
-                    title:
-                        Text(FlutterI18n.translate(context, "aboutUs.title")),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/about');
-                      Scaffold.of(context).openEndDrawer();
-                    },
+                  Container(width: 10),
+                  Text(
+                    "circa 2018",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
-              ))
+              ),
+            ),
+          ),
         ],
       ),
     );

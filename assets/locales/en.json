@@ -70,8 +70,12 @@
     "opensource": "This project was made with Flutter and is open-source.",
     "github": "Open GitHub repository",
     "toiletPaper": "Buy us a roll of toilet paper!",
-    "paypal": "Donate via PayPal"
+    "toiletPaper-description": "Support the costs of server upkeep and the further development of this terrific app. Or don't. We won't judge you.",
+    "team": "The Team",
+    "accountNumber": "Account number: 10402764-86767651-74521001",
+    "recipient": "Recipient: Gergely Dániel, K&H Bank"
   },
+  "copied": "Text copied to clipboard!",
   "empty": {
     "notes-title": "There are no notes yet.",
     "notes-description": "Share your personal review or other useful details about the toilet in a note."

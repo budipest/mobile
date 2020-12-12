@@ -95,37 +95,34 @@ class NoteList extends StatelessWidget {
                   ),
                 ],
               )
-            : Container(
-                child: CardTemplate(
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          FlutterI18n.translate(context, "empty.notes-title"),
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Container(height: 8),
-                        Text(
-                          FlutterI18n.translate(
-                              context, "empty.notes-description"),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
+            : CardTemplate(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      FlutterI18n.translate(context, "empty.notes-title"),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    gradient: LinearGradient(
-                      stops: [0],
-                      colors: [Colors.grey[100]],
+                    Container(height: 8),
+                    Text(
+                      FlutterI18n.translate(context, "empty.notes-description"),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.grey[600],
+                      ),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 25, vertical: 25)),
+                  ],
+                ),
+                gradient: LinearGradient(
+                  stops: [0],
+                  colors: [Colors.grey[100]],
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
               ),
       ),
     );

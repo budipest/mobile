@@ -70,8 +70,13 @@
     "opensource": "A projektet Flutter-rel készítettük, az alkalmazás pedig nyílt forráskódú.",
     "github": "GitHub repo megnyitása",
     "toiletPaper": "Vegyél nekünk WC papírt!",
-    "paypal": "Adományozás PayPal-lal"
+    "toiletPaper-description": "Támogasd a továbbfejlesztését és a szerverköltségeit ennek az appnak. Vagy ne. Mi nem ítélkezünk.",
+    "team": "A Csapat",
+    "paypal": "Adományozás PayPal-lal",
+    "accountNumber": "Számlaszám: 10402764-86767651-74521001",
+    "recipient": "Számlavezető neve: Gergely Dániel, K&H Bank"
   },
+  "copied": "Szöveg kimásolva a vágólapra!",
   "empty": {
     "notes-title": "Még nincsenek megjegyzések.",
     "notes-description": "Oszd meg a személyes tapasztalataidat vagy egyéb hasznos információkat másokkal egy megjegyzésben."

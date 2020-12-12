@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// import 'button.dart';
+import 'Button.dart';
 
 class PersonCard extends StatelessWidget {
   PersonCard(
@@ -18,35 +18,33 @@ class PersonCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 8.0),
+          padding: EdgeInsets.only(top: 12, bottom: 8),
           child: Text(
             text,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
+            ),
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             ...links.entries.map(
-              (link) =>
-                  // Button(
-                  //   link.key,
-                  //   () async {
-                  //     if (await canLaunch(link.value)) {
-                  //       await launch(link.value);
-                  //     }
-                  //   },
-                  //   isBordered: true,
-                  //   isMini: true,
-                  // ),
-
-                  InkWell(
-                child: Text(link.key),
-                onTap: () async {
-                  if (await canLaunch(link.value)) {
-                    await launch(link.value);
-                  }
-                },
+              (link) => Container(
+                margin: EdgeInsets.only(right: 8),
+                child: Button(
+                  link.key,
+                  () async {
+                    if (await canLaunch(link.value)) {
+                      await launch(link.value);
+                    }
+                  },
+                  backgroundColor: Colors.grey[700],
+                  foregroundColor: Colors.white,
+                  isBordered: false,
+                  isMini: true,
+                ),
               ),
             ),
           ],
