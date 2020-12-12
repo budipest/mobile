@@ -78,7 +78,7 @@ class Sidebar extends StatelessWidget {
                   ),
                   Container(width: 10),
                   Text(
-                    "circa 2018",
+                    "anno 2018",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
