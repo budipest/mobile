@@ -68,24 +68,23 @@ class Sidebar extends StatelessWidget {
               right: 20,
               bottom: (MediaQuery.of(context).padding.bottom + 15),
             ),
-            child: ListTile(
-              title: Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/icons/logo-white.svg",
-                    width: 25,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  "assets/icons/logo-white.svg",
+                  width: 25,
+                  color: Colors.grey,
+                ),
+                Container(width: 10),
+                Text(
+                  "since 2018",
+                  style: TextStyle(
+                    fontSize: 16,
                     color: Colors.grey,
                   ),
-                  Container(width: 10),
-                  Text(
-                    "anno 2018",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
