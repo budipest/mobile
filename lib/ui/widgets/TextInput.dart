@@ -103,6 +103,7 @@ class _TextInputState extends State<TextInput> {
                     color: widget.isDark ? Colors.grey[600] : Colors.grey[700],
                   ),
                 ),
+                autocorrect: false,
                 onChanged: widget.onTextChanged,
                 controller: _textEditingController,
               ),
