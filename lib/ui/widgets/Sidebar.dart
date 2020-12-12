@@ -14,7 +14,7 @@ class Sidebar extends StatelessWidget {
               top: (MediaQuery.of(context).padding.top + 60),
               right: 20,
               bottom: 30,
-              left: 20,
+              left: 25,
             ),
             margin: EdgeInsets.only(bottom: 20),
             color: Colors.black,
