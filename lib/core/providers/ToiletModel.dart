@@ -118,16 +118,24 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> addToilet(Toilet item) async {
+    print("model bef addtoilet");
     Toilet addedToilet;
+
     try {
+      print("model bef api");
       addedToilet = await API.addToilet(item);
+      print("model aft api");
     } catch (error) {
       print(error);
       showErrorSnackBar("error.onServer");
     }
 
+    print("model aft try");
+
     _toilets.add(addedToilet);
     selectToilet(addedToilet);
+
+    print("model aft everything");
   }
 
   void selectToilet(Toilet item) {

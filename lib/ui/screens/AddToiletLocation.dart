@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../core/common/bitmapFromSvg.dart';
@@ -61,6 +62,7 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
 
     setState(() {
       _mapController = controller;
+      markers = <MarkerId, Marker>{};
       markers[id] = _marker;
       _animateToLocation();
       _getFileData('assets/light_mode.json').then(_setMapStyle);
@@ -69,24 +71,50 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(
-        target: LatLng(
-          widget.location.latitude,
-          widget.location.longitude,
+    return Stack(
+      children: [
+        GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(
+              widget.location.latitude,
+              widget.location.longitude,
+            ),
+            zoom: 16.0,
+          ),
+          compassEnabled: true,
+          mapType: MapType.normal,
+          rotateGesturesEnabled: true,
+          scrollGesturesEnabled: true,
+          tiltGesturesEnabled: false,
+          zoomGesturesEnabled: true,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
+          markers: Set<Marker>.of(markers.values),
         ),
-        zoom: 16.0,
-      ),
-      compassEnabled: true,
-      mapType: MapType.normal,
-      rotateGesturesEnabled: true,
-      scrollGesturesEnabled: true,
-      tiltGesturesEnabled: false,
-      zoomGesturesEnabled: true,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: false,
-      markers: Set<Marker>.of(markers.values),
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(45),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 5.0,
+                  offset: Offset(0, 2.5),
+                ),
+              ],
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            margin: EdgeInsets.only(top: 15),
+            child: Text(
+              FlutterI18n.translate(context, "drag-marker"),
+              style: TextStyle(fontSize: 14.0),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

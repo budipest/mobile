@@ -135,9 +135,13 @@ class _AddToiletState extends State<AddToilet> {
   }
 
   void onFABPressed(ToiletModel provider) async {
+    print("onfab");
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
-      var data = Toilet.createNew(
+      print("onfab if");
+      print(provider.userId);
+      Toilet data = Toilet.createNew(
         name,
+        provider.userId,
         category,
         openHours,
         tags,
@@ -147,8 +151,13 @@ class _AddToiletState extends State<AddToilet> {
         location.latitude,
         location.longitude,
       );
+      print(data);
+
+      print("onfab after createnew");
 
       provider.addToilet(data);
+
+      print("onfab after addtoilet");
 
       Navigator.of(context).pop();
     } else {

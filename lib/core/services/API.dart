@@ -33,14 +33,15 @@ class API {
   }
 
   static Future<Toilet> addToilet(Toilet toilet) async {
+    print("api start");
     final response = await client.post(
       '$url/toilets',
       headers: _defaultHeaders,
       body: utf8.encode(json.encode(toilet.toJson())),
     );
-
+    print("api aft res");
     final body = json.decode(response.body)["toilet"];
-
+    print("api aft json");
     return Toilet.fromMap(body);
   }
 

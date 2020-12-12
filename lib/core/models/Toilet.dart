@@ -12,6 +12,7 @@ enum EntryMethod { FREE, CODE, PRICE, CONSUMERS, UNKNOWN }
 
 class Toilet {
   String id;
+  String userId;
   String name;
   DateTime addDate;
   Category category;
@@ -31,62 +32,36 @@ class Toilet {
   int distance = 0;
 
   Toilet(
-    String id,
-    String name,
-    DateTime addDate,
-    Category category,
-    List<int> openHours,
-    List<Tag> tags,
-    EntryMethod entryMethod,
-    Map price,
-    String code,
-    double latitude,
-    double longitude,
-    List<Note> notes,
-    List<Vote> votes,
-  ) {
-    this.id = id;
-    this.name = name;
-    this.addDate = addDate;
-    this.category = category;
-    this.openHours = openHours;
-    this.tags = tags;
-
-    this.entryMethod = entryMethod;
-    this.price = price;
-    this.code = code;
-
-    this.latitude = latitude;
-    this.longitude = longitude;
-
-    this.notes = notes;
-    this.votes = votes;
-  }
+    this.id,
+    this.name,
+    this.userId,
+    this.addDate,
+    this.category,
+    this.openHours,
+    this.tags,
+    this.entryMethod,
+    this.price,
+    this.code,
+    this.latitude,
+    this.longitude,
+    this.notes,
+    this.votes,
+  );
 
   Toilet.createNew(
-    String name,
-    Category category,
-    List<int> openHours,
-    List<Tag> tags,
-    EntryMethod entryMethod,
-    Map price,
-    String code,
-    double latitude,
-    double longitude,
+    this.name,
+    this.userId,
+    this.category,
+    this.openHours,
+    this.tags,
+    this.entryMethod,
+    this.price,
+    this.code,
+    this.latitude,
+    this.longitude,
   ) {
     this.id = "";
-    this.name = name;
     this.addDate = new DateTime.now();
-    this.category = category;
-    this.openHours = openHours;
-    this.tags = tags;
-
-    this.entryMethod = entryMethod;
-    this.price = price;
-    this.code = code;
-
-    this.latitude = latitude;
-    this.longitude = longitude;
 
     this.notes = List<Note>();
     this.votes = List<Vote>();
@@ -95,6 +70,7 @@ class Toilet {
   // Named constructor
   Toilet.origin() {
     name = "";
+    userId = "";
     addDate = new DateTime.now();
     category = Category.GENERAL;
     openHours = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -111,6 +87,7 @@ class Toilet {
 
   Toilet.fromMap(Map raw)
       : id = raw["_id"] ?? "",
+        userId = raw["userId"] ?? "BUDIPEST-DEFAULT",
         name = raw["name"] ?? "",
         latitude = raw["location"]["latitude"] ?? 0.0,
         longitude = raw["location"]["longitude"] ?? 0.0,
@@ -152,6 +129,7 @@ class Toilet {
   Map<String, dynamic> toJson() {
     return {
       "name": name,
+      "userId": userId,
       "addDate": addDate.toString(),
       "category":
           "${category.toString().substring(category.toString().indexOf('.') + 1)}",
