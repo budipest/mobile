@@ -57,12 +57,11 @@ class Home extends StatelessWidget {
           curve: Curves.easeInOut,
         );
     } else {
-      if (_notifier.value < 0.5)
-        _pc.animatePanelToPosition(
-          0.3,
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
-        );
+      _pc.animatePanelToPosition(
+        0.3,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
