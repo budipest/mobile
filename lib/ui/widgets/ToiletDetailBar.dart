@@ -29,8 +29,7 @@ class ToiletDetailBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ToiletModel provider = Provider.of<ToiletModel>(context);
-    final String userId = provider.userId;
+    final String userId = Provider.of<ToiletModel>(context, listen: false).userId;
 
     return Column(
       children: <Widget>[

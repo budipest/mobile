@@ -57,10 +57,6 @@ class Home extends StatelessWidget {
           curve: Curves.easeInOut,
         );
     } else {
-      _mapKey.currentState.animateToLocation(
-        selectedToilet.latitude,
-        selectedToilet.longitude,
-      );
       if (_notifier.value < 0.5)
         _pc.animatePanelToPosition(
           0.3,

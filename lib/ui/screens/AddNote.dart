@@ -22,7 +22,7 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    final ToiletModel provider = Provider.of<ToiletModel>(context);
+    final ToiletModel provider = Provider.of<ToiletModel>(context, listen: false);
     final Toilet toilet = provider.selectedToilet;
 
     return BlackLayoutContainer(

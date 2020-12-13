@@ -178,7 +178,7 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
+    final provider = Provider.of<ToiletModel>(context, listen: false);
 
     return BlackLayoutContainer(
       context: context,

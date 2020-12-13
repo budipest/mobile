@@ -86,4 +86,18 @@ class API {
 
     return Toilet.fromMap(body);
   }
+
+  static Future<String> getRouteCoordinates(
+    double userLat,
+    double userLon,
+    double toiletLat,
+    double toiletLon,
+  ) async {
+    String googleApiKey = "ADD-GCP-API-KEY";
+    String url =
+        "https://maps.googleapis.com/maps/api/directions/json?origin=${userLat},${userLon}&destination=${toiletLat},${toiletLon}&mode=walking&key=$googleApiKey";
+    final response = await http.get(url);
+    Map values = jsonDecode(response.body);
+    return values["routes"][0]["overview_polyline"]["points"];
+  }
 }

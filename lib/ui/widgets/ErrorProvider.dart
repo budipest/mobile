@@ -7,7 +7,7 @@ import '../../core/providers/ToiletModel.dart';
 class ErrorProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
+    final provider = Provider.of<ToiletModel>(context, listen: false);
     provider.globalContext = context;
 
     return Container();

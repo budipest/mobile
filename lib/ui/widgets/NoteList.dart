@@ -59,7 +59,7 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userId = Provider.of<ToiletModel>(context).userId;
+    final String userId = Provider.of<ToiletModel>(context, listen: false).userId;
 
     toilet.notes.forEach((Note note) {
       if (note.userId == userId) {

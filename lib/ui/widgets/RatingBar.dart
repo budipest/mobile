@@ -40,14 +40,14 @@ class RatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
+    final String userId = Provider.of<ToiletModel>(context, listen: false).userId;
 
     int upvotes = 0;
     int downvotes = 0;
     int myVote = 0;
 
     toilet.votes.forEach((Vote vote) {
-      if (vote.userId == provider.userId) {
+      if (vote.userId == userId) {
         myVote = vote.value;
       }
 
