@@ -28,7 +28,7 @@ class GoogleMapsServices {
 
     return Polyline(
       polylineId: PolylineId(LatLng(userLat, userLon).toString()),
-      width: 4,
+      width: 5,
       points: _convertToLatLng(_decodePoly(encodedPoly)),
       color: Colors.black,
     );

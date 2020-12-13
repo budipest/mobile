@@ -169,19 +169,12 @@ class BottomBar extends StatelessWidget {
                       direction: Axis.horizontal,
                       runSpacing: 7.5,
                       children: <Widget>[
-                        ...(hasSelected
-                            ? describeToiletIcons(
-                                selectedToilet,
-                                "dark",
-                                true,
-                                true,
-                              )
-                            : describeToiletIcons(
-                                suggestedToilet,
-                                "dark",
-                                false,
-                                false,
-                              )),
+                        ...describeToiletIcons(
+                          hasSelected ? selectedToilet : suggestedToilet,
+                          "dark",
+                          hasSelected,
+                          hasSelected,
+                        ),
                         if (!hasSelected)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

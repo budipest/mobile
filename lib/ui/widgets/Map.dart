@@ -11,12 +11,8 @@ import '../../core/providers/ToiletModel.dart';
 import '../../core/services/GoogleMapsServices.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget({
-    this.onMapCreated,
-    this.key,
-  });
+  const MapWidget({this.key});
 
-  final Function onMapCreated;
   final GlobalKey key;
 
   @override
@@ -85,8 +81,6 @@ class MapState extends State<MapWidget> {
       mapController = controller;
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
-
-    widget.onMapCreated();
   }
 
   @override

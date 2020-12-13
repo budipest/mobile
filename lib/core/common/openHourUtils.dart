@@ -11,8 +11,13 @@ import '../models/Vote.dart';
 import 'bitmapFromSvg.dart';
 
 Widget descriptionIcon(
-    EdgeInsetsGeometry padding, String mode, bool smaller, String text,
-    {String iconPath, IconData icon}) {
+  EdgeInsetsGeometry padding,
+  String mode,
+  bool smaller,
+  String text, {
+  String iconPath,
+  IconData icon,
+}) {
   return Padding(
     padding: padding,
     child: Container(

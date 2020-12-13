@@ -7,7 +7,6 @@ import '../widgets/BottomBar.dart';
 import '../widgets/ErrorProvider.dart';
 import '../widgets/Map.dart';
 import '../widgets/Sidebar.dart';
-import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
 import "Error.dart";
 
@@ -20,24 +19,10 @@ class Home extends StatelessWidget {
   final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   final PanelController _pc = new PanelController();
 
-  void onBottomBarDrag(double val, bool hasSelected) {
+  void onBottomBarDrag(double val) {
     _notifier.value = val;
 
     if (val < 0.4) {
-      if (!_pc.isPanelAnimating && hasSelected && val < 0.45) {
-        _pc.animatePanelToPosition(
-          0.3,
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
-        );
-      } else if (!_pc.isPanelAnimating && !hasSelected && val < 0.225) {
-        _pc.animatePanelToPosition(
-          0.15,
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
-        );
-      }
-
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.dark,
       );
@@ -48,27 +33,15 @@ class Home extends StatelessWidget {
     }
   }
 
-  void animateForSelection(Toilet selectedToilet) {
-    if (selectedToilet == null) {
-      if (_notifier.value < 0.5)
-        _pc.animatePanelToPosition(
-          0.15,
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
-        );
-    } else {
-      _pc.animatePanelToPosition(
-        0.3,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final _toiletProvider = Provider.of<ToiletModel>(context);
     final _selectedToilet = _toiletProvider.selectedToilet;
+    final _screenHeight = MediaQuery.of(context).size.height;
+    final _screenWidth = MediaQuery.of(context).size.width;
+    final _hasSelected = _selectedToilet == null;
+    final _bottomBarMinHeight =
+        80 + _screenHeight * (_hasSelected ? 0.15 : 0.3);
 
     if (_toiletProvider.appError != null) {
       return Scaffold(
@@ -90,10 +63,6 @@ class Home extends StatelessWidget {
       );
     }
 
-    if (_pc.isAttached) {
-      animateForSelection(_selectedToilet);
-    }
-
     return Scaffold(
       key: _scaffoldKey,
       drawer: Sidebar(),
@@ -103,8 +72,8 @@ class Home extends StatelessWidget {
           SlidingUpPanel(
             controller: _pc,
             panelSnapping: true,
-            minHeight: 80,
-            maxHeight: MediaQuery.of(context).size.height,
+            minHeight: _bottomBarMinHeight,
+            maxHeight: _screenHeight,
             panelBuilder: (ScrollController sc) => AnimatedBuilder(
               animation: _notifier,
               builder: (context, _) => BottomBar(
@@ -112,26 +81,23 @@ class Home extends StatelessWidget {
                 sc,
               ),
             ),
-            onPanelSlide: (double val) => onBottomBarDrag(
-              val,
-              _selectedToilet != null,
-            ),
-            body: MapWidget(
-              onMapCreated: () => _pc.animatePanelToPosition(
-                0.15,
-                duration: Duration(milliseconds: 200),
-                curve: Curves.easeInOut,
+            onPanelSlide: (double val) => onBottomBarDrag(val),
+            body: Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: _screenWidth,
+                height: _screenHeight - _bottomBarMinHeight,
+                child: MapWidget(key: _mapKey),
               ),
-              key: _mapKey,
             ),
           ),
           AnimatedBuilder(
             animation: _notifier,
             builder: (context, _) => Positioned(
               right: 0,
-              bottom: ((MediaQuery.of(context).size.height - 80) *
-                      _notifier.value) +
-                  95,
+              bottom: (_screenHeight *
+                      (_notifier.value * (_hasSelected ? 0.85 : 0.7))) +
+                  (_bottomBarMinHeight + 20),
               child: RawMaterialButton(
                 shape: CircleBorder(),
                 fillColor: Colors.white,
@@ -170,21 +136,21 @@ class Home extends StatelessWidget {
                       shape: CircleBorder(),
                       fillColor: _notifier.value > 0.99
                           ? Colors.white
-                          : _selectedToilet != null
-                              ? Colors.black
-                              : Colors.white,
+                          : _hasSelected
+                              ? Colors.white
+                              : Colors.black,
                       elevation: 5.0,
                       child: Icon(
                         _notifier.value > 0.99
                             ? Icons.close
-                            : _selectedToilet != null
-                                ? Icons.close
-                                : Icons.menu,
+                            : _hasSelected
+                                ? Icons.menu
+                                : Icons.close,
                         color: _notifier.value > 0.99
                             ? Colors.black
-                            : _selectedToilet != null
-                                ? Colors.white
-                                : Colors.black,
+                            : _hasSelected
+                                ? Colors.black
+                                : Colors.white,
                         size: 30.0,
                       ),
                       onPressed: () {
