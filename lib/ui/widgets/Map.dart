@@ -72,6 +72,7 @@ class MapState extends State<MapWidget> {
     );
 
     setState(() {
+      _polylines.clear();
       _polylines.add(directions);
     });
   }
