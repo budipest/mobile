@@ -8,7 +8,7 @@ import 'dart:async';
 import '../../core/common/openHourUtils.dart';
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
-import '../../core/services/API.dart';
+import '../../core/services/GoogleMapsServices.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({
@@ -62,62 +62,21 @@ class MapState extends State<MapWidget> {
     mapController.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lon)));
   }
 
-  List<LatLng> _convertToLatLng(List points) {
-    List<LatLng> result = <LatLng>[];
-    for (int i = 0; i < points.length; i++) {
-      if (i % 2 != 0) {
-        result.add(LatLng(points[i - 1], points[i]));
-      }
-    }
-    return result;
-  }
-
-  List _decodePoly(String poly) {
-    var list = poly.codeUnits;
-    var lList = new List();
-    int index = 0;
-    int len = poly.length;
-    int c = 0;
-    do {
-      var shift = 0;
-      int result = 0;
-
-      do {
-        c = list[index] - 63;
-        result |= (c & 0x1F) << (shift * 5);
-        index++;
-        shift++;
-      } while (c >= 32);
-      if (result & 1 == 1) {
-        result = ~result;
-      }
-      var result1 = (result >> 1) * 0.00001;
-      lList.add(result1);
-    } while (index < len);
-
-    for (var i = 2; i < lList.length; i++) lList[i] += lList[i - 2];
-
-    return lList;
-  }
-
   drawRoutes(
     double userLat,
     double userLon,
     double toiletLat,
     double toiletLon,
   ) async {
-    final encodedPoly =
-        await API.getRouteCoordinates(userLat, userLon, toiletLat, toiletLon);
+    final Polyline directions = await GoogleMapsServices.getRoutes(
+      userLat,
+      userLon,
+      toiletLat,
+      toiletLon,
+    );
 
     setState(() {
-      _polylines.add(
-        Polyline(
-          polylineId: PolylineId(LatLng(userLat, userLon).toString()),
-          width: 4,
-          points: _convertToLatLng(_decodePoly(encodedPoly)),
-          color: Colors.black,
-        ),
-      );
+      _polylines.add(directions);
     });
   }
 

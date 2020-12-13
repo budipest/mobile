@@ -56,6 +56,10 @@ flutter:
   assets:
     - assets/
 
+    - assets/secrets.json
+    - assets/light_mode.json
+    - assets/dark_mode.json
+
     - assets/logo-white.svg
 
     # Locales
@@ -122,10 +126,6 @@ flutter:
     - assets/icons/bottom/light/tag_guests.svg
     - assets/icons/bottom/light/tag_paid.svg
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
   fonts:
     - family: Muli
       fonts:
