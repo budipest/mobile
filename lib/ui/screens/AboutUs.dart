@@ -189,7 +189,7 @@ class AboutUs extends StatelessWidget {
                   child: Button(
                     FlutterI18n.translate(context, "aboutUs.github"),
                     () async {
-                      String url = "https://github.com/dnlgrgly/budipest";
+                      String url = "https://github.com/dnlgrgly/budipest-mobile";
                       if (await canLaunch(url)) {
                         await launch(url);
                       }

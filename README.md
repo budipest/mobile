@@ -1,4 +1,4 @@
-![Budipest logo](https://github.com/dnlgrgly/budipest/blob/master/github_assets/titlecard.png?raw=true)
+![Budipest logo](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/titlecard.png?raw=true)
 
 ## What's the deal with the name?
 
@@ -7,7 +7,7 @@ Budapest is the capital of Hungary and is our hometown. It was created in 1873 b
 ## App features
 The app shows the toilets nearby you on a map and in a list, ordered by distance from you. It recommends you the nearest open toilet, and when selecting a toilet, you'll see the opening hours, notes and ratings of the toilet. You can also add new toilets, or edit and rate existing ones.
 
-![App screenshots](https://github.com/dnlgrgly/budipest/blob/master/github_assets/appfeatures.png?raw=true)
+![App screenshots](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/appfeatures.png?raw=true)
 
 ## Getting Started
 
@@ -26,7 +26,7 @@ A few resources to get you started if this is your first Flutter project:
 ### Setting up the project
 
 Add a Google Maps API key both for Android and iOS. For instructions on how to do this, [click here](https://stackoverflow.com/a/59834585).
-For the backend, we use our own API that can be found in [this repository](https://github.com/dnlgrgly/budipest-api).
+For the backend, we use our own API that can be found in [this repository](https://github.com/dnlgrgly/budipest-mobile-api).
 
 ### Running on iOS
 
