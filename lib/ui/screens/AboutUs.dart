@@ -161,9 +161,9 @@ class AboutUs extends StatelessWidget {
                 ),
                 PersonCard(
                     FlutterI18n.translate(context, "aboutUs.development"), {
-                  "LinkedIn": "https://www.linkedin.com/in/danielgrgly/",
-                  "Telegram": "https://t.me/danielgrgly",
-                  "email": "mailto:danielgrgly@gmail.com"
+                  "LinkedIn": "https://www.linkedin.com/in/dnlgrgly/",
+                  "Telegram": "https://t.me/dnlgrgly",
+                  "email": "mailto:dnlgrgly@gmail.com"
                 }),
                 PersonCard(FlutterI18n.translate(context, "aboutUs.design"), {
                   "LinkedIn":
@@ -189,7 +189,7 @@ class AboutUs extends StatelessWidget {
                   child: Button(
                     FlutterI18n.translate(context, "aboutUs.github"),
                     () async {
-                      String url = "https://github.com/danielgrgly/budipest";
+                      String url = "https://github.com/dnlgrgly/budipest";
                       if (await canLaunch(url)) {
                         await launch(url);
                       }

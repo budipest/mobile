@@ -1,5 +1,5 @@
 name: Budipest
-description: A community-based toilet finder app.
+description: Toilets anytime, anywhere
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -35,7 +35,7 @@ dependencies:
   uuid: 2.2.2
 
   http: any
-  url_launcher: any
+  url_launcher: 5.0.5
 
 
 dev_dependencies:
