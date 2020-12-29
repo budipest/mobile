@@ -175,7 +175,7 @@ String openState(List<int> openHours) {
     return "_unknown";
   }
 
-  if(openHours[start] == 0 && openHours[end] == 0) {
+  if (openHours[start] == 0 && openHours[end] == 0) {
     return "_closed";
   }
 
@@ -253,7 +253,8 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
               ),
       ];
 
-    // TODO: investigate this thing
+    // TODO: refact this so that the next changing of the state can be later than tomorrow
+    // e.g. it's Monday night and the place is closed until Wednesday morning
     case "_closed":
       return [
         FlutterI18n.translate(context, "closed") + " ",
