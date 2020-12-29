@@ -175,6 +175,10 @@ String openState(List<int> openHours) {
     return "_unknown";
   }
 
+  if(openHours[start] == 0 && openHours[end] == 0) {
+    return "_closed";
+  }
+
   if (regularHours) {
     // if it has a regular opening time, e.g. 8AM-9PM
     if (pastOpening && !pastClosing) {
