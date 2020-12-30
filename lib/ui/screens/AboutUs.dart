@@ -12,7 +12,8 @@ import '../widgets/PersonCard.dart';
 
 class AboutUs extends StatelessWidget {
   void setClipboard(BuildContext context, String text) {
-    Clipboard.setData(new ClipboardData(text: text));
+    Clipboard.setData(ClipboardData(text: text));
+
     Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -175,7 +176,8 @@ class AboutUs extends StatelessWidget {
                   "email": "mailto:usbee@pm.me"
                 }),
                 Container(height: 24),
-                Text(FlutterI18n.translate(context, "aboutUs.feedback"), style: TextStyle(fontSize: 18)),
+                Text(FlutterI18n.translate(context, "aboutUs.feedback"),
+                    style: TextStyle(fontSize: 18)),
                 Container(height: 8),
                 Text(
                   FlutterI18n.translate(context, "aboutUs.opensource"),
@@ -189,7 +191,8 @@ class AboutUs extends StatelessWidget {
                   child: Button(
                     FlutterI18n.translate(context, "aboutUs.github"),
                     () async {
-                      String url = "https://github.com/dnlgrgly/budipest-mobile";
+                      String url =
+                          "https://github.com/dnlgrgly/budipest-mobile";
                       if (await canLaunch(url)) {
                         await launch(url);
                       }

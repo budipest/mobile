@@ -9,6 +9,7 @@ import 'dart:core';
 import '../models/Toilet.dart';
 import '../models/Vote.dart';
 import 'bitmapFromSvg.dart';
+import "variables.dart";
 
 enum OpenState { OPEN, CLOSED, UNKNOWN }
 
@@ -25,6 +26,17 @@ class OpenStateDetails {
     if (this.raw.every((element) => element == 0)) {
       state = OpenState.UNKNOWN;
       color = Colors.grey;
+      first = FlutterI18n.translate(context, "unknown");
+      second = "";
+      return;
+    }
+
+    if (this.raw[0] == 0 && this.raw[1] == 1440 && this.raw.length == 2) {
+      state = OpenState.OPEN;
+      color = Colors.green;
+      first = FlutterI18n.translate(context, "open");
+      second = "24/7";
+      return;
     }
 
     DateTime dateTime = DateTime.now();
@@ -32,11 +44,16 @@ class OpenStateDetails {
     // current minute of day
     int currentTime = (dateTime.hour * 60) + dateTime.minute;
     // 0 - Monday -- 6 - Sunday
-    int dayOfWeek = dateTime.weekday - 1;
+    int currentDayIndex = dateTime.weekday - 1;
+    int currentlyPast = -2;
 
-    int yesterdayLast = this.raw[handleDayOverflow((dayOfWeek * 2) - 1)];
-    int todayFirst = this.raw[handleDayOverflow(dayOfWeek * 2)];
-    int todayLast = this.raw[handleDayOverflow((dayOfWeek * 2) + 1)];
+    int yesterdayLastIndex = handleDayIndexOverflow((currentDayIndex * 2) - 1);
+    int todayFirstIndex = handleDayIndexOverflow(currentDayIndex * 2);
+    int todayLastIndex = handleDayIndexOverflow((currentDayIndex * 2) + 1);
+
+    int yesterdayLast = this.raw[yesterdayLastIndex];
+    int todayFirst = this.raw[todayFirstIndex];
+    int todayLast = this.raw[todayLastIndex];
 
     // "regular hours" are, for example: 8AM-4PM (cafe)
     // "irregular" or "overnight" hours are, for example: 8PM-4AM (bar)
@@ -48,28 +65,103 @@ class OpenStateDetails {
         state = OpenState.OPEN;
         color = Colors.green;
         first = FlutterI18n.translate(context, "open");
+        currentlyPast = todayFirstIndex;
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
         first = FlutterI18n.translate(context, "closed");
+
+        if (todayFirst > currentTime) {
+          currentlyPast = yesterdayLastIndex;
+        } else if (todayLast < currentTime) {
+          currentlyPast = todayLast;
+        }
       }
     } else {
-      if (yesterdayLast < currentTime || currentTime < todayFirst) {
+      if (yesterdayLast < currentTime ||
+          currentTime < todayFirst ||
+          todayLast < currentTime) {
         state = OpenState.OPEN;
         color = Colors.green;
         first = FlutterI18n.translate(context, "open");
+        if (todayLast < currentTime) {
+          currentlyPast = todayLastIndex;
+        } else {
+          currentlyPast = yesterdayLastIndex;
+        }
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
         first = FlutterI18n.translate(context, "closed");
+        currentlyPast = todayFirstIndex;
       }
     }
 
-    second = "hi, hello";
+    if (todayFirst == 0 && todayLast == 0) {
+      state = OpenState.CLOSED;
+      color = Colors.red;
+      first = FlutterI18n.translate(context, "closed");
+      currentlyPast = -2;
+    }
+
+    print("=================================================================");
+    print(currentlyPast);
+    for (int i = currentlyPast + 1; second == null; i++) {
+      print("==================================");
+      print("raw i: $i");
+      i = handleDayIndexOverflow(i);
+
+      // TODO: if a place opens/closes at 0, this will skip it
+      bool isFirstValueToday = i % 2 == 0;
+      print("currentlyPast: $currentlyPast");
+      print("i: $i");
+      print(this.raw[i]);
+      print(this.raw[handleDayIndexOverflow(i + 1)]);
+      print(this.raw[i] != 0);
+      print(isFirstValueToday);
+      print(this.raw[handleDayIndexOverflow(i + 1)] != 0);
+      if (this.raw[i] != 0 ||
+          (isFirstValueToday && this.raw[handleDayIndexOverflow(i + 1)] != 0)) {
+        String time = minuteToHourFormat(this.raw[i]);
+        String localeKey;
+        int dayIndex = (i / 2).floor();
+
+        if (dayIndex == currentDayIndex) {
+          // today
+          localeKey = "todayUntil";
+        } else if (dayIndex == handleDayOverflow(currentDayIndex + 1)) {
+          // tomorrow
+          localeKey = "tomorrowUntil";
+        } else {
+          // other day
+          localeKey = "until";
+        }
+
+        second = FlutterI18n.translate(
+          context,
+          localeKey,
+          translationParams: Map.fromIterables(
+            ["time", "day"],
+            [time, FlutterI18n.translate(context, days[dayIndex])],
+          ),
+        );
+      }
+    }
   }
 }
 
 int handleDayOverflow(int i) {
+  // Sunday => Monday overflow
+  if (i > 6) {
+    i -= 7;
+  } else if (i < 0) {
+    i += 7;
+  }
+
+  return i;
+}
+
+int handleDayIndexOverflow(int i) {
   // Sunday => Monday overflow
   if (i > 13) {
     i -= 14;
@@ -245,7 +337,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
 
 List<Widget> describeToiletIcons(
     Toilet toilet, String mode, bool isDetailed, bool smaller) {
-  var result = new List<Widget>();
+  var result = List<Widget>();
 
   if (toilet == null) {
     return result;

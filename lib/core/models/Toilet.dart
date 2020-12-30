@@ -48,7 +48,7 @@ class Toilet {
     this.longitude,
   ) {
     this.id = "";
-    this.addDate = new DateTime.now();
+    this.addDate = DateTime.now();
     this.openState = OpenStateDetails(this.openHours);
 
     this.notes = List<Note>();
@@ -59,7 +59,7 @@ class Toilet {
   Toilet.origin() {
     name = "";
     userId = "";
-    addDate = new DateTime.now();
+    addDate = DateTime.now();
     category = Category.GENERAL;
     openHours = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     tags = [];
@@ -69,16 +69,17 @@ class Toilet {
     latitude = 0.0;
     longitude = 0.0;
 
-    notes = new List<Note>();
-    votes = new List<Vote>();
+    notes = List<Note>();
+    votes = List<Vote>();
   }
+
 
   Toilet.fromMap(Map raw) {
     this.id = raw["_id"] ?? "";
     this.userId = raw["userId"] ?? "BUDIPEST-DEFAULT";
     this.name = raw["name"] ?? "";
-    this.latitude = raw["location"]["latitude"] ?? 0.0;
-    this.longitude = raw["location"]["longitude"] ?? 0.0;
+    this.latitude = raw["location"]["latitude"].toDouble() ?? 0.0;
+    this.longitude = raw["location"]["longitude"].toDouble() ?? 0.0;
     this.category =
         _standariseCategory(raw["category"].toString()) ?? Category.GENERAL;
     this.openHours = raw["openHours"].cast<int>() ??
@@ -87,17 +88,17 @@ class Toilet {
     this.tags = raw["tags"] != null ? _standariseTags(raw["tags"]) : [];
     this.notes = raw["notes"] != null
         ? _standariseNotes(raw["notes"])
-        : new List<Note>();
+        : List<Note>();
     this.votes = raw["votes"] != null
         ? _standariseVotes(raw["votes"])
-        : new List<Vote>();
+        : List<Vote>();
     this.entryMethod = _standariseEntryMethod(raw["entryMethod"].toString()) ??
         EntryMethod.UNKNOWN;
     this.price = raw["price"] != null && raw["price"] != 0
         ? Map.from(raw["price"])
         : null;
     this.code = raw["code"] ?? null;
-    this.addDate = DateTime.parse(raw["addDate"]) ?? new DateTime.now();
+    this.addDate = DateTime.parse(raw["addDate"]) ?? DateTime.now();
   }
 
   int calculateDistance(double userLatitude, double userLongitude) {

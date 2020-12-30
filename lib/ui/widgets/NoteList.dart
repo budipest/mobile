@@ -19,27 +19,27 @@ class NoteList extends StatelessWidget {
       context: context,
       builder: (BuildContext innerContext) {
         return AlertDialog(
-          title: new Text(
+          title: Text(
             FlutterI18n.translate(context, "areYouSure"),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24.0,
             ),
           ),
-          content: new Text(
+          content: Text(
             FlutterI18n.translate(context, "irreversibleNote"),
             style: TextStyle(
               fontSize: 18.0,
             ),
           ),
           actions: <Widget>[
-            new FlatButton(
+            FlatButton(
               child: Text(FlutterI18n.translate(context, "cancel")),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            new FlatButton(
+            FlatButton(
               child: Text(
                 FlutterI18n.translate(context, "remove"),
                 style: TextStyle(
@@ -59,7 +59,8 @@ class NoteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userId = Provider.of<ToiletModel>(context, listen: false).userId;
+    final String userId =
+        Provider.of<ToiletModel>(context, listen: false).userId;
 
     toilet.notes.forEach((Note note) {
       if (note.userId == userId) {

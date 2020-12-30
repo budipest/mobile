@@ -46,7 +46,7 @@ class GoogleMapsServices {
 
   static List _decodePoly(String poly) {
     var list = poly.codeUnits;
-    var lList = new List();
+    var lList = List();
     int index = 0;
     int len = poly.length;
     int c = 0;

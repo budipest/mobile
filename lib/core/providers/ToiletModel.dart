@@ -10,12 +10,12 @@ import '../services/API.dart';
 
 class ToiletModel extends ChangeNotifier {
   // user-related data
-  final Location _location = new Location();
+  final Location _location = Location();
   LocationData _userLocation;
   String _userId;
 
   // toilets
-  List<Toilet> _toilets = new List<Toilet>();
+  List<Toilet> _toilets = List<Toilet>();
   Toilet _selected;
 
   // errors
@@ -55,6 +55,7 @@ class ToiletModel extends ChangeNotifier {
     try {
       toilets = await API.getToilets();
     } catch (error) {
+      print(error);
       _appError = FlutterI18n.translate(_globalContext, "error.data");
       notifyListeners();
       return;
@@ -124,8 +125,15 @@ class ToiletModel extends ChangeNotifier {
     try {
       addedToilet = await API.addToilet(item);
     } catch (error) {
+      print(error);
       showErrorSnackBar("error.onServer");
     }
+
+    addedToilet.calculateDistance(
+      _userLocation.latitude,
+      _userLocation.longitude,
+    );
+    addedToilet.openState.updateState(_globalContext);
 
     _toilets.add(addedToilet);
     selectToilet(addedToilet);

@@ -13,11 +13,11 @@ import "Error.dart";
 class Home extends StatelessWidget {
   Home({GlobalKey key}) : super(key: key);
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final GlobalKey<MapState> _mapKey = new GlobalKey<MapState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<MapState> _mapKey = GlobalKey<MapState>();
 
   final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
-  final PanelController _pc = new PanelController();
+  final PanelController _pc = PanelController();
 
   void onBottomBarDrag(double val) {
     _notifier.value = val;

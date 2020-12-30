@@ -45,14 +45,14 @@ class BottomBar extends StatelessWidget {
         builder: (BuildContext context) {
           // return object of type Dialog
           return AlertDialog(
-            title: new Text(
+            title: Text(
               FlutterI18n.translate(context, "notGonnaGetThere"),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24.0,
               ),
             ),
-            content: new Text(
+            content: Text(
               FlutterI18n.plural(context, "closerToilets.numOfToilets", index),
               style: TextStyle(
                 fontSize: 18.0,
@@ -60,13 +60,13 @@ class BottomBar extends StatelessWidget {
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
-              new FlatButton(
+              FlatButton(
                 child: Text(FlutterI18n.translate(context, "cancel")),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-              new FlatButton(
+              FlatButton(
                 child: Text(FlutterI18n.translate(context, "directions")),
                 onPressed: () {
                   _navigate(toilet);

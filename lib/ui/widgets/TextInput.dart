@@ -58,7 +58,7 @@ class TextInput extends StatefulWidget {
 
 class _TextInputState extends State<TextInput> {
   final TextEditingController _textEditingController =
-      new TextEditingController(text: "");
+      TextEditingController(text: "");
 
   @override
   void initState() {
@@ -69,8 +69,8 @@ class _TextInputState extends State<TextInput> {
     _textEditingController.text = widget.text ?? '';
 
     if (cursorPos.start > _textEditingController.text.length) {
-      cursorPos = new TextSelection.fromPosition(
-        new TextPosition(offset: _textEditingController.text.length),
+      cursorPos = TextSelection.fromPosition(
+        TextPosition(offset: _textEditingController.text.length),
       );
     }
 

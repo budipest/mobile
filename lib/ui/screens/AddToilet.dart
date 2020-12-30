@@ -33,10 +33,10 @@ class _AddToiletState extends State<AddToilet> {
   String code = "";
   bool hasEUR = false;
 
-  List<int> openHours = new List<int>.filled(14, 0);
+  List<int> openHours = List<int>.filled(14, 0);
   bool isNonStop = false;
 
-  List<Tag> tags = new List<Tag>();
+  List<Tag> tags = List<Tag>();
 
   void onNameChanged(String text) {
     setState(() {
@@ -180,6 +180,13 @@ class _AddToiletState extends State<AddToilet> {
   Widget build(BuildContext context) {
     final provider = Provider.of<ToiletModel>(context, listen: false);
 
+    if (location == null) {
+      location = LatLng(
+        provider.location.latitude,
+        provider.location.longitude,
+      );
+    }
+
     return BlackLayoutContainer(
       context: context,
       title: FlutterI18n.translate(context, "addToilet"),
@@ -198,13 +205,7 @@ class _AddToiletState extends State<AddToilet> {
                 : null
             : NeverScrollableScrollPhysics(),
         children: <Widget>[
-          AddToiletLocation(
-            onLocationChanged,
-            LatLng(
-              provider.location.latitude,
-              provider.location.longitude,
-            ),
-          ),
+          AddToiletLocation(onLocationChanged, location),
           AddToiletName(name, onNameChanged),
           AddToiletCategory(onCategoryChanged, category),
           AddToiletEntryMethod(
