@@ -18,7 +18,7 @@
     "numOfToilets-2": "There are {numOfToilets} toilets that are closer to you. Are you sure you wanna go there?"
   },
   "areYouSure": "Are you sure?",
-  "irreversibleNote": "This action is irreversible. Do you really want to delete your note? There is no magic undo button!",
+  "irreversibleNote": "Do you really want to delete your note? There is no magic undo button!",
   "remove": "Remove",
   "directions": "Directions",
   "rate": "Rating",
@@ -28,7 +28,7 @@
   "newNotePlaceholder": "This toilet was nice, because...",
   "send": "Send",
   "addToilet": "Add toilet",
-  "drag-marker": "Drag marker for precise positioning",
+  "drag-marker": "Hold and drag marker for precise positioning",
   "toiletName": "Name of the toilet",
   "name": "Name",
   "toiletType": "Type of toilet",
@@ -91,8 +91,8 @@
   },
   "error": {
     "title": "Something stinks in here...",
-    "location": "We can't find you. Or at least we don't know where you at. Maybe you declined the location permissions?",
+    "location": "We can't find you. Or at least we don't know where you're at. Maybe you declined the location permissions?",
     "data": "We couldn't retrieve data from the server. Maybe check your connection?",
-    "onServer": "The server can't flush down the toilet right now and they're busy with that. Please check back later"
+    "onServer": "The server can't flush the toilet right now and they're busy with that. Please check back later"
   }
 }

@@ -15,7 +15,7 @@
   "notGonnaGetThere": "Nem hisszük hogy időben odaérnél...",
   "closerToilets": {
     "numOfToilets-1": "Van egy ennél közelebbi mosdó is. Biztosan a távolabbiba szeretnél menni?",
-    "numOfToilets-2": "Van {numOfToilets} mosdó ami közelebb van hozzád ennél. Biztosan ezt szeretnéd?"
+    "numOfToilets-2": "Van {numOfToilets} mosdó, ami közelebb van hozzád ennél. Biztosan ezt szeretnéd?"
   },
   "areYouSure": "Biztosan?",
   "irreversibleNote": "Ez a művelet visszafordíthatatlan. Biztosan ki akarod törölni a jegyzetedet? Még mágiával sem tudjuk majd visszahozni!",
@@ -28,7 +28,7 @@
   "newNotePlaceholder": "Ez a mosdó remek, mert...",
   "send": "Elküldés",
   "addToilet": "Mosdó hozzáadása",
-  "drag-marker": "Mozgasd a jelzőt a pontosabb helyzethez",
+  "drag-marker": "Tartsd az ujjad a jelzőn, és mozgasd a WC pontos helyzetéhez",
   "toiletName": "A mosdó neve",
   "name": "Név",
   "toiletType": "A mosdó típusa",
@@ -79,7 +79,7 @@
     "opensource": "A projektet Flutter-rel készítettük, az alkalmazás pedig nyílt forráskódú.",
     "github": "GitHub repo megnyitása",
     "toiletPaper": "Vegyél nekünk WC papírt!",
-    "toiletPaper-description": "Támogasd a továbbfejlesztését és a szerverköltségeit ennek az appnak. Vagy ne. Mi nem ítélkezünk.",
+    "toiletPaper-description": "Támogasd az app fejlődését! Vagy ne. Mi nem ítélkezünk.",
     "team": "A Csapat",
     "paypal": "Adományozás PayPal-lal",
     "accountNumber": "Számlaszám: 10402764-86767651-74521001",
@@ -88,11 +88,11 @@
   "copied": "Szöveg kimásolva a vágólapra!",
   "empty": {
     "notes-title": "Még nincsenek megjegyzések.",
-    "notes-description": "Oszd meg a személyes tapasztalataidat vagy egyéb hasznos információkat másokkal egy megjegyzésben."
+    "notes-description": "Ossz meg személyes tapasztalatokat, vagy egyéb hasznos információkat egy megjegyzésben."
   },
   "error": {
     "title": "Itt valami bűzlik...",
-    "location": "Nem találunk téged, és nem tudjuk hogy hol vagy, nem működik az app. Lehet hogy nem adtál nekünk engedélyt erre?",
+    "location": "Nem találunk téged. Nem tudjuk hogy hol vagy, így nem működik az app. Lehet hogy nem adtál nekünk engedélyt erre?",
     "data": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?",
     "onServer": "A szerverünknél mostanában nem megy le a WC, emiatt picit elfoglalt. Kérjük, próbáld újra később!"
   }
