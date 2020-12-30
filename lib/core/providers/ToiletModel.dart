@@ -29,7 +29,7 @@ class ToiletModel extends ChangeNotifier {
   // toilet getters
   List<Toilet> get toilets => _toilets;
   Toilet get suggestedToilet => _toilets.firstWhere(
-        (element) => isOpen(element.openHours),
+        (element) => element.openState.state == OpenState.OPEN,
         orElse: () => _toilets[0],
       );
   Toilet get selectedToilet => _selected;
@@ -74,6 +74,7 @@ class ToiletModel extends ChangeNotifier {
 
     _toilets.forEach((Toilet toilet) {
       toilet.calculateDistance(_userLocation.latitude, _userLocation.longitude);
+      toilet.openState.updateState(_globalContext);
     });
 
     _toilets.sort((a, b) => a.distance.compareTo(b.distance));

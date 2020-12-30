@@ -10,6 +10,93 @@ import '../models/Toilet.dart';
 import '../models/Vote.dart';
 import 'bitmapFromSvg.dart';
 
+enum OpenState { OPEN, CLOSED, UNKNOWN }
+
+class OpenStateDetails {
+  OpenState state;
+  String first;
+  String second;
+  Color color;
+  List<int> raw;
+
+  OpenStateDetails(this.raw);
+
+  updateState(BuildContext context) {
+    if (this.raw.every((element) => element == 0)) {
+      state = OpenState.UNKNOWN;
+      color = Colors.grey;
+    }
+
+    DateTime dateTime = DateTime.now();
+
+    // current minute of day
+    int currentTime = (dateTime.hour * 60) + dateTime.minute;
+    // 0 - Monday -- 6 - Sunday
+    int dayOfWeek = dateTime.weekday - 1;
+
+    int yesterdayLast = this.raw[handleDayOverflow((dayOfWeek * 2) - 1)];
+    int todayFirst = this.raw[handleDayOverflow(dayOfWeek * 2)];
+    int todayLast = this.raw[handleDayOverflow((dayOfWeek * 2) + 1)];
+
+    // "regular hours" are, for example: 8AM-4PM (cafe)
+    // "irregular" or "overnight" hours are, for example: 8PM-4AM (bar)
+    bool regularHours =
+        (todayFirst < todayLast) || (yesterdayLast > todayFirst);
+
+    if (regularHours) {
+      if (todayFirst < currentTime && currentTime < todayLast) {
+        state = OpenState.OPEN;
+        color = Colors.green;
+        first = FlutterI18n.translate(context, "open");
+      } else {
+        state = OpenState.CLOSED;
+        color = Colors.red;
+        first = FlutterI18n.translate(context, "closed");
+      }
+    } else {
+      if (yesterdayLast < currentTime || currentTime < todayFirst) {
+        state = OpenState.OPEN;
+        color = Colors.green;
+        first = FlutterI18n.translate(context, "open");
+      } else {
+        state = OpenState.CLOSED;
+        color = Colors.red;
+        first = FlutterI18n.translate(context, "closed");
+      }
+    }
+
+    second = "hi, hello";
+  }
+}
+
+int handleDayOverflow(int i) {
+  // Sunday => Monday overflow
+  if (i > 13) {
+    i -= 14;
+  } else if (i < 0) {
+    i += 14;
+  }
+
+  return i;
+}
+
+String stringFromCategory(Category category) {
+  switch (category) {
+    case Category.GENERAL:
+      return "general";
+    case Category.SHOP:
+      return "shop";
+    case Category.RESTAURANT:
+      return "restaurant";
+    case Category.GAS_STATION:
+      return "gas_station";
+    case Category.PORTABLE:
+      return "portable";
+    default:
+      return "general";
+  }
+}
+
 Widget descriptionIcon(
   EdgeInsetsGeometry padding,
   String mode,
@@ -142,6 +229,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
       return Wrap(
         children: priceIcons,
       );
+
     case EntryMethod.CODE:
       return descriptionIcon(
         padding,
@@ -152,188 +240,6 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
       );
     default:
       return null;
-  }
-}
-
-String openState(List<int> openHours) {
-  DateTime dateTime = DateTime.now();
-
-  int curr = (dateTime.hour * 60) + dateTime.minute; // current minute of day
-  int start = 0; // today's starting time index
-  int end = 1; // today's ending time index
-
-  if (openHours.length > 2) {
-    start = (dateTime.weekday - 1) * 2;
-    end = start + 1;
-  }
-
-  bool regularHours = openHours[start] < openHours[end];
-  bool pastOpening = openHours[start] < curr;
-  bool pastClosing = openHours[end] < curr;
-
-  if (openHours.every((element) => element == 0)) {
-    return "_unknown";
-  }
-
-  if (openHours[start] == 0 && openHours[end] == 0) {
-    return "_closed";
-  }
-
-  if (regularHours) {
-    // if it has a regular opening time, e.g. 8AM-9PM
-    if (pastOpening && !pastClosing) {
-      // if it's past opening but before closing time
-      return "_open";
-    } else if (!pastOpening || pastClosing) {
-      // if it's before opening or past closing time
-      return "_closed";
-    }
-  } else {
-    // if it has an overnight opening time, e.g. 10PM-2AM
-    // opening: 10PM
-    // closing: 2AM
-    // current: 11PM. pastOpening, pastClosing
-    // current: 1AM. !pastOpening, !pastClosing
-    if (!pastOpening && !pastClosing || pastOpening && pastClosing) {
-      return "_open";
-    } else if (pastOpening && !pastClosing || !pastOpening && pastClosing) {
-      return "_closed";
-    }
-  }
-
-  return "_unknown";
-}
-
-bool isOpen(List<int> openHours) {
-  if (openState(openHours) == "_open") {
-    return true;
-  }
-  return false;
-}
-
-Color coloredOpenState(List<int> openHours) {
-  switch (openState(openHours)) {
-    case "_open":
-      return Colors.green;
-    case "_closed":
-      return Colors.red;
-    default:
-      return Colors.grey;
-  }
-}
-
-List<String> readableOpenState(List<int> openHours, BuildContext context) {
-  DateTime dateTime = DateTime.now();
-  int curr = (dateTime.hour * 60) + dateTime.minute;
-  int start = 0;
-  int end = 1;
-
-  if (openHours.length > 2) {
-    start = (dateTime.weekday - 1) * 2;
-    end = start + 1;
-  }
-
-  bool regularHours = openHours[start] < openHours[end];
-  bool pastOpening = openHours[start] < curr;
-  bool pastClosing = openHours[end] < curr;
-
-  switch (openState(openHours)) {
-    case "_open":
-      return [
-        FlutterI18n.translate(context, "open") + " ",
-        openHours[0] == 0 && openHours[1] == 1440
-            ? "24/7"
-            : FlutterI18n.translate(
-                context,
-                regularHours ? "todayUntil" : "tomorrowUntil",
-                translationParams: Map.fromIterables(
-                  ["time"],
-                  [minuteToHourFormat(openHours[end])],
-                ),
-              ),
-      ];
-
-    // TODO: refact this so that the next changing of the state can be later than tomorrow
-    // e.g. it's Monday night and the place is closed until Wednesday morning
-    case "_closed":
-      {
-        return [
-          FlutterI18n.translate(context, "closed") + " ",
-          regularHours
-              ? pastClosing
-                  ? FlutterI18n.translate(
-                      context,
-                      "tomorrowUntil",
-                      translationParams: Map.fromIterables(
-                        ["time"],
-                        end > 1
-                            ? [
-                                minuteToHourFormat(
-                                    openHours[start + 1 >= 14 ? 0 : start])
-                              ]
-                            : [minuteToHourFormat(openHours[start])],
-                      ),
-                    )
-                  : FlutterI18n.translate(
-                      context,
-                      "todayUntil",
-                      translationParams: Map.fromIterables(
-                        ["time"],
-                        [
-                          minuteToHourFormat(
-                            openHours[start],
-                          ),
-                        ],
-                      ),
-                    )
-              : pastOpening
-                  ? FlutterI18n.translate(
-                      context,
-                      "tomorrowUntil",
-                      translationParams: Map.fromIterables(
-                        ["time"],
-                        start > 1
-                            ? [
-                                minuteToHourFormat(
-                                    openHours[end + 1 >= 14 ? 0 : end])
-                              ]
-                            : [minuteToHourFormat(openHours[end])],
-                      ),
-                    )
-                  : FlutterI18n.translate(
-                      context,
-                      "todayUntil",
-                      translationParams: Map.fromIterables(
-                        ["time"],
-                        [
-                          minuteToHourFormat(
-                            openHours[start],
-                          ),
-                        ],
-                      ),
-                    )
-        ];
-      }
-
-    default:
-      return [FlutterI18n.translate(context, "unknown"), ""];
-  }
-}
-
-String stringFromCategory(Category category) {
-  switch (category) {
-    case Category.GENERAL:
-      return "general";
-    case Category.SHOP:
-      return "shop";
-    case Category.RESTAURANT:
-      return "restaurant";
-    case Category.GAS_STATION:
-      return "gas_station";
-    case Category.PORTABLE:
-      return "portable";
-    default:
-      return "general";
   }
 }
 
@@ -432,11 +338,18 @@ List<Widget> describeToiletIcons(
 }
 
 Future<BitmapDescriptor> determineMarkerIcon(
-    Category category, List<int> openHours, BuildContext context) async {
+  Category category,
+  OpenState openState,
+  BuildContext context,
+) async {
   String result = "";
 
   result += stringFromCategory(category);
-  result += openState(openHours);
+  result += "_";
+  result += openState
+      .toString()
+      .substring(openState.toString().indexOf('.') + 1)
+      .toLowerCase();
 
   return await bitmapDescriptorFromSvgAsset(
     context,

@@ -114,7 +114,7 @@ class MapState extends State<MapWidget> {
       }
     }
 
-    toilets.forEach((toilet) async {
+    toilets.forEach((Toilet toilet) async {
       double lat = toilet.latitude;
       double lng = toilet.longitude;
       MarkerId id = MarkerId(lat.toString() + lng.toString());
@@ -123,7 +123,7 @@ class MapState extends State<MapWidget> {
         position: LatLng(lat, lng),
         icon: await determineMarkerIcon(
           toilet.category,
-          toilet.openHours,
+          toilet.openState.state,
           context,
         ),
         onTap: () => selectToilet(toilet),

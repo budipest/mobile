@@ -20,7 +20,7 @@ class GoogleMapsServices {
   ) async {
     final String googleApiKey = await getAPIKey();
     String _url =
-        "https://maps.googleapis.com/maps/api/directions/json?origin=${userLat},${userLon}&destination=${toiletLat},${toiletLon}&mode=walking&key=$googleApiKey";
+        "https://maps.googleapis.com/maps/api/directions/json?origin=$userLat,$userLon&destination=$toiletLat,$toiletLon&mode=walking&key=$googleApiKey";
 
     final response = await http.get(_url);
     Map values = json.decode(response.body);

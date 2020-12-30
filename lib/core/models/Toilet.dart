@@ -3,6 +3,8 @@ import 'dart:math';
 import 'Note.dart';
 import 'Vote.dart';
 
+import "../common/openHourUtils.dart";
+
 enum Category { GENERAL, SHOP, RESTAURANT, PORTABLE, GAS_STATION }
 enum Tag {
   WHEELCHAIR_ACCESSIBLE,
@@ -19,6 +21,8 @@ class Toilet {
   List<int> openHours;
   List<Tag> tags;
 
+  OpenStateDetails openState;
+
   EntryMethod entryMethod;
   Map price;
   String code;
@@ -30,23 +34,6 @@ class Toilet {
   List<Vote> votes;
 
   int distance = 0;
-
-  Toilet(
-    this.id,
-    this.name,
-    this.userId,
-    this.addDate,
-    this.category,
-    this.openHours,
-    this.tags,
-    this.entryMethod,
-    this.price,
-    this.code,
-    this.latitude,
-    this.longitude,
-    this.notes,
-    this.votes,
-  );
 
   Toilet.createNew(
     this.name,
@@ -62,6 +49,7 @@ class Toilet {
   ) {
     this.id = "";
     this.addDate = new DateTime.now();
+    this.openState = OpenStateDetails(this.openHours);
 
     this.notes = List<Note>();
     this.votes = List<Vote>();
@@ -85,30 +73,32 @@ class Toilet {
     votes = new List<Vote>();
   }
 
-  Toilet.fromMap(Map raw)
-      : id = raw["_id"] ?? "",
-        userId = raw["userId"] ?? "BUDIPEST-DEFAULT",
-        name = raw["name"] ?? "",
-        latitude = raw["location"]["latitude"] ?? 0.0,
-        longitude = raw["location"]["longitude"] ?? 0.0,
-        category =
-            _standariseCategory(raw["category"].toString()) ?? Category.GENERAL,
-        openHours = raw["openHours"].cast<int>() ??
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        tags = raw["tags"] != null ? _standariseTags(raw["tags"]) : [],
-        notes = raw["notes"] != null
-            ? _standariseNotes(raw["notes"])
-            : new List<Note>(),
-        votes = raw["votes"] != null
-            ? _standariseVotes(raw["votes"])
-            : new List<Vote>(),
-        entryMethod = _standariseEntryMethod(raw["entryMethod"].toString()) ??
-            EntryMethod.UNKNOWN,
-        price = raw["price"] != null && raw["price"] != 0
-            ? Map.from(raw["price"])
-            : null,
-        code = raw["code"] ?? null,
-        addDate = DateTime.parse(raw["addDate"]) ?? new DateTime.now();
+  Toilet.fromMap(Map raw) {
+    this.id = raw["_id"] ?? "";
+    this.userId = raw["userId"] ?? "BUDIPEST-DEFAULT";
+    this.name = raw["name"] ?? "";
+    this.latitude = raw["location"]["latitude"] ?? 0.0;
+    this.longitude = raw["location"]["longitude"] ?? 0.0;
+    this.category =
+        _standariseCategory(raw["category"].toString()) ?? Category.GENERAL;
+    this.openHours = raw["openHours"].cast<int>() ??
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.openState = OpenStateDetails(this.openHours);
+    this.tags = raw["tags"] != null ? _standariseTags(raw["tags"]) : [];
+    this.notes = raw["notes"] != null
+        ? _standariseNotes(raw["notes"])
+        : new List<Note>();
+    this.votes = raw["votes"] != null
+        ? _standariseVotes(raw["votes"])
+        : new List<Vote>();
+    this.entryMethod = _standariseEntryMethod(raw["entryMethod"].toString()) ??
+        EntryMethod.UNKNOWN;
+    this.price = raw["price"] != null && raw["price"] != 0
+        ? Map.from(raw["price"])
+        : null;
+    this.code = raw["code"] ?? null;
+    this.addDate = DateTime.parse(raw["addDate"]) ?? new DateTime.now();
+  }
 
   int calculateDistance(double userLatitude, double userLongitude) {
     var p = 0.017453292519943295;

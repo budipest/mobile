@@ -217,15 +217,10 @@ class BottomBar extends StatelessWidget {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: readableOpenState(
-                                    selectedToilet.openHours,
-                                    context,
-                                  )[0]),
+                                    text: selectedToilet.openState.first + " ",
+                                  ),
                                   TextSpan(
-                                    text: readableOpenState(
-                                      selectedToilet.openHours,
-                                      context,
-                                    )[1],
+                                    text: selectedToilet.openState.second,
                                     style: TextStyle(
                                       color: Colors.grey,
                                     ),

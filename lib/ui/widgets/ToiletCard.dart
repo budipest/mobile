@@ -69,7 +69,7 @@ class ToiletCard extends StatelessWidget {
       ),
       gradient: LinearGradient(
         stops: [0.02, 0.02],
-        colors: [coloredOpenState(toilet.openHours), Colors.grey[200]],
+        colors: [toilet.openState.color, Colors.grey[200]],
       ),
       padding: EdgeInsets.fromLTRB(25, 15, 17.5, 15),
     );
