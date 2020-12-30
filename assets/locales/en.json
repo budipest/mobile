@@ -49,11 +49,11 @@
   "openHours": "Opening hours",
   "alwaysOpen": "Open 24/7",
   "days-short": {
-    "monday": "M",
-    "tuesday": "Tu",
-    "wednesday": "W",
-    "thursday": "Th",
-    "friday": "F",
+    "monday": "Mon",
+    "tuesday": "Tue",
+    "wednesday": "Wed",
+    "thursday": "Thu",
+    "friday": "Fri",
     "saturday": "Sat",
     "sunday": "Sun"
   },
