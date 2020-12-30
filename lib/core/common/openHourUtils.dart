@@ -104,22 +104,11 @@ class OpenStateDetails {
       currentlyPast = -2;
     }
 
-    print("=================================================================");
-    print(currentlyPast);
     for (int i = currentlyPast + 1; second == null; i++) {
-      print("==================================");
-      print("raw i: $i");
       i = handleDayIndexOverflow(i);
 
-      // TODO: if a place opens/closes at 0, this will skip it
       bool isFirstValueToday = i % 2 == 0;
-      print("currentlyPast: $currentlyPast");
-      print("i: $i");
-      print(this.raw[i]);
-      print(this.raw[handleDayIndexOverflow(i + 1)]);
-      print(this.raw[i] != 0);
-      print(isFirstValueToday);
-      print(this.raw[handleDayIndexOverflow(i + 1)] != 0);
+
       if (this.raw[i] != 0 ||
           (isFirstValueToday && this.raw[handleDayIndexOverflow(i + 1)] != 0)) {
         String time = minuteToHourFormat(this.raw[i]);
