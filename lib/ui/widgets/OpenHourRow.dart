@@ -47,7 +47,9 @@ class _OpenHourRowState extends State<OpenHourRow> {
             activeColor: Colors.grey[300],
             onChanged: (bool value) {
               if (value == true) {
-                if (widget.lastEditedDayStartIndex == -1) {
+                if (widget.lastEditedDayStartIndex == -1 ||
+                    (widget.lastEditedOpening == 0 &&
+                        widget.lastEditedClosing == 0)) {
                   widget.openHours[widget.index] = 0;
                   widget.openHours[widget.index + 1] = 15;
                 } else {
