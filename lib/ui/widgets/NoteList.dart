@@ -102,6 +102,7 @@ class NoteList extends StatelessWidget {
                   children: [
                     Text(
                       FlutterI18n.translate(context, "empty.notes-title"),
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,

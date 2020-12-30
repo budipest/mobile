@@ -107,10 +107,11 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
               ],
             ),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            margin: EdgeInsets.only(top: 15),
+            margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             child: Text(
               FlutterI18n.translate(context, "drag-marker"),
               style: TextStyle(fontSize: 14.0),
+              textAlign: TextAlign.center,
             ),
           ),
         ),
