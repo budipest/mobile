@@ -245,7 +245,7 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
             ? "24/7"
             : FlutterI18n.translate(
                 context,
-                "todayUntil",
+                regularHours ? "todayUntil" : "tomorrowUntil", 
                 translationParams: Map.fromIterables(
                   ["time"],
                   [minuteToHourFormat(openHours[end])],
@@ -288,7 +288,7 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
             : pastOpening
                 ? FlutterI18n.translate(
                     context,
-                    "todayUntil",
+                    "tomorrowUntil",
                     translationParams: Map.fromIterables(
                       ["time"],
                       start > 1
@@ -301,7 +301,7 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
                   )
                 : FlutterI18n.translate(
                     context,
-                    "tomorrowUntil",
+                    "todayUntil",
                     translationParams: Map.fromIterables(
                       ["time"],
                       [

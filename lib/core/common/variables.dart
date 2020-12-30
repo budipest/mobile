@@ -15,6 +15,16 @@ final Map<int, Color> color = {
 
 final MaterialColor black = MaterialColor(0xFF000000, color);
 
+List<String> daysShort = [
+  "days-short.monday",
+  "days-short.tuesday",
+  "days-short.wednesday",
+  "days-short.thursday",
+  "days-short.friday",
+  "days-short.saturday",
+  "days-short.sunday",
+];
+
 List<String> days = [
   "days.monday",
   "days.tuesday",

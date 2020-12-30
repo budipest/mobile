@@ -30,7 +30,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
   Widget build(BuildContext context) {
     String day = FlutterI18n.translate(
       context,
-      days[(widget.index / 2).floor()],
+      daysShort[(widget.index / 2).floor()],
     );
 
     bool isOn = widget.openHours[widget.index] != 0 ||

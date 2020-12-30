@@ -7,7 +7,7 @@
   "open": "Open",
   "closed": "Closed",
   "unknown": "Unknown opening hours",
-  "until": "until {time}",
+  "until": "until {day} {time}",
   "todayUntil": "today until {time}",
   "tomorrowUntil": "tomorrow until {time}",
   "tooFar": "Too far",
@@ -48,7 +48,7 @@
   "code": "CODE",
   "openHours": "Opening hours",
   "alwaysOpen": "Open 24/7",
-  "days": {
+  "days-short": {
     "monday": "M",
     "tuesday": "Tu",
     "wednesday": "W",
@@ -56,6 +56,15 @@
     "friday": "F",
     "saturday": "Sat",
     "sunday": "Sun"
+  },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
   },
   "services": "Services",
   "accessible": "wheelchair accessible",

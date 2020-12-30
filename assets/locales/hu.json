@@ -7,7 +7,7 @@
   "open": "Nyitva",
   "closed": "Zárva",
   "unknown": "Ismeretlen nyitvatartási idő",
-  "until": "{time}-ig",
+  "until": "{day}, {time}-ig",
   "todayUntil": "ma {time}-ig",
   "tomorrowUntil": "holnap {time}-ig",
   "tooFar": "Túl távol",
@@ -48,7 +48,7 @@
   "code": "KÓD",
   "openHours": "Nyitvatartás",
   "alwaysOpen": "24/7-es nyivatartás",
-  "days": {
+  "days-short": {
     "monday": "H",
     "tuesday": "K",
     "wednesday": "Sze",
@@ -56,6 +56,15 @@
     "friday": "P",
     "saturday": "Szo",
     "sunday": "V"
+  },
+  "days": {
+    "monday": "hétfő",
+    "tuesday": "kedd",
+    "wednesday": "szerda",
+    "thursday": "csütörtök",
+    "friday": "péntek",
+    "saturday": "szombat",
+    "sunday": "vasárnap"
   },
   "services": "Szolgáltatások",
   "accessible": "akadálymentes",
