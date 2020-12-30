@@ -245,7 +245,7 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
             ? "24/7"
             : FlutterI18n.translate(
                 context,
-                regularHours ? "todayUntil" : "tomorrowUntil", 
+                regularHours ? "todayUntil" : "tomorrowUntil",
                 translationParams: Map.fromIterables(
                   ["time"],
                   [minuteToHourFormat(openHours[end])],
@@ -256,62 +256,64 @@ List<String> readableOpenState(List<int> openHours, BuildContext context) {
     // TODO: refact this so that the next changing of the state can be later than tomorrow
     // e.g. it's Monday night and the place is closed until Wednesday morning
     case "_closed":
-      return [
-        FlutterI18n.translate(context, "closed") + " ",
-        regularHours
-            ? pastClosing
-                ? FlutterI18n.translate(
-                    context,
-                    "tomorrowUntil",
-                    translationParams: Map.fromIterables(
-                      ["time"],
-                      end > 1
-                          ? [
-                              minuteToHourFormat(
-                                  openHours[start + 1 >= 14 ? 0 : start])
-                            ]
-                          : [minuteToHourFormat(openHours[start])],
-                    ),
-                  )
-                : FlutterI18n.translate(
-                    context,
-                    "todayUntil",
-                    translationParams: Map.fromIterables(
-                      ["time"],
-                      [
-                        minuteToHourFormat(
-                          openHours[start],
-                        ),
-                      ],
-                    ),
-                  )
-            : pastOpening
-                ? FlutterI18n.translate(
-                    context,
-                    "tomorrowUntil",
-                    translationParams: Map.fromIterables(
-                      ["time"],
-                      start > 1
-                          ? [
-                              minuteToHourFormat(
-                                  openHours[end + 1 >= 14 ? 0 : end])
-                            ]
-                          : [minuteToHourFormat(openHours[end])],
-                    ),
-                  )
-                : FlutterI18n.translate(
-                    context,
-                    "todayUntil",
-                    translationParams: Map.fromIterables(
-                      ["time"],
-                      [
-                        minuteToHourFormat(
-                          openHours[start],
-                        ),
-                      ],
-                    ),
-                  )
-      ];
+      {
+        return [
+          FlutterI18n.translate(context, "closed") + " ",
+          regularHours
+              ? pastClosing
+                  ? FlutterI18n.translate(
+                      context,
+                      "tomorrowUntil",
+                      translationParams: Map.fromIterables(
+                        ["time"],
+                        end > 1
+                            ? [
+                                minuteToHourFormat(
+                                    openHours[start + 1 >= 14 ? 0 : start])
+                              ]
+                            : [minuteToHourFormat(openHours[start])],
+                      ),
+                    )
+                  : FlutterI18n.translate(
+                      context,
+                      "todayUntil",
+                      translationParams: Map.fromIterables(
+                        ["time"],
+                        [
+                          minuteToHourFormat(
+                            openHours[start],
+                          ),
+                        ],
+                      ),
+                    )
+              : pastOpening
+                  ? FlutterI18n.translate(
+                      context,
+                      "tomorrowUntil",
+                      translationParams: Map.fromIterables(
+                        ["time"],
+                        start > 1
+                            ? [
+                                minuteToHourFormat(
+                                    openHours[end + 1 >= 14 ? 0 : end])
+                              ]
+                            : [minuteToHourFormat(openHours[end])],
+                      ),
+                    )
+                  : FlutterI18n.translate(
+                      context,
+                      "todayUntil",
+                      translationParams: Map.fromIterables(
+                        ["time"],
+                        [
+                          minuteToHourFormat(
+                            openHours[start],
+                          ),
+                        ],
+                      ),
+                    )
+        ];
+      }
 
     default:
       return [FlutterI18n.translate(context, "unknown"), ""];

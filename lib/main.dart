@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import "package:flutter_i18n/flutter_i18n.dart";
@@ -24,6 +25,8 @@ Future main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await flutterI18nDelegate.load(null);
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     ChangeNotifierProvider(
