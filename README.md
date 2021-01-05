@@ -1,17 +1,23 @@
-![Budipest logo](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/titlecard.png?raw=true)
+![Budipest logo](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/titlecard.png)
 
 ## What's the deal with the name?
 
 Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you... (Alternative name ideas: Loondon, Honolua)
 
 ## App features
-The app shows the toilets nearby you on a map and in a list, ordered by distance from you. It recommends you the nearest open toilet, and when selecting a toilet, you'll see the opening hours, notes and ratings of the toilet. You can also add new toilets, or edit and rate existing ones.
+Budipest is a community-based toilet finder app that seeks to alleviate the problem of public toilets in Hungary by making existing toilets more visible, and displaying restrooms in clubs and bars that are open to anyone.
 
-![App screenshots](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/appfeatures.png?raw=true)
+The main features of Budipest:
+- See restrooms around you on a map and in a list
+- Check the opening hours of restrooms, and their main features (eg. free or paid, price of entry, accessibility, etc.)
+- Rate toilets or add helpful comments to them
+- Anyone can add new toilets to the app
+
+![App screenshots](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/appfeatures.png)
 
 ## Getting Started
 
-This project has been built with Dart and Flutter, so in the first place, [you may want to get your hands dirty](https://flutter.dev/docs/get-started) with these techs before contributing to Budipest.
+This project has been built with Dart and Flutter, so in the first place, [you may want to get your hands dirty](https://flutter.dev/docs/get-started) with these technologies before contributing to Budipest.
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -22,11 +28,10 @@ A few resources to get you started if this is your first Flutter project:
 - Dart and Flutter
 - [google_maps_flutter](https://pub.dev/packages/google_maps_flutter)
 
-
 ### Setting up the project
 
 Add a Google Maps API key both for Android and iOS. For instructions on how to do this, [click here](https://stackoverflow.com/a/59834585).
-For the backend, we use our own API that can be found in [this repository](https://github.com/dnlgrgly/budipest-mobile-api).
+For the backend, we use our own API that can be found in [this repository](https://github.com/dnlgrgly/budipest-api).
 
 ### Running on iOS
 
@@ -58,4 +63,5 @@ Once you're all set with connecting an Android device to your machine, you can j
 
 ## Contributing
 
-All contributions are more than welcome! If you fixed a bug, developed a feature, made a new language locale or your fixed a typo, create a pull request and I'll be sure to check it out and merge it. Once you contributed a decent amount of work (more than just fixing a few typos) into the project, I'll be sure to contact you and add you to the About us section of the app if you'd wish to.
+We created Budipest with our small team in our spare time, so any help is welcome. If you fixed a bug, made a new feature, translated the app for a new language or just fixed a typo, create a pull request and I'll be sure to check it out and merge it once it's ready to be merged.
+If you want to contribute but don't have any feature ideas, check out our [Trello board](https://trello.com/b/EZNASMNg/budipest). (If you find a card that seems interesting and isn't translated to Hungarian, don't hesitate to contact us!)
