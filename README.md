@@ -2,7 +2,7 @@
 
 ## What's the deal with the name?
 
-Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you... (Alternative name ideas: Loondon, Honolua)
+Budapest is the capital of Hungary and is our hometown. It was created in 1873 by merging Óbuda, **Buda and Pest**. **Budi**, on the other hand, is a slang word for toilets. The rest is up to you... (Alternative name ideas would include Loondon or Honolua)
 
 ## App features
 Budipest is a community-based toilet finder app that seeks to alleviate the problem of public toilets in Hungary by making existing toilets more visible, and displaying restrooms in clubs and bars that are open to anyone.
