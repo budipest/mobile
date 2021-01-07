@@ -170,7 +170,12 @@ class _AddToiletState extends State<AddToilet> {
         location.longitude,
       );
 
-      await provider.addToilet(data);
+      try {
+        await provider.addToilet(data);
+      } catch (error) {
+        print(error);
+        Navigator.of(context).pop();
+      }
 
       setState(() {
         isLoading = false;
