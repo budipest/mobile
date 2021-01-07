@@ -54,20 +54,20 @@ class ToiletModel extends ChangeNotifier {
 
     try {
       toilets = await API.getToilets();
+
+      toilets.forEach((item) {
+        _toilets.add(item);
+      });
+
+      _location.onLocationChanged.listen((LocationData location) {
+        orderToilets(location);
+      });
     } catch (error) {
       print(error);
       _appError = FlutterI18n.translate(_globalContext, "error.data");
       notifyListeners();
       return;
     }
-
-    toilets.forEach((item) {
-      _toilets.add(item);
-    });
-
-    _location.onLocationChanged.listen((LocationData location) {
-      orderToilets(location);
-    });
   }
 
   Toilet processToilet(Toilet raw) {
@@ -126,14 +126,14 @@ class ToiletModel extends ChangeNotifier {
 
     try {
       addedToilet = await API.addToilet(item);
+
+      addedToilet = processToilet(addedToilet);
+      _toilets.add(addedToilet);
+      selectToilet(addedToilet);
     } catch (error) {
       print(error);
       showErrorSnackBar("error.onServer");
     }
-
-    addedToilet = processToilet(addedToilet);
-    _toilets.add(addedToilet);
-    selectToilet(addedToilet);
   }
 
   void selectToilet(Toilet item) {
@@ -146,18 +146,18 @@ class ToiletModel extends ChangeNotifier {
 
     try {
       updatedToilet = await API.voteToilet(_selected.id, _userId, vote);
+
+      final int index = _toilets.indexOf(_selected);
+
+      updatedToilet = processToilet(updatedToilet);
+      _toilets[index] = updatedToilet;
+      _selected = updatedToilet;
+
+      notifyListeners();
     } catch (error) {
       print(error);
       showErrorSnackBar("error.onServer");
     }
-
-    final int index = _toilets.indexOf(_selected);
-
-    updatedToilet = processToilet(updatedToilet);
-    _toilets[index] = updatedToilet;
-    _selected = updatedToilet;
-
-    notifyListeners();
   }
 
   Future<void> addNote(String note) async {
@@ -165,18 +165,18 @@ class ToiletModel extends ChangeNotifier {
 
     try {
       updatedToilet = await API.addNote(_selected.id, _userId, note);
+
+      final int index = _toilets.indexOf(_selected);
+
+      updatedToilet = processToilet(updatedToilet);
+      _toilets[index] = updatedToilet;
+      _selected = updatedToilet;
+
+      notifyListeners();
     } catch (error) {
       print(error);
       showErrorSnackBar("error.onServer");
     }
-
-    final int index = _toilets.indexOf(_selected);
-
-    updatedToilet = processToilet(updatedToilet);
-    _toilets[index] = updatedToilet;
-    _selected = updatedToilet;
-
-    notifyListeners();
   }
 
   Future<void> removeNote() async {
@@ -184,18 +184,18 @@ class ToiletModel extends ChangeNotifier {
 
     try {
       updatedToilet = await API.removeNote(_selected.id, _userId);
+
+      final int index = _toilets.indexOf(_selected);
+
+      updatedToilet = processToilet(updatedToilet);
+      _toilets[index] = updatedToilet;
+      _selected = updatedToilet;
+
+      notifyListeners();
     } catch (error) {
       print(error);
       showErrorSnackBar("error.onServer");
     }
-
-    final int index = _toilets.indexOf(_selected);
-
-    updatedToilet = processToilet(updatedToilet);
-    _toilets[index] = updatedToilet;
-    _selected = updatedToilet;
-
-    notifyListeners();
   }
 
   void showErrorSnackBar(String errorCode) {
@@ -205,7 +205,7 @@ class ToiletModel extends ChangeNotifier {
           FlutterI18n.translate(_globalContext, errorCode),
         ),
         backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 10),
         behavior: SnackBarBehavior.floating,
       ),
     );
