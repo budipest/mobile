@@ -38,6 +38,8 @@ class _AddToiletState extends State<AddToilet> {
 
   List<Tag> tags = List<Tag>();
 
+  bool isLoading = false;
+
   void onNameChanged(String text) {
     setState(() {
       name = text;
@@ -143,6 +145,10 @@ class _AddToiletState extends State<AddToilet> {
 
   void onFABPressed(ToiletModel provider) async {
     if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
+      setState(() {
+        isLoading = true;
+      });
+
       Toilet data = Toilet.createNew(
         name,
         provider.userId,
@@ -156,7 +162,11 @@ class _AddToiletState extends State<AddToilet> {
         location.longitude,
       );
 
-      provider.addToilet(data);
+      await provider.addToilet(data);
+
+      setState(() {
+        isLoading = false;
+      });
 
       Navigator.of(context).pop();
     } else {
@@ -179,6 +189,7 @@ class _AddToiletState extends State<AddToilet> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ToiletModel>(context, listen: false);
+    final dimensions = MediaQuery.of(context).size;
 
     if (location == null) {
       location = LatLng(
@@ -187,46 +198,76 @@ class _AddToiletState extends State<AddToilet> {
       );
     }
 
-    return BlackLayoutContainer(
-      context: context,
-      title: FlutterI18n.translate(context, "addToilet"),
-      fab: FloatingActionButton.extended(
-        onPressed: () => onFABPressed(provider),
-        backgroundColor: Colors.black,
-        label: Text(FlutterI18n.translate(context, "continue")),
-        icon: Icon(Icons.navigate_next),
-      ),
-      child: PageView(
-        controller: _controller,
-        pageSnapping: true,
-        physics: _controller.hasClients
-            ? _controller.offset < 100
-                ? NeverScrollableScrollPhysics()
-                : null
-            : NeverScrollableScrollPhysics(),
-        children: <Widget>[
-          AddToiletLocation(onLocationChanged, location),
-          AddToiletName(name, onNameChanged),
-          AddToiletCategory(onCategoryChanged, category),
-          AddToiletEntryMethod(
-            onEntryMethodChanged,
-            entryMethod,
-            price,
-            onPriceChanged,
-            code,
-            onCodeChanged,
-            hasEUR,
-            toggleEUR,
+    return Stack(
+      children: [
+        BlackLayoutContainer(
+          context: context,
+          title: FlutterI18n.translate(context, "addToilet"),
+          fab: FloatingActionButton.extended(
+            onPressed: () => onFABPressed(provider),
+            backgroundColor: Colors.black,
+            label: Text(FlutterI18n.translate(context, "continue")),
+            icon: Icon(Icons.navigate_next),
           ),
-          AddToiletOpenHours(
-            onOpenHoursChanged,
-            onNonStopChanged,
-            openHours,
-            isNonStop,
+          child: PageView(
+            controller: _controller,
+            pageSnapping: true,
+            physics: _controller.hasClients
+                ? _controller.offset < 100
+                    ? NeverScrollableScrollPhysics()
+                    : null
+                : NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              AddToiletLocation(onLocationChanged, location),
+              AddToiletName(name, onNameChanged),
+              AddToiletCategory(onCategoryChanged, category),
+              AddToiletEntryMethod(
+                onEntryMethodChanged,
+                entryMethod,
+                price,
+                onPriceChanged,
+                code,
+                onCodeChanged,
+                hasEUR,
+                toggleEUR,
+              ),
+              AddToiletOpenHours(
+                onOpenHoursChanged,
+                onNonStopChanged,
+                openHours,
+                isNonStop,
+              ),
+              AddToiletTags(onTagToggled, tags),
+            ],
           ),
-          AddToiletTags(onTagToggled, tags),
-        ],
-      ),
+        ),
+        isLoading
+            ? Stack(
+                children: [
+                  Opacity(
+                    opacity: 0.5,
+                    child: Container(
+                      color: Colors.black,
+                      width: dimensions.width,
+                      height: dimensions.height,
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.all(25),
+                      width: 80,
+                      height: 80,
+                      child: CircularProgressIndicator(),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(45),
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Container(),
+      ],
     );
   }
 }
