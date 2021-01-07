@@ -18,6 +18,7 @@ class Home extends StatelessWidget {
 
   final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   final PanelController _pc = PanelController();
+  ScrollController _panelScrollController;
 
   void onBottomBarDrag(double val) {
     _notifier.value = val;
@@ -30,6 +31,23 @@ class Home extends StatelessWidget {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle.light,
       );
+    }
+  }
+
+  void backHandler(ToiletModel provider) {
+    if (provider.selectedToilet != null) {
+      provider.selectToilet(null);
+    } else {
+      if (_notifier.value > 0.99) {
+        _panelScrollController.animateTo(
+          0,
+          duration: Duration(milliseconds: 100),
+          curve: Curves.easeInOut,
+        );
+        _pc.close();
+      } else {
+        _scaffoldKey.currentState.openDrawer();
+      }
     }
   }
 
@@ -74,13 +92,19 @@ class Home extends StatelessWidget {
             panelSnapping: true,
             minHeight: _bottomBarMinHeight,
             maxHeight: _screenHeight,
-            panelBuilder: (ScrollController sc) => AnimatedBuilder(
-              animation: _notifier,
-              builder: (context, _) => BottomBar(
-                _notifier.value < 0.3 ? 0 : (1 / 0.7) * (_notifier.value - 0.3),
-                sc,
-              ),
-            ),
+            panelBuilder: (ScrollController sc) {
+              _panelScrollController = sc;
+
+              return AnimatedBuilder(
+                animation: _notifier,
+                builder: (context, _) => BottomBar(
+                  _notifier.value < 0.3
+                      ? 0
+                      : (1 / 0.7) * (_notifier.value - 0.3),
+                  sc,
+                ),
+              );
+            },
             onPanelSlide: (double val) => onBottomBarDrag(val),
             body: Align(
               alignment: Alignment.topCenter,
@@ -153,17 +177,7 @@ class Home extends StatelessWidget {
                                 : Colors.white,
                         size: 30.0,
                       ),
-                      onPressed: () {
-                        if (_selectedToilet != null) {
-                          _toiletProvider.selectToilet(null);
-                        } else {
-                          if (_notifier.value > 0.99) {
-                            _pc.close();
-                          } else {
-                            _scaffoldKey.currentState.openDrawer();
-                          }
-                        }
-                      },
+                      onPressed: () => backHandler(_toiletProvider),
                     ),
                   ),
                 ),
