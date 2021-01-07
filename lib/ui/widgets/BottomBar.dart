@@ -94,7 +94,9 @@ class BottomBar extends StatelessWidget {
       removeTop: true,
       child: ListView(
         controller: sc,
-        physics: scrollProgress == 0 ? NeverScrollableScrollPhysics() : ClampingScrollPhysics(),
+        physics: scrollProgress == 0
+            ? NeverScrollableScrollPhysics()
+            : ClampingScrollPhysics(),
         children: <Widget>[
           Container(
             color: Colors.black,

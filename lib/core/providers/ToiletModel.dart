@@ -70,14 +70,16 @@ class ToiletModel extends ChangeNotifier {
     });
   }
 
+  Toilet processToilet(Toilet raw) {
+    raw.calculateDistance(_userLocation.latitude, _userLocation.longitude);
+    raw.openState.updateState(_globalContext);
+    return raw;
+  }
+
   void orderToilets(LocationData location) async {
     _userLocation = location;
 
-    _toilets.forEach((Toilet toilet) {
-      toilet.calculateDistance(_userLocation.latitude, _userLocation.longitude);
-      toilet.openState.updateState(_globalContext);
-    });
-
+    _toilets.forEach((Toilet toilet) => processToilet(toilet));
     _toilets.sort((a, b) => a.distance.compareTo(b.distance));
 
     notifyListeners();
@@ -129,12 +131,7 @@ class ToiletModel extends ChangeNotifier {
       showErrorSnackBar("error.onServer");
     }
 
-    addedToilet.calculateDistance(
-      _userLocation.latitude,
-      _userLocation.longitude,
-    );
-    addedToilet.openState.updateState(_globalContext);
-
+    addedToilet = processToilet(addedToilet);
     _toilets.add(addedToilet);
     selectToilet(addedToilet);
   }
@@ -156,11 +153,7 @@ class ToiletModel extends ChangeNotifier {
 
     final int index = _toilets.indexOf(_selected);
 
-    updatedToilet.calculateDistance(
-      _userLocation.latitude,
-      _userLocation.longitude,
-    );
-
+    updatedToilet = processToilet(updatedToilet);
     _toilets[index] = updatedToilet;
     _selected = updatedToilet;
 
@@ -179,11 +172,7 @@ class ToiletModel extends ChangeNotifier {
 
     final int index = _toilets.indexOf(_selected);
 
-    updatedToilet.calculateDistance(
-      _userLocation.latitude,
-      _userLocation.longitude,
-    );
-
+    updatedToilet = processToilet(updatedToilet);
     _toilets[index] = updatedToilet;
     _selected = updatedToilet;
 
@@ -202,11 +191,7 @@ class ToiletModel extends ChangeNotifier {
 
     final int index = _toilets.indexOf(_selected);
 
-    updatedToilet.calculateDistance(
-      _userLocation.latitude,
-      _userLocation.longitude,
-    );
-
+    updatedToilet = processToilet(updatedToilet);
     _toilets[index] = updatedToilet;
     _selected = updatedToilet;
 
