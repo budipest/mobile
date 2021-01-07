@@ -134,6 +134,6 @@ flutter:
         - asset: fonts/Muli-Regular.ttf
 
 flutter_icons:
-  android: true
+  android: false
   ios: true
   image_path: "assets/icons/icon.png"
