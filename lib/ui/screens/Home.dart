@@ -34,9 +34,10 @@ class Home extends StatelessWidget {
     }
   }
 
-  void backHandler(ToiletModel provider) {
+  bool backHandler(bool physicalBack, ToiletModel provider) {
     if (provider.selectedToilet != null) {
       provider.selectToilet(null);
+      return false;
     } else {
       if (_notifier.value > 0.99) {
         _panelScrollController.animateTo(
@@ -45,8 +46,14 @@ class Home extends StatelessWidget {
           curve: Curves.easeInOut,
         );
         _pc.close();
+        return false;
       } else {
-        _scaffoldKey.currentState.openDrawer();
+        if (!physicalBack) {
+          _scaffoldKey.currentState.openDrawer();
+          return false;
+        } else {
+          return true;
+        }
       }
     }
   }
@@ -81,110 +88,115 @@ class Home extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: Sidebar(),
-      body: Stack(
-        children: <Widget>[
-          ErrorProvider(),
-          SlidingUpPanel(
-            controller: _pc,
-            panelSnapping: true,
-            minHeight: _bottomBarMinHeight,
-            maxHeight: _screenHeight,
-            panelBuilder: (ScrollController sc) {
-              _panelScrollController = sc;
+    return WillPopScope(
+      onWillPop: () async {
+        return backHandler(true, _toiletProvider);
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: Sidebar(),
+        body: Stack(
+          children: <Widget>[
+            ErrorProvider(),
+            SlidingUpPanel(
+              controller: _pc,
+              panelSnapping: true,
+              minHeight: _bottomBarMinHeight,
+              maxHeight: _screenHeight,
+              panelBuilder: (ScrollController sc) {
+                _panelScrollController = sc;
 
-              return AnimatedBuilder(
-                animation: _notifier,
-                builder: (context, _) => BottomBar(
-                  _notifier.value < 0.3
-                      ? 0
-                      : (1 / 0.7) * (_notifier.value - 0.3),
-                  sc,
-                ),
-              );
-            },
-            onPanelSlide: (double val) => onBottomBarDrag(val),
-            body: Align(
-              alignment: Alignment.topCenter,
-              child: SizedBox(
-                width: _screenWidth,
-                height: _screenHeight - _bottomBarMinHeight,
-                child: MapWidget(key: _mapKey),
-              ),
-            ),
-          ),
-          AnimatedBuilder(
-            animation: _notifier,
-            builder: (context, _) => Positioned(
-              right: 0,
-              bottom: (_screenHeight *
-                      (_notifier.value * (_hasSelected ? 0.85 : 0.7))) +
-                  (_bottomBarMinHeight + 20),
-              child: RawMaterialButton(
-                shape: CircleBorder(),
-                fillColor: Colors.white,
-                elevation: 12.5,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.my_location,
-                    color: Colors.grey[800],
-                    size: 27.5,
-                  ),
-                ),
-                onPressed: () {
-                  _mapKey.currentState.animateToLocation(
-                    _toiletProvider.location.latitude,
-                    _toiletProvider.location.longitude,
-                  );
-                },
-              ),
-            ),
-          ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-                vertical: 20.0,
-              ),
-              child: Container(
-                width: 50.0,
-                height: 50.0,
-                child: AnimatedBuilder(
+                return AnimatedBuilder(
                   animation: _notifier,
-                  builder: (context, _) => Hero(
-                    tag: "materialCloseButton",
-                    child: RawMaterialButton(
-                      shape: CircleBorder(),
-                      fillColor: _notifier.value > 0.99
-                          ? Colors.white
-                          : _hasSelected
-                              ? Colors.white
-                              : Colors.black,
-                      elevation: 5.0,
-                      child: Icon(
-                        _notifier.value > 0.99
-                            ? Icons.close
+                  builder: (context, _) => BottomBar(
+                    _notifier.value < 0.3
+                        ? 0
+                        : (1 / 0.7) * (_notifier.value - 0.3),
+                    sc,
+                  ),
+                );
+              },
+              onPanelSlide: (double val) => onBottomBarDrag(val),
+              body: Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  width: _screenWidth,
+                  height: _screenHeight - _bottomBarMinHeight,
+                  child: MapWidget(key: _mapKey),
+                ),
+              ),
+            ),
+            AnimatedBuilder(
+              animation: _notifier,
+              builder: (context, _) => Positioned(
+                right: 0,
+                bottom: (_screenHeight *
+                        (_notifier.value * (_hasSelected ? 0.85 : 0.7))) +
+                    (_bottomBarMinHeight + 20),
+                child: RawMaterialButton(
+                  shape: CircleBorder(),
+                  fillColor: Colors.white,
+                  elevation: 12.5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.my_location,
+                      color: Colors.grey[800],
+                      size: 27.5,
+                    ),
+                  ),
+                  onPressed: () {
+                    _mapKey.currentState.animateToLocation(
+                      _toiletProvider.location.latitude,
+                      _toiletProvider.location.longitude,
+                    );
+                  },
+                ),
+              ),
+            ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 20.0,
+                ),
+                child: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  child: AnimatedBuilder(
+                    animation: _notifier,
+                    builder: (context, _) => Hero(
+                      tag: "materialCloseButton",
+                      child: RawMaterialButton(
+                        shape: CircleBorder(),
+                        fillColor: _notifier.value > 0.99
+                            ? Colors.white
                             : _hasSelected
-                                ? Icons.menu
-                                : Icons.close,
-                        color: _notifier.value > 0.99
-                            ? Colors.black
-                            : _hasSelected
-                                ? Colors.black
-                                : Colors.white,
-                        size: 30.0,
+                                ? Colors.white
+                                : Colors.black,
+                        elevation: 5.0,
+                        child: Icon(
+                          _notifier.value > 0.99
+                              ? Icons.close
+                              : _hasSelected
+                                  ? Icons.menu
+                                  : Icons.close,
+                          color: _notifier.value > 0.99
+                              ? Colors.black
+                              : _hasSelected
+                                  ? Colors.black
+                                  : Colors.white,
+                          size: 30.0,
+                        ),
+                        onPressed: () => backHandler(false, _toiletProvider),
                       ),
-                      onPressed: () => backHandler(_toiletProvider),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

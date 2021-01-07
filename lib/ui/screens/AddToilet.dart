@@ -133,6 +133,14 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
+  void previousPage() {
+    FocusScope.of(context).requestFocus(FocusNode());
+    _controller.previousPage(
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+    );
+  }
+
   void nextPage() {
     if (validate()) {
       FocusScope.of(context).requestFocus(FocusNode());
@@ -198,76 +206,86 @@ class _AddToiletState extends State<AddToilet> {
       );
     }
 
-    return Stack(
-      children: [
-        BlackLayoutContainer(
-          context: context,
-          title: FlutterI18n.translate(context, "addToilet"),
-          fab: FloatingActionButton.extended(
-            onPressed: () => onFABPressed(provider),
-            backgroundColor: Colors.black,
-            label: Text(FlutterI18n.translate(context, "continue")),
-            icon: Icon(Icons.navigate_next),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_controller.offset == 0) {
+          return true;
+        } else {
+          previousPage();
+          return false;
+        }
+      },
+      child: Stack(
+        children: [
+          BlackLayoutContainer(
+            context: context,
+            title: FlutterI18n.translate(context, "addToilet"),
+            fab: FloatingActionButton.extended(
+              onPressed: () => onFABPressed(provider),
+              backgroundColor: Colors.black,
+              label: Text(FlutterI18n.translate(context, "continue")),
+              icon: Icon(Icons.navigate_next),
+            ),
+            child: PageView(
+              controller: _controller,
+              pageSnapping: true,
+              physics: _controller.hasClients
+                  ? _controller.offset < 100
+                      ? NeverScrollableScrollPhysics()
+                      : null
+                  : NeverScrollableScrollPhysics(),
+              children: <Widget>[
+                AddToiletLocation(onLocationChanged, location),
+                AddToiletName(name, onNameChanged),
+                AddToiletCategory(onCategoryChanged, category),
+                AddToiletEntryMethod(
+                  onEntryMethodChanged,
+                  entryMethod,
+                  price,
+                  onPriceChanged,
+                  code,
+                  onCodeChanged,
+                  hasEUR,
+                  toggleEUR,
+                ),
+                AddToiletOpenHours(
+                  onOpenHoursChanged,
+                  onNonStopChanged,
+                  openHours,
+                  isNonStop,
+                ),
+                AddToiletTags(onTagToggled, tags),
+              ],
+            ),
           ),
-          child: PageView(
-            controller: _controller,
-            pageSnapping: true,
-            physics: _controller.hasClients
-                ? _controller.offset < 100
-                    ? NeverScrollableScrollPhysics()
-                    : null
-                : NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              AddToiletLocation(onLocationChanged, location),
-              AddToiletName(name, onNameChanged),
-              AddToiletCategory(onCategoryChanged, category),
-              AddToiletEntryMethod(
-                onEntryMethodChanged,
-                entryMethod,
-                price,
-                onPriceChanged,
-                code,
-                onCodeChanged,
-                hasEUR,
-                toggleEUR,
-              ),
-              AddToiletOpenHours(
-                onOpenHoursChanged,
-                onNonStopChanged,
-                openHours,
-                isNonStop,
-              ),
-              AddToiletTags(onTagToggled, tags),
-            ],
-          ),
-        ),
-        isLoading
-            ? Stack(
-                children: [
-                  Opacity(
-                    opacity: 0.5,
-                    child: Container(
-                      color: Colors.black,
-                      width: dimensions.width,
-                      height: dimensions.height,
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      padding: EdgeInsets.all(25),
-                      width: 80,
-                      height: 80,
-                      child: CircularProgressIndicator(),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(45),
-                        color: Colors.white,
+          isLoading
+              ? Stack(
+                  children: [
+                    Opacity(
+                      opacity: 0.5,
+                      child: Container(
+                        color: Colors.black,
+                        width: dimensions.width,
+                        height: dimensions.height,
                       ),
                     ),
-                  ),
-                ],
-              )
-            : Container(),
-      ],
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.all(25),
+                        width: 80,
+                        height: 80,
+                        child: CircularProgressIndicator(),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(45),
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 }
