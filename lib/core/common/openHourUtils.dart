@@ -74,7 +74,7 @@ class OpenStateDetails {
         if (todayFirst > currentTime) {
           currentlyPast = yesterdayLastIndex;
         } else if (todayLast < currentTime) {
-          currentlyPast = todayLast;
+          currentlyPast = todayLastIndex;
         }
       }
     } else {
@@ -106,6 +106,7 @@ class OpenStateDetails {
 
     for (int i = currentlyPast + 1; second == null; i++) {
       i = handleDayIndexOverflow(i);
+      print(i);
 
       bool isFirstValueToday = i % 2 == 0;
 
@@ -151,12 +152,15 @@ int handleDayOverflow(int i) {
 }
 
 int handleDayIndexOverflow(int i) {
+  print("handleDayIndexOverflow: $i");
   // Sunday => Monday overflow
   if (i > 13) {
     i -= 14;
   } else if (i < 0) {
     i += 14;
   }
+
+  print("handleDayIndexOverflow (2): $i");
 
   return i;
 }
