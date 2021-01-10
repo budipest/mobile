@@ -40,6 +40,8 @@ class _AddToiletState extends State<AddToilet> {
 
   bool isLoading = false;
 
+  int lastValidated = 1;
+
   void onNameChanged(String text) {
     setState(() {
       name = text;
@@ -109,14 +111,11 @@ class _AddToiletState extends State<AddToilet> {
     });
   }
 
-  bool validate() {
-    int position =
-        (_controller.offset / MediaQuery.of(context).size.width).round();
-
+  bool validate(int position) {
     switch (position) {
       case 1:
         {
-          return name != null;
+          return name != null && name != "";
         }
       case 2:
         {
@@ -141,34 +140,54 @@ class _AddToiletState extends State<AddToilet> {
     );
   }
 
-  void nextPage() {
-    if (validate()) {
+  void nextPage(ToiletModel provider) {
+    int position =
+        (_controller.offset / MediaQuery.of(context).size.width).floor();
+
+    if (validate(position)) {
+      if (position + 1 >= lastValidated) {
+        setState(() {
+          lastValidated = position + 1;
+        });
+      }
+
       FocusScope.of(context).requestFocus(FocusNode());
+
       _controller.nextPage(
         duration: Duration(milliseconds: 200),
         curve: Curves.easeInOut,
       );
+    } else {
+      provider.showErrorSnackBar("error.requiredFields");
     }
   }
 
-  void onFABPressed(ToiletModel provider) async {
-    if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
+  void addToilet(ToiletModel provider) async {
+    Toilet data = Toilet.createNew(
+      name,
+      provider.userId,
+      category,
+      isNonStop ? [0, 1440] : openHours,
+      tags,
+      entryMethod,
+      price,
+      code,
+      location.latitude,
+      location.longitude,
+    );
+
+    bool isValid = true;
+
+    for (int i = 1; i < 4; i++) {
+      if (!validate(i)) {
+        isValid = false;
+      }
+    }
+
+    if (isValid) {
       setState(() {
         isLoading = true;
       });
-
-      Toilet data = Toilet.createNew(
-        name,
-        provider.userId,
-        category,
-        isNonStop ? [0, 1440] : openHours,
-        tags,
-        entryMethod,
-        price,
-        code,
-        location.latitude,
-        location.longitude,
-      );
 
       try {
         await provider.addToilet(data);
@@ -183,7 +202,15 @@ class _AddToiletState extends State<AddToilet> {
 
       Navigator.of(context).pop();
     } else {
-      nextPage();
+      provider.showErrorSnackBar("error.missingFields");
+    }
+  }
+
+  void onFABPressed(ToiletModel provider) {
+    if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
+      addToilet(provider);
+    } else {
+      nextPage(provider);
     }
   }
 
@@ -210,6 +237,32 @@ class _AddToiletState extends State<AddToilet> {
         provider.location.longitude,
       );
     }
+
+    final List<Widget> allScreens = [
+      AddToiletLocation(onLocationChanged, location),
+      AddToiletName(name, onNameChanged),
+      AddToiletCategory(onCategoryChanged, category),
+      AddToiletEntryMethod(
+        onEntryMethodChanged,
+        entryMethod,
+        price,
+        onPriceChanged,
+        code,
+        onCodeChanged,
+        hasEUR,
+        toggleEUR,
+      ),
+      AddToiletOpenHours(
+        onOpenHoursChanged,
+        onNonStopChanged,
+        openHours,
+        isNonStop,
+      ),
+      AddToiletTags(onTagToggled, tags),
+    ];
+
+    final List<Widget> screens =
+        allScreens.getRange(0, lastValidated + 1).toList();
 
     return WillPopScope(
       onWillPop: () async {
@@ -239,28 +292,7 @@ class _AddToiletState extends State<AddToilet> {
                       ? NeverScrollableScrollPhysics()
                       : null
                   : NeverScrollableScrollPhysics(),
-              children: <Widget>[
-                AddToiletLocation(onLocationChanged, location),
-                AddToiletName(name, onNameChanged),
-                AddToiletCategory(onCategoryChanged, category),
-                AddToiletEntryMethod(
-                  onEntryMethodChanged,
-                  entryMethod,
-                  price,
-                  onPriceChanged,
-                  code,
-                  onCodeChanged,
-                  hasEUR,
-                  toggleEUR,
-                ),
-                AddToiletOpenHours(
-                  onOpenHoursChanged,
-                  onNonStopChanged,
-                  openHours,
-                  isNonStop,
-                ),
-                AddToiletTags(onTagToggled, tags),
-              ],
+              children: screens,
             ),
           ),
           isLoading

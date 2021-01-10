@@ -94,6 +94,8 @@
     "title": "Itt valami bűzlik...",
     "location": "Nem találunk téged. Nem tudjuk hogy hol vagy, így nem működik az app. Lehet hogy nem adtál nekünk engedélyt erre?",
     "data": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?",
-    "onServer": "A szerverünknél mostanában nem megy le a WC, emiatt picit elfoglalt. Kérjük, próbáld újra később!"
+    "onServer": "A szerverünknél mostanában nem megy le a WC, emiatt picit elfoglalt. Kérjük, próbáld újra később!",
+    "requiredFields": "Ezt a mezőt nem hagyhatod üresen",
+    "missingFields": "Néhány kitöltendő mező üresen lett hagyva. Kérjük ellenőrizd, hogy mindent kitöltöttél-e."
   }
 }
