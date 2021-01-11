@@ -22,7 +22,8 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    final ToiletModel provider = Provider.of<ToiletModel>(context, listen: false);
+    final ToiletModel provider =
+        Provider.of<ToiletModel>(context, listen: false);
     final Toilet toilet = provider.selectedToilet;
 
     return BlackLayoutContainer(
@@ -75,8 +76,8 @@ class _AddNoteState extends State<AddNote> {
                         ),
                         child: Button(
                           FlutterI18n.translate(context, "send"),
-                          () {
-                            provider.addNote(note);
+                          () async {
+                            await provider.addNote(note);
                             Navigator.of(context).pop();
                           },
                           backgroundColor: Colors.black,

@@ -64,9 +64,9 @@ class Home extends StatelessWidget {
     final _selectedToilet = _toiletProvider.selectedToilet;
     final _screenHeight = MediaQuery.of(context).size.height;
     final _screenWidth = MediaQuery.of(context).size.width;
-    final _hasSelected = _selectedToilet == null;
+    final _hasSelected = _selectedToilet != null;
     final _bottomBarMinHeight =
-        80 + _screenHeight * (_hasSelected ? 0.15 : 0.3);
+        80 + _screenHeight * (_hasSelected ? 0.3 : 0.15);
 
     if (_toiletProvider.appError != null) {
       return Scaffold(
@@ -131,7 +131,7 @@ class Home extends StatelessWidget {
               builder: (context, _) => Positioned(
                 right: 0,
                 bottom: (_screenHeight *
-                        (_notifier.value * (_hasSelected ? 0.85 : 0.7))) +
+                        (_notifier.value * (_hasSelected ? 0.7 : 0.85))) +
                     (_bottomBarMinHeight + 20),
                 child: RawMaterialButton(
                   shape: CircleBorder(),
@@ -172,20 +172,20 @@ class Home extends StatelessWidget {
                         fillColor: _notifier.value > 0.99
                             ? Colors.white
                             : _hasSelected
-                                ? Colors.white
-                                : Colors.black,
+                                ? Colors.black
+                                : Colors.white,
                         elevation: 5.0,
                         child: Icon(
                           _notifier.value > 0.99
                               ? Icons.close
                               : _hasSelected
-                                  ? Icons.menu
-                                  : Icons.close,
+                                  ? Icons.close
+                                  : Icons.menu,
                           color: _notifier.value > 0.99
                               ? Colors.black
                               : _hasSelected
-                                  ? Colors.black
-                                  : Colors.white,
+                                  ? Colors.white
+                                  : Colors.black,
                           size: 30.0,
                         ),
                         onPressed: () => backHandler(false, _toiletProvider),
