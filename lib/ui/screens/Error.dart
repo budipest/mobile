@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Error extends StatelessWidget {
-  const Error(this.text);
+  const Error(this.errorCode);
 
-  final String text;
+  final String errorCode;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class Error extends StatelessWidget {
             ),
           ),
           Text(
-            text,
+            FlutterI18n.translate(context, errorCode),
             style: TextStyle(fontSize: 18),
           ),
         ],

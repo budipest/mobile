@@ -64,7 +64,7 @@ class ToiletModel extends ChangeNotifier {
       });
     } catch (error) {
       print(error);
-      _appError = FlutterI18n.translate(_globalContext, "error.data");
+      _appError = "error.data";
       notifyListeners();
       return;
     }
@@ -72,7 +72,7 @@ class ToiletModel extends ChangeNotifier {
 
   Toilet processToilet(Toilet raw) {
     raw.calculateDistance(_userLocation.latitude, _userLocation.longitude);
-    raw.openState.updateState(_globalContext);
+    raw.openState.updateState();
     return raw;
   }
 
@@ -106,7 +106,7 @@ class ToiletModel extends ChangeNotifier {
     if (!_serviceEnabled) {
       _serviceEnabled = await _location.requestService();
       if (!_serviceEnabled) {
-        _appError = FlutterI18n.translate(_globalContext, "error.location");
+        _appError = "error.location";
         notifyListeners();
       }
     }
@@ -115,7 +115,7 @@ class ToiletModel extends ChangeNotifier {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await _location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        _appError = FlutterI18n.translate(_globalContext, "error.location");
+        _appError = "error.location";
         notifyListeners();
       }
     }

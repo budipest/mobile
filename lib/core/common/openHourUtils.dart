@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 import 'dart:async';
 import 'dart:core';
@@ -16,26 +15,28 @@ enum OpenState { OPEN, CLOSED, UNKNOWN }
 class OpenStateDetails {
   OpenState state;
   String first;
-  String second;
+  String secondString;
+  String secondKey;
+  Map secondParams;
   Color color;
   List<int> raw;
 
   OpenStateDetails(this.raw);
 
-  updateState(BuildContext context) {
+  updateState() {
     if (this.raw.every((element) => element == 0)) {
       state = OpenState.UNKNOWN;
       color = Colors.grey;
-      first = FlutterI18n.translate(context, "unknown");
-      second = "";
+      first = "unknown";
+      secondString = "";
       return;
     }
 
     if (this.raw[0] == 0 && this.raw[1] == 1440 && this.raw.length == 2) {
       state = OpenState.OPEN;
       color = Colors.green;
-      first = FlutterI18n.translate(context, "open");
-      second = "24/7";
+      first = "open";
+      secondString = "24/7";
       return;
     }
 
@@ -64,12 +65,12 @@ class OpenStateDetails {
       if (todayFirst < currentTime && currentTime < todayLast) {
         state = OpenState.OPEN;
         color = Colors.green;
-        first = FlutterI18n.translate(context, "open");
+        first = "open";
         currentlyPast = todayFirstIndex;
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
-        first = FlutterI18n.translate(context, "closed");
+        first = "closed";
 
         if (todayFirst > currentTime) {
           currentlyPast = yesterdayLastIndex;
@@ -83,7 +84,7 @@ class OpenStateDetails {
           todayLast < currentTime) {
         state = OpenState.OPEN;
         color = Colors.green;
-        first = FlutterI18n.translate(context, "open");
+        first = "open";
         if (todayLast < currentTime) {
           currentlyPast = todayLastIndex;
         } else {
@@ -92,7 +93,7 @@ class OpenStateDetails {
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
-        first = FlutterI18n.translate(context, "closed");
+        first = "closed";
         currentlyPast = todayFirstIndex;
       }
     }
@@ -100,11 +101,13 @@ class OpenStateDetails {
     if (todayFirst == 0 && todayLast == 0) {
       state = OpenState.CLOSED;
       color = Colors.red;
-      first = FlutterI18n.translate(context, "closed");
+      first = "closed";
       currentlyPast = -2;
     }
 
-    for (int i = currentlyPast + 1; second == null; i++) {
+    for (int i = currentlyPast + 1;
+        secondString == null && secondKey == null && secondParams == null;
+        i++) {
       i = handleDayIndexOverflow(i);
 
       bool isFirstValueToday = i % 2 == 0;
@@ -112,27 +115,22 @@ class OpenStateDetails {
       if (this.raw[i] != 0 ||
           (isFirstValueToday && this.raw[handleDayIndexOverflow(i + 1)] != 0)) {
         String time = minuteToHourFormat(this.raw[i]);
-        String localeKey;
         int dayIndex = (i / 2).floor();
 
         if (dayIndex == currentDayIndex) {
           // today
-          localeKey = "todayUntil";
+          secondKey = "todayUntil";
         } else if (dayIndex == handleDayOverflow(currentDayIndex + 1)) {
           // tomorrow
-          localeKey = "tomorrowUntil";
+          secondKey = "tomorrowUntil";
         } else {
           // other day
-          localeKey = "until";
+          secondKey = "until";
         }
 
-        second = FlutterI18n.translate(
-          context,
-          localeKey,
-          translationParams: Map.fromIterables(
-            ["time", "day"],
-            [time, FlutterI18n.translate(context, days[dayIndex])],
-          ),
+        secondParams = Map.fromIterables(
+          ["time", "day"],
+          [time, days[dayIndex]],
         );
       }
     }

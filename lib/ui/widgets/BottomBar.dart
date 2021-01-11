@@ -86,8 +86,34 @@ class BottomBar extends StatelessWidget {
     final provider = Provider.of<ToiletModel>(context);
     final Toilet selectedToilet = provider.selectedToilet;
     final Toilet suggestedToilet = provider.suggestedToilet;
+    final List<String> openingTimes = new List<String>();
 
     bool hasSelected = selectedToilet != null;
+
+    if (hasSelected) {
+      // setup first and second opening time strings
+      OpenStateDetails openState = selectedToilet.openState;
+
+      openingTimes.add(FlutterI18n.translate(
+            context,
+            openState.first,
+          ) +
+          " ");
+
+      if (openState.secondKey != null) {
+        Map params = openState.secondParams;
+
+        params["day"] = FlutterI18n.translate(context, params["day"]);
+
+        openingTimes.add(FlutterI18n.translate(
+          context,
+          openState.secondKey,
+          translationParams: Map.from(openState.secondParams),
+        ));
+      } else {
+        openingTimes.add(openState.secondString);
+      }
+    }
 
     return MediaQuery.removePadding(
       context: context,
@@ -219,10 +245,10 @@ class BottomBar extends StatelessWidget {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: selectedToilet.openState.first + " ",
+                                    text: openingTimes[0],
                                   ),
                                   TextSpan(
-                                    text: selectedToilet.openState.second,
+                                    text: openingTimes[1],
                                     style: TextStyle(
                                       color: Colors.grey,
                                     ),
@@ -242,7 +268,9 @@ class BottomBar extends StatelessWidget {
                                     text: selectedToilet.distance < 10000
                                         ? '${selectedToilet.distance} m'
                                         : FlutterI18n.translate(
-                                            context, "tooFar"),
+                                            context,
+                                            "tooFar",
+                                          ),
                                   ),
                                   TextSpan(
                                     text: FlutterI18n.translate(
