@@ -46,18 +46,24 @@ class _AddToiletState extends State<AddToilet> {
     setState(() {
       name = text;
     });
+
+    validatePage();
   }
 
   void onCategoryChanged(Category newCategory) {
     setState(() {
       category = newCategory;
     });
+
+    validatePage();
   }
 
   void onEntryMethodChanged(EntryMethod entryMethodValue) {
     setState(() {
       entryMethod = entryMethodValue;
     });
+
+    validatePage();
   }
 
   void toggleEUR() {
@@ -115,7 +121,7 @@ class _AddToiletState extends State<AddToilet> {
     switch (position) {
       case 1:
         {
-          return name != null && name != "";
+          return name != null && name.length > 2;
         }
       case 2:
         {
@@ -132,6 +138,27 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
+  void validatePage() {
+    int position =
+        (_controller.offset / MediaQuery.of(context).size.width).floor();
+
+    if (validate(position)) {
+      if (position >= 3) {
+        setState(() {
+          lastValidated = 5;
+        });
+      } else {
+        setState(() {
+          lastValidated = position + 1;
+        });
+      }
+    } else {
+      setState(() {
+        lastValidated = position;
+      });
+    }
+  }
+
   void previousPage() {
     FocusScope.of(context).requestFocus(FocusNode());
     _controller.previousPage(
@@ -145,12 +172,6 @@ class _AddToiletState extends State<AddToilet> {
         (_controller.offset / MediaQuery.of(context).size.width).floor();
 
     if (validate(position)) {
-      if (position + 1 >= lastValidated) {
-        setState(() {
-          lastValidated = position + 1;
-        });
-      }
-
       FocusScope.of(context).requestFocus(FocusNode());
 
       _controller.nextPage(
