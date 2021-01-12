@@ -65,16 +65,17 @@ class NoteCard extends StatelessWidget {
                       ),
                     )
                   else
-                    GestureDetector(
-                      onTap: () {
-                        // TODO: implement reporting a comment
-                        if (reportHandler != null) reportHandler();
-                      },
-                      child: Icon(
-                        Icons.flag,
-                        color: Colors.grey[700],
-                      ),
-                    )
+                    Container(),
+                    // TODO: implement reporting a comment
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     if (reportHandler != null) reportHandler();
+                    //   },
+                    //   child: Icon(
+                    //     Icons.flag,
+                    //     color: Colors.grey[700],
+                    //   ),
+                    // )
                 ],
               ),
             )
