@@ -23,7 +23,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  flutter_i18n: 0.20.1
+  flutter_i18n: 0.21.0-intl.nullsafety
   flutter_svg: 0.19.1
   sliding_up_panel: 1.0.2
 

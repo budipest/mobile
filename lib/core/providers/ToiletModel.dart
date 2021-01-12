@@ -205,7 +205,7 @@ class ToiletModel extends ChangeNotifier {
           FlutterI18n.translate(_globalContext, errorCode),
         ),
         backgroundColor: Colors.red,
-        duration: Duration(seconds: 10),
+        duration: Duration(seconds: 6),
         behavior: SnackBarBehavior.floating,
       ),
     );

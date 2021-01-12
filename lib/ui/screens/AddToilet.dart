@@ -41,6 +41,7 @@ class _AddToiletState extends State<AddToilet> {
   bool isLoading = false;
 
   int lastValidated = 1;
+  bool isOnLastScreen = false;
 
   void onNameChanged(String text) {
     setState(() {
@@ -78,12 +79,22 @@ class _AddToiletState extends State<AddToilet> {
         price["EUR"] = null;
       });
     }
+
+    validatePage();
   }
 
   void onPriceChanged(String input, String currency) {
-    setState(() {
-      price[currency] = int.parse(input);
-    });
+    if (input.length > 0) {
+      setState(() {
+        price[currency] = int.parse(input);
+      });
+    } else {
+      setState(() {
+        price[currency] = null;
+      });
+    }
+
+    validatePage();
   }
 
   void onCodeChanged(String text) {
@@ -131,7 +142,22 @@ class _AddToiletState extends State<AddToilet> {
         }
       case 3:
         {
-          return entryMethod != EntryMethod.UNKNOWN;
+          if (entryMethod == EntryMethod.UNKNOWN) {
+            return false;
+          }
+
+          if (entryMethod == EntryMethod.PRICE) {
+            print(price);
+            if (price["HUF"] == null) {
+              return false;
+            }
+
+            if (hasEUR && price["EUR"] == null) {
+              return false;
+            }
+          }
+
+          return true;
         }
       default:
         {
@@ -141,22 +167,22 @@ class _AddToiletState extends State<AddToilet> {
   }
 
   void validatePage() {
-    int position =
-        (_controller.offset / MediaQuery.of(context).size.width).floor();
+    int lastValidPosition = 4;
 
-    if (validate(position)) {
-      if (position >= 3) {
-        setState(() {
-          lastValidated = 5;
-        });
-      } else {
-        setState(() {
-          lastValidated = position + 1;
-        });
+    for (int i = 1; i < 4; i++) {
+      if (!validate(i)) {
+        lastValidPosition = i;
+        break;
       }
+    }
+
+    if (lastValidPosition > 3) {
+      setState(() {
+        lastValidated = 5;
+      });
     } else {
       setState(() {
-        lastValidated = position;
+        lastValidated = lastValidPosition;
       });
     }
   }
@@ -230,11 +256,17 @@ class _AddToiletState extends State<AddToilet> {
   }
 
   void onFABPressed(ToiletModel provider) {
-    if (_controller.offset > MediaQuery.of(context).size.width * 4.8) {
+    if (isOnLastScreen) {
       addToilet(provider);
     } else {
       nextPage(provider);
     }
+  }
+
+  void updateScreenState(int index) {
+    setState(() {
+      isOnLastScreen = index == 5;
+    });
   }
 
   @override
@@ -304,17 +336,23 @@ class _AddToiletState extends State<AddToilet> {
             fab: FloatingActionButton.extended(
               onPressed: () => onFABPressed(provider),
               backgroundColor: Colors.black,
-              label: Text(FlutterI18n.translate(context, "continue")),
+              label: Text(
+                FlutterI18n.translate(
+                  context,
+                  isOnLastScreen ? "addToilet" : "continue",
+                ),
+              ),
               icon: Icon(Icons.navigate_next),
             ),
             child: PageView(
               controller: _controller,
               pageSnapping: true,
               physics: _controller.hasClients
-                  ? _controller.offset < 100
+                  ? _controller.offset < 5
                       ? NeverScrollableScrollPhysics()
                       : null
                   : NeverScrollableScrollPhysics(),
+              onPageChanged: updateScreenState,
               children: screens,
             ),
           ),
