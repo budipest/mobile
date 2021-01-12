@@ -121,7 +121,9 @@ class _AddToiletState extends State<AddToilet> {
     switch (position) {
       case 1:
         {
-          return name != null && name.length > 2;
+          return name != null &&
+              name.length > 2 &&
+              name.replaceAll(" ", "").length > 2;
         }
       case 2:
         {
