@@ -56,6 +56,7 @@ class _AddNoteState extends State<AddNote> {
                           note = text;
                         });
                       },
+                      maxLines: null
                     ),
                   ),
                   Row(

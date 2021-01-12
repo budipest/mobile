@@ -42,6 +42,7 @@ class TextInput extends StatefulWidget {
     this.prefixText,
     this.suffixText,
     this.keyboardType = TextInputType.text,
+    this.maxLines = 1
   });
 
   final String text;
@@ -51,6 +52,7 @@ class TextInput extends StatefulWidget {
   final String prefixText;
   final String suffixText;
   final TextInputType keyboardType;
+  final int maxLines;
 
   @override
   _TextInputState createState() => _TextInputState();
@@ -91,6 +93,7 @@ class _TextInputState extends State<TextInput> {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
               child: TextField(
+                maxLines: widget.maxLines,
                 keyboardType: widget.keyboardType,
                 style: TextStyle(
                   fontSize: 18.0,
