@@ -48,16 +48,13 @@ class ToiletModel extends ChangeNotifier {
   }
 
   void initLocation() async {
-    await checkLocationPermission();
-
-    List<Toilet> toilets;
-
     try {
-      toilets = await API.getToilets();
+      final List responses = await Future.wait([
+        checkLocationPermission(),
+        API.getToilets(),
+      ]);
 
-      toilets.forEach((item) {
-        _toilets.add(item);
-      });
+      _toilets = responses[1];
 
       _location.onLocationChanged.listen((LocationData location) {
         orderToilets(location);
