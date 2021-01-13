@@ -36,7 +36,7 @@ class _AddToiletState extends State<AddToilet> {
   List<int> openHours = List<int>.filled(14, 0);
   bool isNonStop = false;
 
-  List<Tag> tags = List<Tag>();
+  List<Tag> tags = List<Tag>.empty(growable: true);
 
   bool isLoading = false;
 

@@ -51,8 +51,8 @@ class Toilet {
     this.addDate = DateTime.now();
     this.openState = OpenStateDetails(this.openHours);
 
-    this.notes = List<Note>();
-    this.votes = List<Vote>();
+    this.notes = List<Note>.empty(growable: true);
+    this.votes = List<Vote>.empty(growable: true);
   }
 
   // Named constructor
@@ -69,8 +69,8 @@ class Toilet {
     latitude = 0.0;
     longitude = 0.0;
 
-    notes = List<Note>();
-    votes = List<Vote>();
+    notes = List<Note>.empty(growable: true);
+    votes = List<Vote>.empty(growable: true);
   }
 
 
@@ -88,17 +88,17 @@ class Toilet {
     this.tags = raw["tags"] != null ? _standariseTags(raw["tags"]) : [];
     this.notes = raw["notes"] != null
         ? _standariseNotes(raw["notes"])
-        : List<Note>();
+        : List<Note>.empty(growable: true);
     this.votes = raw["votes"] != null
         ? _standariseVotes(raw["votes"])
-        : List<Vote>();
+        : List<Vote>.empty(growable: true);
     this.entryMethod = _standariseEntryMethod(raw["entryMethod"].toString()) ??
         EntryMethod.UNKNOWN;
     this.price = raw["price"] != null && raw["price"] != 0
         ? Map.from(raw["price"])
         : null;
     this.code = raw["code"] ?? null;
-    this.addDate = DateTime.parse(raw["addDate"]) ?? DateTime.now();
+    this.addDate = DateTime.parse(raw["addDate"] + 'Z') ?? DateTime.now();
   }
 
   int calculateDistance(double userLatitude, double userLongitude) {
@@ -147,7 +147,7 @@ class Toilet {
     if (input != null) {
       return List<Vote>.from(input.map((item) => Vote.fromMap(item)));
     }
-    return List<Vote>();
+    return List<Vote>.empty(growable: true);
   }
 
   static Category _standariseCategory(String input) {

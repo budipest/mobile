@@ -14,7 +14,7 @@ class AboutUs extends StatelessWidget {
   void setClipboard(BuildContext context, String text) {
     Clipboard.setData(ClipboardData(text: text));
 
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           FlutterI18n.translate(

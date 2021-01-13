@@ -15,7 +15,7 @@ class ToiletModel extends ChangeNotifier {
   String _userId;
 
   // toilets
-  List<Toilet> _toilets = List<Toilet>();
+  List<Toilet> _toilets = List<Toilet>.empty(growable: true);
   Toilet _selected;
 
   // errors
@@ -199,7 +199,7 @@ class ToiletModel extends ChangeNotifier {
   }
 
   void showErrorSnackBar(String errorCode) {
-    Scaffold.of(_globalContext).showSnackBar(
+    ScaffoldMessenger.of(_globalContext).showSnackBar(
       SnackBar(
         content: Text(
           FlutterI18n.translate(_globalContext, errorCode),

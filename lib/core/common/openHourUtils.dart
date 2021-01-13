@@ -280,7 +280,8 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         iconPath: "assets/icons/bottom/dark/tag_guests.svg",
       );
     case EntryMethod.PRICE:
-      var priceIcons = List<Widget>();
+      var priceIcons = List<Widget>.empty(growable: true);
+
       if (toilet.price != null) {
         toilet.price.forEach((dynamic currency, dynamic value) {
           priceIcons.add(
@@ -324,7 +325,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
 
 List<Widget> describeToiletIcons(
     Toilet toilet, String mode, bool isDetailed, bool smaller) {
-  var result = List<Widget>();
+  var result = List<Widget>.empty(growable: true);
 
   if (toilet == null) {
     return result;

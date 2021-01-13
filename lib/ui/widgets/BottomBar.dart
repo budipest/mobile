@@ -86,7 +86,7 @@ class BottomBar extends StatelessWidget {
     final provider = Provider.of<ToiletModel>(context);
     final Toilet selectedToilet = provider.selectedToilet;
     final Toilet suggestedToilet = provider.suggestedToilet;
-    final List<String> openingTimes = new List<String>();
+    final List<String> openingTimes = new List<String>.empty(growable: true);
 
     bool hasSelected = selectedToilet != null;
 
