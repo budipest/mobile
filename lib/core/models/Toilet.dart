@@ -98,7 +98,7 @@ class Toilet {
         ? Map.from(raw["price"])
         : null;
     this.code = raw["code"] ?? null;
-    this.addDate = DateTime.parse(raw["addDate"] + 'Z') ?? DateTime.now();
+    this.addDate = DateTime.parse(raw["addDate"]).toLocal() ?? DateTime.now();
   }
 
   int calculateDistance(double userLatitude, double userLongitude) {
@@ -119,21 +119,21 @@ class Toilet {
 
   Map<String, dynamic> toJson() {
     return {
-      "name": name,
+      "name": name.trim(),
       "userId": userId,
       "addDate": addDate.toString(),
       "category":
-          "${category.toString().substring(category.toString().indexOf('.') + 1)}",
+          "${category.toString().substring(category.toString().indexOf('.') + 1).trim()}",
       "openHours": openHours,
       "tags": {
         "WHEELCHAIR_ACCESSIBLE": tags.contains(Tag.WHEELCHAIR_ACCESSIBLE),
         "BABY_ROOM": tags.contains(Tag.BABY_ROOM)
       },
       "entryMethod": entryMethod != null
-          ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1)}"
+          ? "${entryMethod.toString().substring(entryMethod.toString().indexOf('.') + 1).trim()}"
           : null,
       "price": price["HUF"] != null ? price : null,
-      "code": code,
+      "code": code.trim(),
       "location": {
         "latitude": latitude,
         "longitude": longitude,
