@@ -66,16 +66,14 @@ class Home extends StatelessWidget {
     final _screenWidth = MediaQuery.of(context).size.width;
     final _hasSelected = _selectedToilet != null;
 
-    if (_pc.isAttached) {
-      if (_hasSelected && _pc.panelPosition != 0.175 && _pc.panelPosition != 1) {
-        print("ANIMATE UP");
+    if (_pc.isAttached  && _pc.panelPosition < 0.95) {
+      if (_hasSelected && _pc.panelPosition != 0.175) {
         _pc.animatePanelToPosition(
           0.175,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         );
-      } else if (!_hasSelected && _pc.panelPosition != 0 && _pc.panelPosition != 1) {
-        print("ANIMATE DOWN");
+      } else if (!_hasSelected && _pc.panelPosition != 0) {
         _pc.animatePanelToPosition(
           0,
           duration: const Duration(milliseconds: 200),
