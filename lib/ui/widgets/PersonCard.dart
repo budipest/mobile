@@ -18,7 +18,7 @@ class PersonCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 12, bottom: 8),
+          padding: const EdgeInsets.only(top: 12, bottom: 8),
           child: Text(
             text,
             style: TextStyle(
@@ -32,7 +32,7 @@ class PersonCard extends StatelessWidget {
           children: <Widget>[
             ...links.entries.map(
               (link) => Container(
-                margin: EdgeInsets.only(right: 8),
+                margin: const EdgeInsets.only(right: 8),
                 child: Button(
                   link.key,
                   () async {

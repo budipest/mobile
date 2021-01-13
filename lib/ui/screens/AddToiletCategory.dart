@@ -16,7 +16,7 @@ class AddToiletCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+      padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
           FlutterI18n.translate(context, "toiletType"),
@@ -27,7 +27,7 @@ class AddToiletCategory extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_general.svg",
             FlutterI18n.translate(context, "general"),
@@ -38,7 +38,7 @@ class AddToiletCategory extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_restaurant.svg",
             FlutterI18n.translate(context, "restaurant"),
@@ -49,7 +49,7 @@ class AddToiletCategory extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_shop.svg",
             FlutterI18n.translate(context, "shop"),
@@ -60,7 +60,7 @@ class AddToiletCategory extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_gas_station.svg",
             FlutterI18n.translate(context, "gasStation"),
@@ -71,7 +71,7 @@ class AddToiletCategory extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_portable.svg",
             FlutterI18n.translate(context, "portable"),

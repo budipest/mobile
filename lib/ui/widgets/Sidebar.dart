@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Sidebar extends StatelessWidget {
+  const Sidebar();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -16,7 +18,7 @@ class Sidebar extends StatelessWidget {
               bottom: 30,
               left: 25,
             ),
-            margin: EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 20),
             color: Colors.black,
             child: SizedBox(
               width: double.infinity,
@@ -41,7 +43,7 @@ class Sidebar extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 ListTile(

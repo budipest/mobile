@@ -30,7 +30,7 @@ class AddToiletEntryMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+      padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
           FlutterI18n.translate(context, "toiletEntryMethod"),
@@ -41,7 +41,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_free.svg",
             FlutterI18n.translate(context, "free"),
@@ -52,7 +52,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_paid.svg",
             FlutterI18n.translate(context, "paid"),
@@ -86,7 +86,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: InkWell(
                                 onTap: toggleEUR,
                                 child: Container(
@@ -126,7 +126,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_guests.svg",
             FlutterI18n.translate(context, "guests"),
@@ -137,7 +137,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_key.svg",
             FlutterI18n.translate(context, "key"),

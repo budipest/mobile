@@ -83,7 +83,7 @@ class NoteList extends StatelessWidget {
         child: toHeroContext.widget,
       ),
       child: Padding(
-        padding: EdgeInsets.only(top: 0, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
         child: toilet.notes.length > 0
             ? Column(
                 children: <Widget>[
@@ -124,7 +124,7 @@ class NoteList extends StatelessWidget {
                   stops: [0],
                   colors: [Colors.grey[100]],
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
               ),
       ),
     );

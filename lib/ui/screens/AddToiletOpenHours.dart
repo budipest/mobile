@@ -37,7 +37,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
+      padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
           FlutterI18n.translate(context, "openHours"),
@@ -48,7 +48,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15.0),
           child: Button(
             FlutterI18n.translate(context, "alwaysOpen"),
             () {

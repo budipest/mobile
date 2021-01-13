@@ -42,7 +42,7 @@ class ToiletDetailBar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[

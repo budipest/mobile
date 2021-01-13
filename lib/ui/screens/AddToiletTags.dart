@@ -16,7 +16,7 @@ class AddToiletTags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 45, 30, 30),
+      padding: const EdgeInsets.fromLTRB(30, 45, 30, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -29,7 +29,7 @@ class AddToiletTags extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 15.0),
+            padding: const EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_wheelchair_accessible.svg",
               FlutterI18n.translate(context, "accessible"),
@@ -40,7 +40,7 @@ class AddToiletTags extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 15.0),
+            padding: const EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_baby_room.svg",
               FlutterI18n.translate(context, "babyRoom"),

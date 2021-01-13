@@ -34,7 +34,7 @@ class _AddNoteState extends State<AddNote> {
         child: ListView(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

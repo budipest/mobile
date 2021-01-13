@@ -74,7 +74,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                             fillColor: Colors.white,
                             elevation: 5.0,
                             constraints: BoxConstraints(),
-                            padding: EdgeInsets.all(0),
+                            padding: const EdgeInsets.all(0),
                             child: Padding(
                               padding: const EdgeInsets.all(6.0),
                               child: Icon(
@@ -95,7 +95,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Padding(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 12.0, right: 18.0),
                                     child: Hero(
                                       tag: "inlineTitle",
@@ -132,7 +132,7 @@ class _BlackLayoutContainerState extends State<BlackLayoutContainer> {
                     ),
                     if (widget.title != null)
                       Padding(
-                        padding: EdgeInsets.only(top: 75, left: 4),
+                        padding: const EdgeInsets.only(top: 75, left: 4),
                         child: Hero(
                           tag: "title",
                           child: Text(

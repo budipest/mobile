@@ -42,7 +42,7 @@ class ToiletCard extends StatelessWidget {
               ),
               if (icons.length > 2)
                 Padding(
-                  padding: EdgeInsets.only(top: 7.5),
+                  padding: const EdgeInsets.only(top: 7.5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -71,7 +71,7 @@ class ToiletCard extends StatelessWidget {
         stops: [0.02, 0.02],
         colors: [toilet.openState.color, Colors.grey[200]],
       ),
-      padding: EdgeInsets.fromLTRB(25, 15, 17.5, 15),
+      padding: const EdgeInsets.fromLTRB(25, 15, 17.5, 15),
     );
   }
 }

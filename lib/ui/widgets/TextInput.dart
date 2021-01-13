@@ -91,7 +91,7 @@ class _TextInputState extends State<TextInput> {
           if (widget.prefixText != null) affix(widget.prefixText, true),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
+              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
               child: TextField(
                 maxLines: widget.maxLines,
                 keyboardType: widget.keyboardType,

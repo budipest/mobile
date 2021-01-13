@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -11,13 +12,12 @@ import '../../core/providers/ToiletModel.dart';
 import "Error.dart";
 
 class Home extends StatelessWidget {
-  Home({GlobalKey key}) : super(key: key);
-
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<MapState> _mapKey = GlobalKey<MapState>();
 
   final ValueNotifier<double> _notifier = ValueNotifier<double>(0);
   final PanelController _pc = PanelController();
+
   ScrollController _panelScrollController;
 
   void onBottomBarDrag(double val) {
@@ -65,8 +65,24 @@ class Home extends StatelessWidget {
     final _screenHeight = MediaQuery.of(context).size.height;
     final _screenWidth = MediaQuery.of(context).size.width;
     final _hasSelected = _selectedToilet != null;
-    final _bottomBarMinHeight =
-        80 + _screenHeight * (_hasSelected ? 0.3 : 0.15);
+
+    if (_pc.isAttached) {
+      if (_hasSelected && _pc.panelPosition != 0.175 && _pc.panelPosition != 1) {
+        print("ANIMATE UP");
+        _pc.animatePanelToPosition(
+          0.175,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+        );
+      } else if (!_hasSelected && _pc.panelPosition != 0 && _pc.panelPosition != 1) {
+        print("ANIMATE DOWN");
+        _pc.animatePanelToPosition(
+          0,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+        );
+      }
+    }
 
     if (_toiletProvider.appError != null) {
       return Scaffold(
@@ -88,13 +104,15 @@ class Home extends StatelessWidget {
       );
     }
 
+    final _bottomBarMinHeight = 80 + _screenHeight * 0.15;
+
     return WillPopScope(
       onWillPop: () async {
         return backHandler(true, _toiletProvider);
       },
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: Sidebar(),
+        drawer: const Sidebar(),
         body: Stack(
           children: <Widget>[
             ErrorProvider(),
@@ -103,6 +121,7 @@ class Home extends StatelessWidget {
               panelSnapping: true,
               minHeight: _bottomBarMinHeight,
               maxHeight: _screenHeight,
+              snapPoint: _hasSelected ? 0.175 : null,
               panelBuilder: (ScrollController sc) {
                 _panelScrollController = sc;
 
@@ -119,7 +138,7 @@ class Home extends StatelessWidget {
               onPanelSlide: (double val) => onBottomBarDrag(val),
               body: Align(
                 alignment: Alignment.topCenter,
-                child: SizedBox(
+                child: Container(
                   width: _screenWidth,
                   height: _screenHeight - _bottomBarMinHeight,
                   child: MapWidget(key: _mapKey),
@@ -128,10 +147,9 @@ class Home extends StatelessWidget {
             ),
             AnimatedBuilder(
               animation: _notifier,
-              builder: (context, _) => Positioned(
+              builder: (_, child) => Positioned(
                 right: 0,
-                bottom: (_screenHeight *
-                        (_notifier.value * (_hasSelected ? 0.7 : 0.85))) +
+                bottom: (_screenHeight * _notifier.value) +
                     (_bottomBarMinHeight + 20),
                 child: RawMaterialButton(
                   shape: CircleBorder(),

@@ -39,7 +39,7 @@ class AboutUs extends StatelessWidget {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(color: Colors.black),
-            padding: EdgeInsets.all(40),
+            padding: const EdgeInsets.all(40),
             child: Row(
               children: [
                 SvgPicture.asset(
@@ -70,7 +70,7 @@ class AboutUs extends StatelessWidget {
           ),
           Container(
             color: Colors.grey[300],
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             child: Center(
               child: Text(
                 FlutterI18n.translate(context, "aboutUs.budapest"),
@@ -145,11 +145,11 @@ class AboutUs extends StatelessWidget {
                 stops: [0],
                 colors: [Colors.grey[100]],
               ),
-              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -187,7 +187,7 @@ class AboutUs extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: Button(
                     FlutterI18n.translate(context, "aboutUs.github"),
                     () async {

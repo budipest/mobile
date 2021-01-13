@@ -369,7 +369,7 @@ class _AddToiletState extends State<AddToilet> {
                     ),
                     Center(
                       child: Container(
-                        padding: EdgeInsets.all(25),
+                        padding: const EdgeInsets.all(25),
                         width: 80,
                         height: 80,
                         child: CircularProgressIndicator(),

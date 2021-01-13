@@ -215,7 +215,7 @@ Widget descriptionIcon(
                   ),
             if (text != null)
               Padding(
-                padding: EdgeInsets.only(left: 12.5),
+                padding: const EdgeInsets.only(left: 12.5),
                 child: Text(
                   text,
                   style: TextStyle(
@@ -334,7 +334,7 @@ List<Widget> describeToiletIcons(
   EdgeInsets padding;
   String categoryStr = stringFromCategory(toilet.category);
 
-  padding = EdgeInsets.fromLTRB(0, 0, 10.0, 0);
+  padding = const EdgeInsets.fromLTRB(0, 0, 10.0, 0);
 
   // Add category icon
   result.add(

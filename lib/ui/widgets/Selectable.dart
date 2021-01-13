@@ -26,13 +26,13 @@ class Selectable extends StatelessWidget {
           child: InkWell(
             onTap: () => onSelect(index),
             child: Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                 children: <Widget>[
                   Row(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(right: 20.0),
+                        padding: const EdgeInsets.only(right: 20.0),
                         child: Container(
                           width: 25,
                           child: SvgPicture.asset(
@@ -53,7 +53,7 @@ class Selectable extends StatelessWidget {
                   ),
                   if (isSelected && openChildren != null)
                     Padding(
-                      padding: EdgeInsets.only(top: 15),
+                      padding: const EdgeInsets.only(top: 15),
                       child: openChildren,
                     )
                 ],

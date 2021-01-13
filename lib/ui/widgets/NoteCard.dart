@@ -27,7 +27,7 @@ class NoteCard extends StatelessWidget {
           children: <Widget>[
             if (isMine)
               Padding(
-                padding: EdgeInsets.only(bottom: 2.5),
+                padding: const EdgeInsets.only(bottom: 2.5),
                 child: Text(
                   FlutterI18n.translate(context, "myNote"),
                   style: TextStyle(
@@ -41,7 +41,7 @@ class NoteCard extends StatelessWidget {
               style: TextStyle(fontSize: 16.0),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 7.5),
+              padding: const EdgeInsets.only(top: 7.5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

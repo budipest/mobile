@@ -12,7 +12,7 @@ class ToiletRecommendationList extends StatelessWidget {
     final provider = Provider.of<ToiletModel>(context);
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0),
+      padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -24,13 +24,16 @@ class ToiletRecommendationList extends StatelessWidget {
             ),
           ),
           Container(height: 14),
-          ...provider.toilets.map(
-            (Toilet toilet) => GestureDetector(
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: provider.toilets.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) => GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                provider.selectToilet(toilet);
+                provider.selectToilet(provider.toilets[index]);
               },
-              child: ToiletCard(toilet),
+              child: ToiletCard(provider.toilets[index]),
             ),
           ),
         ],

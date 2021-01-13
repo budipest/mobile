@@ -134,7 +134,7 @@ class BottomBar extends StatelessWidget {
                   provider.selectToilet(provider.suggestedToilet);
               },
               child: Padding(
-                padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 25.0),
+                padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -307,7 +307,7 @@ class BottomBar extends StatelessWidget {
                           ),
                           // TODO: implement suggesting toilet data modifications
                           // Padding(
-                          //   padding: EdgeInsets.only(left: 12.0),
+                          //   padding: const EdgeInsets.only(left: 12.0),
                           //   child: Button(
                           //     "",
                           //     () => {print("not implemented yet")},

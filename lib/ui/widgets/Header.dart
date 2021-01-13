@@ -10,7 +10,7 @@ class Header extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(right: 10),
                     child: GestureDetector(
                         onTap: () {
                           Scaffold.of(context).openDrawer();
@@ -24,8 +24,8 @@ class Header extends StatelessWidget {
                 Icon(Icons.add, color: Colors.black45),
               ],
             ),
-            padding: EdgeInsets.all(15)),
-        margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(15)),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
       ),
     );
   }

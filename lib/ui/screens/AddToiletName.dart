@@ -15,7 +15,7 @@ class AddToiletName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(30, 45, 30, 30),
+      padding: const EdgeInsets.fromLTRB(30, 45, 30, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

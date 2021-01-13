@@ -72,7 +72,7 @@ class RatingBar extends StatelessWidget {
         ),
         Spacer(),
         Padding(
-          padding: EdgeInsets.only(right: 10.0),
+          padding: const EdgeInsets.only(right: 10.0),
           child: Button(
             upvotes.toString(),
             () => castVote(context, myVote, true),
