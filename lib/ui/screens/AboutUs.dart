@@ -70,12 +70,44 @@ class AboutUs extends StatelessWidget {
           ),
           Container(
             color: Colors.grey[300],
-            padding: const EdgeInsets.all(5),
-            child: Center(
-              child: Text(
-                FlutterI18n.translate(context, "aboutUs.budapest"),
-                style: TextStyle(fontSize: 18),
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+            child: Column(
+              children: [
+                Text(
+                  FlutterI18n.translate(context, "aboutUs.budapest"),
+                  style: TextStyle(fontSize: 18),
+                ),
+                Container(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Button(
+                      "Facebook",
+                      () async {
+                        String url = "https://facebook.com/budipestapp";
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        }
+                      },
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                    Container(width: 20),
+                    Button(
+                      "GitHub",
+                      () async {
+                        String url =
+                            "https://github.com/dnlgrgly/budipest-mobile";
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        }
+                      },
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Builder(
@@ -163,8 +195,8 @@ class AboutUs extends StatelessWidget {
                 PersonCard(
                   FlutterI18n.translate(context, "aboutUs.development"),
                   {
+                    "website": "https://dnlgrgly.com",
                     "LinkedIn": "https://www.linkedin.com/in/dnlgrgly/",
-                    "Telegram": "https://t.me/dnlgrgly",
                     "email": "mailto:dnlgrgly@gmail.com"
                   },
                 ),
@@ -175,36 +207,25 @@ class AboutUs extends StatelessWidget {
                         "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
                   },
                 ),
-                PersonCard(
-                  FlutterI18n.translate(context, "aboutUs.beta"),
-                  {},
-                ),
-                Container(height: 24),
+                Container(height: 20),
                 Text(
-                  FlutterI18n.translate(context, "aboutUs.feedback"),
-                  style: TextStyle(fontSize: 18),
+                  FlutterI18n.translate(context, "aboutUs.betaTitle"),
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  FlutterI18n.translate(context, "aboutUs.betaNames"),
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
                 ),
                 Container(height: 8),
                 Text(
                   FlutterI18n.translate(context, "aboutUs.opensource"),
                   style: TextStyle(
-                    fontStyle: FontStyle.italic,
                     fontSize: 18,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: Button(
-                    FlutterI18n.translate(context, "aboutUs.github"),
-                    () async {
-                      String url =
-                          "https://github.com/dnlgrgly/budipest-mobile";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      }
-                    },
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
                   ),
                 ),
               ],
