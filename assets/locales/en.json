@@ -73,7 +73,7 @@
     "title": "About us",
     "development": "Development: Daniel Gergely",
     "design": "Design: David Jobbagy",
-    "special": "Special thanks to Balazs Szulovszky",
+    "beta": "Special thanks to the beta testers: Balázs Szulovszky, Dániel Egri, Dániel Lesti, Gergő Pór, Péter Hajdu, Ákos Horváth, Lili Tóth, Dominik Nagy, Vendel Gáspár",
     "budapest": "Made with ❤️ in Budapest",
     "feedback": "Feedback: dnlgrgly@gmail.com",
     "opensource": "This project was made with Flutter and is open-source.",

@@ -147,7 +147,6 @@ class _AddToiletState extends State<AddToilet> {
           }
 
           if (entryMethod == EntryMethod.PRICE) {
-            print(price);
             if (price["HUF"] == null) {
               return false;
             }

@@ -161,23 +161,29 @@ class AboutUs extends StatelessWidget {
                   ),
                 ),
                 PersonCard(
-                    FlutterI18n.translate(context, "aboutUs.development"), {
-                  "LinkedIn": "https://www.linkedin.com/in/dnlgrgly/",
-                  "Telegram": "https://t.me/dnlgrgly",
-                  "email": "mailto:dnlgrgly@gmail.com"
-                }),
-                PersonCard(FlutterI18n.translate(context, "aboutUs.design"), {
-                  "LinkedIn":
-                      "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
-                }),
-                PersonCard(FlutterI18n.translate(context, "aboutUs.special"), {
-                  "website": "http://sites.google.com/view/b95/",
-                  "Telegram": "https://t.me/bala7s",
-                  "email": "mailto:usbee@pm.me"
-                }),
+                  FlutterI18n.translate(context, "aboutUs.development"),
+                  {
+                    "LinkedIn": "https://www.linkedin.com/in/dnlgrgly/",
+                    "Telegram": "https://t.me/dnlgrgly",
+                    "email": "mailto:dnlgrgly@gmail.com"
+                  },
+                ),
+                PersonCard(
+                  FlutterI18n.translate(context, "aboutUs.design"),
+                  {
+                    "LinkedIn":
+                        "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
+                  },
+                ),
+                PersonCard(
+                  FlutterI18n.translate(context, "aboutUs.beta"),
+                  {},
+                ),
                 Container(height: 24),
-                Text(FlutterI18n.translate(context, "aboutUs.feedback"),
-                    style: TextStyle(fontSize: 18)),
+                Text(
+                  FlutterI18n.translate(context, "aboutUs.feedback"),
+                  style: TextStyle(fontSize: 18),
+                ),
                 Container(height: 8),
                 Text(
                   FlutterI18n.translate(context, "aboutUs.opensource"),
