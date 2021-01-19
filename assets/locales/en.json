@@ -91,10 +91,14 @@
   },
   "error": {
     "title": "Something stinks in here...",
-    "location": "We can't find you. Or at least we don't know where you're at. Maybe you declined the location permissions?",
     "data": "We couldn't retrieve data from the server. Maybe check your connection?",
     "onServer": "The server can't flush the toilet right now and they're busy with that. Please check back later",
     "requiredFields": "You can't leave this field empty",
     "missingFields": "Some required fields are missing. Please make sure that you filled out everything."
+  },
+  "noLocation": {
+    "title": "You did not enable location services",
+    "card-title": "Toilets will appear here, in order of their distance from you",
+    "card-description": "Allow Budipest to use your location so that we can recommend you the closest opening toilet, show toilets in a list, or show on-map directions to a toilet. To enable location permissions, open the Settings app, search for Budipest and select 'While Using The App' for the Location permission."
   }
 }

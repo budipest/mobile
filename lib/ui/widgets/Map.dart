@@ -86,9 +86,10 @@ class MapState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final toilets = Provider.of<ToiletModel>(context, listen: false).toilets;
-    final userLocation =
-        Provider.of<ToiletModel>(context, listen: false).location;
+    final provider = Provider.of<ToiletModel>(context, listen: false);
+    final toilets = provider.toilets;
+    final userLocation = provider.location;
+
     final selectedToilet =
         context.select((ToiletModel model) => model.selectedToilet);
     final selectToilet =
@@ -98,12 +99,14 @@ class MapState extends State<MapWidget> {
       latestSelected = selectedToilet;
 
       if (selectedToilet != null) {
-        drawRoutes(
-          userLocation.latitude,
-          userLocation.longitude,
-          selectedToilet.latitude,
-          selectedToilet.longitude,
-        );
+        if (provider.hasLocationPermission) {
+          drawRoutes(
+            userLocation.latitude,
+            userLocation.longitude,
+            selectedToilet.latitude,
+            selectedToilet.longitude,
+          );
+        }
 
         animateToLocation(
           selectedToilet.latitude,

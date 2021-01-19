@@ -66,7 +66,7 @@ class Home extends StatelessWidget {
     final _screenWidth = MediaQuery.of(context).size.width;
     final _hasSelected = _selectedToilet != null;
 
-    if (_pc.isAttached  && _pc.panelPosition < 0.95) {
+    if (_pc.isAttached && _pc.panelPosition < 0.95) {
       if (_hasSelected && _pc.panelPosition != 0.175) {
         _pc.animatePanelToPosition(
           0.175,
@@ -143,33 +143,35 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            AnimatedBuilder(
-              animation: _notifier,
-              builder: (_, child) => Positioned(
-                right: 0,
-                bottom: (_screenHeight * _notifier.value) +
-                    (_bottomBarMinHeight + 20),
-                child: RawMaterialButton(
-                  shape: CircleBorder(),
-                  fillColor: Colors.white,
-                  elevation: 12.5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.my_location,
-                      color: Colors.grey[800],
-                      size: 27.5,
+            _toiletProvider.hasLocationPermission
+                ? AnimatedBuilder(
+                    animation: _notifier,
+                    builder: (_, child) => Positioned(
+                      right: 0,
+                      bottom: (_screenHeight * _notifier.value) +
+                          (_bottomBarMinHeight + 20),
+                      child: RawMaterialButton(
+                        shape: CircleBorder(),
+                        fillColor: Colors.white,
+                        elevation: 12.5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.my_location,
+                            color: Colors.grey[800],
+                            size: 27.5,
+                          ),
+                        ),
+                        onPressed: () {
+                          _mapKey.currentState.animateToLocation(
+                            _toiletProvider.location.latitude,
+                            _toiletProvider.location.longitude,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  onPressed: () {
-                    _mapKey.currentState.animateToLocation(
-                      _toiletProvider.location.latitude,
-                      _toiletProvider.location.longitude,
-                    );
-                  },
-                ),
-              ),
-            ),
+                  )
+                : Container(), 
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(

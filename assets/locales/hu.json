@@ -92,10 +92,14 @@
   },
   "error": {
     "title": "Itt valami bűzlik...",
-    "location": "Nem találunk téged. Nem tudjuk hogy hol vagy, így nem működik az app. Lehet hogy nem adtál nekünk engedélyt erre?",
     "data": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?",
     "onServer": "A szerverünknél mostanában nem megy le a WC, emiatt picit elfoglalt. Kérjük, próbáld újra később!",
     "requiredFields": "Ezt a mezőt nem hagyhatod üresen",
     "missingFields": "Néhány kitöltendő mező üresen lett hagyva. Kérjük ellenőrizd, hogy mindent kitöltöttél-e."
+  },
+  "noLocation": {
+    "title": "Nem engedélyezted a helyadatokhoz való hozzáférést",
+    "card-title": "A mosdók a távolságuk alapján rendezve itt fognak megjelenni",
+    "card-description": "Engedélyezd a Budipestnek a helyadataidhoz való hozzáférést hogy tudjuk neked ajánlani a legközelebbi nyitva tartó WC-t, mutathassuk őket itt, a listában, vagy hogy rajzolhassunk útvonalterveket a térképre. Az engedélyezéshez nyisd meg a Beállítások appot, keresd meg a Budipestet, és a Helyadatoknál válaszd az `Az alkalmazás használata közben` opciót."
   }
 }

@@ -11,7 +11,11 @@ import '../services/API.dart';
 class ToiletModel extends ChangeNotifier {
   // user-related data
   final Location _location = Location();
-  LocationData _userLocation;
+  LocationData _userLocation = LocationData.fromMap({
+    "latitude": 47.497643763874876,
+    "longitude": 19.054028096671686,
+  });
+  PermissionStatus _locationPermissionStatus;
   String _userId;
 
   // toilets
@@ -24,6 +28,8 @@ class ToiletModel extends ChangeNotifier {
 
   // user-related getters
   LocationData get location => _userLocation;
+  bool get hasLocationPermission =>
+      _locationPermissionStatus == PermissionStatus.granted;
   String get userId => _userId;
 
   // toilet getters
@@ -56,9 +62,13 @@ class ToiletModel extends ChangeNotifier {
 
       _toilets = responses[1];
 
-      _location.onLocationChanged.listen((LocationData location) {
-        orderToilets(location);
-      });
+      if (_locationPermissionStatus == PermissionStatus.granted) {
+        _location.onLocationChanged.listen((LocationData location) {
+          orderToilets(location);
+        });
+      } else {
+        orderToilets(_userLocation);
+      }
     } catch (error) {
       print(error);
       _appError = "error.data";
@@ -97,25 +107,21 @@ class ToiletModel extends ChangeNotifier {
 
   Future<void> checkLocationPermission() async {
     bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
 
     _serviceEnabled = await _location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await _location.requestService();
-      if (!_serviceEnabled) {
-        _appError = "error.location";
-        notifyListeners();
-      }
     }
 
-    _permissionGranted = await _location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        _appError = "error.location";
-        notifyListeners();
-      }
-    }
+    _locationPermissionStatus = await _location.hasPermission();
+
+    notifyListeners();
+  }
+
+  Future<void> askLocationPermission() async {
+    _location.getLocation();
+    _locationPermissionStatus = await _location.requestPermission();
+    notifyListeners();
   }
 
   Future<void> addToilet(Toilet item) async {

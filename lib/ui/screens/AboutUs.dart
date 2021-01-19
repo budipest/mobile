@@ -203,8 +203,7 @@ class AboutUs extends StatelessWidget {
                 PersonCard(
                   FlutterI18n.translate(context, "aboutUs.design"),
                   {
-                    "LinkedIn":
-                        "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
+                    "LinkedIn": "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
                   },
                 ),
                 Container(height: 20),
