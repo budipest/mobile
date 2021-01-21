@@ -78,12 +78,9 @@
     "budapest": "Szeretettel ❤️ Budapestről",
     "feedback": "Visszajelzések: dnlgrgly@gmail.com",
     "opensource": "A projektet Flutter-rel készítettük, az alkalmazás pedig nyílt forráskódú.",
-    "toiletPaper": "Vegyél nekünk WC papírt!",
-    "toiletPaper-description": "Támogasd az app fejlődését! Vagy ne. Mi nem ítélkezünk.",
-    "team": "A Csapat",
-    "paypal": "Adományozás PayPal-lal",
-    "accountNumber": "Számlaszám: 10402764-86767651-74521001",
-    "recipient": "Számlavezető neve: Gergely Dániel, K&H Bank"
+    "toiletPaper": "Segíts a Budipest továbbfejlődésében!",
+    "toiletPaper-description": "A Budipest célja a világuralomra törés. Ahhoz, hogy ebben segíthess nekünk, kövess minket Facebookon, beszélj az appról a barátaidnak, adj hozzá új WC-ket az apphoz, értékeld a meglévőeket, jelentsd az esetlegesen előforduló hibákat, javasolj új funkciókat, vagy akár írj kódot a GitHub repo-ba. Tudj meg többet a segítségnyújtás további lehetséges módjairól a websiteunkon.",
+    "team": "A Csapat"
   },
   "copied": "Szöveg kimásolva a vágólapra!",
   "empty": {

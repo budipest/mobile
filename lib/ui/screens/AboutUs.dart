@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,24 +10,6 @@ import '../widgets/CardTemplate.dart';
 import '../widgets/PersonCard.dart';
 
 class AboutUs extends StatelessWidget {
-  void setClipboard(BuildContext context, String text) {
-    Clipboard.setData(ClipboardData(text: text));
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          FlutterI18n.translate(
-            context,
-            FlutterI18n.translate(context, "copied"),
-          ),
-        ),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,43 +52,10 @@ class AboutUs extends StatelessWidget {
           Container(
             color: Colors.grey[300],
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
-            child: Column(
-              children: [
-                Text(
-                  FlutterI18n.translate(context, "aboutUs.budapest"),
-                  style: TextStyle(fontSize: 18),
-                ),
-                Container(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Button(
-                      "Facebook",
-                      () async {
-                        String url = "https://facebook.com/budipestapp";
-                        if (await canLaunch(url)) {
-                          await launch(url);
-                        }
-                      },
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                    ),
-                    Container(width: 20),
-                    Button(
-                      "GitHub",
-                      () async {
-                        String url =
-                            "https://github.com/dnlgrgly/budipest-mobile";
-                        if (await canLaunch(url)) {
-                          await launch(url);
-                        }
-                      },
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                    ),
-                  ],
-                ),
-              ],
+            child: Text(
+              FlutterI18n.translate(context, "aboutUs.budapest"),
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
             ),
           ),
           Builder(
@@ -116,7 +64,7 @@ class AboutUs extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    FlutterI18n.translate(context, "aboutUs.toiletPaper"),
+                    FlutterI18n.translate(context, "aboutUs.helpUs"),
                     style: TextStyle(
                       fontSize: 22.0,
                       fontWeight: FontWeight.bold,
@@ -124,52 +72,52 @@ class AboutUs extends StatelessWidget {
                   ),
                   Text(
                     FlutterI18n.translate(
-                        context, "aboutUs.toiletPaper-description"),
+                        context, "aboutUs.helpUs-description"),
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  Container(height: 12),
-                  GestureDetector(
-                    child: Text(
-                      "IBAN: HU80 1040 2764 8676 7651 7452 1001",
-                      style: TextStyle(
-                        fontSize: 16,
+                  Container(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Button(
+                        "Facebook",
+                        () async {
+                          String url = "https://facebook.com/budipestapp";
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          }
+                        },
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
                       ),
-                    ),
-                    onTap: () => setClipboard(
-                        context, "HU80 1040 2764 8676 7651 7452 1001"),
-                  ),
-                  Container(height: 8),
-                  GestureDetector(
-                    child: Text(
-                      "SWIFT: OKHB HUHB",
-                      style: TextStyle(
-                        fontSize: 16,
+                      Container(width: 20),
+                      Button(
+                        "website",
+                        () async {
+                          String url = "https://dnlgrgly.com/budipest";
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          }
+                        },
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
                       ),
-                    ),
-                    onTap: () => setClipboard(context, "OKHB HUHB"),
-                  ),
-                  Container(height: 8),
-                  GestureDetector(
-                    child: Text(
-                      FlutterI18n.translate(context, "aboutUs.accountNumber"),
-                      style: TextStyle(
-                        fontSize: 16,
+                      Container(width: 20),
+                      Button(
+                        "GitHub",
+                        () async {
+                          String url =
+                              "https://github.com/dnlgrgly/budipest-mobile";
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          }
+                        },
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
                       ),
-                    ),
-                    onTap: () =>
-                        setClipboard(context, "10402764-86767651-74521001"),
-                  ),
-                  Container(height: 8),
-                  GestureDetector(
-                    child: Text(
-                      FlutterI18n.translate(context, "aboutUs.recipient"),
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    onTap: () => setClipboard(context, "Gergely Dániel"),
+                    ],
                   ),
                 ],
               ),

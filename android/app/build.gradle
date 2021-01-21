@@ -38,7 +38,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "hu.dnlgrgly.budipest"
+        applicationId "com.dnlgrgly.budipest"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()

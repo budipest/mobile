@@ -78,11 +78,9 @@
     "budapest": "Made with ❤️ in Budapest",
     "feedback": "Feedback: dnlgrgly@gmail.com",
     "opensource": "This project was made with Flutter and is open-source.",
-    "toiletPaper": "Buy us a roll of toilet paper!",
-    "toiletPaper-description": "Support the costs of server upkeep and the further development of this terrific app. Or don't. We won't judge you.",
-    "team": "The Team",
-    "accountNumber": "Account number: 10402764-86767651-74521001",
-    "recipient": "Recipient: Gergely Dániel, K&H Bank"
+    "helpUs": "Help the development of Budipest!",
+    "helpUs-description": "Help Budipest take over the world by following us on Facebook, recommending the app to your friends, adding more toilets to the app, rating and adding helpful notes to the ones that exist, reporting bugs, or by giving general feedback, suggesting new features or by writing code in our GitHub repo. Learn more about other methods of help on our website.",
+    "team": "The Team"
   },
   "copied": "Text copied to clipboard!",
   "empty": {
