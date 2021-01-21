@@ -86,14 +86,12 @@ class MapState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context, listen: false);
+    final provider = Provider.of<ToiletModel>(context);
     final toilets = provider.toilets;
     final userLocation = provider.location;
 
-    final selectedToilet =
-        context.select((ToiletModel model) => model.selectedToilet);
-    final selectToilet =
-        context.select((ToiletModel model) => model.selectToilet);
+    final selectedToilet = provider.selectedToilet;
+    final selectToilet = provider.selectToilet;
 
     if (selectedToilet != latestSelected) {
       latestSelected = selectedToilet;

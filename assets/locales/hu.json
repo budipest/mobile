@@ -74,7 +74,7 @@
     "development": "Fejlesztés: Gergely Dániel",
     "design": "Design: Jobbágy Dávid",
     "betaTitle": "Külön köszönet a béta tesztelőknek:",
-    "betaNames": "Szulovszky Balázs, Egri Dániel, Lesti Dániel, Pór Gergő, Hajdu Péter, Horváth Ákos, Tóth Lili, Nagy Dominik, Gáspár Vendel",
+    "betaNames": "Szulovszky Balázs, Egri Dániel, Lesti Dániel, Pór Gergő, Hajdu Péter, Horváth Ákos, Tóth Lili, Nagy Dominik, Gáspár Vendel, és Szőcs Zsombor",
     "budapest": "Szeretettel ❤️ Budapestről",
     "feedback": "Visszajelzések: dnlgrgly@gmail.com",
     "opensource": "A projektet Flutter-rel készítettük, az alkalmazás pedig nyílt forráskódú.",
@@ -95,7 +95,8 @@
     "data": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?",
     "onServer": "A szerverünknél mostanában nem megy le a WC, emiatt picit elfoglalt. Kérjük, próbáld újra később!",
     "requiredFields": "Ezt a mezőt nem hagyhatod üresen",
-    "missingFields": "Néhány kitöltendő mező üresen lett hagyva. Kérjük ellenőrizd, hogy mindent kitöltöttél-e."
+    "missingFields": "Néhány kitöltendő mező üresen lett hagyva. Kérjük ellenőrizd, hogy mindent kitöltöttél-e.",
+    "location": "Néhány funkció (pl. az alsó sáv, útvonaltervek rajzolása) nem működik amíg nem engedélyezed a helyadatokhoz való hozzáférést."
   },
   "noLocation": {
     "title": "Nem engedélyezted a helyadatokhoz való hozzáférést",

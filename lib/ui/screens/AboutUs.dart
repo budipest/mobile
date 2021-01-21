@@ -60,7 +60,7 @@ class AboutUs extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'v2.0.0',
+                      'v2.0.1',
                       style: TextStyle(color: Colors.grey, fontSize: 22),
                     ),
                   ],
@@ -203,7 +203,7 @@ class AboutUs extends StatelessWidget {
                 PersonCard(
                   FlutterI18n.translate(context, "aboutUs.design"),
                   {
-                    "LinkedIn": "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
+                    "email": "mailto:davidjobbagy07@gmail.com",
                   },
                 ),
                 Container(height: 20),

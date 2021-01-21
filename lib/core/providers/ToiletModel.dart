@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -10,12 +12,11 @@ import '../services/API.dart';
 
 class ToiletModel extends ChangeNotifier {
   // user-related data
-  final Location _location = Location();
-  LocationData _userLocation = LocationData.fromMap({
+  Position _userLocation = Position.fromMap({
     "latitude": 47.497643763874876,
     "longitude": 19.054028096671686,
   });
-  PermissionStatus _locationPermissionStatus;
+  LocationPermission _locationPermissionStatus;
   String _userId;
 
   // toilets
@@ -27,9 +28,10 @@ class ToiletModel extends ChangeNotifier {
   BuildContext _globalContext;
 
   // user-related getters
-  LocationData get location => _userLocation;
+  Position get location => _userLocation;
   bool get hasLocationPermission =>
-      _locationPermissionStatus == PermissionStatus.granted;
+      (_locationPermissionStatus == LocationPermission.always ||
+          _locationPermissionStatus == LocationPermission.whileInUse);
   String get userId => _userId;
 
   // toilet getters
@@ -60,14 +62,15 @@ class ToiletModel extends ChangeNotifier {
         API.getToilets(),
       ]);
 
-      _toilets = responses[1];
+      List<Toilet> toiletsRaw = responses[1];
 
-      if (_locationPermissionStatus == PermissionStatus.granted) {
-        _location.onLocationChanged.listen((LocationData location) {
-          orderToilets(location);
+      if (hasLocationPermission) {
+        StreamSubscription<Position> positionStream =
+            Geolocator.getPositionStream().listen((Position position) {
+          orderToilets(toiletsRaw, position);
         });
       } else {
-        orderToilets(_userLocation);
+        orderToilets(toiletsRaw, _userLocation);
       }
     } catch (error) {
       print(error);
@@ -78,16 +81,23 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Toilet processToilet(Toilet raw) {
-    raw.calculateDistance(_userLocation.latitude, _userLocation.longitude);
+    raw.distance = Geolocator.distanceBetween(
+      raw.latitude,
+      raw.longitude,
+      _userLocation.latitude,
+      _userLocation.longitude,
+    ).round();
     raw.openState.updateState();
     return raw;
   }
 
-  void orderToilets(LocationData location) async {
+  void orderToilets(List<Toilet> toiletsRaw, Position location) async {
     _userLocation = location;
 
-    _toilets.forEach((Toilet toilet) => processToilet(toilet));
-    _toilets.sort((a, b) => a.distance.compareTo(b.distance));
+    toiletsRaw.forEach((Toilet toilet) => processToilet(toilet));
+    toiletsRaw.sort((a, b) => a.distance.compareTo(b.distance));
+
+    _toilets = toiletsRaw;
 
     notifyListeners();
   }
@@ -106,21 +116,31 @@ class ToiletModel extends ChangeNotifier {
   }
 
   Future<void> checkLocationPermission() async {
-    bool _serviceEnabled;
+    bool serviceEnabled;
 
-    _serviceEnabled = await _location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _location.requestService();
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      showErrorSnackBar("error.location");
+      return;
     }
 
-    _locationPermissionStatus = await _location.hasPermission();
+    _locationPermissionStatus = await Geolocator.checkPermission();
+    if (_locationPermissionStatus == LocationPermission.deniedForever) {
+      showErrorSnackBar("error.location");
+      return;
+    }
 
-    notifyListeners();
-  }
+    if (_locationPermissionStatus == LocationPermission.denied) {
+      _locationPermissionStatus = await Geolocator.requestPermission();
+      if (_locationPermissionStatus != LocationPermission.whileInUse &&
+          _locationPermissionStatus != LocationPermission.always) {
+        showErrorSnackBar("error.location");
+        return;
+      }
+    }
 
-  Future<void> askLocationPermission() async {
-    _location.getLocation();
-    _locationPermissionStatus = await _location.requestPermission();
+    _userLocation = await Geolocator.getCurrentPosition();
+
     notifyListeners();
   }
 

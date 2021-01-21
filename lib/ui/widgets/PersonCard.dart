@@ -37,7 +37,10 @@ class PersonCard extends StatelessWidget {
                   link.key,
                   () async {
                     if (await canLaunch(link.value)) {
+                      print("launch itttt");
                       await launch(link.value);
+                    } else {
+                      print("cant launch");
                     }
                   },
                   backgroundColor: Colors.grey[700],

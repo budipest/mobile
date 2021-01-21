@@ -34,7 +34,7 @@ class Sidebar extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'v2.0.0',
+                    'v2.0.1',
                     style: TextStyle(color: Colors.grey),
                   )
                 ],

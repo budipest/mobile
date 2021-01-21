@@ -23,7 +23,7 @@ class AskPermission extends StatelessWidget {
       children: [
         BottomBarBlackContainer(
           scrollProgress,
-          provider.askLocationPermission,
+          provider.checkLocationPermission,
           Text(
             FlutterI18n.translate(context, "noLocation.title"),
             style: TextStyle(

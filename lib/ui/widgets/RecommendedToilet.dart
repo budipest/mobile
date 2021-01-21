@@ -212,34 +212,35 @@ class RecommendedToilet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontFamily: 'Muli',
-                        fontSize: 16.0,
-                        color: Colors.white,
+                  if (provider.hasLocationPermission)
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontFamily: 'Muli',
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: selectedToilet.distance < 10000
+                                ? '${selectedToilet.distance} m'
+                                : FlutterI18n.translate(
+                                    context,
+                                    "tooFar",
+                                  ),
+                          ),
+                          TextSpan(
+                            text: FlutterI18n.translate(
+                              context,
+                              "distanceFromYou",
+                            ),
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: selectedToilet.distance < 10000
-                              ? '${selectedToilet.distance} m'
-                              : FlutterI18n.translate(
-                                  context,
-                                  "tooFar",
-                                ),
-                        ),
-                        TextSpan(
-                          text: FlutterI18n.translate(
-                            context,
-                            "distanceFromYou",
-                          ),
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
                     ),
-                  ),
                 ],
               ),
             ),
