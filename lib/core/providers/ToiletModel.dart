@@ -87,6 +87,11 @@ class ToiletModel extends ChangeNotifier {
       _userLocation.latitude,
       _userLocation.longitude,
     ).round();
+
+    raw.distanceString = raw.distance > 1000
+        ? "${(raw.distance / 1000).toStringAsFixed(1)} km"
+        : "${raw.distance} m";
+
     raw.openState.updateState();
     return raw;
   }

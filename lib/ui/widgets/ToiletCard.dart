@@ -34,7 +34,7 @@ class ToiletCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "${toilet.distance} m",
+                toilet.distanceString,
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 16.0,

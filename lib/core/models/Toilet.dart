@@ -32,6 +32,7 @@ class Toilet {
   List<Vote> votes;
 
   int distance = 0;
+  String distanceString = "0 m";
 
   Toilet.createNew(
     this.name,
@@ -70,7 +71,6 @@ class Toilet {
     notes = List<Note>.empty(growable: true);
     votes = List<Vote>.empty(growable: true);
   }
-
 
   Toilet.fromMap(Map raw) {
     this.id = raw["_id"] ?? "";

@@ -175,8 +175,8 @@ class RecommendedToilet extends StatelessWidget {
                     ),
                     Text(
                       hasSelected
-                          ? "${selectedToilet.distance} m"
-                          : "${suggestedToilet.distance} m",
+                          ? selectedToilet.distanceString
+                          : suggestedToilet.distanceString,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 16.0,
@@ -223,7 +223,7 @@ class RecommendedToilet extends StatelessWidget {
                         children: <TextSpan>[
                           TextSpan(
                             text: selectedToilet.distance < 10000
-                                ? '${selectedToilet.distance} m'
+                                ? selectedToilet.distanceString
                                 : FlutterI18n.translate(
                                     context,
                                     "tooFar",
