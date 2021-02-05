@@ -55,7 +55,12 @@ class MapState extends State<MapWidget> {
   // }
 
   animateToLocation(double lat, double lon) {
-    mapController.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lon)));
+    mapController.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(lat, lon),
+        15.0,
+      ),
+    );
   }
 
   drawRoutes(
