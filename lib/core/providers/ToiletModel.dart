@@ -49,6 +49,8 @@ class ToiletModel extends ChangeNotifier {
     _globalContext = context;
   }
 
+  Timer _timer;
+
   ToiletModel() {
     API.init();
     initLocation();
@@ -64,14 +66,12 @@ class ToiletModel extends ChangeNotifier {
 
       List<Toilet> toiletsRaw = responses[1];
 
-      if (hasLocationPermission) {
-        StreamSubscription<Position> positionStream =
-            Geolocator.getPositionStream().listen((Position position) {
-          orderToilets(toiletsRaw, position);
-        });
-      } else {
-        orderToilets(toiletsRaw, _userLocation);
-      }
+      orderToilets(toiletsRaw);
+
+      _timer = Timer.periodic(Duration(seconds: 15), (Timer t) async {
+        _userLocation = await Geolocator.getCurrentPosition();
+        orderToilets(toiletsRaw);
+      });
     } catch (error) {
       print(error);
       _appError = "error.data";
@@ -91,8 +91,11 @@ class ToiletModel extends ChangeNotifier {
     return raw;
   }
 
-  void orderToilets(List<Toilet> toiletsRaw, Position location) async {
-    _userLocation = location;
+  void orderToilets(List<Toilet> toiletsRaw) async {
+    if (hasLocationPermission) {
+      final location = await Geolocator.getCurrentPosition();
+      _userLocation = location;
+    }
 
     toiletsRaw.forEach((Toilet toilet) => processToilet(toilet));
     toiletsRaw.sort((a, b) => a.distance.compareTo(b.distance));
