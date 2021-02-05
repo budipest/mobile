@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:ui';
 
+import "../models/Toilet.dart";
+import "../providers/ToiletModel.dart";
+
+import 'package:provider/provider.dart';
 import 'package:fluster/fluster.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,12 +12,14 @@ import 'package:meta/meta.dart';
 
 class MapMarker extends Clusterable {
   final String id;
+  final Toilet toilet;
   final LatLng position;
   BitmapDescriptor icon;
 
   MapMarker({
     @required this.id,
     @required this.position,
+    this.toilet,
     this.icon,
     isCluster = false,
     clusterId,
@@ -29,13 +35,21 @@ class MapMarker extends Clusterable {
           childMarkerId: childMarkerId,
         );
 
-  Marker toMarker() => Marker(
+  Marker toMarker(BuildContext context) => Marker(
         markerId: MarkerId(isCluster ? 'cl_$id' : id),
         position: LatLng(
           position.latitude,
           position.longitude,
         ),
         icon: icon,
+        onTap: () {
+          if (isCluster) {
+            print("thassa cluster lmao");
+          } else {
+            Provider.of<ToiletModel>(context, listen: false)
+                .selectToilet(toilet);
+          }
+        },
       );
 }
 
@@ -130,14 +144,9 @@ class MapHelper {
   static Future<List<Marker>> getClusterMarkers(
     Fluster<MapMarker> clusterManager,
     double currentZoom,
-    Color clusterColor,
-    Color clusterTextColor,
-    int clusterWidth,
+    BuildContext context,
   ) {
     assert(currentZoom != null);
-    assert(clusterColor != null);
-    assert(clusterTextColor != null);
-    assert(clusterWidth != null);
 
     if (clusterManager == null) return Future.value([]);
 
@@ -146,13 +155,13 @@ class MapHelper {
       if (mapMarker.isCluster) {
         mapMarker.icon = await _getClusterMarker(
           mapMarker.pointsSize,
-          clusterColor,
-          clusterTextColor,
-          clusterWidth,
+          Colors.black,
+          Colors.white,
+          80,
         );
       }
 
-      return mapMarker.toMarker();
+      return mapMarker.toMarker(context);
     }).toList());
   }
 }

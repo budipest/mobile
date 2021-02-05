@@ -59,14 +59,13 @@ class MapState extends State<MapWidget> {
   //   );
   // }
 
-  animateToLocation(double lat, double lon) {
-    mapController.animateCamera(
-      CameraUpdate.newLatLngZoom(
-        LatLng(lat, lon),
-        15.0,
-      ),
-    );
-  }
+  Future<void> animateToLocation(double lat, double lon) =>
+      mapController.animateCamera(
+        CameraUpdate.newLatLngZoom(
+          LatLng(lat, lon),
+          15.0,
+        ),
+      );
 
   drawRoutes(
     double userLat,
@@ -100,6 +99,7 @@ class MapState extends State<MapWidget> {
           id: toilets.indexOf(toilet).toString(),
           position: LatLng(toilet.latitude, toilet.longitude),
           icon: icon,
+          toilet: toilet,
         ),
       );
     }
@@ -111,10 +111,11 @@ class MapState extends State<MapWidget> {
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
 
-    await _updateMarkers();
+    await updateMarkers();
   }
 
-  Future<void> _updateMarkers([double updatedZoom]) async {
+  Future<void> updateMarkers([double updatedZoom]) async {
+    print("updatemarkers. zoom level: $updatedZoom");
     if (_clusterManager == null || updatedZoom == _currentZoom) return;
 
     if (updatedZoom != null) {
@@ -124,9 +125,7 @@ class MapState extends State<MapWidget> {
     final updatedMarkers = await MapHelper.getClusterMarkers(
       _clusterManager,
       _currentZoom,
-      Colors.black,
-      Colors.white,
-      80,
+      context,
     );
 
     setState(() {
@@ -198,7 +197,7 @@ class MapState extends State<MapWidget> {
       markers: _markers.toSet(),
       polylines: _polylines,
       onTap: (LatLng coords) => selectToilet(context, null),
-      onCameraMove: (position) => _updateMarkers(position.zoom),
+      onCameraMove: (position) => updateMarkers(position.zoom),
     );
   }
 }

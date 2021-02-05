@@ -58,13 +58,15 @@ class Home extends StatelessWidget {
     }
   }
 
-  void animateMapToUserLocation(BuildContext context) {
+  void animateMapToUserLocation(BuildContext context) async {
     final _location = Provider.of<ToiletModel>(context, listen: false).location;
 
-    _mapKey.currentState.animateToLocation(
+    await _mapKey.currentState.animateToLocation(
       _location.latitude,
       _location.longitude,
     );
+
+    _mapKey.currentState.updateMarkers(15.0);
   }
 
   void selectNullToilet(BuildContext context) {
