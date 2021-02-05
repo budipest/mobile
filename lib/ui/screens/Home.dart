@@ -34,9 +34,9 @@ class Home extends StatelessWidget {
     }
   }
 
-  bool backHandler(bool physicalBack, ToiletModel provider) {
-    if (provider.selectedToilet != null) {
-      provider.selectToilet(null);
+  bool backHandler(bool physicalBack, bool hasSelected, BuildContext context) {
+    if (hasSelected) {
+      selectNullToilet(context);
       return false;
     } else {
       if (_notifier.value > 0.99) {
@@ -58,16 +58,32 @@ class Home extends StatelessWidget {
     }
   }
 
+  void animateMapToUserLocation(BuildContext context) {
+    final _location = Provider.of<ToiletModel>(context, listen: false).location;
+
+    _mapKey.currentState.animateToLocation(
+      _location.latitude,
+      _location.longitude,
+    );
+  }
+
+  void selectNullToilet(BuildContext context) {
+    Provider.of<ToiletModel>(context, listen: false).selectToilet(null);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _toiletProvider = Provider.of<ToiletModel>(context);
-    final _selectedToilet = _toiletProvider.selectedToilet;
+    final _selectedToilet = context.select((ToiletModel m) => m.selectedToilet);
+    final _appError = context.select((ToiletModel m) => m.appError);
+    final _loaded = context.select((ToiletModel m) => m.loaded);
+    final _hasLocationPermission =
+        context.select((ToiletModel m) => m.hasLocationPermission);
+
     final _screenHeight = MediaQuery.of(context).size.height;
     final _screenWidth = MediaQuery.of(context).size.width;
     final _hasSelected = _selectedToilet != null;
 
     print("home is rebuilt");
-    print(_toiletProvider.hasLocationPermission);
 
     if (_pc.isAttached && _pc.panelPosition < 0.95) {
       if (_hasSelected && _pc.panelPosition != 0.175) {
@@ -85,16 +101,16 @@ class Home extends StatelessWidget {
       }
     }
 
-    if (_toiletProvider.appError != null) {
+    if (_appError != null) {
       return Scaffold(
         body: Stack(
           children: [
             ErrorProvider(),
-            Error(_toiletProvider.appError),
+            Error(_appError),
           ],
         ),
       );
-    } else if (!_toiletProvider.loaded) {
+    } else if (!_loaded) {
       return Scaffold(
         body: Stack(
           children: [
@@ -109,7 +125,7 @@ class Home extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        return backHandler(true, _toiletProvider);
+        return backHandler(true, _hasSelected, context);
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -146,7 +162,7 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            _toiletProvider.hasLocationPermission
+            _hasLocationPermission
                 ? AnimatedBuilder(
                     animation: _notifier,
                     builder: (_, child) => Positioned(
@@ -165,16 +181,11 @@ class Home extends StatelessWidget {
                             size: 27.5,
                           ),
                         ),
-                        onPressed: () {
-                          _mapKey.currentState.animateToLocation(
-                            _toiletProvider.location.latitude,
-                            _toiletProvider.location.longitude,
-                          );
-                        },
+                        onPressed: () => animateMapToUserLocation(context),
                       ),
                     ),
                   )
-                : Container(), 
+                : Container(),
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -209,7 +220,11 @@ class Home extends StatelessWidget {
                                   : Colors.black,
                           size: 30.0,
                         ),
-                        onPressed: () => backHandler(false, _toiletProvider),
+                        onPressed: () => backHandler(
+                          false,
+                          _hasSelected,
+                          context,
+                        ),
                       ),
                     ),
                   ),
