@@ -85,8 +85,6 @@ class Home extends StatelessWidget {
     final _screenWidth = MediaQuery.of(context).size.width;
     final _hasSelected = _selectedToilet != null;
 
-    print("home is rebuilt");
-
     if (_pc.isAttached && _pc.panelPosition < 0.95) {
       if (_hasSelected && _pc.panelPosition != 0.175) {
         _pc.animatePanelToPosition(

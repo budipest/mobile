@@ -115,7 +115,6 @@ class MapState extends State<MapWidget> {
   }
 
   Future<void> updateMarkers([double updatedZoom]) async {
-    print("updatemarkers. zoom level: $updatedZoom");
     if (_clusterManager == null || updatedZoom == _currentZoom) return;
 
     if (updatedZoom != null) {

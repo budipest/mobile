@@ -44,7 +44,7 @@ class MapMarker extends Clusterable {
         icon: icon,
         onTap: () {
           if (isCluster) {
-            print("thassa cluster lmao");
+            // TODO: zoom in to the map
           } else {
             Provider.of<ToiletModel>(context, listen: false)
                 .selectToilet(toilet);
