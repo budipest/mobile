@@ -25,7 +25,7 @@ class ToiletRecommendationList extends StatelessWidget {
           Container(height: 14),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
-            itemCount: provider.toilets.length,
+            itemCount: 20,
             shrinkWrap: true,
             itemBuilder: (context, index) => GestureDetector(
               behavior: HitTestBehavior.translucent,
