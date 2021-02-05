@@ -41,7 +41,7 @@ class AboutUs extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'v2.0.1',
+                      'v2.0.2',
                       style: TextStyle(color: Colors.grey, fontSize: 22),
                     ),
                   ],
