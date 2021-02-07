@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/common/openHourUtils.dart';
 import '../../core/common/variables.dart';
@@ -28,10 +27,7 @@ class OpenHourRow extends StatefulWidget {
 class _OpenHourRowState extends State<OpenHourRow> {
   @override
   Widget build(BuildContext context) {
-    String day = FlutterI18n.translate(
-      context,
-      daysShort[(widget.index / 2).floor()],
-    );
+    String day = daysShort[(widget.index / 2).floor()];
 
     bool isOn = widget.openHours[widget.index] != 0 ||
         widget.openHours[widget.index + 1] != 0;
@@ -167,7 +163,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
                   )
                 : Center(
                     child: Text(
-                      FlutterI18n.translate(context, "closed"),
+                      "closed",
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                       ),

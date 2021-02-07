@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import "package:flutter_i18n/flutter_i18n.dart";
 
 import "BottomBarBlackContainer.dart";
 import "CardTemplate.dart";
@@ -27,7 +26,7 @@ class AskPermission extends StatelessWidget {
           scrollProgress,
           checkLocationPermission,
           Text(
-            FlutterI18n.translate(context, "noLocation.title"),
+            "noLocation.title",
             style: TextStyle(
               color: Colors.white,
               fontSize: 22.0,
@@ -44,7 +43,7 @@ class AskPermission extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  FlutterI18n.translate(context, "noLocation.card-title"),
+                  "noLocation.card-title",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -53,7 +52,7 @@ class AskPermission extends StatelessWidget {
                 ),
                 Container(height: 8),
                 Text(
-                  FlutterI18n.translate(context, "noLocation.card-description"),
+                  "noLocation.card-description",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16.0,

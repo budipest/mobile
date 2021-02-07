@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../widgets/Selectable.dart';
 import '../../core/models/Toilet.dart';
@@ -21,7 +20,7 @@ class AddToiletTags extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            FlutterI18n.translate(context, "services"),
+            "services",
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -32,8 +31,7 @@ class AddToiletTags extends StatelessWidget {
             padding: const EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_wheelchair_accessible.svg",
-              FlutterI18n.translate(context, "accessible"),
-              null,
+              "accessible",
               onTagToggled,
               0,
               tags.contains(Tag.WHEELCHAIR_ACCESSIBLE),
@@ -43,8 +41,7 @@ class AddToiletTags extends StatelessWidget {
             padding: const EdgeInsets.only(top: 15.0),
             child: Selectable(
               "tag_baby_room.svg",
-              FlutterI18n.translate(context, "babyRoom"),
-              null,
+              "babyRoom",
               onTagToggled,
               1,
               tags.contains(Tag.BABY_ROOM),

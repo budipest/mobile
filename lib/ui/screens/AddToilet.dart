@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -336,16 +335,11 @@ class _AddToiletState extends State<AddToilet> {
         children: [
           BlackLayoutContainer(
             context: context,
-            title: FlutterI18n.translate(context, "addToilet"),
+            title: "addToilet",
             fab: FloatingActionButton.extended(
               onPressed: () => onFABPressed(context),
               backgroundColor: Colors.black,
-              label: Text(
-                FlutterI18n.translate(
-                  context,
-                  isOnLastScreen ? "addToilet" : "continue",
-                ),
-              ),
+              label: Text(isOnLastScreen ? "addToilet" : "continue"),
               icon: Icon(Icons.navigate_next),
             ),
             child: PageView(

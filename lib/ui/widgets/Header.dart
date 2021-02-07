@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Header extends StatelessWidget {
   @override
@@ -18,7 +17,7 @@ class Header extends StatelessWidget {
                         child: Icon(Icons.menu))),
                 Expanded(
                     child: Text(
-                  FlutterI18n.translate(context, "title"),
+                  "title",
                   style: TextStyle(color: Colors.black87, fontSize: 24),
                 )),
                 Icon(Icons.add, color: Colors.black45),

@@ -179,8 +179,8 @@ String stringFromCategory(Category category) {
 Widget descriptionIcon(
   EdgeInsetsGeometry padding,
   String mode,
-  bool smaller,
-  String text, {
+  bool smaller, {
+  String text,
   String iconPath,
   IconData icon,
 }) {
@@ -256,7 +256,6 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding, String mode) {
     padding,
     mode,
     true,
-    null,
     iconPath: path,
   );
 }
@@ -268,7 +267,6 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         padding,
         "dark",
         true,
-        null,
         iconPath: "assets/icons/bottom/dark/tag_free.svg",
       );
     case EntryMethod.CONSUMERS:
@@ -276,7 +274,6 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         padding,
         "dark",
         true,
-        null,
         iconPath: "assets/icons/bottom/dark/tag_guests.svg",
       );
     case EntryMethod.PRICE:
@@ -289,7 +286,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
               padding,
               "dark",
               true,
-              "$value $currency",
+              text: "$value $currency",
               iconPath: "assets/icons/bottom/dark/tag_paid.svg",
             ),
           );
@@ -300,7 +297,6 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
             padding,
             "dark",
             true,
-            null,
             iconPath: "assets/icons/bottom/dark/tag_paid.svg",
           ),
         );
@@ -315,7 +311,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         padding,
         "dark",
         true,
-        toilet.code != null ? toilet.code : "",
+        text: toilet.code != null ? toilet.code : "",
         iconPath: "assets/icons/bottom/dark/tag_key.svg",
       );
     default:
@@ -342,7 +338,6 @@ List<Widget> describeToiletIcons(
       padding,
       mode,
       smaller,
-      null,
       iconPath: "assets/icons/bottom/$mode/cat_$categoryStr.svg",
     ),
   );
@@ -359,7 +354,6 @@ List<Widget> describeToiletIcons(
           padding,
           mode,
           smaller,
-          null,
           iconPath: "assets/icons/bottom/$mode/tag_$tagStr.svg",
         ),
       );
@@ -397,7 +391,7 @@ List<Widget> describeToiletIcons(
             padding,
             mode,
             smaller,
-            '${((upvotes / (upvotes + downvotes)) * 100).round()}%',
+            text: '${((upvotes / (upvotes + downvotes)) * 100).round()}%',
             icon: Icons.thumb_up,
           ),
         );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/providers/ToiletModel.dart';
@@ -10,7 +9,7 @@ class ToiletRecommendationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Toilet> toilets =
-        context.select((ToiletModel m) => m.toilets.getRange(0, 20));
+        context.select((ToiletModel m) => m.toilets.getRange(0, 20).toList());
     final Function selectToilet =
         context.select((ToiletModel m) => m.selectToilet);
 
@@ -20,7 +19,7 @@ class ToiletRecommendationList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            FlutterI18n.translate(context, "otherToilets"),
+            "otherToilets",
             style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,

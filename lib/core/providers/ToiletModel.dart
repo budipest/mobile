@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -232,9 +231,7 @@ class ToiletModel extends ChangeNotifier {
   void showErrorSnackBar(String errorCode) {
     ScaffoldMessenger.of(_globalContext).showSnackBar(
       SnackBar(
-        content: Text(
-          FlutterI18n.translate(_globalContext, errorCode),
-        ),
+        content: Text(errorCode),
         backgroundColor: Colors.red,
         duration: Duration(seconds: 6),
         behavior: SnackBarBehavior.floating,

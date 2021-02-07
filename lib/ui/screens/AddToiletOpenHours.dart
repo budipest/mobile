@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../widgets/Button.dart';
 import '../widgets/OpenHourRow.dart';
@@ -40,7 +39,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
       padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
-          FlutterI18n.translate(context, "openHours"),
+          "openHours",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -50,7 +49,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
         Padding(
           padding: const EdgeInsets.only(top: 15.0),
           child: Button(
-            FlutterI18n.translate(context, "alwaysOpen"),
+            "alwaysOpen",
             () {
               widget.onNonStopChanged(!widget.isNonStop);
             },

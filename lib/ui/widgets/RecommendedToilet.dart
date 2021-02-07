@@ -1,7 +1,6 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 
@@ -41,14 +40,14 @@ class RecommendedToilet extends StatelessWidget {
           // return object of type Dialog
           return AlertDialog(
             title: Text(
-              FlutterI18n.translate(context, "notGonnaGetThere"),
+              "notGonnaGetThere",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24.0,
               ),
             ),
             content: Text(
-              FlutterI18n.plural(context, "closerToilets.numOfToilets", index),
+              "closerToilets.numOfToilets index",
               style: TextStyle(
                 fontSize: 18.0,
               ),
@@ -56,13 +55,13 @@ class RecommendedToilet extends StatelessWidget {
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               FlatButton(
-                child: Text(FlutterI18n.translate(context, "cancel")),
+                child: Text("cancel"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               FlatButton(
-                child: Text(FlutterI18n.translate(context, "directions")),
+                child: Text("directions"),
                 onPressed: () {
                   _navigate(toilet);
                 },
@@ -95,22 +94,15 @@ class RecommendedToilet extends StatelessWidget {
       // setup first and second opening time strings
       OpenStateDetails openState = selectedToilet.openState;
 
-      openingTimes.add(FlutterI18n.translate(
-            context,
-            openState.first,
-          ) +
-          " ");
+      openingTimes.add(openState.first + " ");
 
       if (openState.secondKey != null) {
         Map params = openState.secondParams;
 
-        params["day"] = FlutterI18n.translate(context, params["day"]);
+        params["day"] = params["day"];
 
-        openingTimes.add(FlutterI18n.translate(
-          context,
-          openState.secondKey,
-          translationParams: Map.from(openState.secondParams),
-        ));
+        openingTimes
+            .add("openState.secondKey Map.from(openState.secondParams)");
       } else {
         openingTimes.add(openState.secondString);
       }
@@ -141,12 +133,7 @@ class RecommendedToilet extends StatelessWidget {
             ),
             child: SizedBox(
               child: Text(
-                hasSelected
-                    ? selectedToilet.name
-                    : FlutterI18n.translate(
-                        context,
-                        "recommendedToilet",
-                      ),
+                hasSelected ? selectedToilet.name : "recommendedToilet",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22.0,
@@ -230,16 +217,10 @@ class RecommendedToilet extends StatelessWidget {
                           TextSpan(
                             text: selectedToilet.distance < 10000
                                 ? selectedToilet.distanceString
-                                : FlutterI18n.translate(
-                                    context,
-                                    "tooFar",
-                                  ),
+                                : "tooFar",
                           ),
                           TextSpan(
-                            text: FlutterI18n.translate(
-                              context,
-                              "distanceFromYou",
-                            ),
+                            text: "distanceFromYou",
                             style: TextStyle(
                               color: Colors.grey,
                             ),
@@ -255,7 +236,7 @@ class RecommendedToilet extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Button(
-                    FlutterI18n.translate(context, "directions"),
+                    "directions",
                     () {
                       if (selectedToilet.distance < 10000) {
                         _navigate(selectedToilet);

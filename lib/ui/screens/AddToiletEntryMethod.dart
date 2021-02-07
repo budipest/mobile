@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../../core/models/Toilet.dart';
 import '../widgets/Selectable.dart';
@@ -33,7 +32,7 @@ class AddToiletEntryMethod extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
-          FlutterI18n.translate(context, "toiletEntryMethod"),
+          "toiletEntryMethod",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -44,8 +43,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_free.svg",
-            FlutterI18n.translate(context, "free"),
-            null,
+            "free",
             onEntryMethodSubmitted,
             EntryMethod.FREE,
             selectedEntryMethod == EntryMethod.FREE,
@@ -55,12 +53,15 @@ class AddToiletEntryMethod extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_paid.svg",
-            FlutterI18n.translate(context, "paid"),
-            Column(
+            "paid",
+            onEntryMethodSubmitted,
+            EntryMethod.PRICE,
+            selectedEntryMethod == EntryMethod.PRICE,
+            openChild: Column(
               children: <Widget>[
                 TextInput(
                   price["HUF"] != null ? price["HUF"].toString() : null,
-                  FlutterI18n.translate(context, "price"),
+                  "price",
                   onTextChanged: (String input) => onPriceChanged(input, "HUF"),
                   isDark: true,
                   suffixText: "HUF",
@@ -76,8 +77,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                                 price["EUR"] != null
                                     ? price["EUR"].toString()
                                     : null,
-                                FlutterI18n.translate(
-                                    context, "priceAlternative"),
+                                "priceAlternative",
                                 onTextChanged: (String input) =>
                                     onPriceChanged(input, "EUR"),
                                 isDark: true,
@@ -112,7 +112,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                     : Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Button(
-                          FlutterI18n.translate(context, "addCurrency"),
+                          "addCurrency",
                           toggleEUR,
                           backgroundColor: Colors.grey[900],
                           foregroundColor: Colors.white,
@@ -120,17 +120,13 @@ class AddToiletEntryMethod extends StatelessWidget {
                       ),
               ],
             ),
-            onEntryMethodSubmitted,
-            EntryMethod.PRICE,
-            selectedEntryMethod == EntryMethod.PRICE,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_guests.svg",
-            FlutterI18n.translate(context, "guests"),
-            null,
+            "guests",
             onEntryMethodSubmitted,
             EntryMethod.CONSUMERS,
             selectedEntryMethod == EntryMethod.CONSUMERS,
@@ -140,17 +136,17 @@ class AddToiletEntryMethod extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_key.svg",
-            FlutterI18n.translate(context, "key"),
-            TextInput(
+            "key",
+            onEntryMethodSubmitted,
+            EntryMethod.CODE,
+            selectedEntryMethod == EntryMethod.CODE,
+            openChild: TextInput(
               code,
               "",
               onTextChanged: onCodeSubmitted,
               isDark: true,
-              prefixText: FlutterI18n.translate(context, "code"),
+              prefixText: "code",
             ),
-            onEntryMethodSubmitted,
-            EntryMethod.CODE,
-            selectedEntryMethod == EntryMethod.CODE,
           ),
         ),
       ],

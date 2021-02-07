@@ -11,7 +11,7 @@ description: Toilets anytime, anywhere
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.2+15
+version: 2.0.2+16
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -23,27 +23,20 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  flutter_i18n: 0.21.0-intl.nullsafety
-  flutter_svg: 0.19.1
-  sliding_up_panel: 1.0.2
+  flutter_svg: 0.20.0-nullsafety.3
+  sliding_up_panel: any
 
-  google_maps_flutter: 1.0.10
-  geolocator: 7.0.0-nullsafety.4
+  google_maps_flutter: any
+  geolocator: any
 
-  provider: 4.3.2+2
-  shared_preferences: 0.5.12+4
-  uuid: 2.2.2
+  provider: any
+  shared_preferences: any
+  uuid: any
 
   http: any
-  url_launcher: 5.0.5
+  url_launcher: any
 
-  fluster: ^1.1.2
-
-
-dev_dependencies:
-  flutter_launcher_icons: 0.8.1
-  flutter_test:
-    sdk: flutter
+  fluster: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

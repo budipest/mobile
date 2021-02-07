@@ -5,18 +5,18 @@ class Selectable extends StatelessWidget {
   Selectable(
     this.iconName,
     this.text,
-    this.openChildren,
     this.onSelect,
     this.index,
-    this.isSelected,
-  );
+    this.isSelected, {
+    this.openChild,
+  });
 
   final String iconName;
   final String text;
-  final Widget openChildren;
   final dynamic index;
   final bool isSelected;
   final Function onSelect;
+  final Widget openChild;
 
   @override
   Widget build(BuildContext context) {

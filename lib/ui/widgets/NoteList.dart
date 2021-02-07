@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/Note.dart';
@@ -20,28 +18,28 @@ class NoteList extends StatelessWidget {
       builder: (BuildContext innerContext) {
         return AlertDialog(
           title: Text(
-            FlutterI18n.translate(context, "areYouSure"),
+            "areYouSure",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24.0,
             ),
           ),
           content: Text(
-            FlutterI18n.translate(context, "irreversibleNote"),
+            "irreversibleNote",
             style: TextStyle(
               fontSize: 18.0,
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text(FlutterI18n.translate(context, "cancel")),
+              child: Text("cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
               child: Text(
-                FlutterI18n.translate(context, "remove"),
+                "remove",
                 style: TextStyle(
                   color: Colors.red,
                 ),
@@ -102,7 +100,7 @@ class NoteList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      FlutterI18n.translate(context, "empty.notes-title"),
+                      "empty.notes-title",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.0,
@@ -111,7 +109,7 @@ class NoteList extends StatelessWidget {
                     ),
                     Container(height: 8),
                     Text(
-                      FlutterI18n.translate(context, "empty.notes-description"),
+                      "empty.notes-description",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16.0,
@@ -124,7 +122,8 @@ class NoteList extends StatelessWidget {
                   stops: [0],
                   colors: [Colors.grey[100]],
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
               ),
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../widgets/TextInput.dart';
 
@@ -20,7 +19,7 @@ class AddToiletName extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            FlutterI18n.translate(context, "toiletName"),
+            "toiletName",
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -31,7 +30,7 @@ class AddToiletName extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0),
             child: TextInput(
               name,
-              FlutterI18n.translate(context, "name"),
+              "name",
               onTextChanged: onNameChanged,
             ),
           )

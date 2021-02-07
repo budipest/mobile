@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
@@ -39,7 +38,7 @@ class _AddNoteState extends State<AddNote> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    FlutterI18n.translate(context, "newNote"),
+                    "newNote",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -48,8 +47,7 @@ class _AddNoteState extends State<AddNote> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                    child: TextInput(note,
-                        FlutterI18n.translate(context, "newNotePlaceholder"),
+                    child: TextInput(note, "newNotePlaceholder",
                         onTextChanged: (String text) {
                       setState(() {
                         note = text;
@@ -73,7 +71,7 @@ class _AddNoteState extends State<AddNote> {
                           child: toHeroContext.widget,
                         ),
                         child: Button(
-                          FlutterI18n.translate(context, "send"),
+                          "send",
                           () async {
                             await addNote(note);
                             Navigator.of(context).pop();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Error extends StatelessWidget {
   const Error(this.errorCode);
@@ -18,12 +17,12 @@ class Error extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Text(
-              FlutterI18n.translate(context, "error.title"),
+              "error.title",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
           ),
           Text(
-            FlutterI18n.translate(context, errorCode),
+            errorCode,
             style: TextStyle(fontSize: 18),
           ),
         ],

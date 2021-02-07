@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/Toilet.dart';
@@ -40,7 +38,8 @@ class RatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userId = Provider.of<ToiletModel>(context, listen: false).userId;
+    final String userId =
+        Provider.of<ToiletModel>(context, listen: false).userId;
 
     int upvotes = 0;
     int downvotes = 0;
@@ -64,7 +63,7 @@ class RatingBar extends StatelessWidget {
     return Row(
       children: <Widget>[
         Text(
-          FlutterI18n.translate(context, "rate"),
+          "rate",
           style: TextStyle(
             fontSize: 22.0,
             fontWeight: FontWeight.bold,

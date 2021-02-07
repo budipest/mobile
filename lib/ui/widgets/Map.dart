@@ -88,6 +88,11 @@ class MapState extends State<MapWidget> {
 
   void _onMapCreated(GoogleMapController controller, BuildContext context,
       List<Toilet> toilets) async {
+    setState(() {
+      mapController = controller;
+      _getFileData('assets/light_mode.json').then(_setMapStyle);
+    });
+
     final List<MapMarker> markers = [];
 
     for (Toilet toilet in toilets) {
@@ -105,11 +110,6 @@ class MapState extends State<MapWidget> {
     }
 
     _clusterManager = await MapHelper.initClusterManager(markers);
-
-    setState(() {
-      mapController = controller;
-      _getFileData('assets/light_mode.json').then(_setMapStyle);
-    });
 
     await updateMarkers();
   }
