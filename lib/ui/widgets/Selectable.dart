@@ -51,10 +51,10 @@ class Selectable extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (isSelected && openChildren != null)
+                  if (isSelected && openChild != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 15),
-                      child: openChildren,
+                      child: openChild,
                     )
                 ],
               ),
