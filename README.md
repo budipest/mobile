@@ -1,3 +1,5 @@
+# Budipest | [App Store](https://apps.apple.com/us/app/budipest/id1544448699) | [Google Play](https://play.google.com/store/apps/details?id=com.dnlgrgly.budipest) | [Facebook](https://facebook.com/budipestapp)
+
 ![Budipest cover image with logo](./github_assets/cover.jpeg?raw=true)
 
 ## What's the deal with the name?
