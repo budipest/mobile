@@ -1,4 +1,4 @@
-![Budipest logo](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/titlecard.png)
+![Budipest logo](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/cover.jpeg)
 
 ## What's the deal with the name?
 
@@ -13,7 +13,7 @@ The main features of Budipest:
 - Rate toilets or add helpful comments to them
 - Anyone can add new toilets to the app
 
-![App screenshots](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/appfeatures.png)
+![App screenshots](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/features.png)
 
 ## Getting Started
 
