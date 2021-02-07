@@ -3,12 +3,16 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/providers/ToiletModel.dart';
+import '../../core/models/Toilet.dart';
 import 'ToiletCard.dart';
 
 class ToiletRecommendationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
+    final List<Toilet> toilets =
+        context.select((ToiletModel m) => m.toilets.getRange(0, 20));
+    final Function selectToilet =
+        context.select((ToiletModel m) => m.selectToilet);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0),
@@ -30,9 +34,9 @@ class ToiletRecommendationList extends StatelessWidget {
             itemBuilder: (context, index) => GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                provider.selectToilet(provider.toilets[index]);
+                selectToilet(toilets[index]);
               },
-              child: ToiletCard(provider.toilets[index]),
+              child: ToiletCard(toilets[index]),
             ),
           ),
         ],

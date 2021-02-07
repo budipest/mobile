@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -194,7 +195,7 @@ class _AddToiletState extends State<AddToilet> {
     );
   }
 
-  void nextPage(ToiletModel provider) {
+  void nextPage(Function showErrorSnackBar) {
     int position =
         (_controller.offset / MediaQuery.of(context).size.width).floor();
 
@@ -206,7 +207,7 @@ class _AddToiletState extends State<AddToilet> {
         curve: Curves.easeInOut,
       );
     } else {
-      provider.showErrorSnackBar("error.requiredFields");
+      showErrorSnackBar("error.requiredFields");
     }
   }
 
@@ -254,11 +255,14 @@ class _AddToiletState extends State<AddToilet> {
     }
   }
 
-  void onFABPressed(ToiletModel provider) {
+  void onFABPressed(BuildContext context) {
+    final ToiletModel provider =
+        Provider.of<ToiletModel>(context, listen: false);
+
     if (isOnLastScreen) {
       addToilet(provider);
     } else {
-      nextPage(provider);
+      nextPage(provider.showErrorSnackBar);
     }
   }
 
@@ -282,13 +286,14 @@ class _AddToiletState extends State<AddToilet> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context, listen: false);
+    final Position userLocation = context.select((ToiletModel m) => m.location);
+
     final dimensions = MediaQuery.of(context).size;
 
     if (location == null) {
       location = LatLng(
-        provider.location.latitude,
-        provider.location.longitude,
+        userLocation.latitude,
+        userLocation.longitude,
       );
     }
 
@@ -333,7 +338,7 @@ class _AddToiletState extends State<AddToilet> {
             context: context,
             title: FlutterI18n.translate(context, "addToilet"),
             fab: FloatingActionButton.extended(
-              onPressed: () => onFABPressed(provider),
+              onPressed: () => onFABPressed(context),
               backgroundColor: Colors.black,
               label: Text(
                 FlutterI18n.translate(

@@ -17,13 +17,15 @@ class AskPermission extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
+    final checkLocationPermission =
+        Provider.of<ToiletModel>(context, listen: false)
+            .checkLocationPermission;
 
     return Column(
       children: [
         BottomBarBlackContainer(
           scrollProgress,
-          provider.checkLocationPermission,
+          checkLocationPermission,
           Text(
             FlutterI18n.translate(context, "noLocation.title"),
             style: TextStyle(

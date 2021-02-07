@@ -140,28 +140,28 @@ class MapState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final _toilets = context.select((ToiletModel m) => m.toilets);
-    final _location = context.select((ToiletModel m) => m.location);
-    final _selectedToilet = context.select((ToiletModel m) => m.selectedToilet);
-    final _hasLocationPermission =
+    final toilets = context.select((ToiletModel m) => m.toilets);
+    final location = context.select((ToiletModel m) => m.location);
+    final selectedToilet = context.select((ToiletModel m) => m.selectedToilet);
+    final hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
 
-    if (_selectedToilet != latestSelected) {
-      latestSelected = _selectedToilet;
+    if (selectedToilet != latestSelected) {
+      latestSelected = selectedToilet;
 
-      if (_selectedToilet != null) {
-        if (_hasLocationPermission) {
+      if (selectedToilet != null) {
+        if (hasLocationPermission) {
           drawRoutes(
-            _location.latitude,
-            _location.longitude,
-            _selectedToilet.latitude,
-            _selectedToilet.longitude,
+            location.latitude,
+            location.longitude,
+            selectedToilet.latitude,
+            selectedToilet.longitude,
           );
         }
 
         animateToLocation(
-          _selectedToilet.latitude,
-          _selectedToilet.longitude,
+          selectedToilet.latitude,
+          selectedToilet.longitude,
         );
       } else {
         _polylines.clear();
@@ -172,12 +172,12 @@ class MapState extends State<MapWidget> {
       onMapCreated: (controller) => _onMapCreated(
         controller,
         context,
-        _toilets,
+        toilets,
       ),
       initialCameraPosition: CameraPosition(
         target: LatLng(
-          _location.latitude,
-          _location.longitude,
+          location.latitude,
+          location.longitude,
         ),
         zoom: 15.0,
       ),

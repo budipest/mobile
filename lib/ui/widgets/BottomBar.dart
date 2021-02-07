@@ -20,8 +20,10 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
-    final Toilet selectedToilet = provider.selectedToilet;
+    final Toilet selectedToilet =
+        context.select((ToiletModel m) => m.selectedToilet);
+    final bool hasLocationPermission =
+        context.select((ToiletModel m) => m.hasLocationPermission);
 
     bool hasSelected = selectedToilet != null;
 
@@ -34,7 +36,7 @@ class BottomBar extends StatelessWidget {
             ? NeverScrollableScrollPhysics()
             : ClampingScrollPhysics(),
         children: !hasSelected
-            ? provider.hasLocationPermission
+            ? hasLocationPermission
                 ? <Widget>[
                     RecommendedToilet(scrollProgress),
                     ToiletRecommendationList()

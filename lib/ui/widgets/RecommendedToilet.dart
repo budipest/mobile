@@ -78,9 +78,15 @@ class RecommendedToilet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
-    final Toilet selectedToilet = provider.selectedToilet;
-    final Toilet suggestedToilet = provider.suggestedToilet;
+    final Toilet selectedToilet =
+        context.select((ToiletModel m) => m.selectedToilet);
+    final Toilet suggestedToilet =
+        context.select((ToiletModel m) => m.suggestedToilet);
+    final Function selectToilet =
+        context.select((ToiletModel m) => m.selectToilet);
+    final bool hasLocationPermission =
+        context.select((ToiletModel m) => m.hasLocationPermission);
+
     final List<String> openingTimes = new List<String>.empty(growable: true);
 
     bool hasSelected = selectedToilet != null;
@@ -114,7 +120,7 @@ class RecommendedToilet extends StatelessWidget {
       scrollProgress,
       () {
         if (!hasSelected) {
-          provider.selectToilet(provider.suggestedToilet);
+          selectToilet(suggestedToilet);
         }
       },
       Column(
@@ -212,7 +218,7 @@ class RecommendedToilet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (provider.hasLocationPermission)
+                  if (hasLocationPermission)
                     RichText(
                       text: TextSpan(
                         style: TextStyle(

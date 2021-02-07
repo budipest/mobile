@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -59,11 +60,12 @@ class Home extends StatelessWidget {
   }
 
   void animateMapToUserLocation(BuildContext context) async {
-    final _location = Provider.of<ToiletModel>(context, listen: false).location;
+    final Position location =
+        Provider.of<ToiletModel>(context, listen: false).location;
 
     await _mapKey.currentState.animateToLocation(
-      _location.latitude,
-      _location.longitude,
+      location.latitude,
+      location.longitude,
     );
 
     _mapKey.currentState.updateMarkers(15.0);
@@ -75,24 +77,24 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _selectedToilet = context.select((ToiletModel m) => m.selectedToilet);
-    final _appError = context.select((ToiletModel m) => m.appError);
-    final _loaded = context.select((ToiletModel m) => m.loaded);
-    final _hasLocationPermission =
+    final selectedToilet = context.select((ToiletModel m) => m.selectedToilet);
+    final appError = context.select((ToiletModel m) => m.appError);
+    final loaded = context.select((ToiletModel m) => m.loaded);
+    final hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
 
-    final _screenHeight = MediaQuery.of(context).size.height;
-    final _screenWidth = MediaQuery.of(context).size.width;
-    final _hasSelected = _selectedToilet != null;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final hasSelected = selectedToilet != null;
 
     if (_pc.isAttached && _pc.panelPosition < 0.95) {
-      if (_hasSelected && _pc.panelPosition != 0.175) {
+      if (hasSelected && _pc.panelPosition != 0.175) {
         _pc.animatePanelToPosition(
           0.175,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         );
-      } else if (!_hasSelected && _pc.panelPosition != 0) {
+      } else if (!hasSelected && _pc.panelPosition != 0) {
         _pc.animatePanelToPosition(
           0,
           duration: const Duration(milliseconds: 200),
@@ -101,16 +103,16 @@ class Home extends StatelessWidget {
       }
     }
 
-    if (_appError != null) {
+    if (appError != null) {
       return Scaffold(
         body: Stack(
           children: [
             ErrorProvider(),
-            Error(_appError),
+            Error(appError),
           ],
         ),
       );
-    } else if (!_loaded) {
+    } else if (!loaded) {
       return Scaffold(
         body: Stack(
           children: [
@@ -121,11 +123,11 @@ class Home extends StatelessWidget {
       );
     }
 
-    final _bottomBarMinHeight = 80 + _screenHeight * 0.15;
+    final bottomBarMinHeight = 80 + screenHeight * 0.15;
 
     return WillPopScope(
       onWillPop: () async {
-        return backHandler(true, _hasSelected, context);
+        return backHandler(true, hasSelected, context);
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -136,9 +138,9 @@ class Home extends StatelessWidget {
             SlidingUpPanel(
               controller: _pc,
               panelSnapping: true,
-              minHeight: _bottomBarMinHeight,
-              maxHeight: _screenHeight,
-              snapPoint: _hasSelected ? 0.175 : null,
+              minHeight: bottomBarMinHeight,
+              maxHeight: screenHeight,
+              snapPoint: hasSelected ? 0.175 : null,
               panelBuilder: (ScrollController sc) {
                 _panelScrollController = sc;
 
@@ -156,19 +158,19 @@ class Home extends StatelessWidget {
               body: Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  width: _screenWidth,
-                  height: _screenHeight - _bottomBarMinHeight,
+                  width: screenWidth,
+                  height: screenHeight - bottomBarMinHeight,
                   child: MapWidget(key: _mapKey),
                 ),
               ),
             ),
-            _hasLocationPermission
+            hasLocationPermission
                 ? AnimatedBuilder(
                     animation: _notifier,
                     builder: (_, child) => Positioned(
                       right: 0,
-                      bottom: (_screenHeight * _notifier.value) +
-                          (_bottomBarMinHeight + 20),
+                      bottom: (screenHeight * _notifier.value) +
+                          (bottomBarMinHeight + 20),
                       child: RawMaterialButton(
                         shape: CircleBorder(),
                         fillColor: Colors.white,
@@ -203,26 +205,26 @@ class Home extends StatelessWidget {
                         shape: CircleBorder(),
                         fillColor: _notifier.value > 0.99
                             ? Colors.white
-                            : _hasSelected
+                            : hasSelected
                                 ? Colors.black
                                 : Colors.white,
                         elevation: 5.0,
                         child: Icon(
                           _notifier.value > 0.99
                               ? Icons.close
-                              : _hasSelected
+                              : hasSelected
                                   ? Icons.close
                                   : Icons.menu,
                           color: _notifier.value > 0.99
                               ? Colors.black
-                              : _hasSelected
+                              : hasSelected
                                   ? Colors.white
                                   : Colors.black,
                           size: 30.0,
                         ),
                         onPressed: () => backHandler(
                           false,
-                          _hasSelected,
+                          hasSelected,
                           context,
                         ),
                       ),
