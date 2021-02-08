@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+// TODO: uncomment the line below after codegen
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'ui/screens/Home.dart';
 import 'ui/screens/AddToilet.dart';
@@ -59,8 +61,11 @@ class Application extends StatelessWidget {
       ],
       localizationsDelegates: [
         // ... app-specific localization delegate[s] here
+        // TODO: uncomment the line below after codegen
+        // AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
         const Locale('en'), // English

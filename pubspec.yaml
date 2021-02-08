@@ -23,20 +23,22 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  intl: 0.17.0-nullsafety.2
+
   flutter_svg: 0.20.0-nullsafety.3
-  sliding_up_panel: any
+  sliding_up_panel: 1.0.2
 
-  google_maps_flutter: any
-  geolocator: any
+  google_maps_flutter: 1.2.0
+  geolocator: 7.0.0-nullsafety.5
 
-  provider: any
-  shared_preferences: any
-  uuid: any
+  provider: 4.3.3
+  shared_preferences: 0.5.12+4
+  uuid: 2.2.2
 
-  http: any
-  url_launcher: any
+  http: 0.12.2
+  url_launcher: 5.7.10
 
-  fluster: any
+  fluster: 1.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
