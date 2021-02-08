@@ -212,6 +212,7 @@ Widget descriptionIcon(
                     iconPath,
                     width: smaller ? 17.5 : 20,
                     height: smaller ? 17.5 : 20,
+                    color: mode == "light" ? Colors.white : Colors.black,
                   ),
             if (text != null)
               Padding(
@@ -237,16 +238,16 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding, String mode) {
 
   switch (toilet.entryMethod) {
     case EntryMethod.FREE:
-      path = "assets/icons/bottom/$mode/tag_free.svg";
+      path = "assets/icons/bottom/tag_free.svg";
       break;
     case EntryMethod.CONSUMERS:
-      path = "assets/icons/bottom/$mode/tag_guests.svg";
+      path = "assets/icons/bottom/tag_guests.svg";
       break;
     case EntryMethod.PRICE:
-      path = "assets/icons/bottom/$mode/tag_paid.svg";
+      path = "assets/icons/bottom/tag_paid.svg";
       break;
     case EntryMethod.CODE:
-      path = "assets/icons/bottom/$mode/tag_key.svg";
+      path = "assets/icons/bottom/tag_key.svg";
       break;
     default:
       return null;
@@ -267,14 +268,14 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         padding,
         "dark",
         true,
-        iconPath: "assets/icons/bottom/dark/tag_free.svg",
+        iconPath: "assets/icons/bottom/tag_free.svg",
       );
     case EntryMethod.CONSUMERS:
       return descriptionIcon(
         padding,
         "dark",
         true,
-        iconPath: "assets/icons/bottom/dark/tag_guests.svg",
+        iconPath: "assets/icons/bottom/tag_guests.svg",
       );
     case EntryMethod.PRICE:
       var priceIcons = List<Widget>.empty(growable: true);
@@ -287,7 +288,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
               "dark",
               true,
               text: "$value $currency",
-              iconPath: "assets/icons/bottom/dark/tag_paid.svg",
+              iconPath: "assets/icons/bottom/tag_paid.svg",
             ),
           );
         });
@@ -297,7 +298,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
             padding,
             "dark",
             true,
-            iconPath: "assets/icons/bottom/dark/tag_paid.svg",
+            iconPath: "assets/icons/bottom/tag_paid.svg",
           ),
         );
       }
@@ -312,7 +313,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         "dark",
         true,
         text: toilet.code != null ? toilet.code : "",
-        iconPath: "assets/icons/bottom/dark/tag_key.svg",
+        iconPath: "assets/icons/bottom/tag_key.svg",
       );
     default:
       return null;
@@ -338,7 +339,7 @@ List<Widget> describeToiletIcons(
       padding,
       mode,
       smaller,
-      iconPath: "assets/icons/bottom/$mode/cat_$categoryStr.svg",
+      iconPath: "assets/icons/bottom/cat_$categoryStr.svg",
     ),
   );
 
@@ -354,7 +355,7 @@ List<Widget> describeToiletIcons(
           padding,
           mode,
           smaller,
-          iconPath: "assets/icons/bottom/$mode/tag_$tagStr.svg",
+          iconPath: "assets/icons/bottom/tag_$tagStr.svg",
         ),
       );
     });
@@ -399,11 +400,7 @@ List<Widget> describeToiletIcons(
   } else {
     if (toilet.entryMethod != EntryMethod.UNKNOWN) {
       result.add(
-        entryMethodIcon(
-          toilet,
-          padding,
-          mode,
-        ),
+        entryMethodIcon(toilet, padding, mode),
       );
     }
   }

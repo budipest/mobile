@@ -58,7 +58,26 @@ flutter:
 
     - assets/logo-white.svg
 
-    # Marker icons - light
+    # bottom bar icons
+    - assets/icons/bottom/cat_general.svg
+    - assets/icons/bottom/cat_gas_station.svg
+    - assets/icons/bottom/cat_restaurant.svg
+    - assets/icons/bottom/cat_shop.svg
+    - assets/icons/bottom/cat_portable.svg
+    - assets/icons/bottom/tag_baby_room.svg
+    - assets/icons/bottom/tag_wheelchair_accessible.svg
+    - assets/icons/bottom/tag_key.svg
+    - assets/icons/bottom/tag_free.svg
+    - assets/icons/bottom/tag_guests.svg
+    - assets/icons/bottom/tag_paid.svg
+
+    # suggest edit icons
+    # - assets/icons/edit/delete.svg
+    # - assets/icons/edit/nametag.svg
+    # - assets/icons/edit/opening.svg
+    # - assets/icons/edit/services.svg
+
+    # map marker icons - light
     - assets/icons/pin/l_gas_station_unknown.svg
     - assets/icons/pin/l_gas_station_closed.svg
     - assets/icons/pin/l_gas_station_open.svg
@@ -76,47 +95,21 @@ flutter:
     - assets/icons/pin/l_shop_open.svg
     - assets/icons/pin/l_gas_station_unknown.svg
 
-    # Marker icons - dark
-    - assets/icons/pin/d_gas_station_closed.svg
-    - assets/icons/pin/d_gas_station_open.svg
-    - assets/icons/pin/d_general_unknown.svg
-    - assets/icons/pin/d_general_closed.svg
-    - assets/icons/pin/d_general_open.svg
-    - assets/icons/pin/d_portable_unknown.svg
-    - assets/icons/pin/d_portable_closed.svg
-    - assets/icons/pin/d_portable_open.svg
-    - assets/icons/pin/d_restaurant_unknown.svg
-    - assets/icons/pin/d_restaurant_closed.svg
-    - assets/icons/pin/d_restaurant_open.svg
-    - assets/icons/pin/d_shop_unknown.svg
-    - assets/icons/pin/d_shop_closed.svg
-    - assets/icons/pin/d_shop_open.svg
-
-      # Square icons - light
-    - assets/icons/bottom/light/cat_general.svg
-    - assets/icons/bottom/light/cat_gas_station.svg
-    - assets/icons/bottom/light/cat_restaurant.svg
-    - assets/icons/bottom/light/cat_shop.svg
-    - assets/icons/bottom/light/cat_portable.svg
-    - assets/icons/bottom/light/tag_baby_room.svg
-    - assets/icons/bottom/light/tag_wheelchair_accessible.svg
-    - assets/icons/bottom/light/tag_key.svg
-    - assets/icons/bottom/light/tag_free.svg
-    - assets/icons/bottom/light/tag_guests.svg
-    - assets/icons/bottom/light/tag_paid.svg
-
-    # Square icons - dark
-    - assets/icons/bottom/dark/cat_general.svg
-    - assets/icons/bottom/dark/cat_gas_station.svg
-    - assets/icons/bottom/dark/cat_restaurant.svg
-    - assets/icons/bottom/dark/cat_shop.svg
-    - assets/icons/bottom/dark/cat_portable.svg
-    - assets/icons/bottom/dark/tag_baby_room.svg
-    - assets/icons/bottom/dark/tag_wheelchair_accessible.svg
-    - assets/icons/bottom/dark/tag_key.svg
-    - assets/icons/bottom/dark/tag_free.svg
-    - assets/icons/bottom/dark/tag_guests.svg
-    - assets/icons/bottom/dark/tag_paid.svg
+    # map marker icons - dark
+    # - assets/icons/pin/d_gas_station_closed.svg
+    # - assets/icons/pin/d_gas_station_open.svg
+    # - assets/icons/pin/d_general_unknown.svg
+    # - assets/icons/pin/d_general_closed.svg
+    # - assets/icons/pin/d_general_open.svg
+    # - assets/icons/pin/d_portable_unknown.svg
+    # - assets/icons/pin/d_portable_closed.svg
+    # - assets/icons/pin/d_portable_open.svg
+    # - assets/icons/pin/d_restaurant_unknown.svg
+    # - assets/icons/pin/d_restaurant_closed.svg
+    # - assets/icons/pin/d_restaurant_open.svg
+    # - assets/icons/pin/d_shop_unknown.svg
+    # - assets/icons/pin/d_shop_closed.svg
+    # - assets/icons/pin/d_shop_open.svg
 
   fonts:
     - family: Muli

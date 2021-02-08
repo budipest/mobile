@@ -36,10 +36,11 @@ class Selectable extends StatelessWidget {
                         child: Container(
                           width: 25,
                           child: SvgPicture.asset(
-                            "assets/icons/bottom/${isSelected ? "light" : "dark"}/$iconName",
+                            "assets/icons/bottom/$iconName",
                             semanticsLabel: '$iconName category icon',
                             width: 25,
                             height: 25,
+                            color: isSelected ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
