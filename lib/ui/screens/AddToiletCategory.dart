@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Toilet.dart';
 import '../widgets/Selectable.dart';
@@ -18,7 +19,7 @@ class AddToiletCategory extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
-          "toiletType",
+          AppLocalizations.of(context).toiletType,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -29,7 +30,7 @@ class AddToiletCategory extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_general.svg",
-            "general",
+            AppLocalizations.of(context).general,
             onCategorySubmitted,
             Category.GENERAL,
             selectedCategory == Category.GENERAL,
@@ -39,7 +40,7 @@ class AddToiletCategory extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_restaurant.svg",
-            "restaurant",
+            AppLocalizations.of(context).restaurant,
             onCategorySubmitted,
             Category.RESTAURANT,
             selectedCategory == Category.RESTAURANT,
@@ -49,7 +50,7 @@ class AddToiletCategory extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_shop.svg",
-            "shop",
+            AppLocalizations.of(context).shop,
             onCategorySubmitted,
             Category.SHOP,
             selectedCategory == Category.SHOP,
@@ -59,7 +60,7 @@ class AddToiletCategory extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_gas_station.svg",
-            "gasStation",
+            AppLocalizations.of(context).gasStation,
             onCategorySubmitted,
             Category.GAS_STATION,
             selectedCategory == Category.GAS_STATION,
@@ -69,7 +70,7 @@ class AddToiletCategory extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "cat_portable.svg",
-            "portable",
+            AppLocalizations.of(context).portable,
             onCategorySubmitted,
             Category.PORTABLE,
             selectedCategory == Category.PORTABLE,

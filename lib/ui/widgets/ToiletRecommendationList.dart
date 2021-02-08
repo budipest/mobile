@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/providers/ToiletModel.dart';
 import '../../core/models/Toilet.dart';
@@ -19,7 +20,7 @@ class ToiletRecommendationList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "otherToilets",
+            AppLocalizations.of(context).otherToilets,
             style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,

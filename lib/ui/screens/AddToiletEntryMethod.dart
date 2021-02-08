@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Toilet.dart';
 import '../widgets/Selectable.dart';
@@ -32,7 +33,7 @@ class AddToiletEntryMethod extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
-          "toiletEntryMethod",
+          AppLocalizations.of(context).toiletEntryMethod,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -43,7 +44,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_free.svg",
-            "free",
+            AppLocalizations.of(context).free,
             onEntryMethodSubmitted,
             EntryMethod.FREE,
             selectedEntryMethod == EntryMethod.FREE,
@@ -53,7 +54,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_paid.svg",
-            "paid",
+            AppLocalizations.of(context).paid,
             onEntryMethodSubmitted,
             EntryMethod.PRICE,
             selectedEntryMethod == EntryMethod.PRICE,
@@ -61,7 +62,7 @@ class AddToiletEntryMethod extends StatelessWidget {
               children: <Widget>[
                 TextInput(
                   price["HUF"] != null ? price["HUF"].toString() : null,
-                  "price",
+                  AppLocalizations.of(context).price,
                   onTextChanged: (String input) => onPriceChanged(input, "HUF"),
                   isDark: true,
                   suffixText: "HUF",
@@ -77,7 +78,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                                 price["EUR"] != null
                                     ? price["EUR"].toString()
                                     : null,
-                                "priceAlternative",
+                                AppLocalizations.of(context).priceAlternative,
                                 onTextChanged: (String input) =>
                                     onPriceChanged(input, "EUR"),
                                 isDark: true,
@@ -112,7 +113,7 @@ class AddToiletEntryMethod extends StatelessWidget {
                     : Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Button(
-                          "addCurrency",
+                          AppLocalizations.of(context).addCurrency,
                           toggleEUR,
                           backgroundColor: Colors.grey[900],
                           foregroundColor: Colors.white,
@@ -126,7 +127,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_guests.svg",
-            "guests",
+            AppLocalizations.of(context).guests,
             onEntryMethodSubmitted,
             EntryMethod.CONSUMERS,
             selectedEntryMethod == EntryMethod.CONSUMERS,
@@ -136,7 +137,7 @@ class AddToiletEntryMethod extends StatelessWidget {
           padding: const EdgeInsets.only(top: 15.0),
           child: Selectable(
             "tag_key.svg",
-            "key",
+            AppLocalizations.of(context).key,
             onEntryMethodSubmitted,
             EntryMethod.CODE,
             selectedEntryMethod == EntryMethod.CODE,
@@ -145,7 +146,7 @@ class AddToiletEntryMethod extends StatelessWidget {
               "",
               onTextChanged: onCodeSubmitted,
               isDark: true,
-              prefixText: "code",
+              prefixText: AppLocalizations.of(context).code,
             ),
           ),
         ),

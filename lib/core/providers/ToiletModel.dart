@@ -73,7 +73,7 @@ class ToiletModel extends ChangeNotifier {
       });
     } catch (error) {
       print(error);
-      _appError = "error.data";
+      _appError = "errorData";
       notifyListeners();
       return;
     }
@@ -127,13 +127,13 @@ class ToiletModel extends ChangeNotifier {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      showErrorSnackBar("error.location");
+      showErrorSnackBar("errorLocation");
       return;
     }
 
     _locationPermissionStatus = await Geolocator.checkPermission();
     if (_locationPermissionStatus == LocationPermission.deniedForever) {
-      showErrorSnackBar("error.location");
+      showErrorSnackBar("errorLocation");
       return;
     }
 
@@ -141,7 +141,7 @@ class ToiletModel extends ChangeNotifier {
       _locationPermissionStatus = await Geolocator.requestPermission();
       if (_locationPermissionStatus != LocationPermission.whileInUse &&
           _locationPermissionStatus != LocationPermission.always) {
-        showErrorSnackBar("error.location");
+        showErrorSnackBar("errorLocation");
         return;
       }
     }
@@ -162,7 +162,7 @@ class ToiletModel extends ChangeNotifier {
       selectToilet(addedToilet);
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
     }
   }
 
@@ -186,7 +186,7 @@ class ToiletModel extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
     }
   }
 
@@ -205,7 +205,7 @@ class ToiletModel extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
     }
   }
 
@@ -224,14 +224,14 @@ class ToiletModel extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
     }
   }
 
   void showErrorSnackBar(String errorCode) {
     ScaffoldMessenger.of(_globalContext).showSnackBar(
       SnackBar(
-        content: Text(errorCode),
+        content: Text(errorCode), // TODO: figure this shit out
         backgroundColor: Colors.red,
         duration: Duration(seconds: 6),
         behavior: SnackBarBehavior.floating,

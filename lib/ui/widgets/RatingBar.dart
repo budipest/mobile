@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/models/Vote.dart';
@@ -63,7 +64,7 @@ class RatingBar extends StatelessWidget {
     return Row(
       children: <Widget>[
         Text(
-          "rate",
+          AppLocalizations.of(context).rate,
           style: TextStyle(
             fontSize: 22.0,
             fontWeight: FontWeight.bold,

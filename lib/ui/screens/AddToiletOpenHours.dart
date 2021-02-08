@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/Button.dart';
 import '../widgets/OpenHourRow.dart';
@@ -39,7 +40,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
       padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
       children: <Widget>[
         Text(
-          "openHours",
+          AppLocalizations.of(context).openHours,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -49,7 +50,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
         Padding(
           padding: const EdgeInsets.only(top: 15.0),
           child: Button(
-            "alwaysOpen",
+            AppLocalizations.of(context).alwaysOpen,
             () {
               widget.onNonStopChanged(!widget.isNonStop);
             },

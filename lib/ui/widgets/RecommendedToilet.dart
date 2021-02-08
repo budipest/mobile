@@ -3,6 +3,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import "Button.dart";
 import "BottomBarBlackContainer.dart";
@@ -40,14 +41,14 @@ class RecommendedToilet extends StatelessWidget {
           // return object of type Dialog
           return AlertDialog(
             title: Text(
-              "notGonnaGetThere",
+              AppLocalizations.of(context).notGonnaGetThere,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24.0,
               ),
             ),
             content: Text(
-              "closerToilets.numOfToilets index",
+              AppLocalizations.of(context).closerToilets(index),
               style: TextStyle(
                 fontSize: 18.0,
               ),
@@ -55,13 +56,13 @@ class RecommendedToilet extends StatelessWidget {
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               FlatButton(
-                child: Text("cancel"),
+                child: Text(AppLocalizations.of(context).cancel),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               FlatButton(
-                child: Text("directions"),
+                child: Text(AppLocalizations.of(context).directions),
                 onPressed: () {
                   _navigate(toilet);
                 },
@@ -101,8 +102,8 @@ class RecommendedToilet extends StatelessWidget {
 
         params["day"] = params["day"];
 
-        openingTimes
-            .add("openState.secondKey Map.from(openState.secondParams)");
+        openingTimes.add(
+            "openState.secondKey Map.from(openState.secondParams)"); // TODO: figure this shit out
       } else {
         openingTimes.add(openState.secondString);
       }
@@ -133,7 +134,9 @@ class RecommendedToilet extends StatelessWidget {
             ),
             child: SizedBox(
               child: Text(
-                hasSelected ? selectedToilet.name : "recommendedToilet",
+                hasSelected
+                    ? selectedToilet.name
+                    : AppLocalizations.of(context).recommendedToilet,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22.0,
@@ -217,10 +220,10 @@ class RecommendedToilet extends StatelessWidget {
                           TextSpan(
                             text: selectedToilet.distance < 10000
                                 ? selectedToilet.distanceString
-                                : "tooFar",
+                                : AppLocalizations.of(context).tooFar,
                           ),
                           TextSpan(
-                            text: "distanceFromYou",
+                            text: AppLocalizations.of(context).distanceFromYou,
                             style: TextStyle(
                               color: Colors.grey,
                             ),
@@ -236,7 +239,7 @@ class RecommendedToilet extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Button(
-                    "directions",
+                    AppLocalizations.of(context).directions,
                     () {
                       if (selectedToilet.distance < 10000) {
                         _navigate(selectedToilet);

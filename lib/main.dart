@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_localizations/flutter_localizations.dart';
-// TODO: uncomment the line below after codegen
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'ui/screens/Home.dart';
 import 'ui/screens/AddToilet.dart';
@@ -34,7 +32,8 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Budipest",
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context).title,
       theme: ThemeData(
         primarySwatch: black,
         textTheme: Theme.of(context).textTheme.apply(
@@ -59,18 +58,8 @@ class Application extends StatelessWidget {
       navigatorObservers: [
         StatusBarObserver(),
       ],
-      localizationsDelegates: [
-        // ... app-specific localization delegate[s] here
-        // TODO: uncomment the line below after codegen
-        // AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en'), // English
-        const Locale('hu'), // Hungarian
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

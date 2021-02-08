@@ -11,7 +11,7 @@ description: Toilets anytime, anywhere
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.2+16
+version: 2.1.0+16
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -45,9 +45,8 @@ dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  generate: true
+
   uses-material-design: true
 
   assets:
@@ -58,10 +57,6 @@ flutter:
     - assets/dark_mode.json
 
     - assets/logo-white.svg
-
-    # Locales
-    - assets/locales/en.json
-    - assets/locales/hu.json
 
     # Marker icons - light
     - assets/icons/pin/l_gas_station_unknown.svg
@@ -97,6 +92,19 @@ flutter:
     - assets/icons/pin/d_shop_closed.svg
     - assets/icons/pin/d_shop_open.svg
 
+      # Square icons - light
+    - assets/icons/bottom/light/cat_general.svg
+    - assets/icons/bottom/light/cat_gas_station.svg
+    - assets/icons/bottom/light/cat_restaurant.svg
+    - assets/icons/bottom/light/cat_shop.svg
+    - assets/icons/bottom/light/cat_portable.svg
+    - assets/icons/bottom/light/tag_baby_room.svg
+    - assets/icons/bottom/light/tag_wheelchair_accessible.svg
+    - assets/icons/bottom/light/tag_key.svg
+    - assets/icons/bottom/light/tag_free.svg
+    - assets/icons/bottom/light/tag_guests.svg
+    - assets/icons/bottom/light/tag_paid.svg
+
     # Square icons - dark
     - assets/icons/bottom/dark/cat_general.svg
     - assets/icons/bottom/dark/cat_gas_station.svg
@@ -109,19 +117,6 @@ flutter:
     - assets/icons/bottom/dark/tag_free.svg
     - assets/icons/bottom/dark/tag_guests.svg
     - assets/icons/bottom/dark/tag_paid.svg
-
-    # Square icons - light
-    - assets/icons/bottom/light/cat_general.svg
-    - assets/icons/bottom/light/cat_gas_station.svg
-    - assets/icons/bottom/light/cat_restaurant.svg
-    - assets/icons/bottom/light/cat_shop.svg
-    - assets/icons/bottom/light/cat_portable.svg
-    - assets/icons/bottom/light/tag_baby_room.svg
-    - assets/icons/bottom/light/tag_wheelchair_accessible.svg
-    - assets/icons/bottom/light/tag_key.svg
-    - assets/icons/bottom/light/tag_free.svg
-    - assets/icons/bottom/light/tag_guests.svg
-    - assets/icons/bottom/light/tag_paid.svg
 
   fonts:
     - family: Muli

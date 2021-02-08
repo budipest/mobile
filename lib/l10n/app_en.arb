@@ -1,0 +1,123 @@
+{
+  "title": "Budipest",
+  "continueButton": "Continue",
+  "cancel": "Cancel",
+  "recommendedToilet": "Recommended toilet",
+  "otherToilets": "Nearby toilets",
+  "open": "Open",
+  "closed": "Closed",
+  "unknown": "Unknown opening hours",
+  "todayUntil": "today until {time}",
+  "@todayUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "12:00"
+      }
+    }
+  },
+  "tomorrowUntil": "today until {time}",
+  "@tomorrowUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "12:00"
+      }
+    }
+  },
+  "until": "today until {day} {time}",
+  "@until": {
+    "placeholders": {
+      "day": {
+        "type": "String",
+        "example": "Monday"
+      },
+      "time": {
+        "type": "String",
+        "example": "12:00"
+      }
+    }
+  },
+  "tooFar": "Too far",
+  "distanceFromYou": " away from you",
+  "notGonnaGetThere": "We don't think you are going to get there in time",
+  "closerToilets": "{count,plural, =1{There is one toilet that is closer to you. You really wanna go to the further one?} other{There are {count} toilets that are closer to you. You really wanna go this far away?}}",
+  "@closerToilets": {
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+  "areYouSure": "Are you sure?",
+  "irreversibleNote": "Do you really want to delete your note? There is no magic undo button!",
+  "remove": "Remove",
+  "directions": "Directions",
+  "rate": "Rating",
+  "notes": "Notes",
+  "newNote": "Add note",
+  "myNote": "Your note",
+  "newNotePlaceholder": "This toilet was nice, because...",
+  "send": "Send",
+  "addToilet": "Add toilet",
+  "dragMarker": "Hold and drag marker for precise positioning",
+  "toiletName": "Name of the toilet",
+  "name": "Name",
+  "toiletType": "Type of toilet",
+  "general": "general",
+  "restaurant": "restaurant / café",
+  "shop": "shop / mall",
+  "gasStation": "gas station",
+  "portable": "portable / temporary toilet",
+  "toiletEntryMethod": "Access type",
+  "free": "free",
+  "paid": "paid",
+  "price": "Price",
+  "priceAlternative": "Price (in EUR)",
+  "addCurrency": "Add currency",
+  "guests": "free for guests",
+  "key": "keycode",
+  "code": "CODE",
+  "openHours": "Opening hours",
+  "alwaysOpen": "Open 24/7",
+  "mondayShort": "Mon",
+  "tuesdayShort": "Tue",
+  "wednesdayShort": "Wed",
+  "thursdayShort": "Thu",
+  "fridayShort": "Fri",
+  "saturdayShort": "Sat",
+  "sundayShort": "Sun",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "services": "Services",
+  "accessible": "wheelchair accessible",
+  "babyRoom": "baby room",
+  "aboutUs": "About us",
+  "aboutUsDevelopment": "Development: Daniel Gergely",
+  "aboutUsDesign": "Design: David Jobbagy",
+  "aboutUsBetaTitle": "Special thanks to the beta testers:",
+  "aboutUsBetaNames": "Dániel Egri, Vendel Gáspár, Péter Hajdu, Ákos Horváth, Bence Kékesi, Dániel Lesti, Dominik Nagy, Gergő Pór, Balázs Szulovszky, Lili Tóth and Zsombor Szőcs",
+  "aboutUsBudapest": "Made with ❤️ in Budapest",
+  "aboutUsFeedback": "Feedback: dnlgrgly@gmail.com",
+  "aboutUsOpenSource": "This project was made with Flutter and is open-source.",
+  "aboutUsHelpUs": "Help the development of Budipest!",
+  "aboutUsHelpUsDescription": "Help Budipest take over the world by following us on Facebook, recommending the app to your friends, adding more toilets to the app, rating and adding helpful notes to the ones that exist, reporting bugs, or by giving general feedback, suggesting new features or by writing code in our GitHub repo. Learn more about other methods of help on our website.",
+  "aboutUsTeam": "The Team",
+  "emptyNotesTitle": "There are no notes yet.",
+  "emptyNotesDescription": "Share your personal review or other useful details about the toilet in a note.",
+  "errorTitle": "Something stinks in here...",
+  "errorData": "We couldn't retrieve data from the server. Maybe check your connection?",
+  "errorOnServer": "The server can't flush the toilet right now and they're busy with that. Please check back later",
+  "errorRequiredFields": "You can't leave this field empty",
+  "errorMissingFields": "Some required fields are missing. Please make sure that you filled out everything.",
+  "errorLocation": "Some features (e.g. the bottom bar, or drawing directions) are disabled until you enable location services.",
+  "noLocationTitle": "You did not enable location services",
+  "noLocationCardTitle": "Toilets will appear here, in order of their distance from you",
+  "noLocationCardDescription": "Allow Budipest to use your location so that we can recommend you the closest opening toilet, show toilets in a list, or show on-map directions to a toilet. To enable location permissions, open the Settings app, search for Budipest and select 'While Using The App' for the Location permission."
+}

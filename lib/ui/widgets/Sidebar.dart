@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar();
@@ -24,7 +25,7 @@ class Sidebar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    "title",
+                    AppLocalizations.of(context).title,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
@@ -32,7 +33,7 @@ class Sidebar extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'v2.0.2',
+                    'v2.1.0',
                     style: TextStyle(color: Colors.grey),
                   )
                 ],
@@ -45,14 +46,14 @@ class Sidebar extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  title: Text("addToilet"),
+                  title: Text(AppLocalizations.of(context).addToilet),
                   onTap: () {
                     Navigator.pushNamed(context, '/addToilet');
                     Scaffold.of(context).openEndDrawer();
                   },
                 ),
                 ListTile(
-                  title: Text("aboutUs.title"),
+                  title: Text(AppLocalizations.of(context).aboutUs),
                   onTap: () {
                     Navigator.pushNamed(context, '/about');
                     Scaffold.of(context).openEndDrawer();

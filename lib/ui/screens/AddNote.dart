@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
@@ -38,7 +39,7 @@ class _AddNoteState extends State<AddNote> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "newNote",
+                    AppLocalizations.of(context).newNote,
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -47,7 +48,8 @@ class _AddNoteState extends State<AddNote> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                    child: TextInput(note, "newNotePlaceholder",
+                    child: TextInput(
+                        note, AppLocalizations.of(context).newNotePlaceholder,
                         onTextChanged: (String text) {
                       setState(() {
                         note = text;
@@ -71,7 +73,7 @@ class _AddNoteState extends State<AddNote> {
                           child: toHeroContext.widget,
                         ),
                         child: Button(
-                          "send",
+                          AppLocalizations.of(context).send,
                           () async {
                             await addNote(note);
                             Navigator.of(context).pop();

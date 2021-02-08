@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Note.dart';
 import '../../core/providers/ToiletModel.dart';
@@ -18,28 +19,28 @@ class NoteList extends StatelessWidget {
       builder: (BuildContext innerContext) {
         return AlertDialog(
           title: Text(
-            "areYouSure",
+            AppLocalizations.of(context).areYouSure,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24.0,
             ),
           ),
           content: Text(
-            "irreversibleNote",
+            AppLocalizations.of(context).irreversibleNote,
             style: TextStyle(
               fontSize: 18.0,
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text("cancel"),
+              child: Text(AppLocalizations.of(context).cancel),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
               child: Text(
-                "remove",
+                AppLocalizations.of(context).remove,
                 style: TextStyle(
                   color: Colors.red,
                 ),
@@ -100,7 +101,7 @@ class NoteList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "empty.notes-title",
+                      AppLocalizations.of(context).emptyNotesTitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20.0,
@@ -109,7 +110,7 @@ class NoteList extends StatelessWidget {
                     ),
                     Container(height: 8),
                     Text(
-                      "empty.notes-description",
+                      AppLocalizations.of(context).emptyNotesDescription,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16.0,

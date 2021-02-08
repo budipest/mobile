@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
@@ -206,7 +207,7 @@ class _AddToiletState extends State<AddToilet> {
         curve: Curves.easeInOut,
       );
     } else {
-      showErrorSnackBar("error.requiredFields");
+      showErrorSnackBar("errorRequiredFields");
     }
   }
 
@@ -250,7 +251,7 @@ class _AddToiletState extends State<AddToilet> {
 
       Navigator.of(context).pop();
     } else {
-      provider.showErrorSnackBar("error.missingFields");
+      provider.showErrorSnackBar("errorMissingFields");
     }
   }
 
@@ -335,11 +336,13 @@ class _AddToiletState extends State<AddToilet> {
         children: [
           BlackLayoutContainer(
             context: context,
-            title: "addToilet",
+            title: AppLocalizations.of(context).addToilet,
             fab: FloatingActionButton.extended(
               onPressed: () => onFABPressed(context),
               backgroundColor: Colors.black,
-              label: Text(isOnLastScreen ? "addToilet" : "continue"),
+              label: Text(isOnLastScreen
+                  ? AppLocalizations.of(context).addToilet
+                  : AppLocalizations.of(context).continueButton),
               icon: Icon(Icons.navigate_next),
             ),
             child: PageView(

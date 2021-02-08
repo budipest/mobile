@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/common/openHourUtils.dart';
 import '../../core/common/variables.dart';
@@ -87,7 +88,8 @@ class _OpenHourRowState extends State<OpenHourRow> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 15.0),
                               child: DropdownButton<int>(
-                                value: widget.openHours[widget.index],
+                                value: widget.openHours[
+                                    widget.index], // TODO: figure this shit out
                                 elevation: 16,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -132,7 +134,8 @@ class _OpenHourRowState extends State<OpenHourRow> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 15.0),
                               child: DropdownButton<int>(
-                                value: widget.openHours[widget.index + 1],
+                                value: widget.openHours[widget.index +
+                                    1], // TODO: figure this shit out
                                 elevation: 16,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -163,7 +166,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
                   )
                 : Center(
                     child: Text(
-                      "closed",
+                      AppLocalizations.of(context).closed,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                       ),
