@@ -3,7 +3,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:fluster/fluster.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'dart:async';
 
@@ -64,7 +63,7 @@ class MapState extends State<MapWidget> {
       mapController.animateCamera(
         CameraUpdate.newLatLngZoom(
           LatLng(lat, lon),
-          15.0,
+          15.0, // TODO: csak akkor zoomoljon ha nincs beljebb zoomolva
         ),
       );
 

@@ -12,6 +12,7 @@ class OpenHourRow extends StatefulWidget {
     this.lastEditedOpening,
     this.lastEditedClosing,
     this.index,
+    this.dayLabel,
   );
 
   final Function onChange;
@@ -20,6 +21,7 @@ class OpenHourRow extends StatefulWidget {
   final int lastEditedOpening;
   final int lastEditedClosing;
   final int index;
+  final String dayLabel;
 
   @override
   _OpenHourRowState createState() => _OpenHourRowState();
@@ -28,8 +30,6 @@ class OpenHourRow extends StatefulWidget {
 class _OpenHourRowState extends State<OpenHourRow> {
   @override
   Widget build(BuildContext context) {
-    String day = daysShort[(widget.index / 2).floor()];
-
     bool isOn = widget.openHours[widget.index] != 0 ||
         widget.openHours[widget.index + 1] != 0;
 
@@ -68,7 +68,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
           Container(
             width: 50,
             child: Text(
-              day,
+              widget.dayLabel,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
@@ -88,8 +88,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 15.0),
                               child: DropdownButton<int>(
-                                value: widget.openHours[
-                                    widget.index], // TODO: figure this shit out
+                                value: widget.openHours[widget.index],
                                 elevation: 16,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -134,8 +133,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 15.0),
                               child: DropdownButton<int>(
-                                value: widget.openHours[widget.index +
-                                    1], // TODO: figure this shit out
+                                value: widget.openHours[widget.index + 1],
                                 elevation: 16,
                                 style: TextStyle(
                                   color: Colors.black,

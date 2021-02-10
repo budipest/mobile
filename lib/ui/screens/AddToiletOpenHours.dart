@@ -68,6 +68,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
                 lastEditedOpening,
                 lastEditedClosing,
                 0,
+                AppLocalizations.of(context).mondayShort,
               ),
               OpenHourRow(
                 onOpenHoursChanged,
@@ -76,6 +77,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
                 lastEditedOpening,
                 lastEditedClosing,
                 2,
+                AppLocalizations.of(context).tuesdayShort,
               ),
               OpenHourRow(
                 onOpenHoursChanged,
@@ -84,6 +86,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
                 lastEditedOpening,
                 lastEditedClosing,
                 4,
+                AppLocalizations.of(context).wednesdayShort,
               ),
               OpenHourRow(
                 onOpenHoursChanged,
@@ -92,6 +95,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
                 lastEditedOpening,
                 lastEditedClosing,
                 6,
+                AppLocalizations.of(context).thursdayShort,
               ),
               OpenHourRow(
                 onOpenHoursChanged,
@@ -100,6 +104,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
                 lastEditedOpening,
                 lastEditedClosing,
                 8,
+                AppLocalizations.of(context).fridayShort,
               ),
               OpenHourRow(
                 onOpenHoursChanged,
@@ -108,6 +113,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
                 lastEditedOpening,
                 lastEditedClosing,
                 10,
+                AppLocalizations.of(context).saturdayShort,
               ),
               OpenHourRow(
                 onOpenHoursChanged,
@@ -116,6 +122,7 @@ class _AddToiletOpenHoursState extends State<AddToiletOpenHours> {
                 lastEditedOpening,
                 lastEditedClosing,
                 12,
+                AppLocalizations.of(context).sundayShort,
               ),
             ],
           ),

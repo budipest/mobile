@@ -6,26 +6,8 @@
   "otherToilets": "Nearby toilets",
   "open": "Open",
   "closed": "Closed",
-  "unknown": "Unknown opening hours",
-  "todayUntil": "today until {time}",
-  "@todayUntil": {
-    "placeholders": {
-      "time": {
-        "type": "String",
-        "example": "12:00"
-      }
-    }
-  },
-  "tomorrowUntil": "today until {time}",
-  "@tomorrowUntil": {
-    "placeholders": {
-      "time": {
-        "type": "String",
-        "example": "12:00"
-      }
-    }
-  },
-  "until": "today until {day} {time}",
+  "unknown": "Unknown opening times",
+  "until": "{day} until {time}",
   "@until": {
     "placeholders": {
       "day": {
@@ -79,15 +61,17 @@
   "guests": "free for guests",
   "key": "keycode",
   "code": "CODE",
-  "openHours": "Opening hours",
+  "openHours": "Opening hours (optional)",
   "alwaysOpen": "Open 24/7",
-  "mondayShort": "Mon",
-  "tuesdayShort": "Tue",
-  "wednesdayShort": "Wed",
-  "thursdayShort": "Thu",
-  "fridayShort": "Fri",
-  "saturdayShort": "Sat",
-  "sundayShort": "Sun",
+  "relativeDays": "{index,plural, =0{today} =1{tomorrow} =other{N/A}}",
+  "@relativeDays": {
+    "placeholders": {
+      "index": {
+        "type": "String",
+        "example": "0"
+      }
+    }
+  },
   "monday": "Monday",
   "tuesday": "Tuesday",
   "wednesday": "Wednesday",
@@ -95,7 +79,14 @@
   "friday": "Friday",
   "saturday": "Saturday",
   "sunday": "Sunday",
-  "services": "Services",
+  "mondayShort": "Mon",
+  "tuesdayShort": "Tue",
+  "wednesdayShort": "Wed",
+  "thursdayShort": "Thu",
+  "fridayShort": "Fri",
+  "saturdayShort": "Sat",
+  "sundayShort": "Sun",
+  "services": "Services (optional)",
   "accessible": "wheelchair accessible",
   "babyRoom": "baby room",
   "aboutUs": "About us",

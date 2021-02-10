@@ -8,17 +8,18 @@ import 'dart:core';
 import '../models/Toilet.dart';
 import '../models/Vote.dart';
 import 'bitmapFromSvg.dart';
-import "variables.dart";
 
 enum OpenState { OPEN, CLOSED, UNKNOWN }
 
 class OpenStateDetails {
-  OpenState state;
-  String first;
-  String secondString;
-  String secondKey;
+  OpenState state = OpenState.UNKNOWN;
+  // if it's 24/7
+  bool isAlwaysOpen = false;
+  // if true, it's either today/tomorrow. if other, it's an absolute day (Mon/Tue/Wed/...)
+  bool isRelativeDay = false;
+  // the current state is active until...
   Map secondParams;
-  Color color;
+  Color color = Colors.grey;
   List<int> raw;
 
   OpenStateDetails(this.raw);
@@ -27,16 +28,13 @@ class OpenStateDetails {
     if (this.raw.every((element) => element == 0)) {
       state = OpenState.UNKNOWN;
       color = Colors.grey;
-      first = "unknown";
-      secondString = "";
       return;
     }
 
     if (this.raw[0] == 0 && this.raw[1] == 1440 && this.raw.length == 2) {
       state = OpenState.OPEN;
       color = Colors.green;
-      first = "open";
-      secondString = "24/7";
+      isAlwaysOpen = true;
       return;
     }
 
@@ -65,12 +63,10 @@ class OpenStateDetails {
       if (todayFirst < currentTime && currentTime < todayLast) {
         state = OpenState.OPEN;
         color = Colors.green;
-        first = "open";
         currentlyPast = todayFirstIndex;
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
-        first = "closed";
 
         if (todayFirst > currentTime) {
           currentlyPast = yesterdayLastIndex;
@@ -84,7 +80,6 @@ class OpenStateDetails {
           todayLast < currentTime) {
         state = OpenState.OPEN;
         color = Colors.green;
-        first = "open";
         if (todayLast < currentTime) {
           currentlyPast = todayLastIndex;
         } else {
@@ -93,7 +88,6 @@ class OpenStateDetails {
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
-        first = "closed";
         currentlyPast = todayFirstIndex;
       }
     }
@@ -101,13 +95,10 @@ class OpenStateDetails {
     if (todayFirst == 0 && todayLast == 0) {
       state = OpenState.CLOSED;
       color = Colors.red;
-      first = "closed";
       currentlyPast = -2;
     }
 
-    for (int i = currentlyPast + 1;
-        secondString == null && secondKey == null && secondParams == null;
-        i++) {
+    for (int i = currentlyPast + 1; secondParams == null; i++) {
       i = handleDayIndexOverflow(i);
 
       bool isFirstValueToday = i % 2 == 0;
@@ -119,18 +110,20 @@ class OpenStateDetails {
 
         if (dayIndex == currentDayIndex) {
           // today
-          secondKey = "todayUntil";
+          isRelativeDay = true;
+          dayIndex = 0;
         } else if (dayIndex == handleDayOverflow(currentDayIndex + 1)) {
           // tomorrow
-          secondKey = "tomorrowUntil";
+          isRelativeDay = true;
+          dayIndex = 1;
         } else {
           // other day
-          secondKey = "until";
+          isRelativeDay = false;
         }
 
         secondParams = Map.fromIterables(
           ["time", "day"],
-          [time, days[dayIndex]],
+          [time, dayIndex],
         );
       }
     }

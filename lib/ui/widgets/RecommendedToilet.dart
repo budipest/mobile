@@ -95,17 +95,44 @@ class RecommendedToilet extends StatelessWidget {
       // setup first and second opening time strings
       OpenStateDetails openState = selectedToilet.openState;
 
-      openingTimes.add(openState.first + " ");
+      if (openState.state != OpenState.UNKNOWN) {
+        if (openState.state == OpenState.OPEN) {
+          openingTimes.add(AppLocalizations.of(context).open + " ");
+        } else if (openState.state == OpenState.CLOSED) {
+          openingTimes.add(AppLocalizations.of(context).closed + " ");
+        }
 
-      if (openState.secondKey != null) {
-        Map params = openState.secondParams;
+        if (!openState.isAlwaysOpen) {
+          String day;
+          if (openState.isRelativeDay) {
+            day = AppLocalizations.of(context)
+                .relativeDays(openState.secondParams["day"]);
+          } else {
+            List<String> days = [
+              AppLocalizations.of(context).monday,
+              AppLocalizations.of(context).tuesday,
+              AppLocalizations.of(context).wednesday,
+              AppLocalizations.of(context).thursday,
+              AppLocalizations.of(context).friday,
+              AppLocalizations.of(context).saturday,
+              AppLocalizations.of(context).sunday,
+            ];
 
-        params["day"] = params["day"];
+            day = days[openState.secondParams["days"]];
+          }
 
-        openingTimes.add(
-            "openState.secondKey Map.from(openState.secondParams)"); // TODO: figure this shit out
+          openingTimes.add(
+            AppLocalizations.of(context).until(
+              day,
+              openState.secondParams["time"],
+            ),
+          );
+        } else {
+          openingTimes.add("24/7");
+        }
       } else {
-        openingTimes.add(openState.secondString);
+        openingTimes.add(AppLocalizations.of(context).unknown + " ");
+        openingTimes.add("");
       }
     }
 
