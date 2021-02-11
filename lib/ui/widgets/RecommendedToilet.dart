@@ -55,13 +55,13 @@ class RecommendedToilet extends StatelessWidget {
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
-              FlatButton(
+              TextButton(
                 child: Text(AppLocalizations.of(context).cancel),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(AppLocalizations.of(context).directions),
                 onPressed: () {
                   _navigate(toilet);

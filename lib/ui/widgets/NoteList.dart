@@ -32,13 +32,13 @@ class NoteList extends StatelessWidget {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(AppLocalizations.of(context).cancel),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 AppLocalizations.of(context).remove,
                 style: TextStyle(
