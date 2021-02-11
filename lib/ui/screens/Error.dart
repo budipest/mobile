@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Error extends StatelessWidget {
-  const Error(this.errorCode);
+  const Error(this.error);
 
-  final String errorCode;
+  final String error;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class Error extends StatelessWidget {
             ),
           ),
           Text(
-            errorCode, // TODO: figure this shit out
+            error,
             style: TextStyle(fontSize: 18),
           ),
         ],

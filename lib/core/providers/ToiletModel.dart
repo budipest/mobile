@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../common/openHourUtils.dart';
 import '../models/Toilet.dart';
@@ -92,6 +93,7 @@ class ToiletModel extends ChangeNotifier {
         : "${raw.distance} m";
 
     raw.openState.updateState();
+
     return raw;
   }
 
@@ -160,6 +162,8 @@ class ToiletModel extends ChangeNotifier {
       addedToilet = processToilet(addedToilet);
       _toilets.add(addedToilet);
       selectToilet(addedToilet);
+
+      notifyListeners();
     } catch (error) {
       print(error);
       showErrorSnackBar("errorOnServer");
@@ -228,12 +232,29 @@ class ToiletModel extends ChangeNotifier {
     }
   }
 
+  String decodeErrorCode(String code) {
+    switch (code) {
+      case "errorData":
+        return AppLocalizations.of(_globalContext).errorData;
+      case "errorOnServer":
+        return AppLocalizations.of(_globalContext).errorOnServer;
+      case "errorMissingFields":
+        return AppLocalizations.of(_globalContext).errorMissingFields;
+      case "errorRequiredFields":
+        return AppLocalizations.of(_globalContext).errorRequiredFields;
+      case "errorLocation":
+        return AppLocalizations.of(_globalContext).errorLocation;
+      default:
+        return AppLocalizations.of(_globalContext).errorTitle;
+    }
+  }
+
   void showErrorSnackBar(String errorCode) {
     ScaffoldMessenger.of(_globalContext).showSnackBar(
       SnackBar(
-        content: Text(errorCode), // TODO: figure this shit out
+        content: Text(decodeErrorCode(errorCode)),
         backgroundColor: Colors.red,
-        duration: Duration(seconds: 6),
+        duration: Duration(seconds: 5),
         behavior: SnackBarBehavior.floating,
       ),
     );

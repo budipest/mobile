@@ -34,6 +34,8 @@ class MapState extends State<MapWidget> {
   Fluster<MapMarker> _clusterManager;
   double _currentZoom = 15;
 
+  int markersCreatedWithLength = 0;
+
   Future<String> _getFileData(String path) async {
     return await rootBundle.loadString(path);
   }
@@ -86,18 +88,22 @@ class MapState extends State<MapWidget> {
     });
   }
 
-  void _onMapCreated(GoogleMapController controller, BuildContext context,
-      List<Toilet> toilets) async {
+  void _onMapCreated(GoogleMapController controller) async {
     setState(() {
       mapController = controller;
       _getFileData('assets/light_mode.json').then(_setMapStyle);
     });
+  }
 
+  Future<void> _initMarkers(BuildContext context, List<Toilet> toilets) async {
     final List<MapMarker> markers = [];
 
     for (Toilet toilet in toilets) {
       final BitmapDescriptor icon = await determineMarkerIcon(
-          toilet.category, toilet.openState.state, context);
+        toilet.category,
+        toilet.openState.state,
+        context,
+      );
 
       markers.add(
         MapMarker(
@@ -146,6 +152,10 @@ class MapState extends State<MapWidget> {
     final hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
 
+    if (markersCreatedWithLength != toilets.length) {
+      _initMarkers(context, toilets);
+    }
+
     if (selectedToilet != latestSelected) {
       latestSelected = selectedToilet;
 
@@ -169,11 +179,7 @@ class MapState extends State<MapWidget> {
     }
 
     return GoogleMap(
-      onMapCreated: (controller) => _onMapCreated(
-        controller,
-        context,
-        toilets,
-      ),
+      onMapCreated: (controller) => _onMapCreated(controller),
       initialCameraPosition: CameraPosition(
         target: LatLng(
           location.latitude,

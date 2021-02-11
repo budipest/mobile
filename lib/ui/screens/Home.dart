@@ -82,6 +82,8 @@ class Home extends StatelessWidget {
     final loaded = context.select((ToiletModel m) => m.loaded);
     final hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
+    final decodeErrorCode =
+        context.select((ToiletModel m) => m.decodeErrorCode);
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -108,7 +110,9 @@ class Home extends StatelessWidget {
         body: Stack(
           children: [
             ErrorProvider(),
-            Error(appError),
+            Error(
+              decodeErrorCode(appError),
+            ),
           ],
         ),
       );
