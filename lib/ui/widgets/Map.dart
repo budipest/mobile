@@ -47,27 +47,16 @@ class MapState extends State<MapWidget> {
     });
   }
 
-  // Widget _nightModeToggler() {
-  //   return FlatButton(
-  //     child: Text('${_nightMode ? 'disable' : 'enable'} night mode'),
-  //     onPressed: () {
-  //       if (_nightMode) {
-  //         _getFileData('assets/light_mode.json').then(_setMapStyle);
-  //       } else {
-  //         _getFileData('assets/dark_mode.json').then(_setMapStyle);
-  //       }
-  //     },
-  //     textColor: Colors.white,
-  //   );
-  // }
+  Future<void> animateToLocation(double lat, double lon) async {
+    double zoom = await mapController.getZoomLevel();
 
-  Future<void> animateToLocation(double lat, double lon) =>
-      mapController.animateCamera(
-        CameraUpdate.newLatLngZoom(
-          LatLng(lat, lon),
-          15.0, // TODO: csak akkor zoomoljon ha nincs beljebb zoomolva
-        ),
-      );
+    mapController.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(lat, lon),
+        zoom < 15 ? 15.0 : zoom,
+      ),
+    );
+  }
 
   drawRoutes(
     double userLat,
@@ -92,6 +81,7 @@ class MapState extends State<MapWidget> {
     setState(() {
       mapController = controller;
       _getFileData('assets/light_mode.json').then(_setMapStyle);
+      // dark mode: _getFileData('assets/dark_mode.json').then(_setMapStyle);
     });
   }
 
