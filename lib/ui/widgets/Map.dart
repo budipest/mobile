@@ -86,6 +86,8 @@ class MapState extends State<MapWidget> {
   }
 
   Future<void> _initMarkers(BuildContext context, List<Toilet> toilets) async {
+    markersCreatedWithLength = toilets.length;
+
     final List<MapMarker> markers = [];
 
     for (Toilet toilet in toilets) {
