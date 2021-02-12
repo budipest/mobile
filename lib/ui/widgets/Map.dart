@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:fluster/fluster.dart';
 
 import 'dart:async';
@@ -138,10 +139,12 @@ class MapState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final toilets = context.select((ToiletModel m) => m.toilets);
-    final location = context.select((ToiletModel m) => m.location);
-    final selectedToilet = context.select((ToiletModel m) => m.selectedToilet);
-    final hasLocationPermission =
+    final List<Toilet> toilets = context.select((ToiletModel m) => m.toilets);
+    final Position location = context.select((ToiletModel m) => m.location);
+    final Toilet selectedToilet =
+        context.select((ToiletModel m) => m.selectedToilet);
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
+    final bool hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
 
     if (markersCreatedWithLength != toilets.length) {
@@ -151,7 +154,7 @@ class MapState extends State<MapWidget> {
     if (selectedToilet != latestSelected) {
       latestSelected = selectedToilet;
 
-      if (selectedToilet != null) {
+      if (hasSelected) {
         if (hasLocationPermission) {
           drawRoutes(
             location.latitude,

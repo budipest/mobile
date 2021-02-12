@@ -77,17 +77,16 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedToilet = context.select((ToiletModel m) => m.selectedToilet);
-    final appError = context.select((ToiletModel m) => m.appError);
-    final loaded = context.select((ToiletModel m) => m.loaded);
-    final hasLocationPermission =
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
+    final bool loaded = context.select((ToiletModel m) => m.loaded);
+    final bool hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
-    final decodeErrorCode =
+    final String appError = context.select((ToiletModel m) => m.appError);
+    final Function decodeErrorCode =
         context.select((ToiletModel m) => m.decodeErrorCode);
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final hasSelected = selectedToilet != null;
 
     if (_pc.isAttached && _pc.panelPosition < 0.95) {
       if (hasSelected && _pc.panelPosition != 0.175) {

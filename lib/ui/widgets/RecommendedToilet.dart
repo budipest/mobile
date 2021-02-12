@@ -84,12 +84,11 @@ class RecommendedToilet extends StatelessWidget {
         context.select((ToiletModel m) => m.suggestedToilet);
     final Function selectToilet =
         context.select((ToiletModel m) => m.selectToilet);
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
     final bool hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
 
     final List<String> openingTimes = new List<String>.empty(growable: true);
-
-    bool hasSelected = selectedToilet != null;
 
     if (hasSelected) {
       // setup first and second opening time strings

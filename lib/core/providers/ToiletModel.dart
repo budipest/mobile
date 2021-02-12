@@ -42,6 +42,7 @@ class ToiletModel extends ChangeNotifier {
       );
   Toilet get selectedToilet => _selected;
   bool get loaded => _toilets.length > 0;
+  bool get hasSelected => _selected != null;
 
   // error getters
   String get appError => _appError;

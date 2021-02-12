@@ -204,5 +204,7 @@ class Toilet {
       other is Toilet &&
           runtimeType == other.runtimeType &&
           name == other.name &&
-          distance == other.distance;
+          distance == other.distance &&
+          notes == other.notes &&
+          votes == other.votes;
 }

@@ -22,10 +22,9 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final Toilet selectedToilet =
         context.select((ToiletModel m) => m.selectedToilet);
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
     final bool hasLocationPermission =
         context.select((ToiletModel m) => m.hasLocationPermission);
-
-    bool hasSelected = selectedToilet != null;
 
     return MediaQuery.removePadding(
       context: context,
