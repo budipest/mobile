@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import "package:flutter_i18n/flutter_i18n.dart";
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'ui/screens/Home.dart';
 import 'ui/screens/AddToilet.dart';
@@ -15,36 +14,26 @@ import 'core/common/statusBarObserver.dart';
 import 'core/providers/ToiletModel.dart';
 
 Future main() async {
-  final FlutterI18nDelegate flutterI18nDelegate = FlutterI18nDelegate(
-    translationLoader: FileTranslationLoader(
-      useCountryCode: false,
-      fallbackFile: 'en',
-      basePath: 'assets/locales',
-    ),
-  );
-
   WidgetsFlutterBinding.ensureInitialized();
-  await flutterI18nDelegate.load(null);
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     ChangeNotifierProvider(
       create: (context) => ToiletModel(),
-      child: Application(flutterI18nDelegate),
+      child: Application(),
     ),
   );
 }
 
 class Application extends StatelessWidget {
-  final FlutterI18nDelegate flutterI18nDelegate;
-
-  Application(this.flutterI18nDelegate);
+  Application();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Budipest",
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context).title,
       theme: ThemeData(
         primarySwatch: black,
         textTheme: Theme.of(context).textTheme.apply(
@@ -69,16 +58,8 @@ class Application extends StatelessWidget {
       navigatorObservers: [
         StatusBarObserver(),
       ],
-      localizationsDelegates: [
-        // ... app-specific localization delegate[s] here
-        flutterI18nDelegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
-      supportedLocales: [
-        const Locale('en'), // English
-        const Locale('hu'), // Hungarian
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

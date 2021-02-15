@@ -1,4 +1,6 @@
-![Budipest logo](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/titlecard.png)
+# Budipest | [App Store](https://apps.apple.com/us/app/budipest/id1544448699) | [Google Play](https://play.google.com/store/apps/details?id=com.dnlgrgly.budipest) | [Facebook](https://facebook.com/budipestapp)
+
+![Budipest cover image with logo](./github_assets/cover.jpeg?raw=true)
 
 ## What's the deal with the name?
 
@@ -13,7 +15,7 @@ The main features of Budipest:
 - Rate toilets or add helpful comments to them
 - Anyone can add new toilets to the app
 
-![App screenshots](https://github.com/dnlgrgly/budipest-mobile/blob/master/github_assets/appfeatures.png)
+![App screenshots and description](./github_assets/features.png?raw=true)
 
 ## Getting Started
 

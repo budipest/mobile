@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import "package:flutter_i18n/flutter_i18n.dart";
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import "BottomBarBlackContainer.dart";
 import "CardTemplate.dart";
@@ -17,15 +17,17 @@ class AskPermission extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
+    final checkLocationPermission =
+        Provider.of<ToiletModel>(context, listen: false)
+            .checkLocationPermission;
 
     return Column(
       children: [
         BottomBarBlackContainer(
           scrollProgress,
-          provider.checkLocationPermission,
+          checkLocationPermission,
           Text(
-            FlutterI18n.translate(context, "noLocation.title"),
+            AppLocalizations.of(context).noLocationTitle,
             style: TextStyle(
               color: Colors.white,
               fontSize: 22.0,
@@ -42,7 +44,7 @@ class AskPermission extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  FlutterI18n.translate(context, "noLocation.card-title"),
+                  AppLocalizations.of(context).noLocationCardTitle,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -51,7 +53,7 @@ class AskPermission extends StatelessWidget {
                 ),
                 Container(height: 8),
                 Text(
-                  FlutterI18n.translate(context, "noLocation.card-description"),
+                  AppLocalizations.of(context).noLocationCardDescription,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16.0,

@@ -34,16 +34,13 @@ Widget affix(
 }
 
 class TextInput extends StatefulWidget {
-  TextInput(
-    this.text,
-    this.placeholder, {
-    this.onTextChanged,
-    this.isDark = false,
-    this.prefixText,
-    this.suffixText,
-    this.keyboardType = TextInputType.text,
-    this.maxLines = 1
-  });
+  TextInput(this.text, this.placeholder,
+      {this.onTextChanged,
+      this.isDark = false,
+      this.prefixText,
+      this.suffixText,
+      this.keyboardType = TextInputType.text,
+      this.maxLines = 1});
 
   final String text;
   final Function onTextChanged;
@@ -91,7 +88,8 @@ class _TextInputState extends State<TextInput> {
           if (widget.prefixText != null) affix(widget.prefixText, true),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 14.0),
               child: TextField(
                 maxLines: widget.maxLines,
                 keyboardType: widget.keyboardType,

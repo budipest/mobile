@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/common/bitmapFromSvg.dart';
 
@@ -113,7 +113,7 @@ class _AddToiletLocationState extends State<AddToiletLocation> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             child: Text(
-              FlutterI18n.translate(context, "drag-marker"),
+              AppLocalizations.of(context).dragMarker,
               style: TextStyle(fontSize: 14.0),
               textAlign: TextAlign.center,
             ),

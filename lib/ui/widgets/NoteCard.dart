@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'CardTemplate.dart';
 import '../../core/models/Note.dart';
@@ -29,7 +29,7 @@ class NoteCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 2.5),
                 child: Text(
-                  FlutterI18n.translate(context, "myNote"),
+                  AppLocalizations.of(context).myNote,
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -66,16 +66,16 @@ class NoteCard extends StatelessWidget {
                     )
                   else
                     Container(),
-                    // TODO: implement reporting a comment
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     if (reportHandler != null) reportHandler();
-                    //   },
-                    //   child: Icon(
-                    //     Icons.flag,
-                    //     color: Colors.grey[700],
-                    //   ),
-                    // )
+                  // TODO: implement reporting a comment
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     if (reportHandler != null) reportHandler();
+                  //   },
+                  //   child: Icon(
+                  //     Icons.flag,
+                  //     color: Colors.grey[700],
+                  //   ),
+                  // )
                 ],
               ),
             )

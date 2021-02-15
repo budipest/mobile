@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/Button.dart';
 import '../widgets/CardTemplate.dart';
@@ -14,7 +14,7 @@ class AboutUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, "aboutUs.title")),
+        title: Text(AppLocalizations.of(context).aboutUs),
       ),
       body: ListView(
         children: <Widget>[
@@ -33,7 +33,7 @@ class AboutUs extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      FlutterI18n.translate(context, "title"),
+                      AppLocalizations.of(context).title,
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class AboutUs extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'v2.0.1',
+                      'v2.1.0',
                       style: TextStyle(color: Colors.grey, fontSize: 22),
                     ),
                   ],
@@ -53,7 +53,7 @@ class AboutUs extends StatelessWidget {
             color: Colors.grey[300],
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
             child: Text(
-              FlutterI18n.translate(context, "aboutUs.budapest"),
+              AppLocalizations.of(context).aboutUsBudapest,
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
             ),
@@ -64,15 +64,14 @@ class AboutUs extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    FlutterI18n.translate(context, "aboutUs.helpUs"),
+                    AppLocalizations.of(context).aboutUsHelpUs,
                     style: TextStyle(
                       fontSize: 22.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    FlutterI18n.translate(
-                        context, "aboutUs.helpUs-description"),
+                    AppLocalizations.of(context).aboutUsHelpUsDescription,
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -134,14 +133,14 @@ class AboutUs extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  FlutterI18n.translate(context, "aboutUs.team"),
+                  AppLocalizations.of(context).aboutUsTeam,
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 PersonCard(
-                  FlutterI18n.translate(context, "aboutUs.development"),
+                  AppLocalizations.of(context).aboutUsDevelopment,
                   {
                     "website": "https://dnlgrgly.com",
                     "LinkedIn": "https://www.linkedin.com/in/dnlgrgly/",
@@ -149,28 +148,28 @@ class AboutUs extends StatelessWidget {
                   },
                 ),
                 PersonCard(
-                  FlutterI18n.translate(context, "aboutUs.design"),
+                  AppLocalizations.of(context).aboutUsDesign,
                   {
                     "email": "mailto:davidjobbagy07@gmail.com",
                   },
                 ),
                 Container(height: 20),
                 Text(
-                  FlutterI18n.translate(context, "aboutUs.betaTitle"),
+                  AppLocalizations.of(context).aboutUsBetaTitle,
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  FlutterI18n.translate(context, "aboutUs.betaNames"),
+                  AppLocalizations.of(context).aboutUsBetaNames,
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
                 ),
                 Container(height: 8),
                 Text(
-                  FlutterI18n.translate(context, "aboutUs.opensource"),
+                  AppLocalizations.of(context).aboutUsOpenSource,
                   style: TextStyle(
                     fontSize: 18,
                   ),

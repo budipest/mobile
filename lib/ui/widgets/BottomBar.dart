@@ -20,10 +20,11 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
-    final Toilet selectedToilet = provider.selectedToilet;
-
-    bool hasSelected = selectedToilet != null;
+    final Toilet selectedToilet =
+        context.select((ToiletModel m) => m.selectedToilet);
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
+    final bool hasLocationPermission =
+        context.select((ToiletModel m) => m.hasLocationPermission);
 
     return MediaQuery.removePadding(
       context: context,
@@ -34,7 +35,7 @@ class BottomBar extends StatelessWidget {
             ? NeverScrollableScrollPhysics()
             : ClampingScrollPhysics(),
         children: !hasSelected
-            ? provider.hasLocationPermission
+            ? hasLocationPermission
                 ? <Widget>[
                     RecommendedToilet(scrollProgress),
                     ToiletRecommendationList()

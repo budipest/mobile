@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/common/openHourUtils.dart';
 import '../../core/common/variables.dart';
@@ -12,6 +12,7 @@ class OpenHourRow extends StatefulWidget {
     this.lastEditedOpening,
     this.lastEditedClosing,
     this.index,
+    this.dayLabel,
   );
 
   final Function onChange;
@@ -20,6 +21,7 @@ class OpenHourRow extends StatefulWidget {
   final int lastEditedOpening;
   final int lastEditedClosing;
   final int index;
+  final String dayLabel;
 
   @override
   _OpenHourRowState createState() => _OpenHourRowState();
@@ -28,11 +30,6 @@ class OpenHourRow extends StatefulWidget {
 class _OpenHourRowState extends State<OpenHourRow> {
   @override
   Widget build(BuildContext context) {
-    String day = FlutterI18n.translate(
-      context,
-      daysShort[(widget.index / 2).floor()],
-    );
-
     bool isOn = widget.openHours[widget.index] != 0 ||
         widget.openHours[widget.index + 1] != 0;
 
@@ -71,7 +68,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
           Container(
             width: 50,
             child: Text(
-              day,
+              widget.dayLabel,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
@@ -167,7 +164,7 @@ class _OpenHourRowState extends State<OpenHourRow> {
                   )
                 : Center(
                     child: Text(
-                      FlutterI18n.translate(context, "closed"),
+                      AppLocalizations.of(context).closed,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                       ),

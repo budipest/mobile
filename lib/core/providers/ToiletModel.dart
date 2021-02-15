@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../common/openHourUtils.dart';
 import '../models/Toilet.dart';
@@ -42,12 +42,15 @@ class ToiletModel extends ChangeNotifier {
       );
   Toilet get selectedToilet => _selected;
   bool get loaded => _toilets.length > 0;
+  bool get hasSelected => _selected != null;
 
   // error getters
   String get appError => _appError;
   set globalContext(BuildContext context) {
     _globalContext = context;
   }
+
+  Timer _timer;
 
   ToiletModel() {
     API.init();
@@ -64,17 +67,15 @@ class ToiletModel extends ChangeNotifier {
 
       List<Toilet> toiletsRaw = responses[1];
 
-      if (hasLocationPermission) {
-        StreamSubscription<Position> positionStream =
-            Geolocator.getPositionStream().listen((Position position) {
-          orderToilets(toiletsRaw, position);
-        });
-      } else {
-        orderToilets(toiletsRaw, _userLocation);
-      }
+      orderToilets(toiletsRaw);
+
+      _timer = Timer.periodic(Duration(seconds: 15), (Timer t) async {
+        _userLocation = await Geolocator.getCurrentPosition();
+        orderToilets(toiletsRaw);
+      });
     } catch (error) {
       print(error);
-      _appError = "error.data";
+      _appError = "errorData";
       notifyListeners();
       return;
     }
@@ -87,12 +88,21 @@ class ToiletModel extends ChangeNotifier {
       _userLocation.latitude,
       _userLocation.longitude,
     ).round();
+
+    raw.distanceString = raw.distance > 1000
+        ? "${(raw.distance / 1000).toStringAsFixed(1)} km"
+        : "${raw.distance} m";
+
     raw.openState.updateState();
+
     return raw;
   }
 
-  void orderToilets(List<Toilet> toiletsRaw, Position location) async {
-    _userLocation = location;
+  void orderToilets(List<Toilet> toiletsRaw) async {
+    if (hasLocationPermission) {
+      final location = await Geolocator.getCurrentPosition();
+      _userLocation = location;
+    }
 
     toiletsRaw.forEach((Toilet toilet) => processToilet(toilet));
     toiletsRaw.sort((a, b) => a.distance.compareTo(b.distance));
@@ -120,13 +130,13 @@ class ToiletModel extends ChangeNotifier {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      showErrorSnackBar("error.location");
+      showErrorSnackBar("errorLocation");
       return;
     }
 
     _locationPermissionStatus = await Geolocator.checkPermission();
     if (_locationPermissionStatus == LocationPermission.deniedForever) {
-      showErrorSnackBar("error.location");
+      showErrorSnackBar("errorLocation");
       return;
     }
 
@@ -134,7 +144,7 @@ class ToiletModel extends ChangeNotifier {
       _locationPermissionStatus = await Geolocator.requestPermission();
       if (_locationPermissionStatus != LocationPermission.whileInUse &&
           _locationPermissionStatus != LocationPermission.always) {
-        showErrorSnackBar("error.location");
+        showErrorSnackBar("errorLocation");
         return;
       }
     }
@@ -153,9 +163,11 @@ class ToiletModel extends ChangeNotifier {
       addedToilet = processToilet(addedToilet);
       _toilets.add(addedToilet);
       selectToilet(addedToilet);
+
+      notifyListeners();
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
     }
   }
 
@@ -179,7 +191,7 @@ class ToiletModel extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
     }
   }
 
@@ -198,7 +210,7 @@ class ToiletModel extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
     }
   }
 
@@ -217,18 +229,33 @@ class ToiletModel extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       print(error);
-      showErrorSnackBar("error.onServer");
+      showErrorSnackBar("errorOnServer");
+    }
+  }
+
+  String decodeErrorCode(String code) {
+    switch (code) {
+      case "errorData":
+        return AppLocalizations.of(_globalContext).errorData;
+      case "errorOnServer":
+        return AppLocalizations.of(_globalContext).errorOnServer;
+      case "errorMissingFields":
+        return AppLocalizations.of(_globalContext).errorMissingFields;
+      case "errorRequiredFields":
+        return AppLocalizations.of(_globalContext).errorRequiredFields;
+      case "errorLocation":
+        return AppLocalizations.of(_globalContext).errorLocation;
+      default:
+        return AppLocalizations.of(_globalContext).errorTitle;
     }
   }
 
   void showErrorSnackBar(String errorCode) {
     ScaffoldMessenger.of(_globalContext).showSnackBar(
       SnackBar(
-        content: Text(
-          FlutterI18n.translate(_globalContext, errorCode),
-        ),
+        content: Text(decodeErrorCode(errorCode)),
         backgroundColor: Colors.red,
-        duration: Duration(seconds: 6),
+        duration: Duration(seconds: 5),
         behavior: SnackBarBehavior.floating,
       ),
     );

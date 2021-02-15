@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
@@ -22,13 +22,13 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    final ToiletModel provider =
-        Provider.of<ToiletModel>(context, listen: false);
-    final Toilet toilet = provider.selectedToilet;
+    final Toilet selectedToilet =
+        context.select((ToiletModel m) => m.selectedToilet);
+    final Function addNote = context.select((ToiletModel m) => m.addNote);
 
     return BlackLayoutContainer(
       context: context,
-      inlineTitle: toilet.name,
+      inlineTitle: selectedToilet.name,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ListView(
@@ -39,7 +39,7 @@ class _AddNoteState extends State<AddNote> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    FlutterI18n.translate(context, "newNote"),
+                    AppLocalizations.of(context).newNote,
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -49,15 +49,12 @@ class _AddNoteState extends State<AddNote> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                     child: TextInput(
-                      note,
-                      FlutterI18n.translate(context, "newNotePlaceholder"),
-                      onTextChanged: (String text) {
-                        setState(() {
-                          note = text;
-                        });
-                      },
-                      maxLines: null
-                    ),
+                        note, AppLocalizations.of(context).newNotePlaceholder,
+                        onTextChanged: (String text) {
+                      setState(() {
+                        note = text;
+                      });
+                    }, maxLines: null),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -76,9 +73,9 @@ class _AddNoteState extends State<AddNote> {
                           child: toHeroContext.widget,
                         ),
                         child: Button(
-                          FlutterI18n.translate(context, "send"),
+                          AppLocalizations.of(context).send,
                           () async {
-                            await provider.addNote(note);
+                            await addNote(note);
                             Navigator.of(context).pop();
                           },
                           backgroundColor: Colors.black,
@@ -93,7 +90,7 @@ class _AddNoteState extends State<AddNote> {
                 ],
               ),
             ),
-            NoteList(toilet),
+            NoteList(selectedToilet),
           ],
         ),
       ),

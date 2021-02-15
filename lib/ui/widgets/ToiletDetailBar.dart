@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/models/Toilet.dart';
 import '../../core/models/Note.dart';
 import '../../core/providers/ToiletModel.dart';
+
 import 'Button.dart';
 import 'NoteList.dart';
 import 'RatingBar.dart';
@@ -47,7 +47,7 @@ class ToiletDetailBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                FlutterI18n.translate(context, "notes"),
+                AppLocalizations.of(context).notes,
                 style: TextStyle(
                   fontSize: 22.0,
                   fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class ToiletDetailBar extends StatelessWidget {
                     child: toHeroContext.widget,
                   ),
                   child: Button(
-                    FlutterI18n.translate(context, "newNote"),
+                    AppLocalizations.of(context).newNote,
                     () {
                       Navigator.pushNamed(context, '/addNote');
                     },

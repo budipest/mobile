@@ -8,17 +8,18 @@ import 'dart:core';
 import '../models/Toilet.dart';
 import '../models/Vote.dart';
 import 'bitmapFromSvg.dart';
-import "variables.dart";
 
 enum OpenState { OPEN, CLOSED, UNKNOWN }
 
 class OpenStateDetails {
-  OpenState state;
-  String first;
-  String secondString;
-  String secondKey;
+  OpenState state = OpenState.UNKNOWN;
+  // if it's 24/7
+  bool isAlwaysOpen = false;
+  // if true, it's either today/tomorrow. if other, it's an absolute day (Mon/Tue/Wed/...)
+  bool isRelativeDay = false;
+  // the current state is active until...
   Map secondParams;
-  Color color;
+  Color color = Colors.grey;
   List<int> raw;
 
   OpenStateDetails(this.raw);
@@ -27,16 +28,13 @@ class OpenStateDetails {
     if (this.raw.every((element) => element == 0)) {
       state = OpenState.UNKNOWN;
       color = Colors.grey;
-      first = "unknown";
-      secondString = "";
       return;
     }
 
     if (this.raw[0] == 0 && this.raw[1] == 1440 && this.raw.length == 2) {
       state = OpenState.OPEN;
       color = Colors.green;
-      first = "open";
-      secondString = "24/7";
+      isAlwaysOpen = true;
       return;
     }
 
@@ -65,12 +63,10 @@ class OpenStateDetails {
       if (todayFirst < currentTime && currentTime < todayLast) {
         state = OpenState.OPEN;
         color = Colors.green;
-        first = "open";
         currentlyPast = todayFirstIndex;
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
-        first = "closed";
 
         if (todayFirst > currentTime) {
           currentlyPast = yesterdayLastIndex;
@@ -84,7 +80,6 @@ class OpenStateDetails {
           todayLast < currentTime) {
         state = OpenState.OPEN;
         color = Colors.green;
-        first = "open";
         if (todayLast < currentTime) {
           currentlyPast = todayLastIndex;
         } else {
@@ -93,7 +88,6 @@ class OpenStateDetails {
       } else {
         state = OpenState.CLOSED;
         color = Colors.red;
-        first = "closed";
         currentlyPast = todayFirstIndex;
       }
     }
@@ -101,13 +95,10 @@ class OpenStateDetails {
     if (todayFirst == 0 && todayLast == 0) {
       state = OpenState.CLOSED;
       color = Colors.red;
-      first = "closed";
       currentlyPast = -2;
     }
 
-    for (int i = currentlyPast + 1;
-        secondString == null && secondKey == null && secondParams == null;
-        i++) {
+    for (int i = currentlyPast + 1; secondParams == null; i++) {
       i = handleDayIndexOverflow(i);
 
       bool isFirstValueToday = i % 2 == 0;
@@ -119,18 +110,20 @@ class OpenStateDetails {
 
         if (dayIndex == currentDayIndex) {
           // today
-          secondKey = "todayUntil";
+          isRelativeDay = true;
+          dayIndex = 0;
         } else if (dayIndex == handleDayOverflow(currentDayIndex + 1)) {
           // tomorrow
-          secondKey = "tomorrowUntil";
+          isRelativeDay = true;
+          dayIndex = 1;
         } else {
           // other day
-          secondKey = "until";
+          isRelativeDay = false;
         }
 
         secondParams = Map.fromIterables(
           ["time", "day"],
-          [time, days[dayIndex]],
+          [time, dayIndex],
         );
       }
     }
@@ -179,8 +172,8 @@ String stringFromCategory(Category category) {
 Widget descriptionIcon(
   EdgeInsetsGeometry padding,
   String mode,
-  bool smaller,
-  String text, {
+  bool smaller, {
+  String text,
   String iconPath,
   IconData icon,
 }) {
@@ -212,6 +205,7 @@ Widget descriptionIcon(
                     iconPath,
                     width: smaller ? 17.5 : 20,
                     height: smaller ? 17.5 : 20,
+                    color: mode == "light" ? Colors.white : Colors.black,
                   ),
             if (text != null)
               Padding(
@@ -237,16 +231,16 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding, String mode) {
 
   switch (toilet.entryMethod) {
     case EntryMethod.FREE:
-      path = "assets/icons/bottom/$mode/tag_free.svg";
+      path = "assets/icons/bottom/tag_free.svg";
       break;
     case EntryMethod.CONSUMERS:
-      path = "assets/icons/bottom/$mode/tag_guests.svg";
+      path = "assets/icons/bottom/tag_guests.svg";
       break;
     case EntryMethod.PRICE:
-      path = "assets/icons/bottom/$mode/tag_paid.svg";
+      path = "assets/icons/bottom/tag_paid.svg";
       break;
     case EntryMethod.CODE:
-      path = "assets/icons/bottom/$mode/tag_key.svg";
+      path = "assets/icons/bottom/tag_key.svg";
       break;
     default:
       return null;
@@ -256,7 +250,6 @@ Widget entryMethodIcon(Toilet toilet, EdgeInsetsGeometry padding, String mode) {
     padding,
     mode,
     true,
-    null,
     iconPath: path,
   );
 }
@@ -268,16 +261,14 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         padding,
         "dark",
         true,
-        null,
-        iconPath: "assets/icons/bottom/dark/tag_free.svg",
+        iconPath: "assets/icons/bottom/tag_free.svg",
       );
     case EntryMethod.CONSUMERS:
       return descriptionIcon(
         padding,
         "dark",
         true,
-        null,
-        iconPath: "assets/icons/bottom/dark/tag_guests.svg",
+        iconPath: "assets/icons/bottom/tag_guests.svg",
       );
     case EntryMethod.PRICE:
       var priceIcons = List<Widget>.empty(growable: true);
@@ -289,8 +280,8 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
               padding,
               "dark",
               true,
-              "$value $currency",
-              iconPath: "assets/icons/bottom/dark/tag_paid.svg",
+              text: "$value $currency",
+              iconPath: "assets/icons/bottom/tag_paid.svg",
             ),
           );
         });
@@ -300,8 +291,7 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
             padding,
             "dark",
             true,
-            null,
-            iconPath: "assets/icons/bottom/dark/tag_paid.svg",
+            iconPath: "assets/icons/bottom/tag_paid.svg",
           ),
         );
       }
@@ -315,8 +305,8 @@ Widget entryMethodIconDetailed(Toilet toilet, EdgeInsetsGeometry padding) {
         padding,
         "dark",
         true,
-        toilet.code != null ? toilet.code : "",
-        iconPath: "assets/icons/bottom/dark/tag_key.svg",
+        text: toilet.code != null ? toilet.code : "",
+        iconPath: "assets/icons/bottom/tag_key.svg",
       );
     default:
       return null;
@@ -342,8 +332,7 @@ List<Widget> describeToiletIcons(
       padding,
       mode,
       smaller,
-      null,
-      iconPath: "assets/icons/bottom/$mode/cat_$categoryStr.svg",
+      iconPath: "assets/icons/bottom/cat_$categoryStr.svg",
     ),
   );
 
@@ -359,8 +348,7 @@ List<Widget> describeToiletIcons(
           padding,
           mode,
           smaller,
-          null,
-          iconPath: "assets/icons/bottom/$mode/tag_$tagStr.svg",
+          iconPath: "assets/icons/bottom/tag_$tagStr.svg",
         ),
       );
     });
@@ -397,7 +385,7 @@ List<Widget> describeToiletIcons(
             padding,
             mode,
             smaller,
-            '${((upvotes / (upvotes + downvotes)) * 100).round()}%',
+            text: '${((upvotes / (upvotes + downvotes)) * 100).round()}%',
             icon: Icons.thumb_up,
           ),
         );
@@ -405,11 +393,7 @@ List<Widget> describeToiletIcons(
   } else {
     if (toilet.entryMethod != EntryMethod.UNKNOWN) {
       result.add(
-        entryMethodIcon(
-          toilet,
-          padding,
-          mode,
-        ),
+        entryMethodIcon(toilet, padding, mode),
       );
     }
   }

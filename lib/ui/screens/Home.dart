@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -34,9 +35,9 @@ class Home extends StatelessWidget {
     }
   }
 
-  bool backHandler(bool physicalBack, ToiletModel provider) {
-    if (provider.selectedToilet != null) {
-      provider.selectToilet(null);
+  bool backHandler(bool physicalBack, bool hasSelected, BuildContext context) {
+    if (hasSelected) {
+      selectNullToilet(context);
       return false;
     } else {
       if (_notifier.value > 0.99) {
@@ -58,25 +59,43 @@ class Home extends StatelessWidget {
     }
   }
 
+  void animateMapToUserLocation(BuildContext context) async {
+    final Position location =
+        Provider.of<ToiletModel>(context, listen: false).location;
+
+    await _mapKey.currentState.animateToLocation(
+      location.latitude,
+      location.longitude,
+    );
+
+    _mapKey.currentState.updateMarkers(15.0);
+  }
+
+  void selectNullToilet(BuildContext context) {
+    Provider.of<ToiletModel>(context, listen: false).selectToilet(null);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _toiletProvider = Provider.of<ToiletModel>(context);
-    final _selectedToilet = _toiletProvider.selectedToilet;
-    final _screenHeight = MediaQuery.of(context).size.height;
-    final _screenWidth = MediaQuery.of(context).size.width;
-    final _hasSelected = _selectedToilet != null;
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
+    final bool loaded = context.select((ToiletModel m) => m.loaded);
+    final bool hasLocationPermission =
+        context.select((ToiletModel m) => m.hasLocationPermission);
+    final String appError = context.select((ToiletModel m) => m.appError);
+    final Function decodeErrorCode =
+        context.select((ToiletModel m) => m.decodeErrorCode);
 
-    print("home is rebuilt");
-    print(_toiletProvider.hasLocationPermission);
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     if (_pc.isAttached && _pc.panelPosition < 0.95) {
-      if (_hasSelected && _pc.panelPosition != 0.175) {
+      if (hasSelected && _pc.panelPosition != 0.175) {
         _pc.animatePanelToPosition(
           0.175,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
         );
-      } else if (!_hasSelected && _pc.panelPosition != 0) {
+      } else if (!hasSelected && _pc.panelPosition != 0) {
         _pc.animatePanelToPosition(
           0,
           duration: const Duration(milliseconds: 200),
@@ -85,16 +104,18 @@ class Home extends StatelessWidget {
       }
     }
 
-    if (_toiletProvider.appError != null) {
+    if (appError != null) {
       return Scaffold(
         body: Stack(
           children: [
             ErrorProvider(),
-            Error(_toiletProvider.appError),
+            Error(
+              decodeErrorCode(appError),
+            ),
           ],
         ),
       );
-    } else if (!_toiletProvider.loaded) {
+    } else if (!loaded) {
       return Scaffold(
         body: Stack(
           children: [
@@ -105,11 +126,11 @@ class Home extends StatelessWidget {
       );
     }
 
-    final _bottomBarMinHeight = 80 + _screenHeight * 0.15;
+    final bottomBarMinHeight = 80 + screenHeight * 0.15;
 
     return WillPopScope(
       onWillPop: () async {
-        return backHandler(true, _toiletProvider);
+        return backHandler(true, hasSelected, context);
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -120,9 +141,9 @@ class Home extends StatelessWidget {
             SlidingUpPanel(
               controller: _pc,
               panelSnapping: true,
-              minHeight: _bottomBarMinHeight,
-              maxHeight: _screenHeight,
-              snapPoint: _hasSelected ? 0.175 : null,
+              minHeight: bottomBarMinHeight,
+              maxHeight: screenHeight,
+              snapPoint: hasSelected ? 0.175 : null,
               panelBuilder: (ScrollController sc) {
                 _panelScrollController = sc;
 
@@ -140,19 +161,19 @@ class Home extends StatelessWidget {
               body: Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  width: _screenWidth,
-                  height: _screenHeight - _bottomBarMinHeight,
+                  width: screenWidth,
+                  height: screenHeight - bottomBarMinHeight,
                   child: MapWidget(key: _mapKey),
                 ),
               ),
             ),
-            _toiletProvider.hasLocationPermission
+            hasLocationPermission
                 ? AnimatedBuilder(
                     animation: _notifier,
                     builder: (_, child) => Positioned(
                       right: 0,
-                      bottom: (_screenHeight * _notifier.value) +
-                          (_bottomBarMinHeight + 20),
+                      bottom: (screenHeight * _notifier.value) +
+                          (bottomBarMinHeight + 20),
                       child: RawMaterialButton(
                         shape: CircleBorder(),
                         fillColor: Colors.white,
@@ -165,16 +186,11 @@ class Home extends StatelessWidget {
                             size: 27.5,
                           ),
                         ),
-                        onPressed: () {
-                          _mapKey.currentState.animateToLocation(
-                            _toiletProvider.location.latitude,
-                            _toiletProvider.location.longitude,
-                          );
-                        },
+                        onPressed: () => animateMapToUserLocation(context),
                       ),
                     ),
                   )
-                : Container(), 
+                : Container(),
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -192,24 +208,28 @@ class Home extends StatelessWidget {
                         shape: CircleBorder(),
                         fillColor: _notifier.value > 0.99
                             ? Colors.white
-                            : _hasSelected
+                            : hasSelected
                                 ? Colors.black
                                 : Colors.white,
                         elevation: 5.0,
                         child: Icon(
                           _notifier.value > 0.99
                               ? Icons.close
-                              : _hasSelected
+                              : hasSelected
                                   ? Icons.close
                                   : Icons.menu,
                           color: _notifier.value > 0.99
                               ? Colors.black
-                              : _hasSelected
+                              : hasSelected
                                   ? Colors.white
                                   : Colors.black,
                           size: 30.0,
                         ),
-                        onPressed: () => backHandler(false, _toiletProvider),
+                        onPressed: () => backHandler(
+                          false,
+                          hasSelected,
+                          context,
+                        ),
                       ),
                     ),
                   ),

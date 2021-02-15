@@ -1,9 +1,9 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import "Button.dart";
 import "BottomBarBlackContainer.dart";
@@ -41,28 +41,28 @@ class RecommendedToilet extends StatelessWidget {
           // return object of type Dialog
           return AlertDialog(
             title: Text(
-              FlutterI18n.translate(context, "notGonnaGetThere"),
+              AppLocalizations.of(context).notGonnaGetThere,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24.0,
               ),
             ),
             content: Text(
-              FlutterI18n.plural(context, "closerToilets.numOfToilets", index),
+              AppLocalizations.of(context).closerToilets(index),
               style: TextStyle(
                 fontSize: 18.0,
               ),
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
-              FlatButton(
-                child: Text(FlutterI18n.translate(context, "cancel")),
+              TextButton(
+                child: Text(AppLocalizations.of(context).cancel),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-              FlatButton(
-                child: Text(FlutterI18n.translate(context, "directions")),
+              TextButton(
+                child: Text(AppLocalizations.of(context).directions),
                 onPressed: () {
                   _navigate(toilet);
                 },
@@ -78,35 +78,60 @@ class RecommendedToilet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
-    final Toilet selectedToilet = provider.selectedToilet;
-    final Toilet suggestedToilet = provider.suggestedToilet;
-    final List<String> openingTimes = new List<String>.empty(growable: true);
+    final Toilet selectedToilet =
+        context.select((ToiletModel m) => m.selectedToilet);
+    final Toilet suggestedToilet =
+        context.select((ToiletModel m) => m.suggestedToilet);
+    final Function selectToilet =
+        context.select((ToiletModel m) => m.selectToilet);
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
+    final bool hasLocationPermission =
+        context.select((ToiletModel m) => m.hasLocationPermission);
 
-    bool hasSelected = selectedToilet != null;
+    final List<String> openingTimes = new List<String>.empty(growable: true);
 
     if (hasSelected) {
       // setup first and second opening time strings
       OpenStateDetails openState = selectedToilet.openState;
 
-      openingTimes.add(FlutterI18n.translate(
-            context,
-            openState.first,
-          ) +
-          " ");
+      if (openState.state != OpenState.UNKNOWN) {
+        if (openState.state == OpenState.OPEN) {
+          openingTimes.add(AppLocalizations.of(context).open + " ");
+        } else if (openState.state == OpenState.CLOSED) {
+          openingTimes.add(AppLocalizations.of(context).closed + " ");
+        }
 
-      if (openState.secondKey != null) {
-        Map params = openState.secondParams;
+        if (!openState.isAlwaysOpen) {
+          String day;
+          if (openState.isRelativeDay) {
+            day = AppLocalizations.of(context)
+                .relativeDays(openState.secondParams["day"]);
+          } else {
+            List<String> days = [
+              AppLocalizations.of(context).monday,
+              AppLocalizations.of(context).tuesday,
+              AppLocalizations.of(context).wednesday,
+              AppLocalizations.of(context).thursday,
+              AppLocalizations.of(context).friday,
+              AppLocalizations.of(context).saturday,
+              AppLocalizations.of(context).sunday,
+            ];
 
-        params["day"] = FlutterI18n.translate(context, params["day"]);
+            day = days[openState.secondParams["days"]];
+          }
 
-        openingTimes.add(FlutterI18n.translate(
-          context,
-          openState.secondKey,
-          translationParams: Map.from(openState.secondParams),
-        ));
+          openingTimes.add(
+            AppLocalizations.of(context).until(
+              day,
+              openState.secondParams["time"],
+            ),
+          );
+        } else {
+          openingTimes.add("24/7");
+        }
       } else {
-        openingTimes.add(openState.secondString);
+        openingTimes.add(AppLocalizations.of(context).unknown + " ");
+        openingTimes.add("");
       }
     }
 
@@ -114,7 +139,7 @@ class RecommendedToilet extends StatelessWidget {
       scrollProgress,
       () {
         if (!hasSelected) {
-          provider.selectToilet(provider.suggestedToilet);
+          selectToilet(suggestedToilet);
         }
       },
       Column(
@@ -137,10 +162,7 @@ class RecommendedToilet extends StatelessWidget {
               child: Text(
                 hasSelected
                     ? selectedToilet.name
-                    : FlutterI18n.translate(
-                        context,
-                        "recommendedToilet",
-                      ),
+                    : AppLocalizations.of(context).recommendedToilet,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22.0,
@@ -175,8 +197,8 @@ class RecommendedToilet extends StatelessWidget {
                     ),
                     Text(
                       hasSelected
-                          ? "${selectedToilet.distance} m"
-                          : "${suggestedToilet.distance} m",
+                          ? selectedToilet.distanceString
+                          : suggestedToilet.distanceString,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 16.0,
@@ -212,7 +234,7 @@ class RecommendedToilet extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (provider.hasLocationPermission)
+                  if (hasLocationPermission)
                     RichText(
                       text: TextSpan(
                         style: TextStyle(
@@ -223,17 +245,11 @@ class RecommendedToilet extends StatelessWidget {
                         children: <TextSpan>[
                           TextSpan(
                             text: selectedToilet.distance < 10000
-                                ? '${selectedToilet.distance} m'
-                                : FlutterI18n.translate(
-                                    context,
-                                    "tooFar",
-                                  ),
+                                ? selectedToilet.distanceString
+                                : AppLocalizations.of(context).tooFar,
                           ),
                           TextSpan(
-                            text: FlutterI18n.translate(
-                              context,
-                              "distanceFromYou",
-                            ),
+                            text: AppLocalizations.of(context).distanceFromYou,
                             style: TextStyle(
                               color: Colors.grey,
                             ),
@@ -249,7 +265,7 @@ class RecommendedToilet extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Button(
-                    FlutterI18n.translate(context, "directions"),
+                    AppLocalizations.of(context).directions,
                     () {
                       if (selectedToilet.distance < 10000) {
                         _navigate(selectedToilet);

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/providers/ToiletModel.dart';
+import '../../core/models/Toilet.dart';
 import 'ToiletCard.dart';
 
 class ToiletRecommendationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
+    final List<Toilet> toilets =
+        context.select((ToiletModel m) => m.toilets.getRange(0, 20).toList());
+    final Function selectToilet =
+        context.select((ToiletModel m) => m.selectToilet);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 0),
@@ -16,7 +20,7 @@ class ToiletRecommendationList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            FlutterI18n.translate(context, "otherToilets"),
+            AppLocalizations.of(context).otherToilets,
             style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,
@@ -25,14 +29,14 @@ class ToiletRecommendationList extends StatelessWidget {
           Container(height: 14),
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
-            itemCount: provider.toilets.length,
+            itemCount: 20,
             shrinkWrap: true,
             itemBuilder: (context, index) => GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                provider.selectToilet(provider.toilets[index]);
+                selectToilet(toilets[index]);
               },
-              child: ToiletCard(provider.toilets[index]),
+              child: ToiletCard(toilets[index]),
             ),
           ),
         ],

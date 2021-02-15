@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:fluster/fluster.dart';
 
 import 'dart:async';
 
@@ -9,6 +11,7 @@ import '../../core/common/openHourUtils.dart';
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
 import '../../core/services/GoogleMapsServices.dart';
+import "../../core/services/MapHelper.dart";
 
 class MapWidget extends StatefulWidget {
   const MapWidget({this.key});
@@ -23,11 +26,16 @@ class MapState extends State<MapWidget> {
   MapState();
 
   GoogleMapController mapController;
-  Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
+  final Set<Marker> _markers = Set();
   Set<Polyline> _polylines = Set<Polyline>();
   bool _nightMode = false;
   BitmapDescriptor generalOpen;
   Toilet latestSelected;
+
+  Fluster<MapMarker> _clusterManager;
+  double _currentZoom = 15;
+
+  int markersCreatedWithLength = 0;
 
   Future<String> _getFileData(String path) async {
     return await rootBundle.loadString(path);
@@ -40,22 +48,15 @@ class MapState extends State<MapWidget> {
     });
   }
 
-  // Widget _nightModeToggler() {
-  //   return FlatButton(
-  //     child: Text('${_nightMode ? 'disable' : 'enable'} night mode'),
-  //     onPressed: () {
-  //       if (_nightMode) {
-  //         _getFileData('assets/light_mode.json').then(_setMapStyle);
-  //       } else {
-  //         _getFileData('assets/dark_mode.json').then(_setMapStyle);
-  //       }
-  //     },
-  //     textColor: Colors.white,
-  //   );
-  // }
+  Future<void> animateToLocation(double lat, double lon) async {
+    double zoom = await mapController.getZoomLevel();
 
-  animateToLocation(double lat, double lon) {
-    mapController.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lon)));
+    mapController.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(lat, lon),
+        zoom < 15 ? 15.0 : zoom,
+      ),
+    );
   }
 
   drawRoutes(
@@ -77,30 +78,87 @@ class MapState extends State<MapWidget> {
     });
   }
 
-  void _onMapCreated(GoogleMapController controller, BuildContext context) {
+  void _onMapCreated(GoogleMapController controller) async {
     setState(() {
       mapController = controller;
       _getFileData('assets/light_mode.json').then(_setMapStyle);
+      // dark mode: _getFileData('assets/dark_mode.json').then(_setMapStyle);
     });
+  }
+
+  Future<void> _initMarkers(BuildContext context, List<Toilet> toilets) async {
+    markersCreatedWithLength = toilets.length;
+
+    final List<MapMarker> markers = [];
+
+    for (Toilet toilet in toilets) {
+      final BitmapDescriptor icon = await determineMarkerIcon(
+        toilet.category,
+        toilet.openState.state,
+        context,
+      );
+
+      markers.add(
+        MapMarker(
+          id: toilets.indexOf(toilet).toString(),
+          position: LatLng(toilet.latitude, toilet.longitude),
+          icon: icon,
+          toilet: toilet,
+        ),
+      );
+    }
+
+    _clusterManager = await MapHelper.initClusterManager(markers);
+
+    await updateMarkers();
+  }
+
+  Future<void> updateMarkers([double updatedZoom]) async {
+    if (_clusterManager == null || updatedZoom == _currentZoom) return;
+
+    if (updatedZoom != null) {
+      _currentZoom = updatedZoom;
+    }
+
+    final updatedMarkers = await MapHelper.getClusterMarkers(
+      _clusterManager,
+      _currentZoom,
+      context,
+    );
+
+    setState(() {
+      _markers
+        ..clear()
+        ..addAll(updatedMarkers);
+    });
+  }
+
+  void selectToilet(BuildContext context, Toilet toilet) {
+    Provider.of<ToiletModel>(context, listen: false).selectToilet(toilet);
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ToiletModel>(context);
-    final toilets = provider.toilets;
-    final userLocation = provider.location;
+    final List<Toilet> toilets = context.select((ToiletModel m) => m.toilets);
+    final Position location = context.select((ToiletModel m) => m.location);
+    final Toilet selectedToilet =
+        context.select((ToiletModel m) => m.selectedToilet);
+    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
+    final bool hasLocationPermission =
+        context.select((ToiletModel m) => m.hasLocationPermission);
 
-    final selectedToilet = provider.selectedToilet;
-    final selectToilet = provider.selectToilet;
+    if (markersCreatedWithLength != toilets.length) {
+      _initMarkers(context, toilets);
+    }
 
     if (selectedToilet != latestSelected) {
       latestSelected = selectedToilet;
 
-      if (selectedToilet != null) {
-        if (provider.hasLocationPermission) {
+      if (hasSelected) {
+        if (hasLocationPermission) {
           drawRoutes(
-            userLocation.latitude,
-            userLocation.longitude,
+            location.latitude,
+            location.longitude,
             selectedToilet.latitude,
             selectedToilet.longitude,
           );
@@ -115,30 +173,12 @@ class MapState extends State<MapWidget> {
       }
     }
 
-    toilets.forEach((Toilet toilet) async {
-      double lat = toilet.latitude;
-      double lng = toilet.longitude;
-      MarkerId id = MarkerId(lat.toString() + lng.toString());
-      Marker _marker = Marker(
-        markerId: id,
-        position: LatLng(lat, lng),
-        icon: await determineMarkerIcon(
-          toilet.category,
-          toilet.openState.state,
-          context,
-        ),
-        onTap: () => selectToilet(toilet),
-      );
-
-      _markers[id] = _marker;
-    });
-
     return GoogleMap(
-      onMapCreated: (controller) => _onMapCreated(controller, context),
+      onMapCreated: (controller) => _onMapCreated(controller),
       initialCameraPosition: CameraPosition(
         target: LatLng(
-          userLocation.latitude,
-          userLocation.longitude,
+          location.latitude,
+          location.longitude,
         ),
         zoom: 15.0,
       ),
@@ -154,9 +194,10 @@ class MapState extends State<MapWidget> {
       zoomGesturesEnabled: true,
       myLocationEnabled: true,
       myLocationButtonEnabled: false,
-      markers: Set<Marker>.of(_markers.values),
+      markers: _markers.toSet(),
       polylines: _polylines,
-      onTap: (LatLng coords) => selectToilet(null),
+      onTap: (LatLng coords) => selectToilet(context, null),
+      onCameraMove: (position) => updateMarkers(position.zoom),
     );
   }
 }

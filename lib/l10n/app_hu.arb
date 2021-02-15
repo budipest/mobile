@@ -1,0 +1,114 @@
+{
+  "title": "Budipest",
+  "continueButton": "Tovább",
+  "cancel": "Mégsem",
+  "recommendedToilet": "Ajánlott mosdó",
+  "otherToilets": "Közeli mosdók",
+  "open": "Nyitva",
+  "closed": "Zárva",
+  "unknown": "Ismeretlen nyitvatartási idő",
+  "until": "{day} {time}-ig",
+  "@until": {
+    "placeholders": {
+      "day": {
+        "type": "String",
+        "example": "Hétfőn"
+      },
+      "time": {
+        "type": "String",
+        "example": "12:00"
+      }
+    }
+  },
+  "tooFar": "Túl távol",
+  "distanceFromYou": " tőled",
+  "notGonnaGetThere": "Nem hisszük hogy időben odaérnél...",
+  "closerToilets": "{count,plural, =1{Van egy mosdó, ami ennél közelebb lenne hozzád. Biztosan a távolabbiba akarsz menni?} =other{Van {count} mosdó, ami ennél közelebb lenne hozzád. Biztosan ilyen messzire szeretnél menni?}}",
+  "@closerToilets": {
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+  "areYouSure": "Biztosan?",
+  "irreversibleNote": "Ez a művelet visszafordíthatatlan. Biztosan ki akarod törölni a jegyzetedet? Még mágiával sem tudjuk majd visszahozni!",
+  "remove": "Törlés",
+  "directions": "Navigáció",
+  "rate": "Értékelés",
+  "notes": "Megjegyzések",
+  "newNote": "Új megjegyzés",
+  "myNote": "Saját jegyzet",
+  "newNotePlaceholder": "Ez a mosdó remek, mert...",
+  "send": "Elküldés",
+  "addToilet": "Mosdó hozzáadása",
+  "dragMarker": "Tartsd az ujjad a jelzőn, és mozgasd a WC pontos helyzetéhez",
+  "toiletName": "A mosdó neve",
+  "name": "Név",
+  "toiletType": "A mosdó típusa",
+  "general": "utcai WC",
+  "restaurant": "étterem / kávézó",
+  "shop": "bolt / áruház",
+  "gasStation": "benzinkút",
+  "portable": "mobil / ideiglenes WC",
+  "toiletEntryMethod": "A mosdó jellege",
+  "free": "ingyenes",
+  "paid": "fizetős",
+  "price": "Ár",
+  "priceAlternative": "Ár (euróban)",
+  "addCurrency": "valuta hozzáadása",
+  "guests": "vendégeknek ingyenes",
+  "key": "kóddal védett",
+  "code": "KÓD",
+  "openHours": "Nyitvatartás (opcionális)",
+  "alwaysOpen": "24/7-es nyivatartás",
+  "relativeDays": "{index,plural, =0{ma} =1{holnap} =other{N/A}}",
+  "@relativeDays": {
+    "placeholders": {
+      "index": {
+        "type": "String",
+        "example": "0"
+      }
+    }
+  },
+  "monday": "hétfő",
+  "tuesday": "kedd",
+  "wednesday": "szerda",
+  "thursday": "csütörtök",
+  "friday": "péntek",
+  "saturday": "szombat",
+  "sunday": "vasárnap",
+  "mondayShort": "H",
+  "tuesdayShort": "K",
+  "wednesdayShort": "Sze",
+  "thursdayShort": "Cs",
+  "fridayShort": "P",
+  "saturdayShort": "Szo",
+  "sundayShort": "V",
+  "services": "Szolgáltatások (opcionális)",
+  "accessible": "akadálymentes",
+  "babyRoom": "pelenkázó",
+  "aboutUs": "Rólunk",
+  "aboutUsDevelopment": "Fejlesztés: Gergely Dániel",
+  "aboutUsDesign": "Design: Jobbágy Dávid",
+  "aboutUsBetaTitle": "Külön köszönet a béta tesztelőknek:",
+  "aboutUsBetaNames": "Egri Dániel, Gáspár Vendel, Hajdu Péter, Horváth Ákos, Kékesi Bence, Lesti Dániel, Nagy Dominik, Pór Gergő, Szulovszky Balázs, Tóth Lili és Szőcs Zsombor",
+  "aboutUsBudapest": "Szeretettel ❤️ Budapestről",
+  "aboutUsFeedback": "Visszajelzések: dnlgrgly@gmail.com",
+  "aboutUsOpenSource": "A projektet Flutter-rel készítettük, az alkalmazás pedig nyílt forráskódú.",
+  "aboutUsHelpUs": "Segíts a Budipest továbbfejlődésében!",
+  "aboutUsHelpUsDescription": "A Budipest célja a világuralomra törés. Ahhoz, hogy ebben segíthess nekünk, kövess minket Facebookon, beszélj az appról a barátaidnak, adj hozzá új WC-ket az apphoz, értékeld a meglévőeket, jelentsd az esetlegesen előforduló hibákat, javasolj új funkciókat, vagy akár írj kódot a GitHub repo-ba. Tudj meg többet a segítségnyújtás további lehetséges módjairól a websiteunkon.",
+  "aboutUsTeam": "A Csapat",
+  "emptyNotesTitle": "Még nincsenek megjegyzések.",
+  "emptyNotesDescription": "Ossz meg személyes tapasztalatokat, vagy egyéb hasznos információkat egy megjegyzésben.",
+  "errorTitle": "Itt valami bűzlik...",
+  "errorData": "Nem tudtuk letölteni a WC-ket a szerverről. Lehet, hogy nincs neted?",
+  "errorOnServer": "A szerverünknél mostanában nem megy le a WC, emiatt picit elfoglalt. Kérjük, próbáld újra később!",
+  "errorRequiredFields": "Ezt a mezőt nem hagyhatod üresen",
+  "errorMissingFields": "Néhány kitöltendő mező üresen lett hagyva. Kérjük ellenőrizd, hogy mindent kitöltöttél-e.",
+  "errorLocation": "Néhány funkció (pl. az alsó sáv, útvonaltervek rajzolása) nem működik amíg nem engedélyezed a helyadatokhoz való hozzáférést.",
+  "noLocationTitle": "Nem engedélyezted a helyadatokhoz való hozzáférést",
+  "noLocationCardTitle": "A mosdók a távolságuk alapján rendezve itt fognak megjelenni",
+  "noLocationCardDescription": "Engedélyezd a Budipestnek a helyadataidhoz való hozzáférést hogy tudjuk neked ajánlani a legközelebbi nyitva tartó WC-t, mutathassuk őket itt, a listában, vagy hogy rajzolhassunk útvonalterveket a térképre. Az engedélyezéshez nyisd meg a Beállítások appot, keresd meg a Budipestet, és a Helyadatoknál válaszd az `Az alkalmazás használata közben` opciót."
+}
