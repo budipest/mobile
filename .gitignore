@@ -74,3 +74,4 @@
 
 secrets.json
 key.properties
+.fvm/flutter_sdk

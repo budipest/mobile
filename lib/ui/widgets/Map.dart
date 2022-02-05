@@ -10,7 +10,6 @@ import 'dart:async';
 import '../../core/common/openHourUtils.dart';
 import '../../core/models/Toilet.dart';
 import '../../core/providers/ToiletModel.dart';
-import '../../core/services/GoogleMapsServices.dart';
 import "../../core/services/MapHelper.dart";
 
 class MapWidget extends StatefulWidget {
@@ -27,7 +26,6 @@ class MapState extends State<MapWidget> {
 
   GoogleMapController mapController;
   final Set<Marker> _markers = Set();
-  Set<Polyline> _polylines = Set<Polyline>();
   bool _nightMode = false;
   BitmapDescriptor generalOpen;
   Toilet latestSelected;
@@ -57,25 +55,6 @@ class MapState extends State<MapWidget> {
         zoom < 15 ? 15.0 : zoom,
       ),
     );
-  }
-
-  drawRoutes(
-    double userLat,
-    double userLon,
-    double toiletLat,
-    double toiletLon,
-  ) async {
-    final Polyline directions = await GoogleMapsServices.getRoutes(
-      userLat,
-      userLon,
-      toiletLat,
-      toiletLon,
-    );
-
-    setState(() {
-      _polylines.clear();
-      _polylines.add(directions);
-    });
   }
 
   void _onMapCreated(GoogleMapController controller) async {
@@ -143,9 +122,6 @@ class MapState extends State<MapWidget> {
     final Position location = context.select((ToiletModel m) => m.location);
     final Toilet selectedToilet =
         context.select((ToiletModel m) => m.selectedToilet);
-    final bool hasSelected = context.select((ToiletModel m) => m.hasSelected);
-    final bool hasLocationPermission =
-        context.select((ToiletModel m) => m.hasLocationPermission);
 
     if (markersCreatedWithLength != toilets.length) {
       _initMarkers(context, toilets);
@@ -154,23 +130,10 @@ class MapState extends State<MapWidget> {
     if (selectedToilet != latestSelected) {
       latestSelected = selectedToilet;
 
-      if (hasSelected) {
-        if (hasLocationPermission) {
-          drawRoutes(
-            location.latitude,
-            location.longitude,
-            selectedToilet.latitude,
-            selectedToilet.longitude,
-          );
-        }
-
-        animateToLocation(
-          selectedToilet.latitude,
-          selectedToilet.longitude,
-        );
-      } else {
-        _polylines.clear();
-      }
+      animateToLocation(
+        selectedToilet.latitude,
+        selectedToilet.longitude,
+      );
     }
 
     return GoogleMap(
@@ -195,7 +158,6 @@ class MapState extends State<MapWidget> {
       myLocationEnabled: true,
       myLocationButtonEnabled: false,
       markers: _markers.toSet(),
-      polylines: _polylines,
       onTap: (LatLng coords) => selectToilet(context, null),
       onCameraMove: (position) => updateMarkers(position.zoom),
     );
