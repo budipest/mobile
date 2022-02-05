@@ -73,7 +73,7 @@
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 android/app/google-services.json
-# ios/GoogleService-Info.plist
+ios/GoogleService-Info.plist
 secrets.json
 key.properties
 .fvm/flutter_sdk
