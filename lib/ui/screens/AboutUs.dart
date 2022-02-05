@@ -41,7 +41,7 @@ class AboutUs extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'v2.1.0',
+                      'v2.2.0',
                       style: TextStyle(color: Colors.grey, fontSize: 22),
                     ),
                   ],
@@ -95,7 +95,7 @@ class AboutUs extends StatelessWidget {
                       Button(
                         "website",
                         () async {
-                          String url = "https://dnlgrgly.com/budipest";
+                          String url = "https://budipest.com";
                           if (await canLaunch(url)) {
                             await launch(url);
                           }
@@ -107,8 +107,7 @@ class AboutUs extends StatelessWidget {
                       Button(
                         "GitHub",
                         () async {
-                          String url =
-                              "https://github.com/dnlgrgly/budipest-mobile";
+                          String url = "https://github.com/budipest";
                           if (await canLaunch(url)) {
                             await launch(url);
                           }
@@ -142,9 +141,8 @@ class AboutUs extends StatelessWidget {
                 PersonCard(
                   AppLocalizations.of(context).aboutUsDevelopment,
                   {
-                    "website": "https://dnlgrgly.com",
                     "LinkedIn": "https://www.linkedin.com/in/dnlgrgly/",
-                    "email": "mailto:dnlgrgly@gmail.com"
+                    "email": "mailto:dnlgrgly@icloud.com"
                   },
                 ),
                 PersonCard(

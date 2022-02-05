@@ -31,7 +31,8 @@ class MapState extends State<MapWidget> {
   Toilet latestSelected;
 
   Fluster<MapMarker> _clusterManager;
-  double _currentZoom = 15;
+  double _currentZoom;
+  LatLngBounds _currentBounds;
 
   int markersCreatedWithLength = 0;
 
@@ -92,16 +93,20 @@ class MapState extends State<MapWidget> {
     await updateMarkers();
   }
 
-  Future<void> updateMarkers([double updatedZoom]) async {
-    if (_clusterManager == null || updatedZoom == _currentZoom) return;
+  Future<void> updateMarkers() async {
+    final zoom = await mapController.getZoomLevel();
+    final bounds = await mapController.getVisibleRegion();
 
-    if (updatedZoom != null) {
-      _currentZoom = updatedZoom;
-    }
+    if (_clusterManager == null ||
+        bounds == _currentBounds && zoom == _currentZoom) return;
+
+    _currentBounds = bounds;
+    _currentZoom = zoom;
 
     final updatedMarkers = await MapHelper.getClusterMarkers(
       _clusterManager,
-      _currentZoom,
+      zoom,
+      bounds,
       context,
     );
 
@@ -130,10 +135,12 @@ class MapState extends State<MapWidget> {
     if (selectedToilet != latestSelected) {
       latestSelected = selectedToilet;
 
-      animateToLocation(
-        selectedToilet.latitude,
-        selectedToilet.longitude,
-      );
+      if (selectedToilet != null) {
+        animateToLocation(
+          selectedToilet.latitude,
+          selectedToilet.longitude,
+        );
+      }
     }
 
     return GoogleMap(
@@ -159,7 +166,7 @@ class MapState extends State<MapWidget> {
       myLocationButtonEnabled: false,
       markers: _markers.toSet(),
       onTap: (LatLng coords) => selectToilet(context, null),
-      onCameraMove: (position) => updateMarkers(position.zoom),
+      onCameraIdle: () => updateMarkers(),
     );
   }
 }

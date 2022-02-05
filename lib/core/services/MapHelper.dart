@@ -117,11 +117,11 @@ class MapHelper {
     assert(markers != null);
 
     return Fluster<MapMarker>(
-      minZoom: 0,
-      maxZoom: 13,
-      radius: 300,
-      extent: 2048,
-      nodeSize: 64,
+      minZoom: 9,
+      maxZoom: 14,
+      radius: 750,
+      extent: 4096,
+      nodeSize: 1,
       points: markers,
       createCluster: (
         BaseCluster cluster,
@@ -143,25 +143,36 @@ class MapHelper {
   /// the given [currentZoom]. For more info check [Fluster.clusters].
   static Future<List<Marker>> getClusterMarkers(
     Fluster<MapMarker> clusterManager,
-    double currentZoom,
+    double zoom,
+    LatLngBounds bounds,
     BuildContext context,
   ) {
-    assert(currentZoom != null);
+    assert(zoom != null);
+    assert(bounds != null);
 
     if (clusterManager == null) return Future.value([]);
 
-    return Future.wait(clusterManager.clusters(
-        [-180, -85, 180, 85], currentZoom.toInt()).map((mapMarker) async {
-      if (mapMarker.isCluster) {
-        mapMarker.icon = await _getClusterMarker(
-          mapMarker.pointsSize,
-          Colors.black,
-          Colors.white,
-          80,
-        );
-      }
+    return Future.wait(
+      clusterManager.clusters(
+        [
+          bounds.southwest.longitude - 0.025,
+          bounds.southwest.latitude - 0.025,
+          bounds.northeast.longitude + 0.025,
+          bounds.northeast.latitude + 0.025,
+        ],
+        zoom.toInt(),
+      ).map((mapMarker) async {
+        if (mapMarker.isCluster) {
+          mapMarker.icon = await _getClusterMarker(
+            mapMarker.pointsSize,
+            Colors.black,
+            Colors.white,
+            80,
+          );
+        }
 
-      return mapMarker.toMarker(context);
-    }).toList());
+        return mapMarker.toMarker(context);
+      }).toList(),
+    );
   }
 }

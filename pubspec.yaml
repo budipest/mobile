@@ -1,7 +1,7 @@
 name: budipest
 description: Toilets anytime, anywhere
 
-version: 2.1.0+17
+version: 2.2.0+20
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -29,6 +29,8 @@ dependencies:
   url_launcher: 5.7.10
 
   fluster: 1.1.2
+  firebase_core: ^0.7.0
+  firebase_analytics: ^7.0.1
 
 flutter:
   generate: true

@@ -68,7 +68,7 @@ class Home extends StatelessWidget {
       location.longitude,
     );
 
-    _mapKey.currentState.updateMarkers(15.0);
+    _mapKey.currentState.updateMarkers();
   }
 
   void selectNullToilet(BuildContext context) {

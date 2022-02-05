@@ -5,12 +5,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../common/openHourUtils.dart';
 import '../models/Toilet.dart';
 import '../services/API.dart';
 
 class ToiletModel extends ChangeNotifier {
+  final FirebaseAnalytics analytics = FirebaseAnalytics();
+
   // user-related data
   Position _userLocation = Position.fromMap({
     "latitude": 47.497643763874876,
@@ -160,6 +163,11 @@ class ToiletModel extends ChangeNotifier {
     try {
       addedToilet = await API.addToilet(item);
 
+      await analytics.logEvent(name: 'add_toilet', parameters: {
+        'toilet_id': item.id,
+        'toilet_name': item.name,
+      });
+
       addedToilet = processToilet(addedToilet);
       _toilets.add(addedToilet);
       selectToilet(addedToilet);
@@ -171,9 +179,16 @@ class ToiletModel extends ChangeNotifier {
     }
   }
 
-  void selectToilet(Toilet item) {
+  Future<void> selectToilet(Toilet item) async {
     _selected = item;
     notifyListeners();
+
+    if (item != null) {
+      await analytics.logEvent(name: 'select_toilet', parameters: {
+        'toilet_id': item.id,
+        'toilet_name': item.name,
+      });
+    }
   }
 
   Future<void> voteToilet(int vote) async {
@@ -187,6 +202,12 @@ class ToiletModel extends ChangeNotifier {
       updatedToilet = processToilet(updatedToilet);
       _toilets[index] = updatedToilet;
       _selected = updatedToilet;
+
+      await analytics.logEvent(name: 'add_vote', parameters: {
+        'toilet_id': updatedToilet.id,
+        'toilet_name': updatedToilet.name,
+        'vote': vote,
+      });
 
       notifyListeners();
     } catch (error) {
@@ -207,6 +228,11 @@ class ToiletModel extends ChangeNotifier {
       _toilets[index] = updatedToilet;
       _selected = updatedToilet;
 
+      await analytics.logEvent(name: 'add_note', parameters: {
+        'toilet_id': updatedToilet.id,
+        'toilet_name': updatedToilet.name,
+      });
+
       notifyListeners();
     } catch (error) {
       print(error);
@@ -225,6 +251,11 @@ class ToiletModel extends ChangeNotifier {
       updatedToilet = processToilet(updatedToilet);
       _toilets[index] = updatedToilet;
       _selected = updatedToilet;
+
+      await analytics.logEvent(name: 'remove_note', parameters: {
+        'toilet_id': updatedToilet.id,
+        'toilet_name': updatedToilet.name,
+      });
 
       notifyListeners();
     } catch (error) {
