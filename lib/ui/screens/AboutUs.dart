@@ -41,7 +41,7 @@ class AboutUs extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'v2.2.0',
+                      'v2.2.1',
                       style: TextStyle(color: Colors.grey, fontSize: 22),
                     ),
                   ],
@@ -91,7 +91,7 @@ class AboutUs extends StatelessWidget {
                         backgroundColor: Colors.black,
                         foregroundColor: Colors.white,
                       ),
-                      Container(width: 20),
+                      Spacer(),
                       Button(
                         "website",
                         () async {
@@ -103,7 +103,7 @@ class AboutUs extends StatelessWidget {
                         backgroundColor: Colors.black,
                         foregroundColor: Colors.white,
                       ),
-                      Container(width: 20),
+                      Spacer(),
                       Button(
                         "GitHub",
                         () async {
@@ -148,6 +148,8 @@ class AboutUs extends StatelessWidget {
                 PersonCard(
                   AppLocalizations.of(context).aboutUsDesign,
                   {
+                    "LinkedIn":
+                        "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
                     "email": "mailto:davidjobbagy07@gmail.com",
                   },
                 ),

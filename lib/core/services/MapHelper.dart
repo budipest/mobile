@@ -117,10 +117,10 @@ class MapHelper {
     assert(markers != null);
 
     return Fluster<MapMarker>(
-      minZoom: 9,
-      maxZoom: 14,
-      radius: 750,
-      extent: 4096,
+      minZoom: 8,
+      maxZoom: 20,
+      radius: 500,
+      extent: 2048,
       nodeSize: 1,
       points: markers,
       createCluster: (
