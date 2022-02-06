@@ -1,7 +1,7 @@
 name: budipest
 description: Toilets anytime, anywhere
 
-version: 2.2.2+22
+version: 2.2.3+23
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
