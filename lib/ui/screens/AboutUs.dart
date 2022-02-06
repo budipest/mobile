@@ -41,7 +41,7 @@ class AboutUs extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'v2.2.1',
+                      'v2.2.2',
                       style: TextStyle(color: Colors.grey, fontSize: 22),
                     ),
                   ],
@@ -148,8 +148,7 @@ class AboutUs extends StatelessWidget {
                 PersonCard(
                   AppLocalizations.of(context).aboutUsDesign,
                   {
-                    "LinkedIn":
-                        "https://www.linkedin.com/in/dávid-jobbágy-18939215a/",
+                    "LinkedIn": "https://www.linkedin.com/in/davidjobbagy/",
                     "email": "mailto:davidjobbagy07@gmail.com",
                   },
                 ),

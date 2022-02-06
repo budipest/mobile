@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     lintOptions {
         disable 'InvalidPackage'
@@ -41,7 +41,7 @@ android {
     defaultConfig {
         applicationId "com.dnlgrgly.budipest"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
